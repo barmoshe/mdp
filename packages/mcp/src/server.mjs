@@ -96,14 +96,48 @@ export async function startServer() {
     async (uri) => ({ contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset("SPEC.md") }] })
   );
 
-  // mdp://example/{name} -> a vendored example source (comparison | tidewater)
+  // The vendored manifests list exactly what shipped (written by sync-mcp.mjs),
+  // so the resource list + description never drift from the vendored files.
+  const exMeta = JSON.parse(readAsset(join("examples", "manifest.json")));
+  const tmplMeta = JSON.parse(readAsset(join("templates", "manifest.json")));
+
+  // mdp://example/{name} -> a vendored example source. list + description derived.
   server.registerResource(
     "example",
-    new ResourceTemplate("mdp://example/{name}", { list: undefined }),
-    { title: "MDP example", description: "A complete example source (comparison | tidewater | brand-logo).", mimeType: "text/markdown" },
+    new ResourceTemplate("mdp://example/{name}", {
+      list: () => ({
+        resources: exMeta.map((e) => ({
+          uri: `mdp://example/${e.id}`,
+          name: e.id,
+          title: e.label,
+          mimeType: "text/markdown",
+        })),
+      }),
+    }),
+    { title: "MDP example", description: `A complete example source (${exMeta.map((e) => e.id).join(" | ")}).`, mimeType: "text/markdown" },
     async (uri, { name }) => {
       const safe = String(name).replace(/[^a-z0-9_-]/gi, "");
       return { contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset(join("examples", `${safe}.mdp`)) }] };
+    }
+  );
+
+  // mdp://template/{name} -> a vendored fill-in template source. list + description derived.
+  server.registerResource(
+    "template",
+    new ResourceTemplate("mdp://template/{name}", {
+      list: () => ({
+        resources: tmplMeta.map((e) => ({
+          uri: `mdp://template/${e.id}`,
+          name: e.id,
+          title: e.label,
+          mimeType: "text/markdown",
+        })),
+      }),
+    }),
+    { title: "MDP template", description: `A fill-in template source (${tmplMeta.map((e) => e.id).join(" | ")}).`, mimeType: "text/markdown" },
+    async (uri, { name }) => {
+      const safe = String(name).replace(/[^a-z0-9_-]/gi, "");
+      return { contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset(join("templates", `${safe}.mdp`)) }] };
     }
   );
 

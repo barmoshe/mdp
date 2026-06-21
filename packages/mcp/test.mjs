@@ -3,11 +3,14 @@
 // It imports the PURE handlers from src/tools.mjs (no stdio, no SDK) and asserts
 // compile output, validate behaviour, and determinism. Exits non-zero on the
 // first failure so CI fails loudly. Run: node test.mjs (after `npm run sync:mcp`).
-import { readFileSync, mkdtempSync } from "node:fs";
+import { readFileSync, mkdtempSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { mdpCompile, mdpValidate, mdpPresent } from "./src/tools.mjs";
 import { artifactFilename } from "./src/io.mjs";
+
+const ASSETS = join(dirname(fileURLToPath(import.meta.url)), "assets");
 
 let failures = 0;
 function check(name, cond) {
@@ -98,6 +101,21 @@ async function main() {
     "determinism: identical HTML",
     readFileSync(a.artifacts[0].path, "utf8") === readFileSync(b.artifacts[0].path, "utf8")
   );
+
+  // 3b. vendored manifests resolve (written by sync-mcp): for examples and
+  // templates, the manifest id-set equals the vendored file-set and every id
+  // maps to a non-empty .mdp. This is what the server's resource list derives from.
+  for (const kind of ["examples", "templates"]) {
+    const man = JSON.parse(readFileSync(join(ASSETS, kind, "manifest.json"), "utf8"));
+    const files = readdirSync(join(ASSETS, kind)).filter((f) => f.endsWith(".mdp")).sort();
+    const ids = man.map((e) => e.file).sort();
+    check(`${kind}: manifest id-set == vendored file-set`, JSON.stringify(files) === JSON.stringify(ids));
+    let allResolve = man.length > 0;
+    for (const e of man) {
+      if (!readFileSync(join(ASSETS, kind, `${e.id}.mdp`), "utf8").trim()) allResolve = false;
+    }
+    check(`${kind}: every manifest id resolves to non-empty bytes`, allResolve);
+  }
 
   // 4. present (opt-in via MDP_TEST_PRESENT; never opens a browser): loopback serve + fetch.
   if (process.env.MDP_TEST_PRESENT) {
