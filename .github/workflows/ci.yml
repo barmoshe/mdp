@@ -39,6 +39,10 @@ jobs:
               || { echo "::error::theme-gallery failed for theme $t"; exit 1; }
           done
           echo "all 11 themes render"
+      - name: Contrast gate (every theme passes WCAG AA in light + dark)
+        run: node scripts/check-contrast.mjs
+      - name: Brand logo gate (masthead slot guarantees hold)
+        run: node scripts/check-logo.mjs
       - name: Drift gate (manifests match disk, roles clean, coverage complete)
         run: node scripts/check-examples.mjs
       - name: Schema conformance (every source's IR validates against the versioned schema)
