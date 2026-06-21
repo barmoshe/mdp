@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { compile, ARTIFACTS, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "@mdp/core";
 import { EXAMPLES } from "../examples";
+import { TEMPLATES } from "../templates";
 
 // Read the theme the source currently declares, so the theme control stays in
 // sync with the editor (the editor is the single source of truth).
@@ -25,8 +26,23 @@ const ARTIFACT_HINT: Record<string, string> = {
   flyer: "One composed surface. The at-a-glance form.",
 };
 
-export default function Playground({ variant = "full" }: { variant?: "full" | "embed" }) {
-  const [source, setSource] = useState(EXAMPLES[0].source);
+export default function Playground({
+  variant = "full",
+  initialId,
+  initialKind,
+}: {
+  variant?: "full" | "embed";
+  initialId?: string;
+  initialKind?: string;
+}) {
+  const [source, setSource] = useState(() => {
+    if (initialId) {
+      const pool = initialKind === "template" ? TEMPLATES : EXAMPLES;
+      const hit = pool.find((x) => x.id === initialId);
+      if (hit) return hit.source;
+    }
+    return EXAMPLES[0].source;
+  });
   const [artifact, setArtifact] = useState("page");
   const [debounced, setDebounced] = useState(source);
   const blobUrl = useRef<string | null>(null);
@@ -39,6 +55,15 @@ export default function Playground({ variant = "full" }: { variant?: "full" | "e
   }, [source]);
 
   const theme = currentTheme(source);
+
+  // The starter picker merges the example probes and the fill-in templates. Ids
+  // collide across the two sets (both have "release-notes"), so options are keyed
+  // by "kind:id".
+  const SOURCES = [
+    ...EXAMPLES.map((e) => ({ key: `example:${e.id}`, label: e.label, source: e.source })),
+    ...TEMPLATES.map((t) => ({ key: `template:${t.id}`, label: t.label, source: t.source })),
+  ];
+  const currentKey = SOURCES.find((s) => s.source === source)?.key ?? "";
 
   // The real engine, bundled from packages/core. Wrong input still renders, but
   // a hard parse error surfaces in the preview instead of a blank frame.
@@ -84,24 +109,31 @@ export default function Playground({ variant = "full" }: { variant?: "full" | "e
         <div className="pg-spacer" />
 
         <label className="pg-control">
-          <span>example</span>
+          <span>start from</span>
           <select
             className="pg-select"
-            aria-label="Example"
-            value={EXAMPLES.find((e) => e.source === source)?.id ?? ""}
+            aria-label="Start from an example or template"
+            value={currentKey}
             onChange={(e) => {
-              const ex = EXAMPLES.find((x) => x.id === e.target.value);
-              if (ex) setSource(ex.source);
+              const item = SOURCES.find((s) => s.key === e.target.value);
+              if (item) setSource(item.source);
             }}
           >
-            {!EXAMPLES.some((e) => e.source === source) && (
-              <option value="">edited</option>
-            )}
-            {EXAMPLES.map((e) => (
-              <option key={e.id} value={e.id}>
-                {e.label}
-              </option>
-            ))}
+            {!currentKey && <option value="">edited</option>}
+            <optgroup label="Examples">
+              {EXAMPLES.map((e) => (
+                <option key={`example:${e.id}`} value={`example:${e.id}`}>
+                  {e.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Templates">
+              {TEMPLATES.map((t) => (
+                <option key={`template:${t.id}`} value={`template:${t.id}`}>
+                  {t.label}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </label>
 
