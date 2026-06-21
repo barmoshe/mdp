@@ -2,9 +2,9 @@
 // HTML artifacts, and can open one to show it or present it.
 //
 // Usage:
-//   node build.mjs <source.mdp> [--out <dir>] [--only <page|slides|flyer>] [--open [artifact]]
+//   node build.mjs <source.mdp> [--out <dir>] [--only <page|slides|flyer>] [--theme <name>] [--open [artifact]]
 //
-// Defaults: source = examples/tidewater.mdp; build all three artifacts.
+// Defaults: source = examples/block-compare.mdp; build all three artifacts.
 // Output dir: --out <dir>, else a temp preview folder when --open is used,
 // else <repo>/dist. --open with no artifact opens the first built one (or the
 // page). The compile is deterministic (no clocks, no randomness); --open is a
@@ -20,17 +20,37 @@ import { compile, ARTIFACTS } from "./src/index.mjs";
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, "..", "..");
 
+// Override the frontmatter `theme:` line (the --theme flag), so one source can be
+// re-rendered across themes (the theme-gallery driver) without editing the file.
+// Pure string transform on the frontmatter block; without --theme it is a no-op.
+function overrideTheme(src, theme) {
+  const lines = src.split("\n");
+  if (lines[0].trim() !== "---") return src;
+  const end = lines.indexOf("---", 1);
+  if (end === -1) return src;
+  for (let i = 1; i < end; i++) {
+    if (/^\s*theme\s*:/.test(lines[i])) {
+      lines[i] = `theme: ${theme}`;
+      return lines.join("\n");
+    }
+  }
+  lines.splice(1, 0, `theme: ${theme}`);
+  return lines.join("\n");
+}
+
 // --- parse argv ---
 const argv = process.argv.slice(2);
 let inputArg = null;
 let outArg = null;
 let onlyArg = null;
+let themeArg = null;
 let openArg; // undefined = no open; null = open default; string = open that artifact
 
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === "--out") outArg = argv[++i];
   else if (a === "--only") onlyArg = argv[++i];
+  else if (a === "--theme") themeArg = argv[++i];
   else if (a === "--open") {
     const next = argv[i + 1];
     if (next && ARTIFACTS.includes(next)) { openArg = next; i++; }
@@ -42,7 +62,7 @@ for (let i = 0; i < argv.length; i++) {
 
 const inputPath = inputArg
   ? resolve(process.cwd(), inputArg)
-  : join(repoRoot, "examples", "tidewater.mdp");
+  : join(repoRoot, "examples", "block-compare.mdp");
 
 let targets = ARTIFACTS;
 if (onlyArg) {
@@ -63,7 +83,8 @@ else if (openArg !== undefined) {
 
 mkdirSync(distDir, { recursive: true });
 
-const source = readFileSync(inputPath, "utf8");
+let source = readFileSync(inputPath, "utf8");
+if (themeArg) source = overrideTheme(source, themeArg);
 
 console.log(`MDP build`);
 console.log(`  source: ${inputPath}`);
