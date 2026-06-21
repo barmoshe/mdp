@@ -14,6 +14,10 @@
 - [tidewater.mdp](examples/tidewater.mdp): a simple launch brief.
 - [comparison.mdp](examples/comparison.mdp): the full block set, with a right-to-left example.
 
+## Use in agent tools
+
+MDP ships as a plugin for Claude Code (a `/mdp` command) and Codex (an `mdp` skill, self-contained in `codex/`). The agent authors `.mdp`, runs the bundled engine, and opens the page, deck, or flyer. Same engine, no styling in the source either way.
+
 ## Authoring MDP
 
 An .mdp file is valid Markdown plus a few typed blocks. There is no styling in the source; the engine composes the design.

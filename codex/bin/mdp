@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# mdp: run the bundled MDP engine, resolving this script's own location so it
+# works wherever the plugin is installed. All arguments pass straight through to
+# packages/core/build.mjs (for example: mdp <file.mdp> --open slides).
+set -e
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")/.." && pwd)"
+exec node "$DIR/packages/core/build.mjs" "$@"

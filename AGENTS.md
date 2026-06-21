@@ -40,6 +40,8 @@ mdp/
       render-flyer.mjs      the `flyer` artifact solver
       index.mjs             exports parse() and compile(source, artifact)
     build.mjs               CLI: read a source, compile all artifacts, write dist
+  commands/mdp.md           the Claude Code /mdp command
+  codex/                    the Codex plugin (vendored engine; see Plugin surfaces)
   spec/schema.json          JSON Schema for the .mdp frontmatter (stub)
   examples/tidewater.mdp    the sample source
 ```
@@ -47,6 +49,23 @@ mdp/
 The data flow is one direction: `source string -> parse() -> IR -> render() ->
 HTML`. The IR (`{ meta, blocks }`) is the semantic representation every artifact
 solves against. See `src/parse.mjs` for the node types.
+
+## Plugin surfaces
+
+The same engine ships to agent tools two ways. Both author MDP, run the engine,
+and open the result; neither adds anything to the format.
+
+- **Claude Code** — the repo root is the plugin (`.claude-plugin/`, a single
+  `/mdp` command in `commands/`). It runs the engine in place at `packages/core/`.
+- **Codex** — a self-contained plugin in `codex/` (`.codex-plugin/plugin.json`,
+  an `mdp` skill in `codex/skills/`). Codex caches a copy of a plugin on install,
+  so the engine, `bin/`, `SPEC.md`, and one example are **vendored** into `codex/`
+  by `npm run sync:codex`. They are a copy of the root, not a second source;
+  re-run it after any engine change. The plugin sits in its own folder (not the
+  root) so Codex and Claude each see exactly one `mdp` component: a root-level
+  skill would collide with the `/mdp` command. To check it, rebuild a source
+  through `codex/bin/mdp` and confirm the HTML is byte-identical to the root
+  engine.
 
 ## The design lock
 

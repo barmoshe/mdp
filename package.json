@@ -23,9 +23,11 @@
     "ai",
     "agents",
     "document",
-    "mdp"
+    "mdp",
+    "codex"
   ],
   "scripts": {
-    "build": "node packages/core/build.mjs"
+    "build": "node packages/core/build.mjs",
+    "sync:codex": "node scripts/sync-codex.mjs"
   }
 }

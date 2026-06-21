@@ -5,6 +5,15 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+- A Codex plugin, so the same "show this as a deck" flow works inside Codex. It
+  is a self-contained plugin in `codex/` (the dependency-free engine is vendored
+  in, refreshed with `npm run sync:codex`) exposing an `mdp` skill that
+  auto-triggers on "show this", "make a deck", "present this", and similar. Add
+  the marketplace with `codex marketplace add barmoshe/mdp`, then enable MDP from
+  the Codex app. Kept in its own folder so Codex and Claude each see a single
+  `mdp` component.
+
 ## [0.2.0]
 
 ### Added
@@ -24,9 +33,9 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
   of pure `#fff` / `#000`) so the default reads designed, not stark.
 
 ### Added
-- A Claude Code plugin (this repo is the marketplace): a `/mdp` command and an
-  `mdp` skill that auto-triggers on "show this", "make a deck", "present this",
-  and similar. Install with `/plugin marketplace add barmoshe/mdp` then
+- A Claude Code plugin (this repo is the marketplace): a self-contained `/mdp`
+  command that auto-triggers on "show this", "make a deck", "present this", and
+  similar. Install with `/plugin marketplace add barmoshe/mdp` then
   `/plugin install mdp@mdp`. Claude authors MDP, compiles it, and opens the
   result to show or present it.
 - The CLI gained `--open [artifact]` (show or present in the browser, cross

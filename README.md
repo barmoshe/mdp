@@ -65,6 +65,20 @@ file", or "present this", or run the command:
 Claude authors clean MDP, compiles it with the bundled engine, and opens the
 page, slide deck, or flyer to show or present it.
 
+## Use it in Codex
+
+MDP also ships a Codex plugin (self-contained in `codex/`), so the same "show
+this as a deck" flow works inside Codex. Add this repo as a marketplace, then
+enable MDP from the Codex app's plugins list:
+
+```
+codex marketplace add barmoshe/mdp
+```
+
+Then just ask, for example "show this as a slide deck", "make a one-pager from
+this file", or "present this". Codex authors clean MDP, compiles it with the
+bundled engine, and opens the page, deck, or flyer.
+
 ## What a source looks like
 
 ````

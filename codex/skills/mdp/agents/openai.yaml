@@ -1,0 +1,8 @@
+interface:
+  display_name: "MDP"
+  short_description: "Show content as a page, deck, or flyer"
+  brand_color: "#4F46E5"
+  default_prompt: "Use $mdp to show this content as a slide deck, a page, or a one-page flyer."
+
+policy:
+  allow_implicit_invocation: true

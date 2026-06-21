@@ -1,0 +1,20 @@
+{
+  "name": "mdp",
+  "interface": {
+    "displayName": "MDP"
+  },
+  "plugins": [
+    {
+      "name": "mdp",
+      "source": {
+        "source": "local",
+        "path": "./codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
