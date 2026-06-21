@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build examples
+        run: |
+          node packages/core/build.mjs examples/tidewater.mdp
+          node packages/core/build.mjs examples/comparison.mdp
+      - name: Determinism
+        run: |
+          node packages/core/build.mjs examples/comparison.mdp
+          sha256sum dist/*.html > run1.txt
+          node packages/core/build.mjs examples/comparison.mdp
+          sha256sum dist/*.html > run2.txt
+          diff run1.txt run2.txt && echo "deterministic"

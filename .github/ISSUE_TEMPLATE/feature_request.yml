@@ -1,0 +1,22 @@
+name: Feature or block proposal
+description: A new block, artifact, or capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should MDP be able to express or do?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: How the source might look
+      description: A sketch of the .mdp syntax you imagine.
+      render: markdown
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What real document needs this?

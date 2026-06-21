@@ -1,0 +1,28 @@
+name: Bug report
+description: Something the engine does wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you expect, and what did you get?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: The .mdp source
+      description: The smallest source that reproduces it.
+      render: markdown
+    validations:
+      required: true
+  - type: input
+    id: artifact
+    attributes:
+      label: Which artifact
+      description: page, slides, or flyer
+  - type: input
+    id: node
+    attributes:
+      label: Node version

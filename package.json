@@ -1,0 +1,31 @@
+{
+  "name": "mdp",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MDP: a presentation compiler for AI-written content. One source, many design-locked artifacts.",
+  "license": "Apache-2.0",
+  "author": "Bar Moshe",
+  "homepage": "https://github.com/barmoshe/mdp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barmoshe/mdp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barmoshe/mdp/issues"
+  },
+  "keywords": [
+    "markdown",
+    "presentation",
+    "compiler",
+    "slides",
+    "flyer",
+    "ai",
+    "agents",
+    "document",
+    "mdp"
+  ],
+  "scripts": {
+    "build": "node packages/core/build.mjs"
+  }
+}

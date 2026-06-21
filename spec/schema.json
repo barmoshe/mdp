@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
+  "title": "MDP frontmatter",
+  "_note": "Placeholder stub. This describes only the .mdp frontmatter block and is intentionally incomplete. The full versioned contract (frontmatter plus the body block and directive grammar) will be exported from @mdp/core and enforced as the conformance test, so the spec and what the engine accepts cannot drift. Do not treat this as the settled schema.",
+  "type": "object",
+  "required": ["mdp"],
+  "additionalProperties": true,
+  "properties": {
+    "mdp": {
+      "description": "Format version. Required.",
+      "type": "integer",
+      "const": 1
+    },
+    "theme": {
+      "description": "A named renderer theme. Never carries colours or sizes. v1 ships one theme.",
+      "type": "string",
+      "default": "studio",
+      "enum": ["studio"]
+    },
+    "forms": {
+      "description": "Which presentation forms this source supports / should compile to.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["page", "slides", "flyer"]
+      },
+      "uniqueItems": true,
+      "default": ["page", "slides", "flyer"]
+    },
+    "title": {
+      "description": "Optional. Defaults to the first H1 heading in the body.",
+      "type": "string"
+    }
+  },
+  "TODO": "Complete this schema: add the body block/directive grammar (line roles like {.lead}/{.cite}, the mdp:stats directive body, the closed set of block types), version it, and wire it as the conformance test exported from @mdp/core."
+}

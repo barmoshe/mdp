@@ -1,0 +1,17 @@
+{
+  "name": "@mdp/core",
+  "version": "0.0.0",
+  "description": "The MDP parser and composition engine: one source to a semantic representation to design-locked artifacts.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}

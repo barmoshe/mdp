@@ -1,0 +1,25 @@
+# MDP
+
+> A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into design-locked artifacts: a page, a slide deck, and a flyer. The author writes meaning; the engine owns all design.
+
+## Docs
+
+- [README](README.md): what MDP is, quick start, the block list.
+- [SPEC](SPEC.md): the .mdp format and how a source maps to each artifact.
+- [VISION](VISION.md): the architecture and the extensibility model.
+- [AGENTS](AGENTS.md): how to build, run, and extend the engine.
+
+## Examples
+
+- [tidewater.mdp](examples/tidewater.mdp): a simple launch brief.
+- [comparison.mdp](examples/comparison.mdp): the full block set, with a right-to-left example.
+
+## Authoring MDP
+
+An .mdp file is valid Markdown plus a few typed blocks. There is no styling in the source; the engine composes the design.
+
+- Frontmatter: `mdp: 1`, `forms: [page, slides, flyer]`, `title`, optional `kicker`, `lang`, `dir`.
+- `# Title`, then `{.lead} a standfirst`. Sections start with `## Heading`. A line that is exactly `---` is a section or slide break.
+- Lists with `- ` or `1. `. A quote with `> ...` and an optional `{.cite} attribution`.
+- `mdp:stats` (key: value lines), `mdp:compare` (options as `# Name` plus `badge:`, `note:`, `cta:`, and `- ` pros), `mdp:flow` (steps joined by `->`), and `:::callout <variant>` ... `:::`.
+- Never put color, size, or font in the source.
