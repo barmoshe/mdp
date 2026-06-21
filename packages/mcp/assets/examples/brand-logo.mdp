@@ -1,0 +1,24 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+kicker: Brand
+title: Acme Industries
+brand-logo: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDAgNDAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iQWNtZSBJbmR1c3RyaWVzIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzViNTRkNiIvPjxjaXJjbGUgY3g9IjI0IiBjeT0iMjAiIHI9IjkiIGZpbGw9IiNmZmZmZmYiLz48dGV4dCB4PSI0NCIgeT0iMjYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjZmZmZmZmIj5BY21lPC90ZXh0Pjwvc3ZnPg==
+---
+
+# Acme Industries
+{.lead} A branded one-pager, page, and deck from a single source. The logo is the only brand input; the engine owns the rest.
+
+```mdp:flow
+Write the source -> Add brand-logo -> Compile to page, deck, and flyer
+```
+
+---
+
+## What the logo can and cannot do
+You supply one asset reference. The engine places it in the masthead at a locked size and position, flips it under right-to-left, and keeps type, color, and spacing exactly as the theme defines.
+
+:::callout note
+Swap the brand-logo value for your own SVG, a hosted URL, or a base64 data URI. An unsafe or missing value simply renders no logo, and the rest of the masthead is unchanged.
+:::

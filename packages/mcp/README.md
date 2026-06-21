@@ -6,7 +6,8 @@ design-locked **page**, **slide deck**, or **flyer** and hands back a file you c
 open, from any MCP-speaking host.
 
 The author writes meaning; the engine owns all design. Output is deterministic
-(byte-identical for the same source).
+(byte-identical for the same source). The only design knobs are a named `theme:`
+and an optional `brand-logo:` mark the engine places in the masthead.
 
 ## Install
 
@@ -38,7 +39,7 @@ dir), `MDP_NO_OPEN=1` (compile and serve without opening a browser).
 ## Resources
 
 - `mdp://spec` — the MDP specification.
-- `mdp://example/comparison`, `mdp://example/tidewater` — complete example sources.
+- `mdp://example/comparison`, `mdp://example/tidewater`, `mdp://example/brand-logo` — complete example sources.
 
 ## License
 

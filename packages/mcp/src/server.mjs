@@ -39,7 +39,7 @@ function readAsset(rel) {
 }
 
 export async function startServer() {
-  const server = new McpServer({ name: "mdp-mcp", version: "0.1.0" });
+  const server = new McpServer({ name: "mdp-mcp", version: "0.2.0" });
 
   // --- tools ---
   server.registerTool(
@@ -100,7 +100,7 @@ export async function startServer() {
   server.registerResource(
     "example",
     new ResourceTemplate("mdp://example/{name}", { list: undefined }),
-    { title: "MDP example", description: "A complete example source (comparison | tidewater).", mimeType: "text/markdown" },
+    { title: "MDP example", description: "A complete example source (comparison | tidewater | brand-logo).", mimeType: "text/markdown" },
     async (uri, { name }) => {
       const safe = String(name).replace(/[^a-z0-9_-]/gi, "");
       return { contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset(join("examples", `${safe}.mdp`)) }] };

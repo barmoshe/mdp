@@ -25,7 +25,7 @@ cpSync(join(root, "packages", "core", "src"), join(mcp, "engine"), { recursive: 
 rmSync(join(mcp, "assets"), { recursive: true, force: true });
 mkdirSync(join(mcp, "assets", "examples"), { recursive: true });
 copyFileSync(join(root, "SPEC.md"), join(mcp, "assets", "SPEC.md"));
-for (const ex of ["comparison.mdp", "tidewater.mdp"]) {
+for (const ex of ["comparison.mdp", "tidewater.mdp", "brand-logo.mdp"]) {
   copyFileSync(join(root, "examples", ex), join(mcp, "assets", "examples", ex));
 }
 
@@ -33,5 +33,5 @@ for (const ex of ["comparison.mdp", "tidewater.mdp"]) {
 copyFileSync(join(root, "LICENSE"), join(mcp, "LICENSE"));
 
 console.log(
-  "Synced packages/mcp from the repo root: engine (packages/core/src), SPEC.md, examples/{comparison,tidewater}.mdp, LICENSE."
+  "Synced packages/mcp from the repo root: engine (packages/core/src), SPEC.md, examples/{comparison,tidewater,brand-logo}.mdp, LICENSE."
 );

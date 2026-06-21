@@ -64,6 +64,18 @@ async function main() {
     check(`${art.form}: stats rendered`, html.includes("48k"));
   }
 
+  // 1b. brand-logo: a safe value renders exactly one masthead <img> in each form;
+  // an unsafe value drops to no logo (ADR 0090).
+  const BRANDED = GOOD.replace("title: Smoke Test\n", "title: Smoke Test\nbrand-logo: ./logo.svg\n");
+  const branded = await mdpCompile({ source: BRANDED, form: "all", out_dir: dir });
+  for (const art of branded.artifacts) {
+    const html = readFileSync(art.path, "utf8");
+    check(`${art.form}: brand-logo renders one masthead img`, (html.match(/<img class="mdp-logo"/g) || []).length === 1);
+  }
+  const UNSAFE = GOOD.replace("title: Smoke Test\n", "title: Smoke Test\nbrand-logo: javascript:alert(1)\n");
+  const unsafe = await mdpCompile({ source: UNSAFE, form: "page", out_dir: dir });
+  check("brand-logo: unsafe value drops to no logo", !readFileSync(unsafe.artifacts[0].path, "utf8").includes('<img class="mdp-logo"'));
+
   // 2a. validate good source.
   const ok = await mdpValidate({ source: GOOD });
   check("validate good: ok=true", ok.ok === true);
