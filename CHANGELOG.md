@@ -5,6 +5,20 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.1.0]
+
+### Added
+- A Claude Code plugin (this repo is the marketplace): a `/mdp` command and an
+  `mdp` skill that auto-triggers on "show this", "make a deck", "present this",
+  and similar. Install with `/plugin marketplace add barmoshe/mdp` then
+  `/plugin install mdp@mdp`. Claude authors MDP, compiles it, and opens the
+  result to show or present it.
+- The CLI gained `--open [artifact]` (show or present in the browser, cross
+  platform), `--out <dir>`, and `--only <artifact>`.
+- The slides deck gained a fullscreen toggle (F key and a button), a print-to-PDF
+  stylesheet (Cmd or Ctrl + P gives one slide per page), space-bar advance, and a
+  keyboard hint.
+
 ## [0.0.0]
 
 Initial public release. The spike that proves the core claim.

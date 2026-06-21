@@ -35,6 +35,36 @@ output.
 Try `examples/tidewater.mdp` for a simple brief, or `examples/comparison.mdp`
 for the full block set, including a right-to-left example.
 
+To show or present an artifact, add `--open`:
+
+```
+node packages/core/build.mjs examples/comparison.mdp --open slides
+```
+
+This opens the deck in your browser. In the deck, arrows or space move, F toggles
+fullscreen, and print (Cmd or Ctrl + P) exports a PDF. Use `--open page` or
+`--open flyer` to show those forms.
+
+## Use it in Claude Code
+
+MDP ships a Claude Code plugin, so you can go from content to a polished artifact
+without leaving your editor. This repo is the marketplace.
+
+```
+/plugin marketplace add barmoshe/mdp
+/plugin install mdp@mdp
+```
+
+Then just ask, for example "show this as a deck", "make a one-pager from this
+file", or "present this", or run the command:
+
+```
+/mdp present <a file, some text, or nothing>
+```
+
+Claude authors clean MDP, compiles it with the bundled engine, and opens the
+page, slide deck, or flyer to show or present it.
+
 ## What a source looks like
 
 ````

@@ -1,5 +1,6 @@
 {
   "name": "mdp",
+  "description": "The MDP plugin: turn content into a polished page, slide deck, or flyer, then show or present it.",
   "owner": { "name": "Bar Moshe" },
   "plugins": [
     {

@@ -1,6 +1,6 @@
 {
   "name": "mdp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "MDP: a presentation compiler for AI-written content. One source, many design-locked artifacts.",
