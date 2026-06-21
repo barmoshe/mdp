@@ -62,7 +62,7 @@ export default function Tools() {
             </p>
             <pre className="codeblock">
 {`node packages/core/build.mjs \\
-  examples/comparison.mdp --open slides`}
+  examples/block-compare.mdp --open slides`}
             </pre>
             <p style={{ marginTop: "var(--mdp-space-3)" }}>
               Writes <code>page.html</code>, <code>slides.html</code>, and{" "}

@@ -10,6 +10,7 @@ import cli from "./cli.md?raw";
 import plugins from "./plugins.md?raw";
 import architecture from "./architecture.md?raw";
 import mcp from "./mcp.md?raw";
+import examplesDoc from "./examples.md?raw";
 
 export type DocPage = {
   id: string;
@@ -27,6 +28,7 @@ export const DOCS: DocPage[] = [
   { id: "blocks", title: "Blocks", group: "Guide", blurb: "Stats, compare, flow, callout, quotes, RTL.", content: blocks },
   { id: "forms", title: "Forms", group: "Guide", blurb: "Page, slides, flyer, and the mapping table.", content: forms },
   { id: "themes", title: "Themes & design", group: "Guide", blurb: "The theme set and the design lock.", content: themes },
+  { id: "examples", title: "Examples & templates", group: "Guide", blurb: "Example probes and fill-in templates.", content: examplesDoc },
   { id: "cli", title: "CLI reference", group: "Tools", blurb: "build.mjs flags and determinism.", content: cli },
   { id: "plugins", title: "Plugins", group: "Tools", blurb: "Claude Code and Codex.", content: plugins },
   { id: "mcp", title: "MCP server", group: "Tools", blurb: "Compile MDP from any MCP host.", content: mcp },

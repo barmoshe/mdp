@@ -19,6 +19,7 @@ title: Tidewater Coffee      # optional, defaults to the first heading
 kicker: Brief                # optional, the small eyebrow above the masthead
 lang: he                     # optional, document language, default "en"
 dir: rtl                     # optional, writing direction, inferred from lang
+brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 ---
 ```
 
@@ -31,6 +32,7 @@ dir: rtl                     # optional, writing direction, inferred from lang
 | `kicker` | The small eyebrow label above the masthead. Defaults to `Brief`. |
 | `lang` | Document language on the root element. Defaults to `en`. |
 | `dir` | `ltr` or `rtl`. If omitted, inferred from `lang`. |
+| `brand-logo` | A brand logo the engine places in the masthead: a URL, a relative path, or a base64 `data:image` URI. Validated and sanitized; an unsafe or missing value renders no logo. |
 
 `theme` selects a designed system, not individual styles. Every theme shares one
 warm neutral ramp and differs only in a single restrained accent. See
@@ -41,6 +43,13 @@ inferred as `rtl` for `he`, `ar`, `fa`, `ur`, and `yi` (matched on the primary
 subtag), else `ltr`. An explicit `dir` always wins. Because the renderer uses
 logical CSS throughout, setting `dir: rtl` flips the whole layout automatically;
 the author never positions anything.
+
+`brand-logo` is the one narrow amendment to "the author cannot style": an optional
+brand mark the engine places in the masthead at a locked size and position
+(flipped under `dir: rtl`). You supply only the asset reference, never its size,
+place, or repeat. The value passes a scheme allowlist (`http(s)`, a relative path,
+or a base64 `data:image/...` URI) and renders as an `<img>`, never inline `<svg>`,
+so it cannot smuggle script.
 
 ## Body
 

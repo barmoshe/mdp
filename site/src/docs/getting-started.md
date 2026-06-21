@@ -57,5 +57,7 @@ deck, or `--open flyer` for the one-pager.
 - The [format](#/docs/format) covers the frontmatter and the body.
 - [Blocks](#/docs/blocks) is the full grammar: stats, compare, flow, callout.
 - [Forms](#/docs/forms) explains how one source maps to a page, slides, and a flyer.
+- [Examples & templates](#/docs/examples): browse the example probes, or copy a
+  fill-in template (or `examples/starter.mdp`) to start a real document.
 - Or skip the install and try the [live playground](#playground): edit a source
   and watch the real engine compile it.
