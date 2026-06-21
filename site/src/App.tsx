@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Playground from "./components/Playground";
+import PlaygroundPreview from "./components/PlaygroundPreview";
 import Pitch from "./components/Pitch";
 import HowItWorks from "./components/HowItWorks";
 import Blocks from "./components/Blocks";
@@ -26,6 +27,32 @@ function useHash(): string {
 export default function App() {
   const hash = useHash();
   const isDocs = hash.startsWith("#/docs");
+  const isPlayground = hash.startsWith("#/playground");
+
+  if (isPlayground) {
+    return (
+      <>
+        <Nav active="playground" />
+        <main id="top" className="pg-page">
+          <div className="pg-page-head wrap">
+            <div className="section-head wrap-narrow">
+              <p className="eyebrow eyebrow-accent">Live playground</p>
+              <h1 className="h2">Edit a source, watch it compile</h1>
+              <p className="lead">
+                This runs the real engine, bundled straight from{" "}
+                <code>packages/core</code>. Change the source, switch the form,
+                pick a theme. The same source becomes all three artifacts.
+              </p>
+            </div>
+          </div>
+          <div className="pg-page-stage">
+            <Playground variant="full" />
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   if (isDocs) {
     const pageId = hash.replace(/^#\/docs\/?/, "") || "getting-started";
@@ -50,14 +77,13 @@ export default function App() {
           <div className="wrap">
             <div className="section-head wrap-narrow">
               <p className="eyebrow eyebrow-accent">Live playground</p>
-              <h2 className="h2">Edit a source, watch it compile</h2>
+              <h2 className="h2">One source, three artifacts</h2>
               <p className="lead">
-                This runs the real engine, bundled straight from{" "}
-                <code>packages/core</code>. Change the source, switch the form,
-                pick a theme. The same source becomes all three artifacts.
+                This runs the real engine from <code>packages/core</code>. See it
+                here, then open the full playground for room to edit.
               </p>
             </div>
-            <Playground />
+            <PlaygroundPreview />
           </div>
         </section>
 

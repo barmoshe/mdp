@@ -79,6 +79,7 @@
 
 /* ---- reset ---- */
 *, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
@@ -133,6 +134,13 @@ code, kbd {
 .section { padding-block: var(--mdp-space-9); }
 .section + .section { border-top: 1px solid var(--mdp-border); }
 @media (max-width: 640px) { .section { padding-block: var(--mdp-space-8); } }
+
+/* Smallest phones: drop multi-column grids to one column and reclaim side
+   padding so nothing forces a horizontal scroll. */
+@media (max-width: 380px) {
+  .wrap { padding-inline: var(--mdp-space-4); }
+  .grid-2, .grid-3, .theme-gallery { grid-template-columns: 1fr; }
+}
 
 .eyebrow {
   font-size: var(--mdp-text-eyebrow);
@@ -222,10 +230,53 @@ code, kbd {
   font-size: var(--mdp-text-small);
 }
 .nav-link:hover { color: var(--mdp-ink); }
-@media (max-width: 720px) { .nav-links .nav-link { display: none; } }
+.nav-link[aria-current="page"] { color: var(--mdp-accent-text); }
+
+/* Hamburger: a real mobile menu so the nav is usable on a phone. Hidden on
+   desktop, where the inline link row stands in for it. */
+.nav-toggle { display: none; }
+@media (max-width: 720px) {
+  .nav-inner { gap: var(--mdp-space-3); }
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: auto;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--mdp-border);
+    border-radius: 8px;
+    color: var(--mdp-ink);
+    cursor: pointer;
+  }
+  .nav-toggle:hover { border-color: var(--mdp-accent-border); }
+  .nav-links {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    margin: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--mdp-space-2);
+    background: color-mix(in oklab, var(--mdp-bg) 96%, transparent);
+    backdrop-filter: saturate(1.4) blur(8px);
+    border-bottom: 1px solid var(--mdp-border);
+    display: none;
+  }
+  .nav-links.is-open { display: flex; }
+  .nav-link {
+    padding: var(--mdp-space-3) var(--mdp-space-4);
+    border-radius: 7px;
+  }
+  .nav-link:hover { background: var(--mdp-surface); }
+}
 
 /* ---- hero ---- */
 .hero { padding-block: var(--mdp-space-9) var(--mdp-space-8); }
+@media (max-width: 640px) { .hero { padding-block: var(--mdp-space-7) var(--mdp-space-6); } }
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
@@ -441,9 +492,42 @@ code, kbd {
 }
 .pg-hint { font-size: var(--mdp-text-eyebrow); color: var(--mdp-ink-faint); padding: var(--mdp-space-2) var(--mdp-space-4) 0; }
 
+/* Full playground page: a wide stage and an editor/preview that fill the
+   viewport, so there's real room to work. */
+.pg-page { padding-block: var(--mdp-space-6) var(--mdp-space-8); }
+.pg-page-head { margin-bottom: var(--mdp-space-6); }
+.pg-page-stage { max-width: 80rem; margin-inline: auto; padding-inline: var(--mdp-space-5); }
+.pg-full .pg-body { height: clamp(28rem, calc(100vh - 18rem), 60rem); min-height: 0; }
+.pg-full .pg-frame { min-height: 0; height: 100%; }
+.pg-full .pg-editor-wrap,
+.pg-full .pg-preview { min-height: 0; }
+@media (max-width: 380px) { .pg-page-stage { padding-inline: var(--mdp-space-4); } }
+
+/* Home teaser: a single fixed-height preview, no editor column. */
+.pg-frame-preview { height: 24rem; min-height: 0; }
+
+/* Toolbar on small screens: let the controls stack cleanly and turn the theme
+   swatch strip into a single horizontally scrollable row instead of a ragged
+   wrap. */
+@media (max-width: 720px) {
+  .pg-bar { gap: var(--mdp-space-2); }
+  .pg-spacer { display: none; }
+  .pg-tabs { width: 100%; }
+  .pg-tab { flex: 1; text-align: center; }
+  .pg-control { width: 100%; }
+  .pg-swatches {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 2px;
+  }
+  .pg-swatch { flex: none; }
+}
+
 /* ---- footer ---- */
 .footer { border-top: 1px solid var(--mdp-border); padding-block: var(--mdp-space-8); color: var(--mdp-ink-faint); }
 .footer-grid { display: flex; flex-wrap: wrap; gap: var(--mdp-space-7); justify-content: space-between; }
+@media (max-width: 640px) { .footer-grid { gap: var(--mdp-space-5); } }
 .footer-links { display: flex; flex-direction: column; gap: var(--mdp-space-2); font-size: var(--mdp-text-small); }
 .footer a { color: var(--mdp-ink-soft); }
 .footer-note { font-size: var(--mdp-text-small); max-width: 30ch; }

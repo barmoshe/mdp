@@ -25,7 +25,7 @@ const ARTIFACT_HINT: Record<string, string> = {
   flyer: "One composed surface. The at-a-glance form.",
 };
 
-export default function Playground() {
+export default function Playground({ variant = "full" }: { variant?: "full" }) {
   const [source, setSource] = useState(EXAMPLES[0].source);
   const [artifact, setArtifact] = useState("page");
   const [debounced, setDebounced] = useState(source);
@@ -65,7 +65,7 @@ export default function Playground() {
   }
 
   return (
-    <div className="pg" id="playground-app">
+    <div className={`pg pg-${variant}`} id="playground-app">
       <div className="pg-bar">
         <div className="pg-tabs" role="tablist" aria-label="Artifact">
           {ARTIFACTS.map((a) => (

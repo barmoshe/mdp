@@ -1,6 +1,27 @@
+import { useEffect, useState } from "react";
 import { LINKS } from "../links";
 
-export default function Nav({ isDocs = false }: { isDocs?: boolean }) {
+export default function Nav({
+  isDocs = false,
+  active,
+}: {
+  isDocs?: boolean;
+  active?: "playground";
+}) {
+  const [open, setOpen] = useState(false);
+
+  // Close the mobile menu whenever the route changes, so following a link never
+  // leaves the panel hanging open over the next view.
+  useEffect(() => {
+    const close = () => setOpen(false);
+    window.addEventListener("hashchange", close);
+    return () => window.removeEventListener("hashchange", close);
+  }, []);
+
+  // On the docs and playground pages the in-page anchors (#how, #blocks) don't
+  // resolve, so those views get a minimal set with a Home link instead.
+  const minimal = isDocs || active === "playground";
+
   return (
     <header className="nav">
       <div className="nav-inner">
@@ -8,12 +29,36 @@ export default function Nav({ isDocs = false }: { isDocs?: boolean }) {
           <img className="brand-mark" src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={24} height={24} />
           <span>MDP</span>
         </a>
-        <nav className="nav-links" aria-label="Primary">
-          {isDocs ? (
-            <a className="nav-link" href="#top">Home</a>
+
+        <button
+          className="nav-toggle"
+          type="button"
+          aria-label="Menu"
+          aria-expanded={open}
+          aria-controls="nav-links"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+            {open ? (
+              <path d="M4 4l10 10M14 4L4 14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            ) : (
+              <path d="M2 5h14M2 9h14M2 13h14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            )}
+          </svg>
+        </button>
+
+        <nav id="nav-links" className={`nav-links${open ? " is-open" : ""}`} aria-label="Primary">
+          {minimal ? (
+            <a className="nav-link" href={active === "playground" ? "#/" : "#top"}>Home</a>
           ) : (
             <>
-              <a className="nav-link" href="#playground">Playground</a>
+              <a
+                className="nav-link"
+                href="#/playground"
+                aria-current={active === "playground" ? "page" : undefined}
+              >
+                Playground
+              </a>
               <a className="nav-link" href="#how">How it works</a>
               <a className="nav-link" href="#blocks">Blocks</a>
             </>

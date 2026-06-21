@@ -20,7 +20,7 @@ export default function Hero() {
       </p>
 
       <div className="hero-actions">
-        <a className="btn btn-primary" href="#playground">
+        <a className="btn btn-primary" href="#/playground">
           Try the playground
         </a>
         <a className="btn" href={LINKS.repo} target="_blank" rel="noreferrer">
