@@ -1,0 +1,21 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+title: Start here
+---
+
+# Start here
+{.lead} Copy this file and replace the text. One source compiles to a page, a deck, and a flyer.
+
+## A section
+Write a paragraph, then a list:
+
+- A point
+- Another point
+
+```mdp:stats
+Sources: 1
+Forms: 3
+Setup: none
+```

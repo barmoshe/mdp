@@ -7,7 +7,7 @@
   { "id": "block-quote", "file": "block-quote.mdp", "label": "Quote", "lead": "slides", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "block-roles", "file": "block-roles.mdp", "label": "Line roles", "lead": "page", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "theme-gallery", "file": "theme-gallery.mdp", "label": "Theme gallery", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
-  { "id": "rtl-hebrew", "file": "rtl-hebrew.mdp", "label": "Right to left", "lead": "page", "roles": ["ci-build", "vendor-mcp"] },
+  { "id": "rtl", "file": "rtl.mdp", "label": "Right to left", "lead": "page", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "form-flyer-heavy", "file": "form-flyer-heavy.mdp", "label": "Flyer composition", "lead": "flyer", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "form-slides-heavy", "file": "form-slides-heavy.mdp", "label": "Slide deck", "lead": "slides", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "brand-logo", "file": "brand-logo.mdp", "label": "Branded", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },

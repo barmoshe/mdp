@@ -1,0 +1,25 @@
+---
+mdp: 1
+theme: ocean
+forms: [flyer, page, slides]
+title: A flow, two ways
+demonstrates: [flow, lead]
+---
+
+# A flow, two ways
+{.lead} A probe for the mdp:flow chip row. Flyer leads so the chips show as a full-width poster element.
+
+```mdp:flow
+Draft the `source` -> **Review** the meaning -> Compile every form -> Ship one file
+```
+
+---
+
+## Newline fallback
+A flow body with no arrow splits into one step per line instead.
+
+```mdp:flow
+Collect
+Summarize
+Send
+```

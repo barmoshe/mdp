@@ -1,0 +1,16 @@
+---
+mdp: 1
+theme: coral
+forms: [page, slides, flyer]
+title: Line roles
+demonstrates: [lead, cite]
+---
+
+# Line roles
+{.lead} The {.lead} standfirst you are reading is one line role; a {.cite} attribution under a quote is the other.
+
+> "Roles add intent to a line without adding style."
+> {.cite} The spec, principle two
+
+## Degradation (not tagged)
+{.note} A standalone {.note} line role is not in the implemented set, so the engine strips the tag and renders this as a plain paragraph rather than failing. Shown only to document that fallback.

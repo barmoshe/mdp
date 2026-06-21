@@ -1,0 +1,33 @@
+---
+mdp: 1
+theme: rose
+dir: rtl
+forms: [page, slides, flyer]
+title: Right to left
+demonstrates: [rtl, flow, stats, list, callout:recommendation, quote, cite, lead]
+---
+
+# Right to left
+{.lead} An engine probe for dir: rtl. The whole layout flips through logical CSS, and the flow arrow mirrors to read in the writing direction. Content is kept English; only the direction is right-to-left.
+
+```mdp:flow
+First -> Second -> Third
+```
+
+## Lists flip too
+- Markers move to the inline-start edge
+- The quote border flips
+- Tables align to the start
+
+```mdp:stats
+Direction: rtl
+Layout source: logical CSS
+Author positioning: none
+```
+
+> "Set dir: rtl and the engine positions everything; the author never does."
+> {.cite} The spec
+
+:::callout recommendation
+Use lang plus dir for a real right-to-left document. The renderer flips lists, the quote border, table alignment, cards, and the flow arrow automatically.
+:::

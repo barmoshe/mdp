@@ -1,0 +1,32 @@
+---
+mdp: 1
+theme: amber
+forms: [page, slides, flyer]
+kicker: Release
+title: Orchard 2.0 is live
+demonstrates: [stats, callout:tip, callout:warning, quote, cite, lead]
+---
+
+# Orchard 2.0 is live
+{.lead} A faster core, a calmer interface, and one number that finally moved.
+
+```mdp:stats
+Build time: 1.2s
+Bundle size: 96 kB
+Lighthouse: 100
+```
+
+---
+
+:::callout tip
+Upgrade in one step: pull main and rebuild. No config changes are needed.
+:::
+
+:::callout warning
+The legacy export flag is removed. Switch to the new command before you upgrade.
+:::
+
+---
+
+> "It feels like the app lost ten pounds."
+> {.cite} Early tester, release week
