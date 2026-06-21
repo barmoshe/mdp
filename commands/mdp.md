@@ -1,35 +1,73 @@
 ---
-description: Turn content into a polished MDP page, slide deck, or flyer, then show or present it.
+description: Turn content into a polished page, slide deck, or flyer and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a brief, or to render or compile MDP.
 argument-hint: [present|page|slides|flyer|all] [content, a file path, or nothing for the current content]
 ---
 
-Turn content into polished MDP artifacts and show or present them.
+# Show and present content with MDP
+
+MDP compiles one plain `.mdp` source into three design-locked artifacts: a `page`
+(a calm scrolling document), `slides` (a full-screen deck), and a `flyer` (a
+one-page surface). The author writes meaning only; the engine owns all design, so
+the output cannot look junky. Turn the user's content into one of those forms and
+open it to show or present it.
 
 Arguments: $ARGUMENTS
 
-1. The first word may be a mode: `present` or `slides` (the deck), `page` (a
-   document), `flyer` (a one-pager), or `all`. The rest is the content: a file
-   path, pasted text, or nothing (use the most relevant content in the
-   conversation or the file in focus).
+## Steps
 
-2. If the content is not already a `.mdp` file, author one. MDP is valid Markdown
-   plus a few typed blocks, with no styling in the source: frontmatter (`mdp: 1`,
-   `forms`, `title`, optional `kicker`/`lang`/`dir`); then `# Title`,
-   `{.lead} standfirst`, `## sections`, `---` breaks, `- ` and `1. ` lists,
-   `> quotes` with `{.cite}`, and the fenced `mdp:stats`, `mdp:compare`,
-   `mdp:flow`, and `:::callout <variant>` blocks. The full guide is in the `mdp`
-   skill (`${CLAUDE_PLUGIN_ROOT}/skills/mdp/reference.md`). Write it to a temp file.
+1. Decide the content. The first word of the arguments may be a mode: `present`
+   or `slides` (the deck), `page` (a document), `flyer` (a one-pager), or `all`.
+   The rest is the content: a file path, pasted text, or empty (then use the most
+   relevant content in the conversation or the file in focus). If the content is
+   already a `.mdp` file, skip to step 3.
 
-3. Compile and open it with the bundled engine:
+2. Author a `.mdp` file (a temp file is fine), following the format below. The
+   full spec is at `${CLAUDE_PLUGIN_ROOT}/SPEC.md`, and a complete example is at
+   `${CLAUDE_PLUGIN_ROOT}/examples/comparison.mdp`.
+
+3. Compile and open it with the bundled engine. This writes the artifacts to a
+   temp folder and opens the chosen one in the default browser:
 
    ```bash
    node "${CLAUDE_PLUGIN_ROOT}/packages/core/build.mjs" <path-to.mdp> --open <artifact>
    ```
 
-   Map the mode to `<artifact>`: present -> slides, otherwise the named form. For
-   `all` or no mode, build everything and open the page. If `${CLAUDE_PLUGIN_ROOT}`
-   is not set in your shell, use the bundled wrapper
-   `"${CLAUDE_PLUGIN_ROOT}/bin/mdp"` instead.
+   Map the mode to `<artifact>`: present becomes slides, otherwise use the named
+   form. For `all` or no mode, drop the artifact name and just pass `--open`
+   (it opens the page). Add `--out <dir>` to also save the files. If
+   `${CLAUDE_PLUGIN_ROOT}` is empty in your shell, run the bundled wrapper
+   `"${CLAUDE_PLUGIN_ROOT}/bin/mdp"` with the same arguments instead.
 
 4. Tell the user what you made, which file opened, and the deck controls: arrows
    or space to move, F for fullscreen, print (Cmd or Ctrl + P) for a PDF.
+
+## The MDP format (crib)
+
+No styling ever goes in the source; the engine owns the design.
+
+Frontmatter:
+
+```
+---
+mdp: 1
+forms: [page, slides, flyer]
+title: A clear title
+kicker: Optional eyebrow label
+lang: en
+dir: ltr
+---
+```
+
+Use `lang: he` (or `ar`, `fa`) with `dir: rtl` for right-to-left.
+
+Body is valid Markdown plus typed blocks:
+- `# Title`, then `{.lead} a one-line standfirst`.
+- `## Section heading`. A line that is exactly `---` is a section or slide break.
+- Lists: `- item` or `1. item`. Quote: `> text`, then `{.cite} attribution`.
+- A fenced `mdp:stats` block with `Label: value` lines.
+- A fenced `mdp:compare` block; each option is `# Name`, then `badge:`, `note:`,
+  `cta: [text](url)`, and `- ` pros lines.
+- A fenced `mdp:flow` block; steps joined by `->`.
+- A `:::callout <note|tip|cost|recommendation|warning>` container, closed by `:::`.
+
+Keep the source clean and never hand-write HTML.
