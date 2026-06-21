@@ -64,11 +64,48 @@ component everywhere. Use `src/compare.mjs` as the model.
 
 ## Extensions
 
-Core ships a curated block set. Anything beyond it lives in its own repo and
-follows the naming convention:
+Core ships a curated block set. Anything beyond it lives in **its own repo** and
+is discovered the zero-maintenance way: a naming convention plus an npm keyword
+plus a GitHub topic, found through npm and GitHub search with no central registry
+to maintain (the model `eslint-plugin-*` and `slidev-theme-*` use).
 
-- third-party blocks: `mdp-block-<name>`
-- third-party artifacts: `mdp-artifact-<name>`
+**Scaffold one in one command** (it sets everything below for you):
+
+```sh
+npm create mdp-extension my-block                       # a block
+npm create mdp-extension my-thing -- --type artifact    # an artifact
+# or: npx create-mdp-extension my-block
+```
+
+The tool lives in
+[`packages/create-mdp-extension`](packages/create-mdp-extension).
+
+**Naming.** `mdp-block-<name>` for a block, `mdp-artifact-<name>` for an artifact,
+plus the scoped `@scope/mdp-block-<name>` forms.
+
+**Discovery.** Require these so search finds the package from day one:
+
+- npm `keywords`: `["mdp", "mdp-block"]` (or `"mdp-artifact"`), listed by
+  `npm search keywords:mdp-block`;
+- a GitHub **topic** of `mdp-block` (or `mdp-artifact`) on the repo.
+
+**Block shape.** A third-party block follows
+[`packages/core/src/compare.mjs`](packages/core/src/compare.mjs): a module that
+exports a `STYLE` string (design tokens only, logical properties) and a
+`render<Name>(block)` that passes every author string through `inline()`. The
+in-core wiring an author or host then does is the
+[Adding a new block](#adding-a-new-block) steps above.
+
+**Licensing.** The scaffold defaults to MIT and can emit Apache-2.0
+(`--license apache-2.0`); third parties are free to choose any license. Core
+itself is Apache-2.0.
+
+**Using a third-party extension.** `@mdp/core` has no runtime plugin loader yet,
+by design (the zero-maintenance bet). To render a third-party block or artifact in
+a real document you fork or patch core: teach `parse.mjs` the fence and add a
+`case` (plus the `STYLE`) to the three renderers for a block, or add a `RENDERERS`
+entry for an artifact. Each generated package's README spells out the exact
+lines.
 
 ## Code style
 

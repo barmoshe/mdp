@@ -68,6 +68,8 @@ jobs:
             exit 1
           fi
           echo "codex is fresh"
+      - name: Scaffolder acceptance (create-mdp-extension produces a working package)
+        run: node scripts/check-scaffold.mjs
 
   site:
     runs-on: ubuntu-latest
