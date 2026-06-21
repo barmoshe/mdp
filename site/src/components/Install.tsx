@@ -22,10 +22,10 @@ const CHANNELS: Channel[] = [
     foot: <>Exposes <code>mdp_compile</code>, <code>mdp_present</code>, and <code>mdp_validate</code>.</>,
   },
   {
-    name: "Command line",
-    body: "Zero dependencies. Plain Node ESM, Node 18 or newer.",
-    cmd: "node packages/core/build.mjs \\\n  examples/block-compare.mdp --open slides",
-    foot: <>Writes <code>page.html</code>, <code>slides.html</code>, and <code>flyer.html</code>.</>,
+    name: "Node & npm",
+    body: "Embed the zero-dependency engine in your own code. Node 18 or newer.",
+    cmd: "npm i mdp-compiler",
+    foot: <>Then <code>compile(source, "slides")</code> returns the HTML. No build step.</>,
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Install() {
           <p className="eyebrow eyebrow-accent">Where it reaches you</p>
           <h2 className="h2">Not an app to visit. A capability inside your agent.</h2>
           <p className="lead">
-            MDP ships as plugins, an MCP server, and a CLI, so you go from content
+            MDP ships as plugins, an MCP server, and a zero-dependency npm engine, so you go from content
             to a polished artifact without leaving your editor. Ask in plain
             language; the agent authors clean MDP, compiles it, and opens the result.
           </p>

@@ -11,6 +11,7 @@ A markdown viewer gives you one rendering. MDP gives you a compiler.
 [![Dependencies: zero](https://img.shields.io/badge/dependencies-zero-brightgreen)](package.json)
 [![CI](https://github.com/barmoshe/mdp/actions/workflows/ci.yml/badge.svg)](https://github.com/barmoshe/mdp/actions/workflows/ci.yml)
 ![Node 18+](https://img.shields.io/badge/node-18%2B-brightgreen)
+[![npm: mdp-compiler](https://img.shields.io/npm/v/mdp-compiler?logo=npm&label=mdp-compiler)](https://www.npmjs.com/package/mdp-compiler)
 
 > **Try it now, no install:** the [live playground and documentation](https://barmoshe.github.io/mdp/)
 > run the real engine in your browser. Edit a source on the left, watch the page,
@@ -54,7 +55,24 @@ flowchart LR
 
 ## Quick start
 
-No dependencies. Plain Node ESM, Node 18 or newer.
+### Install from npm
+
+The engine ships as [`mdp-compiler`](https://www.npmjs.com/package/mdp-compiler),
+zero dependencies, plain ESM, Node 18 or newer:
+
+```bash
+npm i mdp-compiler
+```
+
+```js
+import { compile } from "mdp-compiler";
+
+const html = compile(source, "slides"); // "page" | "slides" | "flyer"
+```
+
+### From source
+
+Or clone and run the engine directly, no install:
 
 ```bash
 git clone https://github.com/barmoshe/mdp
@@ -211,8 +229,9 @@ Issues and ideas are welcome.
 
 ## Roadmap
 
-A live playground and an MCP server (both shipped), an `mdp:chart` block, a
-`create-mdp-extension` scaffolder, and a JSON Schema conformance test.
+The live playground, the `mdp-mcp` MCP server, and the `create-mdp-extension`
+scaffolder are shipped and published to npm. Next: an `mdp:chart` block and a
+JSON Schema conformance test.
 
 ## Contributing
 
