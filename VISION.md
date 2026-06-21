@@ -111,4 +111,3 @@ rendering itself we borrow.
 - The exact declarative grammar for blocks, which will move before 1.0.
 - The first extension units to open publicly, blocks before artifacts, and the
   registry and naming convention that seed them.
-- The hosted surfaces: a live playground and an MCP server.

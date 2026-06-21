@@ -6,6 +6,12 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- An MCP server (`mdp-mcp`, in `packages/mcp/`), so any MCP host (Claude Desktop,
+  Cursor, ...) can compile MDP. It exposes `mdp_compile` (writes a file, returns
+  the absolute path), `mdp_present` (a loopback browser preview), and
+  `mdp_validate`, plus `mdp://spec` and `mdp://example/*` resources. Install with
+  `claude mcp add mdp -- npx -y mdp-mcp`. The engine is vendored in (refreshed by
+  `npm run sync:mcp`), so the published package is self-contained.
 - Five more themes, bringing the curated set to eleven: `ocean` (a clean true
   blue), `forest` (a deep natural green), `terracotta` (an earthy burnt clay),
   `coral` (a warm coral red), and `plum` (a deep berry). The set is now ordered

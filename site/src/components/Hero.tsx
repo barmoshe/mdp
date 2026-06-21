@@ -35,7 +35,7 @@ export default function Hero() {
         <span><b>Apache-2.0</b> licensed</span>
         <span><b>Zero-dependency</b> engine</span>
         <span><b>Deterministic</b>, byte-identical output</span>
-        <span>Ships as <b>Claude</b> and <b>Codex</b> plugins</span>
+        <span>Ships to <b>Claude</b>, <b>Codex</b>, and any <b>MCP</b> host</span>
       </div>
     </section>
   );

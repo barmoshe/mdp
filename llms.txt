@@ -16,7 +16,7 @@
 
 ## Use in agent tools
 
-MDP ships as a plugin for Claude Code (a `/mdp` command) and Codex (an `mdp` skill, self-contained in `codex/`). The agent authors `.mdp`, runs the bundled engine, and opens the page, deck, or flyer. Same engine, no styling in the source either way.
+MDP ships to agent tools three ways: a Claude Code plugin (a `/mdp` command), a Codex plugin (an `mdp` skill, self-contained in `codex/`), and an MCP server (`mdp-mcp` in `packages/mcp/`, run via `npx -y mdp-mcp`) exposing `mdp_compile`, `mdp_present`, and `mdp_validate` to any MCP host (Claude Desktop, Cursor, ...). The agent authors `.mdp`, runs the bundled engine, and opens the page, deck, or flyer. Same engine, no styling in the source any way.
 
 ## Authoring MDP
 

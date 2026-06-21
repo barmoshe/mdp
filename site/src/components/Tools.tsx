@@ -6,7 +6,7 @@ export default function Tools() {
           <p className="eyebrow eyebrow-accent">Where it reaches you</p>
           <h2 className="h2">Not an app to visit. A capability inside your agent.</h2>
           <p className="lead">
-            MDP ships as a plugin, so you go from content to a polished artifact
+            MDP ships as plugins and an MCP server, so you go from content to a polished artifact
             without leaving your editor. Ask in plain language; the agent authors
             clean MDP, compiles it, and opens the result.
           </p>
@@ -38,6 +38,20 @@ export default function Tools() {
             <p style={{ marginTop: "var(--mdp-space-3)" }}>
               Enable MDP from the Codex app, then “make a one-pager from this
               file”.
+            </p>
+          </div>
+
+          <div className="card">
+            <h3>Any MCP host</h3>
+            <p style={{ marginBottom: "var(--mdp-space-4)" }}>
+              An MCP server for Claude Desktop, Cursor, and any MCP host.
+            </p>
+            <pre className="codeblock">
+{`claude mcp add mdp -- npx -y mdp-mcp`}
+            </pre>
+            <p style={{ marginTop: "var(--mdp-space-3)" }}>
+              Exposes <code>mdp_compile</code>, <code>mdp_present</code>, and{" "}
+              <code>mdp_validate</code>.
             </p>
           </div>
 

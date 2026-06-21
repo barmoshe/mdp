@@ -42,6 +42,7 @@ mdp/
     build.mjs               CLI: read a source, compile all artifacts, write dist
   commands/mdp.md           the Claude Code /mdp command
   codex/                    the Codex plugin (vendored engine; see Plugin surfaces)
+  packages/mcp/             the mdp-mcp server (vendored engine; see Plugin surfaces)
   spec/schema.json          JSON Schema for the .mdp frontmatter (stub)
   examples/tidewater.mdp    the sample source
 ```
@@ -52,8 +53,8 @@ solves against. See `src/parse.mjs` for the node types.
 
 ## Plugin surfaces
 
-The same engine ships to agent tools two ways. Both author MDP, run the engine,
-and open the result; neither adds anything to the format.
+The same engine ships to agent tools three ways. All author MDP, run the engine,
+and surface the result; none adds anything to the format.
 
 - **Claude Code** — the repo root is the plugin (`.claude-plugin/`, a single
   `/mdp` command in `commands/`). It runs the engine in place at `packages/core/`.
@@ -66,6 +67,14 @@ and open the result; neither adds anything to the format.
   skill would collide with the `/mdp` command. To check it, rebuild a source
   through `codex/bin/mdp` and confirm the HTML is byte-identical to the root
   engine.
+- **MCP server** — a self-contained server in `packages/mcp/` (`mdp-mcp`),
+  published to npm and runnable via `npx -y mdp-mcp`, so any MCP host (Claude
+  Desktop, Cursor, ...) can compile MDP. It exposes the `mdp_compile`,
+  `mdp_present`, and `mdp_validate` tools plus `mdp://spec` and `mdp://example/*`
+  resources. Like Codex it is self-contained: the engine and assets are
+  **vendored** in by `npm run sync:mcp` (a copy of the root, re-run after any
+  engine change; CI fails if it is stale). It is the one package with
+  dependencies (the MCP SDK + zod); the engine itself stays dependency-free.
 
 ## The design lock
 

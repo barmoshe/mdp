@@ -46,6 +46,7 @@ mdp/
     build.mjs               the CLI
   commands/mdp.md           the Claude Code /mdp command
   codex/                    the Codex plugin (vendored engine)
+  packages/mcp/             the mdp-mcp server (vendored engine)
   examples/                 sample sources
   site/                     this hub and playground
 ```

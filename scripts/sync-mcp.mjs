@@ -29,6 +29,9 @@ for (const ex of ["comparison.mdp", "tidewater.mdp"]) {
   copyFileSync(join(root, "examples", ex), join(mcp, "assets", "examples", ex));
 }
 
+// 3. The license, so the published package carries it.
+copyFileSync(join(root, "LICENSE"), join(mcp, "LICENSE"));
+
 console.log(
-  "Synced packages/mcp from the repo root: engine (packages/core/src), SPEC.md, examples/{comparison,tidewater}.mdp."
+  "Synced packages/mcp from the repo root: engine (packages/core/src), SPEC.md, examples/{comparison,tidewater}.mdp, LICENSE."
 );
