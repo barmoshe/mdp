@@ -1,0 +1,47 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+kicker: Decision brief
+title: Two ways to run the nightly digest
+---
+
+# Two ways to run the nightly digest
+{.lead} Both paths produce the same email and use the same model. They differ in where the work runs and who maintains it.
+
+```mdp:flow
+Collect the day's data -> The model writes the summary -> Send one message
+```
+
+---
+
+```mdp:compare
+# Managed platform
+badge: no code
+note: A visual builder. The pipeline is boxes wired together.
+cta: [See the scenario](https://example.com/managed)
+- See and edit the pipeline yourself, no code.
+- Runs on a third-party platform and account.
+
+# Self-hosted script
+badge: in your stack
+note: A small script that runs inside your own environment.
+cta: [See the project](https://example.com/self-hosted)
+- Everything stays in your account, no extra subscription.
+- A maintainer keeps the code current for you.
+```
+
+---
+
+:::callout cost
+Neither option is entirely free. Both need a model API key, a few dollars a month. The managed platform also runs on paid credits beyond a small free tier; the self-hosted script runs free inside your own environment.
+:::
+
+:::callout recommendation
+Recommendation: start self-hosted, since everything stays in your account with no platform cost. Move to the managed platform later if you would rather see and edit the pipeline yourself.
+:::
+
+---
+
+## Built and tested
+Both options were built and verified on real data before this brief.

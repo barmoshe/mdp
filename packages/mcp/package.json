@@ -1,0 +1,49 @@
+{
+  "name": "mdp-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for MDP: compile one .mdp source into design-locked page/slides/flyer HTML from any MCP host.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Bar Moshe",
+  "homepage": "https://github.com/barmoshe/mdp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barmoshe/mdp.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/barmoshe/mdp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mdp",
+    "presentation",
+    "slides",
+    "flyer",
+    "markdown",
+    "ai",
+    "agents"
+  ],
+  "bin": {
+    "mdp-mcp": "bin/mdp-mcp.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "engine",
+    "assets",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "prepack": "node ../../scripts/sync-mcp.mjs",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.8"
+  }
+}

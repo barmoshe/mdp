@@ -24,3 +24,26 @@ jobs:
           node packages/core/build.mjs examples/comparison.mdp
           sha256sum dist/*.html > run2.txt
           diff run1.txt run2.txt && echo "deterministic"
+
+  mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Vendor freshness (sync:mcp committed and up to date)
+        run: |
+          node scripts/sync-mcp.mjs
+          if ! git diff --quiet -- packages/mcp/engine packages/mcp/assets; then
+            echo "::error::packages/mcp/engine or assets is stale. Run 'npm run sync:mcp' and commit."
+            git --no-pager diff --stat -- packages/mcp/engine packages/mcp/assets
+            exit 1
+          fi
+          echo "vendored engine + assets are fresh"
+      - name: Install mcp deps
+        working-directory: packages/mcp
+        run: npm install --no-audit --no-fund
+      - name: Smoke test
+        working-directory: packages/mcp
+        run: npm test

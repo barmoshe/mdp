@@ -1,0 +1,112 @@
+// server.mjs: the MCP wiring. Registers three tools + the spec/example resources,
+// connects the stdio transport, and routes ALL logging to stderr (stdout is the
+// JSON-RPC channel; one stray write to stdout corrupts the stream). The tool
+// logic lives in tools.mjs (pure); this file is thin glue, so SDK API churn
+// touches only here.
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve, join } from "node:path";
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
+import { ARTIFACTS } from "./engine.mjs";
+import { mdpCompile, mdpValidate, mdpPresent } from "./tools.mjs";
+
+const here = dirname(fileURLToPath(import.meta.url));
+const assetsDir = resolve(here, "..", "assets"); // vendored SPEC.md + examples/
+
+function log(msg) {
+  process.stderr.write(`[mdp-mcp] ${msg}\n`);
+}
+
+// Wrap a pure handler's structured result as MCP text content (JSON, so a host
+// can show it and a model can parse it). Errors become isError content rather
+// than thrown exceptions (better UX in hosts; the model sees the message).
+function asText(obj) {
+  return { content: [{ type: "text", text: JSON.stringify(obj, null, 2) }] };
+}
+async function run(fn, args) {
+  try {
+    return asText(await fn(args));
+  } catch (err) {
+    log(`tool error: ${err.message}`);
+    return { content: [{ type: "text", text: `Error: ${err.message}` }], isError: true };
+  }
+}
+
+function readAsset(rel) {
+  return readFileSync(join(assetsDir, rel), "utf8");
+}
+
+export async function startServer() {
+  const server = new McpServer({ name: "mdp-mcp", version: "0.1.0" });
+
+  // --- tools ---
+  server.registerTool(
+    "mdp_compile",
+    {
+      title: "Compile MDP",
+      description:
+        "Compile an MDP source string into design-locked HTML and write it to a file. " +
+        "Returns the absolute output path(s) and byte size. No browser. Deterministic.",
+      inputSchema: {
+        source: z.string().describe("The raw .mdp source text."),
+        form: z.enum([...ARTIFACTS, "all"]).default("page").describe('Which artifact: "page", "slides", "flyer", or "all".'),
+        out_dir: z.string().optional().describe("Output directory. Defaults to $MDP_OUT_DIR or the OS temp dir."),
+      },
+      annotations: { readOnlyHint: false, openWorldHint: false },
+    },
+    (args) => run(mdpCompile, args)
+  );
+
+  server.registerTool(
+    "mdp_validate",
+    {
+      title: "Validate MDP",
+      description: "Parse an MDP source and report { ok, meta, blocks (type->count), issues }. Never throws.",
+      inputSchema: { source: z.string().describe("The raw .mdp source text.") },
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    (args) => run(mdpValidate, args)
+  );
+
+  server.registerTool(
+    "mdp_present",
+    {
+      title: "Present MDP",
+      description:
+        "Compile (default: slides), serve it on a loopback (127.0.0.1) preview server, open the " +
+        "default browser, and return the URL and absolute path.",
+      inputSchema: {
+        source: z.string().describe("The raw .mdp source text."),
+        form: z.enum([...ARTIFACTS]).default("slides").describe('Artifact to present ("page", "slides", or "flyer").'),
+        out_dir: z.string().optional().describe("Output directory. Defaults to $MDP_OUT_DIR or the OS temp dir."),
+      },
+      annotations: { readOnlyHint: false, openWorldHint: false },
+    },
+    (args) => run(mdpPresent, args)
+  );
+
+  // --- resources ---
+  // mdp://spec -> the vendored SPEC.md
+  server.registerResource(
+    "spec",
+    "mdp://spec",
+    { title: "MDP specification", description: "The MDP format specification.", mimeType: "text/markdown" },
+    async (uri) => ({ contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset("SPEC.md") }] })
+  );
+
+  // mdp://example/{name} -> a vendored example source (comparison | tidewater)
+  server.registerResource(
+    "example",
+    new ResourceTemplate("mdp://example/{name}", { list: undefined }),
+    { title: "MDP example", description: "A complete example source (comparison | tidewater).", mimeType: "text/markdown" },
+    async (uri, { name }) => {
+      const safe = String(name).replace(/[^a-z0-9_-]/gi, "");
+      return { contents: [{ uri: uri.href, mimeType: "text/markdown", text: readAsset(join("examples", `${safe}.mdp`)) }] };
+    }
+  );
+
+  await server.connect(new StdioServerTransport());
+  log("ready on stdio");
+}
