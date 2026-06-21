@@ -1,28 +1,62 @@
 # MDP
 
-Markdown Presentation. A presentation compiler for AI-written content. One
+**Markdown Presentation.** A presentation compiler for AI-written content. One
 declarative `.mdp` source composes, deterministically, into many polished,
 design-locked artifacts: a page, a slide deck, and a flyer.
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
-![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)
-![Dependencies: zero](https://img.shields.io/badge/dependencies-zero-brightgreen)
+[![Live playground](https://img.shields.io/badge/live-playground%20%2B%20docs-5b54d6)](https://barmoshe.github.io/mdp/)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![Dependencies: zero](https://img.shields.io/badge/dependencies-zero-brightgreen)](package.json)
+[![CI](https://github.com/barmoshe/mdp/actions/workflows/ci.yml/badge.svg)](https://github.com/barmoshe/mdp/actions/workflows/ci.yml)
+![Node 18+](https://img.shields.io/badge/node-18%2B-brightgreen)
+
+> **Try it now, no install:** the [live playground and documentation](https://barmoshe.github.io/mdp/)
+> run the real engine in your browser. Edit a source on the left, watch the page,
+> slides, and flyer compile on the right.
 
 ## Why
 
 AI writes oceans of Markdown. It is clean and cheap but reads as a flat wall of
-text. Ask to "show it nicely" and you get a one-off HTML artifact that looks
-fine once and is junky and unmaintainable the next day. MDP closes that gap. The
+text. Ask to "show it nicely" and you get a one-off HTML artifact that looks fine
+once and is junky and unmaintainable the next day. MDP closes that gap. The
 author, a person or an agent, writes meaning. The engine owns all design, so the
 output cannot look junky. And the same source becomes a page, a deck, and a
 flyer.
+
+## How it works
+
+The rendering method is deterministic composition over a semantic
+representation, not templates and not live AI.
+
+```mermaid
+flowchart LR
+  S[".mdp source"] --> P["parse()"]
+  P --> IR["IR<br/>{ meta, blocks }<br/>typed meaning"]
+  IR --> A["page solver"]
+  IR --> B["slides solver"]
+  IR --> C["flyer solver"]
+  A --> AO["page.html"]
+  B --> BO["slides.html"]
+  C --> CO["flyer.html"]
+```
+
+1. **A declarative source.** Markdoc-shaped: typed tags filled with data, no
+   arbitrary code. Agent-emittable, statically checkable, safe.
+2. **A semantic representation.** The source parses into typed meaning, the IR
+   `{ meta, blocks }`. Intent, not layout.
+3. **Deterministic composition.** Each artifact is a solver, not a template. It
+   lays the meaning out against locked design tokens and reflows so it cannot
+   look bad, compiled once and reproducible.
+4. **AI authors, the engine composes.** The render path is pure: the same source
+   produces byte-identical output every time.
 
 ## Quick start
 
 No dependencies. Plain Node ESM, Node 18 or newer.
 
-```
+```bash
 git clone https://github.com/barmoshe/mdp
 cd mdp
 node packages/core/build.mjs examples/comparison.mdp
@@ -33,57 +67,45 @@ them in a browser. The render path is pure, so two runs produce byte-identical
 output.
 
 Try `examples/tidewater.mdp` for a simple brief, or `examples/comparison.mdp`
-for the full block set, including a right-to-left example.
+for the full block set. To show or present an artifact, add `--open`:
 
-To show or present an artifact, add `--open`:
-
-```
+```bash
 node packages/core/build.mjs examples/comparison.mdp --open slides
 ```
 
-This opens the deck in your browser. In the deck, arrows or space move, F toggles
-fullscreen, and print (Cmd or Ctrl + P) exports a PDF. Use `--open page` or
-`--open flyer` to show those forms.
+In the deck, arrows or space move, F toggles fullscreen, and print (Cmd or
+Ctrl + P) exports a PDF. See the [CLI reference](https://barmoshe.github.io/mdp/#/docs/cli)
+for `--out` and `--only`.
 
-## Use it in Claude Code
+## Use it in your agent
 
-MDP ships a Claude Code plugin, so you can go from content to a polished artifact
-without leaving your editor. This repo is the marketplace.
+MDP is not an app to visit and not a syntax to learn. It ships as a plugin, so
+you go from content to a polished artifact without leaving your editor. Ask in
+plain language; the agent authors clean MDP, compiles it, and opens the result.
 
-```
+**Claude Code** (this repo is the marketplace):
+
+```text
 /plugin marketplace add barmoshe/mdp
 /plugin install mdp@mdp
 ```
 
-Then just ask, for example "show this as a deck", "make a one-pager from this
-file", or "present this", or run the command:
+Then "show this as a deck", "make a one-pager from this file", or `/mdp present <file>`.
 
-```
-/mdp present <a file, some text, or nothing>
-```
+**Codex** (a self-contained plugin in `codex/`):
 
-Claude authors clean MDP, compiles it with the bundled engine, and opens the
-page, slide deck, or flyer to show or present it.
-
-## Use it in Codex
-
-MDP also ships a Codex plugin (self-contained in `codex/`), so the same "show
-this as a deck" flow works inside Codex. Add this repo as a marketplace, then
-enable MDP from the Codex app's plugins list:
-
-```
+```text
 codex marketplace add barmoshe/mdp
 ```
 
-Then just ask, for example "show this as a slide deck", "make a one-pager from
-this file", or "present this". Codex authors clean MDP, compiles it with the
-bundled engine, and opens the page, deck, or flyer.
+Then enable MDP from the Codex app and ask "show this as a slide deck".
 
 ## What a source looks like
 
-````
+````text
 ---
 mdp: 1
+theme: studio
 forms: [page, slides, flyer]
 title: Two ways to run the digest
 ---
@@ -115,41 +137,80 @@ source. The design lives in the engine.
 
 ## Blocks
 
-- `{.lead}` a standfirst, `{.cite}` an attribution under a quote.
-- `mdp:stats` key and value figures.
-- `mdp:compare` options side by side, each with a badge, a note, pros, and a CTA.
-- `mdp:flow` an `a -> b -> c` pipeline.
-- `:::callout <variant>` a note, tip, cost, recommendation, or warning.
-- `---` a section break: a divider on a page, a slide break in slides.
-- Right-to-left: set `lang` and `dir` in the frontmatter.
+| Block | What it is |
+|---|---|
+| `{.lead}` / `{.cite}` | A standfirst under the title; an attribution under a quote. |
+| `mdp:stats` | Key and value figures. |
+| `mdp:compare` | Options side by side, each with a badge, note, pros, and a CTA. |
+| `mdp:flow` | An `a -> b -> c` pipeline. |
+| `:::callout` | A note, tip, cost, recommendation, or warning aside. |
+| `---` | A section break: a divider on a page, a slide break in slides. |
+| `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
 
-See [SPEC.md](SPEC.md) for the full format and [VISION.md](VISION.md) for the
-architecture and the extensibility model.
+Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks)
+and the [spec](SPEC.md).
 
-## How it works
+## How one source maps to each form
 
-One declarative source parses into a tree of typed meaning. Each artifact is a
-solver, not a fixed template: it lays that meaning out against locked design
-tokens, so the output is composed once and is reproducible. AI authors the
-source, the engine composes. No styling ever lives in the document.
+| Block | page | slides | flyer |
+|---|---|---|---|
+| First `#` + `{.lead}` | masthead | title slide | header |
+| `##` heading | section in flow | slide heading | surface section |
+| `---` | divider | slide break | panel divider |
+| `mdp:stats` | table | big figures | figure band |
+| `mdp:compare` | card grid | own slide | full-width grid |
+| `mdp:flow` | chip row | chip row | full-width chip row |
+| blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+
+## The design lock
+
+`packages/core/src/tokens.mjs` is the single source of the look: two font
+families, two weights, one warm neutral ink ramp plus a single restrained accent,
+light and dark, no gradients or shadows. The author writes meaning only and
+cannot reach the design, so the over-decorated "junky artifact" look is
+impossible by construction. Pick a vibe with the `theme` field (`studio`, `teal`,
+`amber`, `violet`, `rose`, or `mono`); every theme passes WCAG AA in light and
+dark.
+
+## Documentation
+
+Full docs live on the site, rendered alongside the live playground:
+
+- [Getting started](https://barmoshe.github.io/mdp/#/docs/getting-started)
+- [The format](https://barmoshe.github.io/mdp/#/docs/format) and [blocks](https://barmoshe.github.io/mdp/#/docs/blocks)
+- [Forms](https://barmoshe.github.io/mdp/#/docs/forms) and [themes](https://barmoshe.github.io/mdp/#/docs/themes)
+- [CLI](https://barmoshe.github.io/mdp/#/docs/cli), [plugins](https://barmoshe.github.io/mdp/#/docs/plugins), and [architecture](https://barmoshe.github.io/mdp/#/docs/architecture)
+
+In-repo: the [vision](VISION.md), the [spec](SPEC.md), and the machine-facing
+build guide [AGENTS.md](AGENTS.md).
+
+## The site and playground
+
+The hub at [barmoshe.github.io/mdp](https://barmoshe.github.io/mdp/) lives in
+`site/` (a Vite + React app) and bundles the real engine straight from
+`packages/core`, so the playground compiles with the same code the CLI and the
+plugins run. The engine itself stays dependency-free; only the docs site has a
+build. It deploys to GitHub Pages on every push to `main`.
 
 ## Status
 
 Early and honest. A working engine that proves the core claim: one source
-composes deterministically into three clean artifacts, with a first set of
-blocks and right-to-left support. The format and the block grammar will move
-before 1.0. Issues and ideas are welcome.
+composes deterministically into three clean artifacts, with a first set of blocks
+and right-to-left support. The format and the block grammar will move before 1.0.
+Issues and ideas are welcome.
 
 ## Roadmap
 
-A live playground (source on the left, the artifacts on the right), an
-`mdp:chart` block, a `create-mdp-extension` scaffolder, and an MCP server so an
-agent can emit MDP from inside the tools you already use.
+A live playground (shipped), an `mdp:chart` block, a `create-mdp-extension`
+scaffolder, an MCP server so an agent can emit MDP from inside the tools you
+already use, and a JSON Schema conformance test.
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md), the
-machine-facing build guide.
+machine-facing build guide. The bar for a change: keep the engine pure (the
+render path is deterministic and byte-identical across runs) and keep the design
+locked.
 
 ## License
 

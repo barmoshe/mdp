@@ -6,6 +6,14 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- A hub and live playground at https://barmoshe.github.io/mdp/, deployed to
+  GitHub Pages. It lives in `site/` (a Vite + React app) and bundles the real
+  engine from `packages/core`, so the playground compiles with the same code the
+  CLI and the plugins run: edit a source, switch the form, pick a theme, and the
+  page, slides, and flyer compile in the browser. The site also carries the full
+  documentation (getting started, the format, blocks, forms, themes, the CLI,
+  plugins, and architecture). The engine stays dependency-free; only the site has
+  a build. A `pages` workflow deploys it on every push to `main`.
 - A Codex plugin, so the same "show this as a deck" flow works inside Codex. It
   is a self-contained plugin in `codex/` (the dependency-free engine is vendored
   in, refreshed with `npm run sync:codex`) exposing an `mdp` skill that
