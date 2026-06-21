@@ -22,6 +22,8 @@ import {
   deriveTheme,
   splitSections,
   extractMasthead,
+  deriveLogo,
+  renderLogo,
 } from "./shared.mjs";
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
@@ -53,6 +55,7 @@ const SLIDES_STYLE = `.mdp-deck {
   letter-spacing: -0.025em;
 }
 .mdp-slide .mdp-lead { font-size: clamp(1.25rem, 3.2vw, 1.875rem); }
+.mdp-slide .mdp-logo { height: clamp(2.5rem, 5vh, 3.5rem); max-width: 16rem; margin-block-end: var(--mdp-space-6); }
 .mdp-slide .mdp-h2 { font-size: clamp(1.75rem, 4.4vw, 2.75rem); }
 .mdp-slide .mdp-p { font-size: clamp(1.0625rem, 2vw, 1.375rem); }
 
@@ -179,6 +182,7 @@ ${CALLOUT_STYLE}
   }
   .mdp-slide:last-child { break-after: auto; }
   .mdp-slide .mdp-title { font-size: 2rem; }
+  .mdp-slide .mdp-logo { height: 1.75rem; }
   .mdp-slide .mdp-lead { font-size: 1.25rem; }
   .mdp-slide .mdp-h2 { font-size: 1.4rem; }
   .mdp-slide .mdp-p, .mdp-slide .mdp-list { font-size: 1rem; }
@@ -350,6 +354,7 @@ export function renderSlides(ir) {
 
   // Title slide first.
   const titleInner =
+    renderLogo(deriveLogo(ir), title || docTitle) +
     `<p class="mdp-eyebrow">${inline(deriveEyebrow(ir))}</p>\n` +
     `<h1 class="mdp-title">${inline(title || docTitle)}</h1>\n` +
     (lead ? `<p class="mdp-lead">${inline(lead)}</p>` : "");

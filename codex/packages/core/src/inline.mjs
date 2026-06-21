@@ -40,6 +40,34 @@ function safeUrl(raw) {
   return escapeHtml(cleaned);
 }
 
+// Validate a brand logo image URL. Stricter than safeUrl: a scheme allowlist
+// plus a base64-only data:image guard, so a logo can never smuggle script or
+// break out of the src attribute. Returns the escaped URL, or null to drop the
+// logo entirely (a logo must vanish on bad input, not point at "#"). The engine
+// only ever emits this as an <img src>, never inline <svg>, so an SVG renders in
+// image mode where scripts and on* handlers do not run.
+export function safeImgUrl(raw) {
+  const url = String(raw).trim();
+  if (!url) return null;
+  const lower = url.toLowerCase();
+  if (
+    lower.startsWith("http://") ||
+    lower.startsWith("https://") ||
+    lower.startsWith("/") ||
+    lower.startsWith("./") ||
+    lower.startsWith("../")
+  ) {
+    return escapeHtml(url);
+  }
+  // data: only as a base64-encoded image of an allowed type. Base64's alphabet
+  // has no <, >, ', " or &, so escapeHtml is a no-op on a valid payload; a raw
+  // (non-base64) data: value is rejected, not corrupted into a broken image.
+  if (/^data:image\/(svg\+xml|png|jpeg|webp|avif|gif);base64,[A-Za-z0-9+/=\s]+$/i.test(url)) {
+    return escapeHtml(url);
+  }
+  return null;
+}
+
 // Render inline marks. Operates on already-escaped text so the regexes never
 // see real angle brackets. Order matters: code spans are extracted first and
 // parked as placeholders so their contents are not re-processed.

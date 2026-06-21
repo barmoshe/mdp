@@ -23,6 +23,8 @@ import {
   deriveTheme,
   splitSections,
   extractMasthead,
+  deriveLogo,
+  renderLogo,
 } from "./shared.mjs";
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
@@ -52,6 +54,7 @@ const FLYER_STYLE = `.mdp-flyer-stage {
   margin-bottom: var(--mdp-space-4);
 }
 .mdp-flyer-header .mdp-lead { font-size: var(--mdp-text-lead); }
+.mdp-flyer-header .mdp-logo { height: 2.25rem; max-width: 13rem; }
 
 .mdp-flyer-body { padding: 0 var(--mdp-space-6); }
 .mdp-flyer-body > * + * { margin-top: var(--mdp-space-6); }
@@ -213,6 +216,7 @@ export function renderFlyer(ir) {
   // Header.
   const header =
     `<header class="mdp-flyer-header">\n` +
+    renderLogo(deriveLogo(ir), title || docTitle) +
     `<p class="mdp-eyebrow">${inline(deriveEyebrow(ir))}</p>\n` +
     `<h1 class="mdp-title">${inline(title || docTitle)}</h1>\n` +
     (lead ? `<p class="mdp-lead">${inline(lead)}</p>\n` : "") +

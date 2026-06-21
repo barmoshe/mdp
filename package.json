@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "build": "node packages/core/build.mjs",
-    "test": "node scripts/check-contrast.mjs",
+    "test": "node scripts/check-contrast.mjs && node scripts/check-logo.mjs",
     "sync:codex": "node scripts/sync-codex.mjs",
     "sync:mcp": "node scripts/sync-mcp.mjs"
   }

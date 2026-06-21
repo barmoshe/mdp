@@ -4,7 +4,7 @@
 // the HTML document scaffold, title/eyebrow derivation, and grouping the flat
 // block list into sections split on `break` nodes.
 
-import { escapeHtml } from "./inline.mjs";
+import { escapeHtml, safeImgUrl } from "./inline.mjs";
 import { baseStyle, THEMES, DEFAULT_THEME } from "./tokens.mjs";
 
 // Languages that default to a right-to-left script when no explicit dir is set.
@@ -80,6 +80,29 @@ export function deriveEyebrow(ir) {
     return meta.kicker;
   }
   return "Brief";
+}
+
+// Resolve the brand logo from the frontmatter `brand-logo:` field. Returns
+// { src } with an already-escaped, scheme-validated src, or null when the field
+// is absent, non-string, or fails validation (the masthead then renders with no
+// logo). The author supplies only the asset reference; the engine owns size and
+// position (see the .mdp-logo rule). Pure: no I/O, the asset bytes never enter
+// the compiler, so output stays byte-identical.
+export function deriveLogo(ir) {
+  const meta = (ir && ir.meta) || {};
+  const value = meta["brand-logo"];
+  if (typeof value !== "string" || !value.trim()) return null;
+  const src = safeImgUrl(value);
+  return src ? { src } : null;
+}
+
+// Render the masthead logo line, or "" when there is no logo. Prepended as the
+// first child of each form's masthead. `title` is the plain, pre-inline title,
+// escaped for alt text.
+export function renderLogo(logo, title) {
+  if (!logo) return "";
+  const alt = escapeHtml(`${title || ""} logo`.trim());
+  return `<img class="mdp-logo" src="${logo.src}" alt="${alt}">\n`;
 }
 
 // Group the flat blocks into sections split on `break` nodes. Returns an array

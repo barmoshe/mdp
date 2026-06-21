@@ -38,6 +38,9 @@ This is a strawman. Anything marked (open) is not yet settled.
    with no examples. The examples are first-class.
 2. The author cannot style. There is no color, size, or font in the source.
    Slop becomes structurally impossible, not something you prompt against.
+   (One deliberate, narrow amendment: the optional `brand-logo` field names a
+   single brand asset. It is a reference, not a color, size, or font; the engine
+   still owns where and how big it renders. See Frontmatter.)
 3. Wrong input still renders. An unknown directive or a malformed block degrades
    to readable text, never a blank or black screen. A validator returns a
    precise fix so an agent can self-heal.
@@ -62,6 +65,7 @@ title: Tidewater Coffee      # optional, defaults to the first heading
 kicker: Brief                # optional, the small eyebrow above the masthead
 lang: he                     # optional, the document language; default "en"
 dir: rtl                     # optional, writing direction; auto from lang
+brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 ---
 ```
 
@@ -88,6 +92,18 @@ the primary subtag, else `ltr`). An explicit `dir` always wins. Because the
 renderer uses logical CSS properties throughout, setting `dir: rtl` flips the
 whole layout (lists, the quote border, table alignment, cards) automatically;
 the author never positions anything.
+
+`brand-logo` is an optional brand mark the engine places in the masthead. Its
+value is an asset reference only: a URL, a relative path, or a base64
+`data:image/...` URI. The engine emits it as an `<img>` at a locked size and
+position per form (the inline-start of the masthead, flipped under `dir: rtl`);
+the author chooses which mark, never how it looks. The value passes a scheme
+allowlist (`http(s)`, `/`, `./`, `../`, and base64 `data:image/*` only) and is
+emitted in image mode (never inline `<svg>`), so it cannot smuggle script; an
+unsafe or malformed value is dropped and the masthead renders without a logo. It
+is the one amendment to Principle 2: an asset slot is not a color, size, or font.
+Prefer SVG or a 2x raster; an agent should normally omit it or use a known URL,
+not synthesize a large `data:` URI.
 
 ### Body
 

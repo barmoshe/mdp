@@ -337,6 +337,19 @@ em { font-style: italic; }
   border-top: 1px solid var(--mdp-border);
   margin: 0;
 }
+
+/* Brand logo: an engine-placed mark in the masthead. The author supplies only
+   the asset reference; size and position are locked here. display:block aligns
+   it to the inline-start edge, so a single dir=rtl flip lands it correctly.
+   Per-form size overrides live in each renderer's stylesheet. */
+.mdp-logo {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-width: 12rem;
+  object-fit: contain;
+  margin-block-end: var(--mdp-space-5);
+}
 `;
 
 // Assemble the shared stylesheet (the selected theme's tokens + base) injected

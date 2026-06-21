@@ -19,6 +19,8 @@ import {
   deriveTheme,
   splitSections,
   extractMasthead,
+  deriveLogo,
+  renderLogo,
 } from "./shared.mjs";
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
@@ -129,6 +131,7 @@ export function renderPage(ir) {
   const mastheadTitle = title || docTitle;
   const masthead =
     `<header class="mdp-page-masthead">\n` +
+    renderLogo(deriveLogo(ir), mastheadTitle) +
     `<p class="mdp-eyebrow">${inline(deriveEyebrow(ir))}</p>\n` +
     `<h1 class="mdp-title">${inline(mastheadTitle)}</h1>\n` +
     (lead ? `<p class="mdp-lead">${inline(lead)}</p>\n` : "") +
