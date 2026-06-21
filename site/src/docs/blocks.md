@@ -1,10 +1,38 @@
 # Blocks
 
-Beyond plain Markdown, MDP adds a small, closed set of typed blocks. Each one is
-content and light intent, never styling. Every block renders across all three
-forms, and the renderer decides how it looks in each.
+Beyond plain Markdown, MDP adds a typed set of elements, organized in three
+categories today, with more on the way. Each one is content and light intent,
+never styling. Every element renders across all three forms, and the renderer
+decides how it looks in each.
 
-## Stats
+The three categories are **Text & quotes**, **Data & diagrams**, and **Callouts
+& layout**.
+
+## Text & quotes
+
+### Lead and cite
+
+Line roles: open a line with a role tag in braces. `{.lead}` is a standfirst or
+subtitle; `{.cite}` is an attribution line. A role the renderer does not know is
+ignored, and the text renders plainly.
+
+```text
+{.lead} Both paths reach the same result. They differ in where the work runs.
+```
+
+### Pull quote
+
+A blockquote, optionally with a `{.cite}` attribution line. An indented serif
+quote on a page and flyer, a full quote slide in slides.
+
+```text
+> "I finally know the name of the farm in my cup."
+> {.cite} Pilot subscriber, week 3
+```
+
+## Data & diagrams
+
+### Stats
 
 A key-and-value figure set. A fenced `mdp:stats` block, one `Label: value` per
 line.
@@ -19,7 +47,7 @@ Avg order value: $28
 
 A table on a page, a band of big figures in slides and on the flyer.
 
-## Compare
+### Compare
 
 Options laid out side by side, for a pricing or options comparison. The body is a
 short, line-oriented declarative block, not YAML.
@@ -54,7 +82,7 @@ Every form renders the options as a responsive card grid: side by side where
 there is width, stacking on narrow. On the flyer the compare block is always its
 own full-width element. The cta is a bordered, button-styled link.
 
-## Flow
+### Flow
 
 A short left-to-right pipeline, read at a glance. Steps are separated by `->`.
 
@@ -70,7 +98,9 @@ as bordered chips joined by an arrow connector. Under `dir: rtl` the row flips
 and the arrow mirrors, so it always points in the reading direction. The row
 wraps on narrow widths.
 
-## Callout
+## Callouts & layout
+
+### Callout
 
 A bordered aside that lifts a short passage out of the flow. A triple-colon
 container opened with `:::callout <variant>` and closed by a line that is exactly
@@ -90,18 +120,20 @@ strong inline-start rule and full-ink text); `note`, `tip`, and `cost` get the
 calm treatment (a hairline border and softer ink). No label text is injected; the
 semantic variant stays in the markup so a future theme can style it.
 
-## Pull quote
+### Section breaks
 
-A blockquote, optionally with a `{.cite}` attribution line. An indented serif
-quote on a page and flyer, a full quote slide in slides.
+A thematic break, `---` on its own line, marks a boundary: a section divider on a
+page, a slide break in slides, and a panel divider on a flyer. If no MDP renderer
+runs, it is just an ordinary horizontal rule.
 
-```text
-> "I finally know the name of the farm in my cup."
-> {.cite} Pilot subscriber, week 3
-```
-
-## Right-to-left
+### Right-to-left
 
 Set `lang` and `dir: rtl` in the frontmatter and the whole layout flips: lists,
 the quote border, table alignment, cards, and the flow arrow. The author
 positions nothing. See [the format](#/docs/format) for the inference rules.
+
+## More on the way
+
+The element set grows by category. A chart block is next, and new categories can
+be added without ever unlocking the design: the author still writes meaning, and
+the engine still owns every pixel.

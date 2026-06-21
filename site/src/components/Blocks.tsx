@@ -1,13 +1,29 @@
 import { LINKS } from "../links";
 
-const BLOCKS = [
-  { name: "{.lead} / {.cite}", desc: "A standfirst under the title, and an attribution line under a quote." },
-  { name: "mdp:stats", desc: "Key and value figures. A table on a page, a figure band in slides and flyer." },
-  { name: "mdp:compare", desc: "Options side by side, each with a badge, a note, pros, and a call-to-action button." },
-  { name: "mdp:flow", desc: "An a -> b -> c pipeline, rendered as bordered chips joined by an arrow." },
-  { name: ":::callout", desc: "A bordered aside: note, tip, cost, recommendation, or warning." },
-  { name: "---", desc: "A section break: a divider on a page, a slide break in slides, a panel on a flyer." },
-  { name: "lang / dir", desc: "Set dir: rtl in the frontmatter and the whole layout flips. The author positions nothing." },
+const CATEGORIES = [
+  {
+    name: "Text & quotes",
+    blocks: [
+      { name: "{.lead} / {.cite}", desc: "A standfirst under the title, and an attribution line under a quote." },
+      { name: "> pull quote", desc: "A blockquote becomes a serif pull quote, with an optional {.cite} line." },
+    ],
+  },
+  {
+    name: "Data & diagrams",
+    blocks: [
+      { name: "mdp:stats", desc: "Key and value figures. A table on a page, a figure band in slides and flyer." },
+      { name: "mdp:compare", desc: "Options side by side, each with a badge, a note, pros, and a call-to-action button." },
+      { name: "mdp:flow", desc: "An a -> b -> c pipeline, rendered as bordered chips joined by an arrow." },
+    ],
+  },
+  {
+    name: "Callouts & layout",
+    blocks: [
+      { name: ":::callout", desc: "A bordered aside: note, tip, cost, recommendation, or warning." },
+      { name: "---", desc: "A section break: a divider on a page, a slide break in slides, a panel on a flyer." },
+      { name: "lang / dir", desc: "Set dir: rtl in the frontmatter and the whole layout flips. The author positions nothing." },
+    ],
+  },
 ];
 
 export default function Blocks() {
@@ -16,11 +32,12 @@ export default function Blocks() {
       <div className="wrap">
         <div className="section-head wrap-narrow">
           <p className="eyebrow eyebrow-accent">The format</p>
-          <h2 className="h2">Plain Markdown, plus a small closed set of blocks</h2>
+          <h2 className="h2">Plain Markdown, plus typed elements</h2>
           <p className="lead">
-            Any valid MDP file is also readable as ordinary Markdown. There is no
-            color, size, or font anywhere in the source. The design lives in the
-            engine.
+            Any valid MDP file is also readable as ordinary Markdown, with no
+            color, size, or font in the source. Beyond Markdown, MDP adds typed
+            elements in three categories today, with more on the way. The design
+            lives in the engine.
           </p>
         </div>
 
@@ -45,19 +62,27 @@ Start self-hosted, move later if you prefer.
 :::`}
           </pre>
 
-          <dl className="deflist">
-            {BLOCKS.map((b) => (
-              <div className="defrow" key={b.name}>
-                <dt>{b.name}</dt>
-                <dd>{b.desc}</dd>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--mdp-space-6)" }}>
+            {CATEGORIES.map((cat) => (
+              <div key={cat.name}>
+                <p className="eyebrow eyebrow-accent" style={{ marginBottom: "var(--mdp-space-2)" }}>{cat.name}</p>
+                <dl className="deflist">
+                  {cat.blocks.map((b) => (
+                    <div className="defrow" key={b.name}>
+                      <dt>{b.name}</dt>
+                      <dd>{b.desc}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
 
         <p className="prose" style={{ marginTop: "var(--mdp-space-6)" }}>
-          Wrong input still renders: an unknown directive degrades to readable
-          text, never a blank or black screen. See the full grammar in the{" "}
+          More elements are on the way, starting with a chart block. Wrong input
+          still renders: an unknown directive degrades to readable text, never a
+          blank or black screen. See the full grammar in the{" "}
           <a href={LINKS.spec} target="_blank" rel="noreferrer">spec</a>.
         </p>
       </div>
