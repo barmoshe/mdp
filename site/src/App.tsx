@@ -32,6 +32,11 @@ export default function App() {
   const isPlayground = hash.startsWith("#/playground");
 
   if (isPlayground) {
+    const q = hash.includes("?")
+      ? new URLSearchParams(hash.slice(hash.indexOf("?") + 1))
+      : null;
+    const initialId = q?.get("src") ?? undefined;
+    const initialKind = q?.get("kind") ?? undefined;
     return (
       <>
         <Nav active="playground" />
@@ -48,7 +53,7 @@ export default function App() {
             </div>
           </div>
           <div className="pg-page-stage">
-            <Playground variant="full" />
+            <Playground variant="full" initialId={initialId} initialKind={initialKind} />
           </div>
         </main>
         <Footer />

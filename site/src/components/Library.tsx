@@ -19,12 +19,13 @@ const TEMPLATE_BLURB: Record<string, string> = {
   "resume": "A clean, design-locked CV.",
 };
 
-function LibCard({ label, lead, blurb, source, href }: {
+function LibCard({ label, lead, blurb, source, href, play }: {
   label: string;
   lead: string;
   blurb: string;
   source: string;
   href: string;
+  play: string;
 }) {
   const [copied, setCopied] = useState(false);
   return (
@@ -46,6 +47,7 @@ function LibCard({ label, lead, blurb, source, href }: {
         >
           {copied ? "Copied" : "Copy source"}
         </button>
+        <a href={play}>Open</a>
         <a href={href} target="_blank" rel="noreferrer">View</a>
       </div>
     </div>
@@ -80,6 +82,7 @@ export default function Library() {
                 blurb={EXAMPLE_BLURB[e.id] ?? ""}
                 source={e.source}
                 href={`${LINKS.repo}/blob/main/examples/${e.id}.mdp`}
+                play={`#/playground?src=${e.id}&kind=example`}
               />
             ))}
           </div>
@@ -99,6 +102,7 @@ export default function Library() {
                 blurb={TEMPLATE_BLURB[t.id] ?? ""}
                 source={t.source}
                 href={`${LINKS.repo}/blob/main/templates/${t.id}.mdp`}
+                play={`#/playground?src=${t.id}&kind=template`}
               />
             ))}
           </div>
