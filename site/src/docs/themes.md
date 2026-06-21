@@ -38,8 +38,9 @@ reach it:
   with structure.
 - **Color.** One warm neutral ink ramp plus a single restrained accent. Color
   encodes meaning, never decoration, and never colors a whole surface. The accent
-  appears only in meaning-spots: links, the compare button, the recommendation
-  callout, stat figures, the active slide dot, and flow arrows.
+  appears only in meaning-spots: the masthead kicker and a short rule under the
+  title, links, the compare button, the recommendation callout, stat figures, the
+  active slide dot, and flow arrows.
 - **Space.** A single spacing scale. Whitespace is the primary structural device.
 - **Restraint.** No gradients, no drop shadows, no decorative icons. Hierarchy
   comes from type and space.

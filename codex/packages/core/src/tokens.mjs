@@ -210,23 +210,36 @@ code {
 strong { font-weight: var(--mdp-weight-medium); }
 em { font-style: italic; }
 
-/* Eyebrow: the only letterspaced, faint label allowed. Sentence-ish. */
+/* Eyebrow: the only letterspaced label allowed. The masthead kicker carries the
+   theme accent (a meaning-spot: it names the document's category), so the chosen
+   theme reads at a glance on the masthead, not only in links and buttons. */
 .mdp-eyebrow {
   font-size: var(--mdp-text-eyebrow);
   font-weight: var(--mdp-weight-medium);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mdp-ink-faint);
+  color: var(--mdp-accent-text);
   margin: 0;
 }
 
-/* Title masthead */
+/* Title masthead. A short accent rule under the title echoes the kicker so the
+   theme is visible even on a title slide that has no links or figures. The rule
+   is decorative weight only (a 3px hairline), never a colored surface. */
 .mdp-title {
   font-family: var(--mdp-font-sans);
   font-weight: var(--mdp-weight-medium);
   line-height: var(--mdp-leading-tight);
   letter-spacing: -0.02em;
   margin: 0;
+}
+.mdp-title::after {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 3px;
+  margin-top: var(--mdp-space-4);
+  border-radius: 999px;
+  background: var(--mdp-accent);
 }
 
 /* Lead / standfirst: serif, softer ink */

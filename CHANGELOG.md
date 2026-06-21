@@ -17,6 +17,12 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
   strip (a colored chip per palette), and the themes doc shows a swatch gallery.
   Both read their colors from a new `THEME_SWATCHES` export on the engine, so the
   swatches never drift from the real accents.
+
+### Changed
+- The masthead now carries the theme accent so the chosen palette reads at a
+  glance, not only in links and buttons: the kicker is accent-colored and a short
+  accent rule sits under the title, in all three artifacts. Both are meaning-spot
+  accents, not colored surfaces, so the design lock is unchanged.
 - A hub and live playground at https://barmoshe.github.io/mdp/, deployed to
   GitHub Pages. It lives in `site/` (a Vite + React app) and bundles the real
   engine from `packages/core`, so the playground compiles with the same code the
