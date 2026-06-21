@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "mdp",
+  "displayName": "MDP",
+  "version": "0.1.0",
+  "description": "Turn content into a polished page, slide deck, or flyer with MDP, then show or present it.",
+  "author": { "name": "Bar Moshe", "url": "https://github.com/barmoshe" },
+  "homepage": "https://github.com/barmoshe/mdp",
+  "repository": "https://github.com/barmoshe/mdp",
+  "license": "Apache-2.0",
+  "keywords": ["mdp", "markdown", "presentation", "slides", "deck", "flyer", "present", "show"]
+}

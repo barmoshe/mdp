@@ -1,0 +1,11 @@
+{
+  "name": "mdp",
+  "owner": { "name": "Bar Moshe" },
+  "plugins": [
+    {
+      "name": "mdp",
+      "source": "./",
+      "description": "Turn content into a polished page, slide deck, or flyer with MDP, then show or present it."
+    }
+  ]
+}

@@ -152,7 +152,39 @@ ${CALLOUT_STYLE}
 
 /* On a slide the callout body reads at presentation scale. */
 .mdp-slide .mdp-callout { padding: var(--mdp-space-6); }
-.mdp-slide .mdp-callout-p { font-size: clamp(1.0625rem, 2vw, 1.375rem); }`;
+.mdp-slide .mdp-callout-p { font-size: clamp(1.0625rem, 2vw, 1.375rem); }
+
+/* Keyboard hint in the chrome, hidden on narrow screens. */
+.mdp-hint { font-size: var(--mdp-text-small); color: var(--mdp-ink-faint); }
+@media (max-width: 48rem) { .mdp-hint { display: none; } }
+
+/* Print to PDF: one slide per page, light, no chrome. Use Cmd or Ctrl + P. */
+@media print {
+  :root {
+    --mdp-bg: #ffffff; --mdp-surface: #f6f6f3; --mdp-ink: #18181b;
+    --mdp-ink-soft: #52525b; --mdp-ink-faint: #8a8a8f; --mdp-border: rgba(0, 0, 0, 0.10);
+  }
+  .mdp-chrome { display: none !important; }
+  .mdp-js .mdp-slide, .mdp-slide {
+    position: static !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    min-height: auto;
+    border-bottom: 0;
+    padding: 2rem;
+    break-after: page;
+    break-inside: avoid;
+  }
+  .mdp-slide:last-child { break-after: auto; }
+  .mdp-slide .mdp-title { font-size: 2rem; }
+  .mdp-slide .mdp-lead { font-size: 1.25rem; }
+  .mdp-slide .mdp-h2 { font-size: 1.4rem; }
+  .mdp-slide .mdp-p, .mdp-slide .mdp-list { font-size: 1rem; }
+  .mdp-slide .mdp-figure-value { font-size: 1.75rem; }
+  .mdp-slide .mdp-quote-text { font-size: 1.4rem; }
+  @page { margin: 1.5cm; }
+}`;
 
 // The stepper. Plain ES5-ish DOM code, no dependencies, runs inline. Pure with
 // respect to content; no Date/Math.random.
@@ -169,6 +201,7 @@ const SLIDES_SCRIPT = `(function () {
   var nextBtn = document.querySelector('[data-mdp="next"]');
   var counter = document.querySelector('[data-mdp="counter"]');
   var dotsWrap = document.querySelector('.mdp-dots');
+  var fullBtn = document.querySelector('[data-mdp="full"]');
   var dots = [];
 
   var index = 0;
@@ -209,6 +242,20 @@ const SLIDES_SCRIPT = `(function () {
   prevBtn.addEventListener('click', function (e) { e.stopPropagation(); prev(); });
   nextBtn.addEventListener('click', function (e) { e.stopPropagation(); next(); });
 
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+  }
+  if (fullBtn) {
+    fullBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleFullscreen(); });
+    document.addEventListener('fullscreenchange', function () {
+      fullBtn.textContent = document.fullscreenElement ? 'Exit' : 'Full';
+    });
+  }
+
   // Click anywhere on the stage advances; clicks on chrome are ignored above.
   deck.addEventListener('click', function (e) {
     if (chrome && chrome.contains(e.target)) return;
@@ -216,10 +263,11 @@ const SLIDES_SCRIPT = `(function () {
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { next(); e.preventDefault(); }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { next(); e.preventDefault(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { prev(); e.preventDefault(); }
     else if (e.key === 'Home') { go(0); e.preventDefault(); }
     else if (e.key === 'End') { go(total - 1); e.preventDefault(); }
+    else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); e.preventDefault(); }
   });
 
   render();
@@ -316,11 +364,13 @@ export function renderSlides(ir) {
 
   const chrome =
     `<div class="mdp-chrome">\n` +
+    `<span class="mdp-hint">arrows or space to move, F for fullscreen, print for PDF</span>\n` +
     `<div class="mdp-dots" role="tablist" aria-label="Slides"></div>\n` +
     `<div class="mdp-nav">\n` +
     `<button class="mdp-btn" type="button" data-mdp="prev" aria-label="Previous slide">Prev</button>\n` +
     `<span class="mdp-counter" data-mdp="counter" aria-live="polite"></span>\n` +
     `<button class="mdp-btn" type="button" data-mdp="next" aria-label="Next slide">Next</button>\n` +
+    `<button class="mdp-btn" type="button" data-mdp="full" aria-label="Toggle fullscreen">Full</button>\n` +
     `</div>\n` +
     `</div>`;
 
