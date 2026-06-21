@@ -1,0 +1,44 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides]
+kicker: Decision brief
+title: <DECISION TITLE>
+---
+
+# <DECISION TITLE>
+{.lead} <ONE SENTENCE FRAMING THE TRADEOFF AND WHO DECIDES>
+
+> TODO: State the decision to be made and the constraint that forces it.
+
+```mdp:flow
+<SHARED STEP A> -> <SHARED STEP B> -> <SHARED STEP C>
+```
+
+---
+
+```mdp:compare
+# <OPTION ONE>
+badge: <SHORT TAG>
+note: <ONE LINE ON WHAT IT IS>
+cta: [<LINK TEXT>](https://example.com/<PATH>)
+- <PRO>
+- <PRO>
+
+# <OPTION TWO>
+badge: <SHORT TAG>
+note: <ONE LINE ON WHAT IT IS>
+cta: [<LINK TEXT>](https://example.com/<PATH>)
+- <PRO>
+- <PRO>
+```
+
+---
+
+:::callout cost
+The real cost of each option: <MONEY, TIME, LOCK-IN>.
+:::
+
+:::callout recommendation
+Recommendation: <THE PICK>, because <THE ONE REASON IT WINS>.
+:::

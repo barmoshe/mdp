@@ -1,0 +1,86 @@
+[
+  {
+    "id": "block-compare",
+    "file": "block-compare.mdp",
+    "label": "Decision brief",
+    "lead": "page"
+  },
+  {
+    "id": "block-stats",
+    "file": "block-stats.mdp",
+    "label": "Product brief",
+    "lead": "page"
+  },
+  {
+    "id": "block-callouts",
+    "file": "block-callouts.mdp",
+    "label": "Callouts",
+    "lead": "page"
+  },
+  {
+    "id": "block-flow",
+    "file": "block-flow.mdp",
+    "label": "Flow",
+    "lead": "flyer"
+  },
+  {
+    "id": "block-lists",
+    "file": "block-lists.mdp",
+    "label": "Lists",
+    "lead": "page"
+  },
+  {
+    "id": "block-quote",
+    "file": "block-quote.mdp",
+    "label": "Quote",
+    "lead": "slides"
+  },
+  {
+    "id": "block-roles",
+    "file": "block-roles.mdp",
+    "label": "Line roles",
+    "lead": "page"
+  },
+  {
+    "id": "theme-gallery",
+    "file": "theme-gallery.mdp",
+    "label": "Theme gallery",
+    "lead": "page"
+  },
+  {
+    "id": "rtl",
+    "file": "rtl.mdp",
+    "label": "Right to left",
+    "lead": "page"
+  },
+  {
+    "id": "form-flyer-heavy",
+    "file": "form-flyer-heavy.mdp",
+    "label": "Flyer composition",
+    "lead": "flyer"
+  },
+  {
+    "id": "form-slides-heavy",
+    "file": "form-slides-heavy.mdp",
+    "label": "Slide deck",
+    "lead": "slides"
+  },
+  {
+    "id": "brand-logo",
+    "file": "brand-logo.mdp",
+    "label": "Branded",
+    "lead": "page"
+  },
+  {
+    "id": "release-notes",
+    "file": "release-notes.mdp",
+    "label": "Release note",
+    "lead": "page"
+  },
+  {
+    "id": "starter",
+    "file": "starter.mdp",
+    "label": "Starter",
+    "lead": "page"
+  }
+]

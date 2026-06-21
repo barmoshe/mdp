@@ -1,0 +1,15 @@
+---
+mdp: 1
+theme: forest
+forms: [slides, page, flyer]
+title: On pull quotes
+demonstrates: [quote, cite, lead]
+---
+
+# On pull quotes
+{.lead} A probe for a blockquote with a {.cite} attribution: an indented serif quote on page and flyer, a full quote slide in slides.
+
+---
+
+> "The right quote, set apart, carries more than a paragraph ever could."
+> {.cite} A satisfied reader, this week

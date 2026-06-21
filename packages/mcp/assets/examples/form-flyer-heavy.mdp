@@ -1,0 +1,51 @@
+---
+mdp: 1
+theme: violet
+forms: [flyer, page]
+title: Flyer composition
+demonstrates: [stats, quote, compare, list, lead]
+---
+
+# Flyer composition
+{.lead} Tuned for the flyer solver: short adjacent sections pair into two columns, stats drop into a band, compare stays full width, and the trailing section becomes a footer.
+
+---
+
+## What it is
+A one-surface poster, composed once by the engine.
+
+---
+
+## Who it is for
+- People who skim before they read
+- People who print a single page
+
+---
+
+```mdp:stats
+Sections: paired
+Bands: stats and footer
+Surface: one
+```
+
+---
+
+```mdp:compare
+# Page
+badge: scroll
+- A calm reading column.
+
+# Flyer
+badge: poster
+- One composed surface.
+```
+
+---
+
+> "A flyer earns the glance, then the read."
+> {.cite} A passerby
+
+---
+
+## Next
+Lock the layout and send it to print.

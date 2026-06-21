@@ -11,8 +11,11 @@
 
 ## Examples
 
-- [tidewater.mdp](examples/tidewater.mdp): a simple launch brief.
-- [comparison.mdp](examples/comparison.mdp): the full block set, with a right-to-left example.
+- [block-stats.mdp](examples/block-stats.mdp): a stats band with a cited quote.
+- [block-compare.mdp](examples/block-compare.mdp): the full block set (compare, flow, callouts).
+- [rtl.mdp](examples/rtl.mdp): a right-to-left document (`dir: rtl`).
+- [examples/README.md](examples/README.md): the full, generated index of probes.
+- [templates/README.md](templates/README.md): fill-in starters by document type.
 
 ## Use in agent tools
 

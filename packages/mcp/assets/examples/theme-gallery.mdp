@@ -1,0 +1,27 @@
+---
+mdp: 1
+theme: plum
+forms: [page, slides, flyer]
+title: Theme gallery
+demonstrates: [stats, flow, callout:note, quote, cite, lead]
+---
+
+# Theme gallery
+{.lead} One neutral body, re-rendered across all eleven themes to show the accent in its meaning-spots. Its own theme is plum.
+
+```mdp:flow
+Pick a theme -> Compile -> Compare the accent
+```
+
+```mdp:stats
+Themes: 11
+Accent spots: links, figures, dots
+Ink ramp: one, shared
+```
+
+> "A theme is a designed system you select, not styles you set."
+> {.cite} The vision
+
+:::callout note
+The accent appears only in meaning-spots (links, the compare button, stat figures, the active dot, flow arrows), never to color a whole surface.
+:::

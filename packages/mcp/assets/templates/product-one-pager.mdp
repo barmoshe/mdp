@@ -1,0 +1,51 @@
+---
+mdp: 1
+theme: teal
+forms: [flyer, page]
+kicker: One-pager
+title: <PRODUCT NAME>
+---
+
+# <PRODUCT NAME>
+{.lead} <ONE-LINE POSITIONING: WHAT IT IS AND FOR WHOM>
+
+---
+
+## The opportunity
+> TODO: One short paragraph on the gap or the pain.
+<THE OPPORTUNITY IN ONE OR TWO SENTENCES>
+
+---
+
+## Who it is for
+- <AUDIENCE ONE>
+- <AUDIENCE TWO>
+- <AUDIENCE THREE>
+
+---
+
+## What makes it different
+> TODO: The single sharpest differentiator first.
+1. <DIFFERENTIATOR ONE>
+2. <DIFFERENTIATOR TWO>
+3. <DIFFERENTIATOR THREE>
+
+---
+
+## Early numbers
+```mdp:stats
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+```
+
+---
+
+> "<A SHORT QUOTE FROM AN EARLY USER>"
+> {.cite} <NAME, ROLE>
+
+---
+
+## Next steps
+> TODO: The one action you want the reader to take.
+<NEXT STEP>

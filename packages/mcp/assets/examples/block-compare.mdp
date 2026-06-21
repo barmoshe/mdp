@@ -4,6 +4,7 @@ theme: studio
 forms: [page, slides, flyer]
 kicker: Decision brief
 title: Two ways to run the nightly digest
+demonstrates: [compare, flow, callout:cost, callout:recommendation, lead]
 ---
 
 # Two ways to run the nightly digest

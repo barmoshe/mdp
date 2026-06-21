@@ -1,0 +1,32 @@
+---
+mdp: 1
+theme: mono
+forms: [slides, page]
+title: Slide deck
+demonstrates: [quote, list, lead]
+---
+
+# Slide deck
+{.lead} Tuned for the slides solver: many breaks, one idea per slide, a full quote slide, and lists that drive per-item reveals.
+
+---
+
+## One idea per slide
+Each thematic break starts a new slide.
+
+---
+
+## Lists reveal
+- First point
+- Second point
+- Third point
+
+---
+
+> "A deck is a sequence, not a page."
+> {.cite} A presenter
+
+---
+
+## Close
+The last slide holds the takeaway.

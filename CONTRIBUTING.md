@@ -11,12 +11,13 @@ No install. Plain Node ESM, Node 18 or newer.
 ```
 git clone https://github.com/barmoshe/mdp
 cd mdp
-node packages/core/build.mjs examples/tidewater.mdp
+node packages/core/build.mjs examples/block-compare.mdp
 ```
 
 That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open
-them in a browser. Pass any `.mdp` path to compile a different source; there is a
-second example at `examples/comparison.mdp`.
+them in a browser. Pass any `.mdp` path to compile a different source; the full
+set of probes lives in `examples/` (indexed in `examples/README.md`), and
+fill-in starters in `templates/`.
 
 ## Project layout
 
@@ -80,7 +81,10 @@ follows the naming convention:
 
 Before opening a PR, confirm:
 
-- Both examples still build (`tidewater.mdp` and `comparison.mdp`).
+- Every `examples/*.mdp` and `templates/*.mdp` builds and is byte-identical
+  across two runs (CI loops over the dirs), and `npm run check:examples` passes.
+  If you add or rename a seed, update its `manifest.json` and run `npm run
+  gen:docs`.
 - Output is deterministic: build twice, the HTML is identical.
 - The **design lock holds**: no gradients, no shadows, one ink ramp, two
   weights. Hierarchy comes from type size, weight, and whitespace. A second

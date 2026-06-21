@@ -39,7 +39,7 @@ dir), `MDP_NO_OPEN=1` (compile and serve without opening a browser).
 ## Resources
 
 - `mdp://spec` — the MDP specification.
-- `mdp://example/comparison`, `mdp://example/tidewater`, `mdp://example/brand-logo` — complete example sources.
+- `mdp://example/{name}` and `mdp://template/{name}`: one resource per vendored source. The server lists them from the bundled manifests.
 
 ## License
 

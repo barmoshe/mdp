@@ -4,6 +4,7 @@ theme: studio
 forms: [page, slides, flyer]
 kicker: Brand
 title: Acme Industries
+demonstrates: [brand-logo, flow, callout:note, lead]
 brand-logo: data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDAgNDAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iQWNtZSBJbmR1c3RyaWVzIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzViNTRkNiIvPjxjaXJjbGUgY3g9IjI0IiBjeT0iMjAiIHI9IjkiIGZpbGw9IiNmZmZmZmYiLz48dGV4dCB4PSI0NCIgeT0iMjYiIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksLWFwcGxlLXN5c3RlbSxzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjZmZmZmZmIj5BY21lPC90ZXh0Pjwvc3ZnPg==
 ---
 

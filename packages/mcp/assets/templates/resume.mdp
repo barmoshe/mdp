@@ -1,0 +1,33 @@
+---
+mdp: 1
+theme: mono
+forms: [page, flyer]
+kicker: Resume
+title: <YOUR NAME>
+---
+
+# <YOUR NAME>
+{.lead} <ROLE> // <ONE-LINE HEADLINE> // <EMAIL> // <CITY>
+
+---
+
+## Experience
+> TODO: Most recent first; lead each line with the outcome.
+- <ROLE>, <COMPANY> (<START>-<END>): <WHAT YOU SHIPPED AND THE RESULT>
+- <ROLE>, <COMPANY> (<START>-<END>): <WHAT YOU SHIPPED AND THE RESULT>
+
+## Skills
+- <SKILL>, <SKILL>, <SKILL>
+- <SKILL>, <SKILL>, <SKILL>
+
+## Education
+- <DEGREE>, <INSTITUTION> (<YEAR>)
+
+---
+
+## By the numbers
+```mdp:stats
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+```

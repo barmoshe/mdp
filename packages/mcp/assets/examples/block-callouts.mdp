@@ -1,0 +1,34 @@
+---
+mdp: 1
+theme: amber
+forms: [page, slides, flyer]
+title: Every callout variant
+demonstrates: [callout:note, callout:tip, callout:cost, callout:recommendation, callout:warning, lead]
+---
+
+# Every callout variant
+{.lead} The five callout variants in spec order, with both emphasis levels, plus an unknown variant that falls back to note.
+
+:::callout note
+A note: a calm aside with a hairline border.
+:::
+
+:::callout tip
+A tip: also the calm treatment.
+:::
+
+:::callout cost
+A cost: calm, for money and tradeoff notes.
+:::
+
+:::callout recommendation
+A recommendation: a key box, with a strong inline-start rule and full-ink text.
+:::
+
+:::callout warning
+A warning: the other key box.
+:::
+
+:::callout mystery
+Fallback case (not tagged): an unknown variant renders as a note rather than being dropped.
+:::

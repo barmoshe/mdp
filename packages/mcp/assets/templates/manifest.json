@@ -1,0 +1,50 @@
+[
+  {
+    "id": "decision-brief",
+    "file": "decision-brief.mdp",
+    "label": "Decision brief",
+    "lead": "page"
+  },
+  {
+    "id": "product-one-pager",
+    "file": "product-one-pager.mdp",
+    "label": "Product one-pager",
+    "lead": "flyer"
+  },
+  {
+    "id": "release-notes",
+    "file": "release-notes.mdp",
+    "label": "Release notes",
+    "lead": "page"
+  },
+  {
+    "id": "pitch-deck",
+    "file": "pitch-deck.mdp",
+    "label": "Pitch deck",
+    "lead": "slides"
+  },
+  {
+    "id": "resume",
+    "file": "resume.mdp",
+    "label": "Resume",
+    "lead": "page"
+  },
+  {
+    "id": "changelog",
+    "file": "changelog.mdp",
+    "label": "Changelog",
+    "lead": "page"
+  },
+  {
+    "id": "roadmap-update",
+    "file": "roadmap-update.mdp",
+    "label": "Roadmap update",
+    "lead": "page"
+  },
+  {
+    "id": "meeting-notes",
+    "file": "meeting-notes.mdp",
+    "label": "Meeting notes",
+    "lead": "page"
+  }
+]

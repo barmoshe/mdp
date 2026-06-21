@@ -23,7 +23,8 @@ Arguments: $ARGUMENTS
 
 2. Author a `.mdp` file (a temp file is fine), following the format below. The
    full spec is at `${CLAUDE_PLUGIN_ROOT}/SPEC.md`, and a complete example is at
-   `${CLAUDE_PLUGIN_ROOT}/examples/comparison.mdp`.
+   `${CLAUDE_PLUGIN_ROOT}/examples/block-compare.mdp`. For a real document, copy
+   the closest file in `${CLAUDE_PLUGIN_ROOT}/templates/` and fill it in.
 
 3. Compile and open it with the bundled engine. This writes the artifacts to a
    temp folder and opens the chosen one in the default browser:

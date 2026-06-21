@@ -25,8 +25,9 @@ The plugin root is this plugin's own folder: the directory that contains
 
 2. Author a `.mdp` file (a temp file is fine), following the format crib below.
    The full spec is at `<plugin-root>/SPEC.md` and a complete example is at
-   `<plugin-root>/examples/comparison.mdp`. Read them if the content needs a block
-   you are unsure about.
+   `<plugin-root>/examples/block-compare.mdp`. Read them if the content needs a
+   block you are unsure about. For a real document, copy the closest file in
+   `<plugin-root>/templates/` and fill it in.
 
 3. Compile and open it with the bundled engine. The wrapper self-locates the
    engine, writes the artifacts to a temp folder, and opens the chosen one in the

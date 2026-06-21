@@ -1,0 +1,20 @@
+---
+mdp: 1
+theme: mono
+forms: [page]
+kicker: Changelog
+title: <PROJECT> v<MAJOR>.<MINOR>.<PATCH>
+---
+
+# <PROJECT> v<MAJOR>.<MINOR>.<PATCH>
+{.lead} <RELEASE DATE: YYYY-MM-DD> // <ONE-LINE SUMMARY>
+
+## Added
+> TODO: New capabilities. Delete a section if it is empty this release.
+- <WHAT WAS ADDED>
+
+## Changed
+- <WHAT CHANGED>
+
+## Fixed
+- <WHAT WAS FIXED>

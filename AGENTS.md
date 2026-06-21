@@ -44,7 +44,8 @@ mdp/
   codex/                    the Codex plugin (vendored engine; see Plugin surfaces)
   packages/mcp/             the mdp-mcp server (vendored engine; see Plugin surfaces)
   spec/schema.json          JSON Schema for the .mdp frontmatter (stub)
-  examples/tidewater.mdp    the sample source
+  examples/                 example probes (indexed in examples/README.md)
+  templates/                fill-in document templates
 ```
 
 The data flow is one direction: `source string -> parse() -> IR -> render() ->

@@ -13,17 +13,62 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Build examples
+      - name: Build coverage (every example + template emits all 3 artifacts)
         run: |
-          node packages/core/build.mjs examples/tidewater.mdp
-          node packages/core/build.mjs examples/comparison.mdp
-      - name: Determinism
+          for f in examples/*.mdp templates/*.mdp; do
+            d=$(mktemp -d)
+            node packages/core/build.mjs "$f" --out "$d" >/dev/null
+            test -f "$d/page.html" && test -f "$d/slides.html" && test -f "$d/flyer.html" \
+              || { echo "::error::$f did not emit all 3 artifacts"; exit 1; }
+          done
+          echo "all sources build all 3 artifacts"
+      - name: Determinism (each source byte-identical across two runs)
         run: |
-          node packages/core/build.mjs examples/comparison.mdp
-          sha256sum dist/*.html > run1.txt
-          node packages/core/build.mjs examples/comparison.mdp
-          sha256sum dist/*.html > run2.txt
-          diff run1.txt run2.txt && echo "deterministic"
+          for f in examples/*.mdp templates/*.mdp; do
+            a=$(mktemp -d); b=$(mktemp -d)
+            node packages/core/build.mjs "$f" --out "$a" >/dev/null
+            node packages/core/build.mjs "$f" --out "$b" >/dev/null
+            diff <(cd "$a" && sha256sum *.html | sort) <(cd "$b" && sha256sum *.html | sort) \
+              || { echo "::error::$f not byte-identical across runs"; exit 1; }
+          done
+          echo "deterministic"
+      - name: Theme gallery (one body across all 11 themes)
+        run: |
+          for t in studio ocean teal forest amber terracotta coral rose plum violet mono; do
+            node packages/core/build.mjs examples/theme-gallery.mdp --theme "$t" --out "$(mktemp -d)" >/dev/null \
+              || { echo "::error::theme-gallery failed for theme $t"; exit 1; }
+          done
+          echo "all 11 themes render"
+      - name: Drift gate (manifests match disk, roles clean, coverage complete)
+        run: node scripts/check-examples.mjs
+      - name: Docs freshness (examples/README table is regenerated)
+        run: |
+          node scripts/gen-docs.mjs
+          git diff --quiet -- examples/README.md \
+            || { echo "::error::examples/README.md is stale. Run 'npm run gen:docs' and commit."; git --no-pager diff -- examples/README.md; exit 1; }
+          echo "docs are fresh"
+      - name: Codex freshness (sync:codex committed and up to date)
+        run: |
+          node scripts/sync-codex.mjs
+          if ! git diff --quiet -- codex; then
+            echo "::error::codex/ is stale. Run 'npm run sync:codex' and commit."
+            git --no-pager diff --stat -- codex
+            exit 1
+          fi
+          echo "codex is fresh"
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build the site (typecheck + bundle the manifest + raw glob)
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
 
   mcp:
     runs-on: ubuntu-latest

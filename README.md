@@ -59,18 +59,18 @@ No dependencies. Plain Node ESM, Node 18 or newer.
 ```bash
 git clone https://github.com/barmoshe/mdp
 cd mdp
-node packages/core/build.mjs examples/comparison.mdp
+node packages/core/build.mjs examples/block-compare.mdp
 ```
 
 This writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open
 them in a browser. The render path is pure, so two runs produce byte-identical
 output.
 
-Try `examples/tidewater.mdp` for a simple brief, or `examples/comparison.mdp`
+Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp`
 for the full block set. To show or present an artifact, add `--open`:
 
 ```bash
-node packages/core/build.mjs examples/comparison.mdp --open slides
+node packages/core/build.mjs examples/block-compare.mdp --open slides
 ```
 
 In the deck, arrows or space move, F toggles fullscreen, and print (Cmd or

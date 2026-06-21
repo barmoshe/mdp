@@ -1,0 +1,46 @@
+---
+mdp: 1
+theme: studio
+forms: [slides, page]
+kicker: Pitch
+title: <COMPANY OR PROJECT>
+---
+
+# <COMPANY OR PROJECT>
+{.lead} <THE ONE-LINE PITCH>
+
+---
+
+## The problem
+> TODO: Who hurts, and how much.
+<THE PROBLEM IN ONE SENTENCE>
+
+---
+
+## The solution
+> TODO: What you do, in one line.
+<THE SOLUTION IN ONE SENTENCE>
+
+```mdp:flow
+<STEP ONE> -> <STEP TWO> -> <STEP THREE>
+```
+
+---
+
+## Traction
+```mdp:stats
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+<METRIC>: <VALUE>
+```
+
+---
+
+> "<A CUSTOMER QUOTE>"
+> {.cite} <NAME, COMPANY>
+
+---
+
+## The ask
+> TODO: Exactly what you want from this audience.
+<THE ASK>
