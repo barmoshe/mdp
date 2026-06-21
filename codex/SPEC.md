@@ -76,8 +76,11 @@ author picks a designed system, not individual styles.
 The themes share one warm neutral ramp and differ only in a single restrained
 accent, used in meaning-spots (links, the compare button, the recommendation
 callout, stat figures, the active slide dot, flow arrows), never to color a whole
-surface. The set: `studio` (the default, an indigo accent), `teal`, `amber`,
-`violet`, `rose`, and `mono` (a strict black-and-white, no accent). Every theme
+surface. The set, eleven in all and ordered as a spectrum: `studio` (the default, an
+indigo accent), `ocean` (a true blue), `teal` (a blue-green), `forest` (a natural
+green), `amber` (a warm gold), `terracotta` (an earthy burnt clay), `coral` (a
+warm coral red), `rose` (a muted pink-red), `plum` (a deep berry), `violet` (a
+soft purple), and `mono` (a strict black-and-white, no accent). Every theme
 is tuned to pass WCAG AA in light and dark. An unknown theme name falls back to
 `studio`.
 
