@@ -41,9 +41,16 @@ install, the dependency-free engine is vendored into that folder and refreshed
 with `npm run sync:codex`. It is a copy of the root engine, not a second source,
 and it compiles byte-identical output.
 
+## MCP server
+
+For any MCP-speaking host (Claude Desktop, Cursor, Windsurf, ...) MDP also ships
+as a standalone MCP server, `mdp-mcp`. It exposes `mdp_compile`, `mdp_present`,
+and `mdp_validate`, plus the spec and examples as resources. See the
+[MCP server](#/docs/mcp) page to install it.
+
 ## One engine, many surfaces
 
-Both plugins author MDP, run the same engine, and open the result. Neither adds
-anything to the format. The roadmap adds an MCP server next, so an agent can emit
-MDP from any MCP-speaking host. See the [architecture](#/docs/architecture) for
-how the pieces fit.
+All three surfaces author MDP, run the same engine, and open the result. None
+adds anything to the format. See the [MCP server](#/docs/mcp) page for the
+cross-host option, and the [architecture](#/docs/architecture) for how the pieces
+fit.

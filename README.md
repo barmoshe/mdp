@@ -100,6 +100,15 @@ codex marketplace add barmoshe/mdp
 
 Then enable MDP from the Codex app and ask "show this as a slide deck".
 
+**Any MCP host** (Claude Desktop, Cursor, ...) via the `mdp-mcp` server:
+
+```text
+claude mcp add mdp -- npx -y mdp-mcp
+```
+
+It exposes `mdp_compile`, `mdp_present`, and `mdp_validate`. See the
+[MCP server](https://barmoshe.github.io/mdp/#/docs/mcp) docs.
+
 ## What a source looks like
 
 ````text
@@ -202,9 +211,8 @@ Issues and ideas are welcome.
 
 ## Roadmap
 
-A live playground (shipped), an `mdp:chart` block, a `create-mdp-extension`
-scaffolder, an MCP server so an agent can emit MDP from inside the tools you
-already use, and a JSON Schema conformance test.
+A live playground and an MCP server (both shipped), an `mdp:chart` block, a
+`create-mdp-extension` scaffolder, and a JSON Schema conformance test.
 
 ## Contributing
 

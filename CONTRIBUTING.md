@@ -86,7 +86,8 @@ Before opening a PR, confirm:
   weights. Hierarchy comes from type size, weight, and whitespace. A second
   accent color needs an ADR, not a PR.
 - Spec and docs are updated if the format changed.
-- If you changed the engine, re-sync the vendored Codex plugin
-  (`npm run sync:codex`) so `codex/` matches `packages/core/`.
+- If you changed the engine, re-sync the vendored copies so they match
+  `packages/core/`: `npm run sync:codex` (the Codex plugin) and
+  `npm run sync:mcp` (the `packages/mcp` server). CI fails if either is stale.
 
 Keep PRs focused and the diff small. Friendly review, fast merges.

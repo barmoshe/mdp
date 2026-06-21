@@ -9,6 +9,7 @@ import themes from "./themes.md?raw";
 import cli from "./cli.md?raw";
 import plugins from "./plugins.md?raw";
 import architecture from "./architecture.md?raw";
+import mcp from "./mcp.md?raw";
 
 export type DocPage = {
   id: string;
@@ -28,6 +29,7 @@ export const DOCS: DocPage[] = [
   { id: "themes", title: "Themes & design", group: "Guide", blurb: "The theme set and the design lock.", content: themes },
   { id: "cli", title: "CLI reference", group: "Tools", blurb: "build.mjs flags and determinism.", content: cli },
   { id: "plugins", title: "Plugins", group: "Tools", blurb: "Claude Code and Codex.", content: plugins },
+  { id: "mcp", title: "MCP server", group: "Tools", blurb: "Compile MDP from any MCP host.", content: mcp },
   { id: "architecture", title: "Architecture", group: "Internals", blurb: "The pipeline, the IR, and extending it.", content: architecture },
 ];
 

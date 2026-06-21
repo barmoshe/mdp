@@ -4,7 +4,7 @@ const ITEMS = [
   { label: "Live playground", state: "done", note: "Source on the left, the artifacts on the right. You are using it." },
   { label: "mdp:chart block", state: "next", note: "A typed chart block every artifact can render." },
   { label: "create-mdp-extension", state: "next", note: "A scaffolder for new blocks and new artifacts." },
-  { label: "MCP server", state: "next", note: "So an agent can emit MDP from inside the tools you already use." },
+  { label: "MCP server", state: "done", note: "mdp_compile, mdp_present, and mdp_validate, from any MCP host." },
   { label: "Schema conformance", state: "next", note: "A JSON Schema and a conformance test for the format." },
 ];
 
