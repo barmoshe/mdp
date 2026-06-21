@@ -93,7 +93,8 @@ built.
 - Reference artifacts: page, slides, flyer.
 - Blocks shipped: stat figures, pull quote, compare, callout, and flow, with
   right-to-left support.
-- One locked theme. The author writes meaning only; the engine owns all design.
+- A curated set of locked themes. The author writes meaning only and picks a
+  named vibe; the engine owns all design.
 - The proof: one source composes deterministically into the three artifacts and
   looks shipped, demonstrated on a real bilingual comparison document.
 

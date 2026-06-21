@@ -28,6 +28,7 @@
   ],
   "scripts": {
     "build": "node packages/core/build.mjs",
+    "test": "node scripts/check-contrast.mjs",
     "sync:codex": "node scripts/sync-codex.mjs"
   }
 }

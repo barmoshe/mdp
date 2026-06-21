@@ -56,7 +56,7 @@ This is a strawman. Anything marked (open) is not yet settled.
 ```
 ---
 mdp: 1                       # format version, required
-theme: studio                # a named theme: studio teal amber violet rose mono
+theme: studio                # a named theme: studio ocean teal forest amber terracotta coral rose plum violet mono
 forms: [page, slides, flyer] # which forms to compile
 title: Tidewater Coffee      # optional, defaults to the first heading
 kicker: Brief                # optional, the small eyebrow above the masthead

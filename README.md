@@ -168,9 +168,10 @@ and the [spec](SPEC.md).
 families, two weights, one warm neutral ink ramp plus a single restrained accent,
 light and dark, no gradients or shadows. The author writes meaning only and
 cannot reach the design, so the over-decorated "junky artifact" look is
-impossible by construction. Pick a vibe with the `theme` field (`studio`, `teal`,
-`amber`, `violet`, `rose`, or `mono`); every theme passes WCAG AA in light and
-dark.
+impossible by construction. Pick a vibe with the `theme` field, one of eleven
+curated palettes (`studio`, `ocean`, `teal`, `forest`, `amber`, `terracotta`,
+`coral`, `rose`, `plum`, `violet`, or `mono`); every theme passes WCAG AA in
+light and dark, verified by `npm test`.
 
 ## Documentation
 

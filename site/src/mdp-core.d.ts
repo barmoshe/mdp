@@ -8,8 +8,15 @@ declare module "@mdp/core" {
   export function parse(source: string): unknown;
   /** The artifacts this engine can compile: ["page", "slides", "flyer"]. */
   export const ARTIFACTS: string[];
-  /** The curated theme names: ["studio", "teal", "amber", "violet", "rose", "mono"]. */
+  /** The curated theme names, in spectrum order: studio, ocean, teal, forest,
+   *  amber, terracotta, coral, rose, plum, violet, mono. */
   export const THEMES: string[];
   /** The default theme name ("studio"). */
   export const DEFAULT_THEME: string;
+  /** A light-mode swatch per theme (accent fill / wash / text), for showing
+   *  what each theme looks like in a picker. Keyed by theme name. */
+  export const THEME_SWATCHES: Record<
+    string,
+    { fill: string; surface: string; text: string }
+  >;
 }

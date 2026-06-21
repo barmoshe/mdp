@@ -13,7 +13,7 @@ prompt against.
 ```text
 ---
 mdp: 1                       # format version, required
-theme: studio                # studio | teal | amber | violet | rose | mono
+theme: studio                # one of 11 themes; see Themes & design
 forms: [page, slides, flyer] # which forms to compile
 title: Tidewater Coffee      # optional, defaults to the first heading
 kicker: Brief                # optional, the small eyebrow above the masthead

@@ -80,26 +80,53 @@ const NEUTRAL_DARK = `    --mdp-bg: #141413;
 //   accent-border   an accent edge/ring (passes 3:1 non-text)
 // `mono` carries no hue: the accent collapses to the ink ramp, preserving the
 // original strict black-and-white look as an explicit opt-in.
+//
+// The set is ordered as a spectrum (the picker reads as a color strip): the
+// indigo default first, then cool to warm to berry, mono last. Every accent is
+// WCAG-AA verified by scripts/check-contrast.mjs (run `npm test`): `text` clears
+// 4.5:1 on the page background in both modes, and the `fill` carries near-white
+// (or near-black, in dark) labels at the large-text/UI bar. Adding a theme is a
+// deliberate, curated act, not a per-document choice — see the themes doc.
 const ACCENTS = {
   studio: {
     light: { fill: "#5b54d6", contrast: "#ffffff", text: "#4f46d6", surface: "#eeedfb", border: "#b8b4ec" },
     dark: { fill: "#7a72e0", contrast: "#16161f", text: "#a9a3f0", surface: "#2c2a45", border: "#4d44a0" },
   },
+  ocean: {
+    light: { fill: "#2f6fd6", contrast: "#ffffff", text: "#2563c4", surface: "#e9f0fc", border: "#aac3ee" },
+    dark: { fill: "#5a8ee6", contrast: "#0c1320", text: "#97baf0", surface: "#1b2b45", border: "#3a5f9c" },
+  },
   teal: {
     light: { fill: "#2f9183", contrast: "#ffffff", text: "#1c7d72", surface: "#e6f4f1", border: "#9fd3ca" },
     dark: { fill: "#3aa597", contrast: "#0f1716", text: "#7fd6c8", surface: "#1c302d", border: "#2e6e64" },
+  },
+  forest: {
+    light: { fill: "#2f7d46", contrast: "#ffffff", text: "#1f7038", surface: "#e6f2e9", border: "#a6d3b2" },
+    dark: { fill: "#45a35f", contrast: "#0d1710", text: "#86d49a", surface: "#18301f", border: "#2f6b43" },
   },
   amber: {
     light: { fill: "#b5760f", contrast: "#ffffff", text: "#9a6212", surface: "#f6efe0", border: "#dcc18a" },
     dark: { fill: "#cf962a", contrast: "#191307", text: "#e0b665", surface: "#33270f", border: "#7e5e23" },
   },
-  violet: {
-    light: { fill: "#9145c8", contrast: "#ffffff", text: "#8a3ec0", surface: "#f4ecfa", border: "#d4afe6" },
-    dark: { fill: "#aa63d8", contrast: "#19101f", text: "#cf9ae8", surface: "#352145", border: "#7a3fa0" },
+  terracotta: {
+    light: { fill: "#b05c34", contrast: "#ffffff", text: "#9c4f2b", surface: "#f6ece2", border: "#ddb295" },
+    dark: { fill: "#cd7b4e", contrast: "#1c1109", text: "#e0a87f", surface: "#34241a", border: "#7e5436" },
+  },
+  coral: {
+    light: { fill: "#cf4633", contrast: "#ffffff", text: "#c2412c", surface: "#fcece8", border: "#f0b3a6" },
+    dark: { fill: "#f0735c", contrast: "#1f0f0b", text: "#f6a08e", surface: "#43221b", border: "#9c4733" },
   },
   rose: {
     light: { fill: "#d34a63", contrast: "#ffffff", text: "#c43a55", surface: "#fbeced", border: "#ecadb6" },
     dark: { fill: "#e26a80", contrast: "#1f1012", text: "#f29aa8", surface: "#43212a", border: "#9c3f50" },
+  },
+  plum: {
+    light: { fill: "#9c3d6e", contrast: "#ffffff", text: "#92376a", surface: "#f8ebf1", border: "#dcaac4" },
+    dark: { fill: "#c25c8c", contrast: "#1d0f16", text: "#e495b8", surface: "#3c2030", border: "#8a3f63" },
+  },
+  violet: {
+    light: { fill: "#9145c8", contrast: "#ffffff", text: "#8a3ec0", surface: "#f4ecfa", border: "#d4afe6" },
+    dark: { fill: "#aa63d8", contrast: "#19101f", text: "#cf9ae8", surface: "#352145", border: "#7a3fa0" },
   },
   mono: {
     light: { fill: "#1c1b19", contrast: "#fdfcfb", text: "#1c1b19", surface: "#f4f3f0", border: "#8c8a83" },
@@ -110,6 +137,16 @@ const ACCENTS = {
 // The curated theme set. The author picks one by name; the default is `studio`.
 export const THEMES = Object.keys(ACCENTS);
 export const DEFAULT_THEME = "studio";
+
+// A light-mode swatch per theme (fill / wash / text), derived from the accent
+// set so a UI can show what each theme looks like without re-typing any hex.
+// The source of truth stays ACCENTS; this is a read-only projection of it.
+export const THEME_SWATCHES = Object.fromEntries(
+  Object.entries(ACCENTS).map(([name, a]) => [
+    name,
+    { fill: a.light.fill, surface: a.light.surface, text: a.light.text },
+  ])
+);
 
 function accentVars(a, indent) {
   return (

@@ -60,7 +60,8 @@ dir: ltr
 ```
 
 `theme` picks a color theme (the author never sets raw colors): `studio` (the
-default, indigo), `teal`, `amber`, `violet`, `rose`, or `mono` (black and white).
+default, indigo), `ocean`, `teal`, `forest`, `amber`, `terracotta`, `coral`,
+`rose`, `plum`, `violet`, or `mono` (black and white).
 Pick one that fits the content's tone. Use `lang: he` (or `ar`, `fa`) with
 `dir: rtl` for right-to-left.
 

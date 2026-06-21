@@ -11,7 +11,7 @@ import { renderFlyer } from "./render-flyer.mjs";
 
 export { parse } from "./parse.mjs";
 export { inline, escapeHtml } from "./inline.mjs";
-export { baseStyle, themeTokens, BASE, THEMES, DEFAULT_THEME } from "./tokens.mjs";
+export { baseStyle, themeTokens, BASE, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "./tokens.mjs";
 
 // The artifact renderers, keyed by name. Adding a new artifact is one entry
 // here plus a render-<name>.mjs module (see AGENTS.md).

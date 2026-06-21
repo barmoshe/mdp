@@ -6,6 +6,17 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- Five more themes, bringing the curated set to eleven: `ocean` (a clean true
+  blue), `forest` (a deep natural green), `terracotta` (an earthy burnt clay),
+  `coral` (a warm coral red), and `plum` (a deep berry). The set is now ordered
+  as a spectrum. Every accent is WCAG-AA verified in light and dark.
+- An AA-conformance test (`npm test`, `scripts/check-contrast.mjs`) that compiles
+  the real token CSS for every theme and asserts the accent-text and accent-fill
+  contrast guarantees, so a future theme cannot regress accessibility.
+- A visual theme picker in the playground: the theme control is now a swatch
+  strip (a colored chip per palette), and the themes doc shows a swatch gallery.
+  Both read their colors from a new `THEME_SWATCHES` export on the engine, so the
+  swatches never drift from the real accents.
 - A hub and live playground at https://barmoshe.github.io/mdp/, deployed to
   GitHub Pages. It lives in `site/` (a Vite + React app) and bundles the real
   engine from `packages/core`, so the playground compiles with the same code the

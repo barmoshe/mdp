@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { compile, ARTIFACTS, THEMES, DEFAULT_THEME } from "@mdp/core";
+import type { CSSProperties } from "react";
+import { compile, ARTIFACTS, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "@mdp/core";
 import { EXAMPLES } from "../examples";
 
 // Read the theme the source currently declares, so the theme control stays in
@@ -104,21 +105,37 @@ export default function Playground() {
           </select>
         </label>
 
-        <label className="pg-control">
+        <div className="pg-control pg-themes" role="radiogroup" aria-label="Theme">
           <span>theme</span>
-          <select
-            className="pg-select"
-            aria-label="Theme"
-            value={theme}
-            onChange={(e) => setSource((s) => withTheme(s, e.target.value))}
-          >
-            {THEMES.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </label>
+          <div className="pg-swatches">
+            {THEMES.map((t) => {
+              const sw = THEME_SWATCHES[t];
+              const selected = theme === t;
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  className={`pg-swatch${selected ? " is-selected" : ""}`}
+                  title={t}
+                  aria-label={`${t} theme`}
+                  onClick={() => setSource((s) => withTheme(s, t))}
+                  style={
+                    {
+                      "--sw-fill": sw?.fill,
+                      "--sw-surface": sw?.surface,
+                      "--sw-text": sw?.text,
+                    } as CSSProperties
+                  }
+                >
+                  <span className="pg-swatch-dot" aria-hidden="true" />
+                  <span className="pg-swatch-name">{t}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         <button className="btn btn-small" onClick={openInNewTab}>
           Open

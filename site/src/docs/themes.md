@@ -6,20 +6,26 @@ engine, not the source.
 
 ## The theme set
 
-Set `theme` in the frontmatter to one of:
+Set `theme` in the frontmatter to one of eleven curated palettes. Each is one
+restrained accent over the shared warm-neutral ramp, ordered as a spectrum:
 
-| Theme | Accent |
-|---|---|
-| `studio` | Indigo. The default. |
-| `teal` | A calm blue-green. |
-| `amber` | A warm gold. |
-| `violet` | A soft purple. |
-| `rose` | A muted red. |
-| `mono` | Strict black-and-white, no accent. |
+<div class="theme-gallery">
+  <div class="theme-card"><span class="theme-chip" style="background:#5b54d6"></span><b>studio</b><span>Indigo. The default.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#2f6fd6"></span><b>ocean</b><span>A clean true blue.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#2f9183"></span><b>teal</b><span>A calm blue-green.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#2f7d46"></span><b>forest</b><span>A deep natural green.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#b5760f"></span><b>amber</b><span>A warm gold.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#b05c34"></span><b>terracotta</b><span>An earthy burnt clay.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#cf4633"></span><b>coral</b><span>A warm coral red.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#d34a63"></span><b>rose</b><span>A muted pink-red.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#9c3d6e"></span><b>plum</b><span>A deep berry.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#9145c8"></span><b>violet</b><span>A soft purple.</span></div>
+  <div class="theme-card"><span class="theme-chip" style="background:#1c1b19;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)"></span><b>mono</b><span>Black-and-white, no accent.</span></div>
+</div>
 
 An unknown theme name falls back to `studio`. Try them live in the
-[playground](#playground): switch the theme control and watch the same source
-recompose.
+[playground](#playground): click a swatch in the theme strip and watch the same
+source recompose.
 
 ## The design lock
 
