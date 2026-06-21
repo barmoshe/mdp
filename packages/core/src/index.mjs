@@ -1,4 +1,4 @@
-// index.mjs: the public entry point for @mdp/core.
+// index.mjs: the public entry point for mdp-compiler.
 //
 // Exports the parser and a single compile(source, artifact) that turns an MDP
 // source string into a standalone HTML document for the chosen artifact. This

@@ -12,7 +12,7 @@
 //   1. It travels with the engine when the core src/ is vendored into the Codex
 //      plugin and the MCP server (both copy the whole tree, byte-for-byte).
 //   2. It bundles in the browser playground with no JSON-import attribute.
-//   3. It keeps @mdp/core dependency-free — no validator, no schema loader.
+//   3. It keeps mdp-compiler dependency-free — no validator, no schema loader.
 // spec/schema.json is the published artifact, REGENERATED from this object by
 // scripts/gen-schema.mjs (a CI freshness gate keeps the two in lockstep).
 //
@@ -214,7 +214,7 @@ export const SCHEMA = {
   $id: "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
   title: "MDP intermediate representation",
   description:
-    "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from @mdp/core as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
+    "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from mdp-compiler as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
   version: SCHEMA_VERSION,
   type: "object",
   additionalProperties: false,

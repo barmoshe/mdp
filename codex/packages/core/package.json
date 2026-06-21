@@ -1,16 +1,42 @@
 {
-  "name": "@mdp/core",
-  "version": "0.0.0",
+  "name": "mdp-compiler",
+  "version": "0.2.0",
   "description": "The MDP parser and composition engine: one source to a semantic representation to design-locked artifacts.",
-  "license": "Apache-2.0",
   "type": "module",
+  "license": "Apache-2.0",
+  "author": "Bar Moshe",
+  "homepage": "https://github.com/barmoshe/mdp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barmoshe/mdp.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/barmoshe/mdp/issues"
+  },
+  "keywords": [
+    "mdp",
+    "presentation",
+    "compiler",
+    "slides",
+    "flyer",
+    "markdown",
+    "ai",
+    "agents",
+    "deterministic"
+  ],
   "main": "src/index.mjs",
   "exports": {
     ".": "./src/index.mjs"
   },
   "files": [
-    "src"
+    "src",
+    "README.md",
+    "LICENSE"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "node build.mjs"
   }
