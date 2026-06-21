@@ -63,6 +63,9 @@ function renderBlock(block) {
     case "heading":
       return `<h2 class="mdp-h2">${inline(block.text)}</h2>`;
 
+    case "lead":
+      return `<p class="mdp-lead">${inline(block.text)}</p>`;
+
     case "paragraph":
       return `<p class="mdp-p">${inline(block.text)}</p>`;
 

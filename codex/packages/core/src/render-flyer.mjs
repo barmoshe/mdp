@@ -120,32 +120,40 @@ ${CALLOUT_STYLE}
 .mdp-flyer .mdp-callout { padding: var(--mdp-space-4); }
 .mdp-flyer .mdp-callout-p { font-size: var(--mdp-text-small); }`;
 
-// Render the inner blocks of a section (heading + content).
+// Render one flyer block in flow. Handles every body block type, so a block that
+// shares a section with another (e.g. a stats band beside a callout) or a
+// mid-document {.lead} is never silently dropped.
+function renderFlyerBlock(block) {
+  switch (block.type) {
+    case "heading":
+      return `<h2 class="mdp-h2">${inline(block.text)}</h2>`;
+    case "lead":
+      return `<p class="mdp-lead">${inline(block.text)}</p>`;
+    case "paragraph":
+      return `<p class="mdp-p">${inline(block.text)}</p>`;
+    case "list": {
+      const tag = block.ordered ? "ol" : "ul";
+      const items = block.items.map((it) => `<li>${inline(it)}</li>`).join("\n");
+      return `<${tag} class="mdp-list">\n${items}\n</${tag}>`;
+    }
+    case "stats":
+      return renderStatsBand(block);
+    case "quote":
+      return renderQuoteBlock(block);
+    case "compare":
+      return renderCompare(block);
+    case "flow":
+      return renderFlow(block);
+    case "callout":
+      return renderCallout(block);
+    default:
+      return "";
+  }
+}
+
+// Render a section's blocks in flow.
 function renderSectionInner(section) {
-  return section.blocks
-    .map((block) => {
-      switch (block.type) {
-        case "heading":
-          return `<h2 class="mdp-h2">${inline(block.text)}</h2>`;
-        case "paragraph":
-          return `<p class="mdp-p">${inline(block.text)}</p>`;
-        case "list": {
-          const tag = block.ordered ? "ol" : "ul";
-          const items = block.items
-            .map((it) => `<li>${inline(it)}</li>`)
-            .join("\n");
-          return `<${tag} class="mdp-list">\n${items}\n</${tag}>`;
-        }
-        case "flow":
-          return renderFlow(block);
-        case "callout":
-          return renderCallout(block);
-        default:
-          return "";
-      }
-    })
-    .filter(Boolean)
-    .join("\n");
+  return section.blocks.map(renderFlyerBlock).filter(Boolean).join("\n");
 }
 
 // Render a stats section as a figure band.
@@ -197,26 +205,6 @@ function classify(section) {
   return "text";
 }
 
-// Render the inner blocks of a section that may also carry a compare block,
-// keeping the compare full-width and any surrounding heading/text in flow.
-function renderCompareSection(section) {
-  return section.blocks
-    .map((block) => {
-      switch (block.type) {
-        case "heading":
-          return `<h2 class="mdp-h2">${inline(block.text)}</h2>`;
-        case "paragraph":
-          return `<p class="mdp-p">${inline(block.text)}</p>`;
-        case "compare":
-          return renderCompare(block);
-        default:
-          return "";
-      }
-    })
-    .filter(Boolean)
-    .join("\n");
-}
-
 export function renderFlyer(ir) {
   const docTitle = deriveTitle(ir);
   const sections = splitSections(ir.blocks);
@@ -254,7 +242,7 @@ export function renderFlyer(ir) {
       // A compare section is its own full-width element; it is never paired
       // with an adjacent section (it already lays its options out side by side).
       pieces.push(
-        `<div class="mdp-flyer-section">\n${renderCompareSection(rest[i])}\n</div>`
+        `<div class="mdp-flyer-section">\n${renderSectionInner(rest[i])}\n</div>`
       );
       i++;
       continue;
