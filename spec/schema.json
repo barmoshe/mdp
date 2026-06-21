@@ -1,41 +1,426 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
-  "title": "MDP frontmatter",
-  "_note": "Placeholder stub. This describes only the .mdp frontmatter block and is intentionally incomplete. The full versioned contract (frontmatter plus the body block and directive grammar) will be exported from @mdp/core and enforced as the conformance test, so the spec and what the engine accepts cannot drift. Do not treat this as the settled schema.",
+  "title": "MDP intermediate representation",
+  "description": "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from @mdp/core as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
+  "version": "1.0.0",
   "type": "object",
-  "required": ["mdp"],
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "required": [
+    "meta",
+    "blocks"
+  ],
   "properties": {
-    "mdp": {
-      "description": "Format version. Required.",
-      "type": "integer",
-      "const": 1
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mdp"
+      ],
+      "properties": {
+        "mdp": {
+          "description": "Format version. Required.",
+          "type": "integer",
+          "const": 1
+        },
+        "theme": {
+          "description": "A named renderer theme (a vibe, never a color). The engine owns the look.",
+          "enum": [
+            "studio",
+            "ocean",
+            "teal",
+            "forest",
+            "amber",
+            "terracotta",
+            "coral",
+            "rose",
+            "plum",
+            "violet",
+            "mono"
+          ],
+          "default": "studio"
+        },
+        "forms": {
+          "description": "Which presentation forms this source compiles to.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "page",
+              "slides",
+              "flyer"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1,
+          "default": [
+            "page",
+            "slides",
+            "flyer"
+          ]
+        },
+        "title": {
+          "description": "Optional. Defaults to the first H1 in the body.",
+          "type": "string"
+        },
+        "kicker": {
+          "description": "Optional eyebrow line placed above the title in the masthead.",
+          "type": "string"
+        },
+        "lang": {
+          "description": "Optional BCP-47 language tag, emitted as the document lang.",
+          "type": "string"
+        },
+        "dir": {
+          "description": "Optional text direction. The layout flips via logical properties.",
+          "enum": [
+            "ltr",
+            "rtl",
+            "auto"
+          ]
+        },
+        "brand-logo": {
+          "description": "Optional brand logo for the masthead: a URL, relative path, or data:image URI. Size and position are engine-locked; unsafe values are dropped.",
+          "type": "string"
+        },
+        "demonstrates": {
+          "description": "Optional authoring/CI metadata: feature tags the coverage gate reads. Not rendered.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
-    "theme": {
-      "description": "A named renderer theme. Never carries colours or sizes. v1 ships one theme.",
-      "type": "string",
-      "default": "studio",
-      "enum": ["studio"]
-    },
-    "forms": {
-      "description": "Which presentation forms this source supports / should compile to.",
+    "blocks": {
       "type": "array",
+      "description": "The flat, ordered body. Every node is one of the closed block types.",
       "items": {
-        "type": "string",
-        "enum": ["page", "slides", "flyer"]
-      },
-      "uniqueItems": true,
-      "default": ["page", "slides", "flyer"]
-    },
-    "title": {
-      "description": "Optional. Defaults to the first H1 heading in the body.",
-      "type": "string"
-    },
-    "brand-logo": {
-      "description": "Optional. A brand logo the engine places in the masthead. A URL, a relative path, or a base64 data:image URI. The author supplies only the asset reference; size and position are engine-locked. Unsafe or malformed values are dropped (no logo). Not a color, size, or font.",
-      "type": "string"
+        "oneOf": [
+          {
+            "$ref": "#/definitions/title"
+          },
+          {
+            "$ref": "#/definitions/lead"
+          },
+          {
+            "$ref": "#/definitions/break"
+          },
+          {
+            "$ref": "#/definitions/heading"
+          },
+          {
+            "$ref": "#/definitions/list"
+          },
+          {
+            "$ref": "#/definitions/stats"
+          },
+          {
+            "$ref": "#/definitions/compare"
+          },
+          {
+            "$ref": "#/definitions/flow"
+          },
+          {
+            "$ref": "#/definitions/callout"
+          },
+          {
+            "$ref": "#/definitions/quote"
+          },
+          {
+            "$ref": "#/definitions/paragraph"
+          }
+        ]
+      }
     }
   },
-  "TODO": "Complete this schema: add the body block/directive grammar (line roles like {.lead}/{.cite}, the mdp:stats directive body, the closed set of block types), version it, and wire it as the conformance test exported from @mdp/core."
+  "definitions": {
+    "title": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "title"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "lead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "lead"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "break": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "const": "break"
+        }
+      }
+    },
+    "heading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "level",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "heading"
+        },
+        "level": {
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "list": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "ordered",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "list"
+        },
+        "ordered": {
+          "type": "boolean"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "stats"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/statItem"
+          }
+        }
+      }
+    },
+    "statItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "value"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "compare": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "options"
+      ],
+      "properties": {
+        "type": {
+          "const": "compare"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/compareOption"
+          }
+        }
+      }
+    },
+    "compareOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "badge",
+        "note",
+        "cta",
+        "pros"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "badge": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cta": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pros": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "steps"
+      ],
+      "properties": {
+        "type": {
+          "const": "flow"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "callout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "variant",
+        "blocks"
+      ],
+      "properties": {
+        "type": {
+          "const": "callout"
+        },
+        "variant": {
+          "enum": [
+            "note",
+            "tip",
+            "cost",
+            "recommendation",
+            "warning"
+          ]
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/calloutParagraph"
+          }
+        }
+      }
+    },
+    "calloutParagraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "paragraph"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "quote": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text",
+        "cite"
+      ],
+      "properties": {
+        "type": {
+          "const": "quote"
+        },
+        "text": {
+          "type": "string"
+        },
+        "cite": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "paragraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "paragraph"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

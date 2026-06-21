@@ -12,6 +12,9 @@ import { renderFlyer } from "./render-flyer.mjs";
 export { parse } from "./parse.mjs";
 export { inline, escapeHtml } from "./inline.mjs";
 export { baseStyle, themeTokens, BASE, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "./tokens.mjs";
+// The versioned JSON Schema for the parsed IR (frontmatter + the closed block
+// set). Generated into spec/schema.json; enforced by scripts/check-schema.mjs.
+export { SCHEMA, SCHEMA_VERSION } from "./schema.mjs";
 
 // The artifact renderers, keyed by name. Adding a new artifact is one entry
 // here plus a render-<name>.mjs module (see AGENTS.md).
