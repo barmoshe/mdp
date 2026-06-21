@@ -81,10 +81,11 @@ export const COMPARE_STYLE = `.mdp-compare {
   content: "✓";
   position: absolute;
   inset-inline-start: 0;
-  color: var(--mdp-ink-faint);
+  color: var(--mdp-accent-text);
   font-weight: var(--mdp-weight-medium);
 }
 
+/* The CTA is a real, filled accent button: the one place the accent leads. */
 .mdp-compare-cta {
   margin-top: auto;
   align-self: start;
@@ -94,17 +95,16 @@ export const COMPARE_STYLE = `.mdp-compare {
   margin-block-start: var(--mdp-space-5);
   font-size: var(--mdp-text-small);
   font-weight: var(--mdp-weight-medium);
-  color: var(--mdp-ink);
-  background: var(--mdp-bg);
-  border: 1px solid var(--mdp-border);
+  color: var(--mdp-accent-contrast);
+  background: var(--mdp-accent);
+  border: 1px solid var(--mdp-accent);
   border-radius: 8px;
   padding: var(--mdp-space-2) var(--mdp-space-4);
   text-decoration: none;
-  transition: background 120ms ease, border-color 120ms ease;
+  transition: opacity 120ms ease;
 }
 .mdp-compare-cta:hover {
-  background: var(--mdp-surface);
-  border-color: var(--mdp-border);
+  opacity: 0.88;
   text-decoration: none;
 }`;
 

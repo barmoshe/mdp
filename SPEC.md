@@ -56,7 +56,7 @@ This is a strawman. Anything marked (open) is not yet settled.
 ```
 ---
 mdp: 1                       # format version, required
-theme: studio                # a named theme, not arbitrary styling
+theme: studio                # a named theme: studio teal amber violet rose mono
 forms: [page, slides, flyer] # which forms to compile
 title: Tidewater Coffee      # optional, defaults to the first heading
 kicker: Brief                # optional, the small eyebrow above the masthead
@@ -68,6 +68,14 @@ dir: rtl                     # optional, writing direction; auto from lang
 `forms` lists which presentation forms this source supports. `theme` selects
 from a fixed set of renderer themes and never carries colors or sizes. The
 author picks a designed system, not individual styles.
+
+The themes share one warm neutral ramp and differ only in a single restrained
+accent, used in meaning-spots (links, the compare button, the recommendation
+callout, stat figures, the active slide dot, flow arrows), never to color a whole
+surface. The set: `studio` (the default, an indigo accent), `teal`, `amber`,
+`violet`, `rose`, and `mono` (a strict black-and-white, no accent). Every theme
+is tuned to pass WCAG AA in light and dark. An unknown theme name falls back to
+`studio`.
 
 `kicker` sets the small eyebrow label shown above the masthead in every form.
 It defaults to `Brief`. It is the one label the author may set; it carries no
@@ -275,5 +283,4 @@ in one pass. (v0.1: contract defined, validator to follow in the spike.)
   also starts one.
 - How images behave differently across forms.
 - Additional forms (social card, print) and their mapping rules.
-- The starting theme set and how a theme is defined.
 - The name is settled: MDP, for Markdown Presentation, owning the acronym.

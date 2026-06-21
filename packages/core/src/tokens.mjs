@@ -1,4 +1,4 @@
-// tokens.mjs: the locked MDP "studio" design system.
+// tokens.mjs: the locked MDP design system.
 //
 // This is the whole point of MDP: the design lives in the engine, not the
 // source. Authors write meaning; the renderer guarantees the look. Every
@@ -10,15 +10,21 @@
 //     the lead and quotes.
 //   - Two weights only (400, 500). Sentence case. No ALL CAPS except a small
 //     letterspaced eyebrow.
-//   - One neutral ink ramp. No second accent colour. Monochrome and premium.
+//   - One warm neutral ramp plus ONE restrained accent. Color encodes meaning,
+//     never decoration; it never colors a whole surface.
 //   - No gradients, no drop shadows, no decorative anything. Hierarchy comes
 //     from type size, weight, and whitespace.
 //   - Light + dark via prefers-color-scheme. Motion respects
 //     prefers-reduced-motion.
+//
+// Color is owned entirely by the engine. The author selects a named THEME (a
+// vibe), never a raw color. Every theme shares the warm neutral ramp below and
+// supplies one accent set, with two shades so the accent passes WCAG AA both as
+// text on the background and as a fill behind near-white text. Values are
+// derived from AA-checked oklch and emitted as plain hex (no dependency).
 
-// The design tokens as CSS custom properties, plus the light/dark ramps.
-export const TOKENS = `:root {
-  /* Type: two families only */
+// The font, scale, spacing, and warm neutral ramp shared by every theme.
+const SCALE = `  /* Type: two families only */
   --mdp-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mdp-font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
 
@@ -48,27 +54,83 @@ export const TOKENS = `:root {
   /* Body rhythm */
   --mdp-leading-body: 1.7;
   --mdp-leading-tight: 1.2;
-  --mdp-measure: 38rem;
+  --mdp-measure: 38rem;`;
 
-  /* Light ramp (default): one neutral ink ramp, no accent */
-  --mdp-bg: #ffffff;
-  --mdp-surface: #f6f6f3;
-  --mdp-ink: #18181b;
-  --mdp-ink-soft: #52525b;
-  --mdp-ink-faint: #8a8a8f;
-  --mdp-border: rgba(0, 0, 0, 0.10);
+// Warm neutral ramp (light): off-white bg and a warm near-black ink read more
+// premium than pure #fff / #000.
+const NEUTRAL_LIGHT = `  --mdp-bg: #fdfcfb;
+  --mdp-surface: #f4f3f0;
+  --mdp-ink: #1c1b19;
+  --mdp-ink-soft: #56544f;
+  --mdp-ink-faint: #8c8a83;
+  --mdp-border: rgba(28, 27, 25, 0.12);`;
+
+const NEUTRAL_DARK = `    --mdp-bg: #141413;
+    --mdp-surface: #1f1e1c;
+    --mdp-ink: #f4f3f1;
+    --mdp-ink-soft: #a8a59f;
+    --mdp-ink-faint: #75736d;
+    --mdp-border: rgba(244, 243, 241, 0.14);`;
+
+// The accent set per theme. Each entry supplies, for light and dark:
+//   accent          the solid fill (near-white text on it passes AA)
+//   accent-contrast the text/icon that sits on the fill
+//   accent-text     the accent used as text/links on the bg (passes AA)
+//   accent-surface  a subtle tinted background wash
+//   accent-border   an accent edge/ring (passes 3:1 non-text)
+// `mono` carries no hue: the accent collapses to the ink ramp, preserving the
+// original strict black-and-white look as an explicit opt-in.
+const ACCENTS = {
+  studio: {
+    light: { fill: "#5b54d6", contrast: "#ffffff", text: "#4f46d6", surface: "#eeedfb", border: "#b8b4ec" },
+    dark: { fill: "#7a72e0", contrast: "#16161f", text: "#a9a3f0", surface: "#2c2a45", border: "#4d44a0" },
+  },
+  teal: {
+    light: { fill: "#2f9183", contrast: "#ffffff", text: "#1c7d72", surface: "#e6f4f1", border: "#9fd3ca" },
+    dark: { fill: "#3aa597", contrast: "#0f1716", text: "#7fd6c8", surface: "#1c302d", border: "#2e6e64" },
+  },
+  amber: {
+    light: { fill: "#b5760f", contrast: "#ffffff", text: "#9a6212", surface: "#f6efe0", border: "#dcc18a" },
+    dark: { fill: "#cf962a", contrast: "#191307", text: "#e0b665", surface: "#33270f", border: "#7e5e23" },
+  },
+  violet: {
+    light: { fill: "#9145c8", contrast: "#ffffff", text: "#8a3ec0", surface: "#f4ecfa", border: "#d4afe6" },
+    dark: { fill: "#aa63d8", contrast: "#19101f", text: "#cf9ae8", surface: "#352145", border: "#7a3fa0" },
+  },
+  rose: {
+    light: { fill: "#d34a63", contrast: "#ffffff", text: "#c43a55", surface: "#fbeced", border: "#ecadb6" },
+    dark: { fill: "#e26a80", contrast: "#1f1012", text: "#f29aa8", surface: "#43212a", border: "#9c3f50" },
+  },
+  mono: {
+    light: { fill: "#1c1b19", contrast: "#fdfcfb", text: "#1c1b19", surface: "#f4f3f0", border: "#8c8a83" },
+    dark: { fill: "#f4f3f1", contrast: "#141413", text: "#f4f3f1", surface: "#1f1e1c", border: "#75736d" },
+  },
+};
+
+// The curated theme set. The author picks one by name; the default is `studio`.
+export const THEMES = Object.keys(ACCENTS);
+export const DEFAULT_THEME = "studio";
+
+function accentVars(a, indent) {
+  return (
+    `${indent}--mdp-accent: ${a.fill};\n` +
+    `${indent}--mdp-accent-contrast: ${a.contrast};\n` +
+    `${indent}--mdp-accent-text: ${a.text};\n` +
+    `${indent}--mdp-accent-surface: ${a.surface};\n` +
+    `${indent}--mdp-accent-border: ${a.border};`
+  );
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --mdp-bg: #0f0f10;
-    --mdp-surface: #1a1a1c;
-    --mdp-ink: #f4f4f5;
-    --mdp-ink-soft: #a1a1aa;
-    --mdp-ink-faint: #71717a;
-    --mdp-border: rgba(255, 255, 255, 0.12);
-  }
-}`;
+// Emit the full token block for one theme: the shared scale + warm neutral ramp
+// + the theme's accent set, for both light and dark.
+export function themeTokens(theme) {
+  const accent = ACCENTS[theme] || ACCENTS[DEFAULT_THEME];
+  return (
+    `:root {\n${SCALE}\n\n  /* Warm neutral ramp */\n${NEUTRAL_LIGHT}\n\n` +
+    `  /* Accent (the one restrained color, in meaning-spots only) */\n${accentVars(accent.light, "  ")}\n}\n\n` +
+    `@media (prefers-color-scheme: dark) {\n  :root {\n${NEUTRAL_DARK}\n\n${accentVars(accent.dark, "    ")}\n  }\n}`
+  );
+}
 
 // Shared base rules used by every artifact: reset, typography defaults, and the
 // shared block primitives (eyebrow, lead, headings, lists, stats table, quote,
@@ -90,14 +152,14 @@ body {
 }
 
 a {
-  color: var(--mdp-ink);
+  color: var(--mdp-accent-text);
   text-decoration: underline;
   text-underline-offset: 0.15em;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--mdp-border);
+  text-decoration-color: var(--mdp-accent-border);
   transition: text-decoration-color 120ms ease;
 }
-a:hover { text-decoration-color: var(--mdp-ink); }
+a:hover { text-decoration-color: var(--mdp-accent-text); }
 
 code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -227,7 +289,8 @@ em { font-style: italic; }
 }
 `;
 
-// Assemble the shared stylesheet (tokens + base) injected into every artifact.
-export function baseStyle() {
-  return `${TOKENS}\n\n${BASE}`;
+// Assemble the shared stylesheet (the selected theme's tokens + base) injected
+// into every artifact. Defaults to the studio theme when none is given.
+export function baseStyle(theme = DEFAULT_THEME) {
+  return `${themeTokens(theme)}\n\n${BASE}`;
 }

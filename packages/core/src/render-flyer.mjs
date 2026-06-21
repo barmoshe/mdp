@@ -20,6 +20,7 @@ import {
   deriveTitle,
   deriveEyebrow,
   deriveLangDir,
+  deriveTheme,
   splitSections,
   extractMasthead,
 } from "./shared.mjs";
@@ -83,7 +84,7 @@ const FLYER_STYLE = `.mdp-flyer-stage {
   border-bottom: 1px solid var(--mdp-border);
 }
 .mdp-flyer-band .mdp-figures { gap: var(--mdp-space-5); justify-content: space-between; }
-.mdp-flyer-band .mdp-figure-value { font-size: 1.5rem; }
+.mdp-flyer-band .mdp-figure-value { font-size: 1.5rem; color: var(--mdp-accent-text); }
 
 /* Quote block. */
 .mdp-flyer-quote { padding: 0 var(--mdp-space-6); }
@@ -321,5 +322,5 @@ export function renderFlyer(ir) {
     `</div>`;
 
   const { lang, dir } = deriveLangDir(ir);
-  return htmlDocument({ title: docTitle, style: FLYER_STYLE, body, lang, dir });
+  return htmlDocument({ title: docTitle, style: FLYER_STYLE, body, lang, dir, theme: deriveTheme(ir) });
 }

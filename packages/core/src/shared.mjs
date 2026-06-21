@@ -5,10 +5,19 @@
 // block list into sections split on `break` nodes.
 
 import { escapeHtml } from "./inline.mjs";
-import { baseStyle } from "./tokens.mjs";
+import { baseStyle, THEMES, DEFAULT_THEME } from "./tokens.mjs";
 
 // Languages that default to a right-to-left script when no explicit dir is set.
 const RTL_LANGS = new Set(["he", "ar", "fa", "ur", "yi"]);
+
+// Resolve the named theme from the frontmatter. `meta.theme` if it names a known
+// theme, else the default. Unknown names fall back, never throw, so a typo still
+// renders something designed.
+export function deriveTheme(ir) {
+  const meta = (ir && ir.meta) || {};
+  const name = typeof meta.theme === "string" ? meta.theme.trim() : "";
+  return THEMES.includes(name) ? name : DEFAULT_THEME;
+}
 
 // Resolve the document language and writing direction from the frontmatter.
 //   lang: meta.lang, else "en"
@@ -36,6 +45,7 @@ export function htmlDocument({
   script = "",
   lang = "en",
   dir = "ltr",
+  theme = "studio",
 }) {
   const head =
     `<!doctype html>\n` +
@@ -45,7 +55,7 @@ export function htmlDocument({
     `<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
     `<meta name="generator" content="MDP">\n` +
     `<title>${escapeHtml(title)}</title>\n` +
-    `<style>\n${baseStyle()}\n${style}\n</style>\n` +
+    `<style>\n${baseStyle(theme)}\n${style}\n</style>\n` +
     `</head>\n`;
   const scriptTag = script ? `<script>\n${script}\n</script>\n` : "";
   return `${head}<body>\n${body}\n${scriptTag}</body>\n</html>\n`;

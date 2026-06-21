@@ -49,15 +49,21 @@ export const CALLOUT_STYLE = `.mdp-callout {
   line-height: var(--mdp-leading-body);
 }
 
-/* Key boxes: a strong inline-start rule and full-ink body. No colour. */
-.mdp-callout--recommendation,
+/* Recommendation: the accent box. A tinted surface and an accent edge mark it
+   as the positive takeaway, the one callout that earns color. */
+.mdp-callout--recommendation {
+  background: var(--mdp-accent-surface);
+  border-color: var(--mdp-accent-border);
+  border-inline-start: 3px solid var(--mdp-accent);
+}
+.mdp-callout--recommendation .mdp-callout-p { color: var(--mdp-ink); }
+
+/* Warning: a strong neutral edge and full-ink body, so it reads distinct from
+   the accent recommendation without competing for color. */
 .mdp-callout--warning {
   border-inline-start: 3px solid var(--mdp-ink);
 }
-.mdp-callout--recommendation .mdp-callout-p,
-.mdp-callout--warning .mdp-callout-p {
-  color: var(--mdp-ink);
-}`;
+.mdp-callout--warning .mdp-callout-p { color: var(--mdp-ink); }`;
 
 // Render one callout block: the box plus its inner paragraphs. Every paragraph
 // runs through the inline renderer so bold/italic/code/links render. The

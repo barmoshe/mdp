@@ -16,6 +16,7 @@ import {
   deriveTitle,
   deriveEyebrow,
   deriveLangDir,
+  deriveTheme,
   splitSections,
   extractMasthead,
 } from "./shared.mjs";
@@ -43,7 +44,7 @@ const PAGE_STYLE = `.mdp-page {
 .mdp-section .mdp-h2 { margin-bottom: var(--mdp-space-4); }
 .mdp-section > * + * { margin-top: var(--mdp-space-4); }
 
-.mdp-page .mdp-figure-value { font-size: var(--mdp-text-h2); }
+.mdp-page .mdp-figure-value { font-size: var(--mdp-text-h2); color: var(--mdp-accent-text); }
 
 /* Hairline divider: thin rule, generous space on both sides. */
 .mdp-page .mdp-hr { margin: var(--mdp-space-8) 0; }
@@ -138,5 +139,5 @@ export function renderPage(ir) {
   const body = `<main class="mdp-page">\n${masthead}\n${sectionHtml}\n</main>`;
 
   const { lang, dir } = deriveLangDir(ir);
-  return htmlDocument({ title: docTitle, style: PAGE_STYLE, body, lang, dir });
+  return htmlDocument({ title: docTitle, style: PAGE_STYLE, body, lang, dir, theme: deriveTheme(ir) });
 }

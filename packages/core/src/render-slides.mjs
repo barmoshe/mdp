@@ -19,6 +19,7 @@ import {
   deriveTitle,
   deriveEyebrow,
   deriveLangDir,
+  deriveTheme,
   splitSections,
   extractMasthead,
 } from "./shared.mjs";
@@ -99,9 +100,9 @@ const SLIDES_STYLE = `.mdp-deck {
   border: 0;
   padding: 0;
   cursor: pointer;
-  transition: opacity 120ms ease;
+  transition: opacity 120ms ease, background 120ms ease;
 }
-.mdp-dot.is-active { opacity: 1; }
+.mdp-dot.is-active { opacity: 1; background: var(--mdp-accent); }
 
 .mdp-nav { display: flex; align-items: center; gap: var(--mdp-space-3); }
 .mdp-counter {
@@ -126,7 +127,7 @@ const SLIDES_STYLE = `.mdp-deck {
 .mdp-btn:disabled { opacity: 0.35; cursor: default; }
 .mdp-btn:focus-visible,
 .mdp-dot:focus-visible {
-  outline: 2px solid var(--mdp-ink);
+  outline: 2px solid var(--mdp-accent-border);
   outline-offset: 2px;
 }
 
@@ -385,5 +386,6 @@ export function renderSlides(ir) {
     script: SLIDES_SCRIPT,
     lang,
     dir,
+    theme: deriveTheme(ir),
   });
 }

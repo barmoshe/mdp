@@ -36,7 +36,7 @@ export const FLOW_STYLE = `.mdp-flow {
 
 .mdp-flow-arrow {
   display: inline-block;
-  color: var(--mdp-ink-faint);
+  color: var(--mdp-accent-text);
   font-size: var(--mdp-text-small);
   line-height: 1;
   user-select: none;

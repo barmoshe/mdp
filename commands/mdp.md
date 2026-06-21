@@ -53,12 +53,16 @@ mdp: 1
 forms: [page, slides, flyer]
 title: A clear title
 kicker: Optional eyebrow label
+theme: studio
 lang: en
 dir: ltr
 ---
 ```
 
-Use `lang: he` (or `ar`, `fa`) with `dir: rtl` for right-to-left.
+`theme` picks a color theme (the author never sets raw colors): `studio` (the
+default, indigo), `teal`, `amber`, `violet`, `rose`, or `mono` (black and white).
+Pick one that fits the content's tone. Use `lang: he` (or `ar`, `fa`) with
+`dir: rtl` for right-to-left.
 
 Body is valid Markdown plus typed blocks:
 - `# Title`, then `{.lead} a one-line standfirst`.

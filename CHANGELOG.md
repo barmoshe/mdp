@@ -5,7 +5,23 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
-## [0.1.0]
+## [0.2.0]
+
+### Added
+- A color and theme system. The `theme` frontmatter field is now wired to a
+  curated set the author selects by name (never raw colors): `studio` (the
+  default, an indigo accent), `teal`, `amber`, `violet`, `rose`, and `mono` (the
+  strict black-and-white look, preserved as an opt-in). An unknown theme falls
+  back to `studio`.
+- A semantic accent token set (`--mdp-accent`, `--mdp-accent-contrast`,
+  `--mdp-accent-text`, `--mdp-accent-surface`, `--mdp-accent-border`), a two-shade
+  system tuned to pass WCAG AA in light and dark. The accent appears only in
+  meaning-spots: links, the compare button (now a filled accent button), the
+  recommendation callout, stat figures, the active slide dot, and flow arrows.
+
+### Changed
+- Warmed the neutral ramp (a warm off-white background and near-black ink instead
+  of pure `#fff` / `#000`) so the default reads designed, not stark.
 
 ### Added
 - A Claude Code plugin (this repo is the marketplace): a `/mdp` command and an
