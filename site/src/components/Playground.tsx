@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { compile, ARTIFACTS, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "@mdp/core";
+import { compile, ARTIFACTS, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "mdp-compiler";
 import { EXAMPLES } from "../examples";
 import { TEMPLATES } from "../templates";
 

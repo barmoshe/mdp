@@ -21,7 +21,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@mdp/core": ["../packages/core/src/index.mjs"]
+      "mdp-compiler": ["../packages/core/src/index.mjs"]
     }
   },
   "include": ["src", "vite.config.ts", "../../examples/manifest.json", "../../templates/manifest.json"]

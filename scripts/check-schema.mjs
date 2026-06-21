@@ -1,7 +1,7 @@
 // check-schema.mjs: the JSON Schema conformance gate (issue #4).
 //
 // Parses every example + template with the real engine and validates the
-// resulting IR against the versioned schema exported from @mdp/core. This is
+// resulting IR against the versioned schema exported from mdp-compiler. This is
 // what makes "the spec is a prompt" enforceable: if the parser starts emitting a
 // block shape the schema doesn't allow (engine drift), or a source carries an
 // off-grammar frontmatter key (example drift), CI fails here.
@@ -9,7 +9,7 @@
 // The validator is a tiny, dependency-free reader of the draft-07 subset this
 // schema actually uses (type/const/enum/required/properties/additionalProperties/
 // items/oneOf/$ref/uniqueItems). Hand-rolled on purpose, like check-contrast.mjs:
-// it keeps @mdp/core and the test suite zero-dependency. The schema is still a
+// it keeps mdp-compiler and the test suite zero-dependency. The schema is still a
 // standard draft-07 document, so ajv or the browser validate it identically.
 //
 // Run: npm run check:schema   (also in `npm test` and CI)

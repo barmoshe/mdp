@@ -47,7 +47,7 @@ artifact is a solver, not a template.
 
 ```
 mdp/
-  packages/core/          @mdp/core, the engine (zero-dependency, the source of truth)
+  packages/core/          mdp-compiler, the engine (zero-dependency, the source of truth)
     build.mjs             CLI: read a source, compile artifacts, write dist/ (or --open)
     src/
       parse.mjs           source string -> IR { meta, blocks }

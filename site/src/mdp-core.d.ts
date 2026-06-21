@@ -1,7 +1,7 @@
-// Ambient types for the engine the playground bundles. `@mdp/core` is plain
+// Ambient types for the engine the playground bundles. `mdp-compiler` is plain
 // ESM with no shipped types; the hub only needs the compile surface, so this
 // declares exactly what it imports. It mirrors packages/core/src/index.mjs.
-declare module "@mdp/core" {
+declare module "mdp-compiler" {
   /** Compile an MDP source string into the standalone HTML for one artifact. */
   export function compile(source: string, artifact?: string): string;
   /** Parse an MDP source into the semantic representation (the typed tree). */

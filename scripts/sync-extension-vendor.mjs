@@ -2,7 +2,7 @@
 // ships inside every generated extension.
 //
 // Generated extension packages are zero-dependency, so they carry a verbatim
-// copy of @mdp/core's inline.mjs as src/_inline.mjs (escaping is security
+// copy of mdp-compiler's inline.mjs as src/_inline.mjs (escaping is security
 // critical and must never be re-implemented from memory). This copies the
 // current core file into both the block and artifact templates. The drift gate
 // in scripts/check-scaffold.mjs fails CI if they are ever out of sync, the same

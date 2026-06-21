@@ -100,7 +100,7 @@ in-core wiring an author or host then does is the
 (`--license apache-2.0`); third parties are free to choose any license. Core
 itself is Apache-2.0.
 
-**Using a third-party extension.** `@mdp/core` has no runtime plugin loader yet,
+**Using a third-party extension.** `mdp-compiler` has no runtime plugin loader yet,
 by design (the zero-maintenance bet). To render a third-party block or artifact in
 a real document you fork or patch core: teach `parse.mjs` the fence and add a
 `case` (plus the `STYLE`) to the three renderers for a block, or add a `RENDERERS`

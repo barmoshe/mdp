@@ -29,7 +29,7 @@ files. Any change that breaks this is a bug.
 
 ```
 mdp/
-  packages/core/            @mdp/core, the engine
+  packages/core/            mdp-compiler, the engine
     src/
       parse.mjs             source string  -> IR { meta, blocks }
       inline.mjs            inline markdown -> escaped, safe HTML

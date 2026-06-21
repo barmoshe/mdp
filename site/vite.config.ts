@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
 
 // The hub runs the real MDP engine in the browser. The whole point of the
-// playground is that it is not a reimplementation: it imports `@mdp/core`
+// playground is that it is not a reimplementation: it imports `mdp-compiler`
 // straight from `../packages/core/src`, the same code the CLI and the plugins
 // run, and bundles it client-side. The engine is pure ESM with zero
 // dependencies, so it bundles cleanly and stays the single source of truth.
@@ -18,7 +18,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@mdp/core": enginePath,
+      "mdp-compiler": enginePath,
     },
   },
   server: {

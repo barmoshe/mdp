@@ -120,7 +120,7 @@ function checkType({ type, name, expectName, expectKeyword, demoNeedle }) {
   ok(`${type}: demo writes a working preview`);
 }
 
-// The vendored escaper in each template must match @mdp/core byte-for-byte.
+// The vendored escaper in each template must match mdp-compiler byte-for-byte.
 function checkVendorDrift() {
   const core = readFileSync(join(ROOT, "packages/core/src/inline.mjs"));
   for (const type of ["block", "artifact"]) {
@@ -135,7 +135,7 @@ function checkVendorDrift() {
       );
     }
   }
-  ok("vendored _inline.mjs matches @mdp/core (no drift)");
+  ok("vendored _inline.mjs matches mdp-compiler (no drift)");
 }
 
 process.stdout.write("check-scaffold: create-mdp-extension acceptance\n");

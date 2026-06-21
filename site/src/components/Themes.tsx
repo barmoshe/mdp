@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { THEMES, THEME_SWATCHES } from "@mdp/core";
+import { THEMES, THEME_SWATCHES } from "mdp-compiler";
 
 const LOCK = [
   "No color, size, or font in the source. The author cannot style.",
