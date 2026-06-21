@@ -4,7 +4,7 @@
 // Usage:
 //   node build.mjs <source.mdp> [--out <dir>] [--only <page|slides|flyer>] [--theme <name>] [--open [artifact]]
 //
-// Defaults: source = examples/tidewater.mdp; build all three artifacts.
+// Defaults: source = examples/block-compare.mdp; build all three artifacts.
 // Output dir: --out <dir>, else a temp preview folder when --open is used,
 // else <repo>/dist. --open with no artifact opens the first built one (or the
 // page). The compile is deterministic (no clocks, no randomness); --open is a
@@ -62,7 +62,7 @@ for (let i = 0; i < argv.length; i++) {
 
 const inputPath = inputArg
   ? resolve(process.cwd(), inputArg)
-  : join(repoRoot, "examples", "tidewater.mdp");
+  : join(repoRoot, "examples", "block-compare.mdp");
 
 let targets = ARTIFACTS;
 if (onlyArg) {

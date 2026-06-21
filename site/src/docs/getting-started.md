@@ -15,7 +15,7 @@ dependencies, and it runs on Node 18 or newer.
 ```bash
 git clone https://github.com/barmoshe/mdp
 cd mdp
-node packages/core/build.mjs examples/comparison.mdp
+node packages/core/build.mjs examples/block-compare.mdp
 ```
 
 That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open

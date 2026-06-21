@@ -7,7 +7,7 @@ bundler: it is plain Node ESM and runs with `node` directly.
 node packages/core/build.mjs <source.mdp> [options]
 ```
 
-If you omit the source, it builds the bundled `examples/tidewater.mdp`. By
+If you omit the source, it builds the bundled `examples/block-compare.mdp`. By
 default it compiles all three artifacts.
 
 ## Options
@@ -16,6 +16,7 @@ default it compiles all three artifacts.
 |---|---|
 | `--out <dir>` | Write the artifacts to `<dir>` instead of `dist/`. |
 | `--only <artifact>` | Build just one of `page`, `slides`, or `flyer`. |
+| `--theme <name>` | Override the frontmatter theme with one of the 11 named themes. |
 | `--open [artifact]` | Show or present in the browser after building. With no name it opens the first built artifact. |
 
 ## Examples
@@ -23,13 +24,13 @@ default it compiles all three artifacts.
 Build all three artifacts into `dist/`:
 
 ```bash
-node packages/core/build.mjs examples/comparison.mdp
+node packages/core/build.mjs examples/block-compare.mdp
 ```
 
 Present the deck:
 
 ```bash
-node packages/core/build.mjs examples/comparison.mdp --open slides
+node packages/core/build.mjs examples/block-compare.mdp --open slides
 ```
 
 Build only the flyer, into a custom folder:
