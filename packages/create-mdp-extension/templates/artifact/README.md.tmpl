@@ -1,0 +1,70 @@
+# __PACKAGE_NAME__
+
+An [MDP](https://github.com/barmoshe/mdp) **artifact** extension: a new output
+form (alongside the core `page`, `slides`, and `flyer`).
+
+> Scaffolded with `create-mdp-extension`. This starter renders the IR as a single
+> centered card; edit `src/index.mjs` to make it your own layout.
+
+## Try it
+
+```sh
+npm test          # full-document output, escaping, the design lock, determinism
+npm run demo      # writes dist/preview.html - open it in a browser
+```
+
+Zero dependencies: it runs anywhere Node 18+ does.
+
+## What an artifact is
+
+An artifact is a solver over the whole IR. It takes `{ meta, blocks }` and returns
+a complete, standalone HTML document:
+
+```js
+import { __RENDER_FN__ } from "__PACKAGE_NAME__";
+import { parse } from "@mdp/core"; // the public parser
+
+const html = __RENDER_FN__(parse(source));
+```
+
+The starter handles `title`, `lead`, `paragraph`, `heading`, `list`, and `quote`;
+unknown blocks are skipped, mirroring the core renderers' graceful degradation.
+
+## Publish (the convention)
+
+MDP discovers extensions with no central registry - just npm + GitHub search:
+
+1. Keep `"keywords": ["mdp", "__KEYWORD__"]` in `package.json` (already set).
+2. `npm publish`
+3. Add the **`__KEYWORD__`** topic to the GitHub repo.
+
+It's then found by `npm search keywords:__KEYWORD__` and GitHub's `__KEYWORD__`
+topic page.
+
+## Use it in a document
+
+`@mdp/core` has no runtime plugin loader yet. An artifact is invoked directly as
+`__RENDER_FN__(parse(source))`, or wired into a fork of
+[`@mdp/core`](https://github.com/barmoshe/mdp) as a new entry in the `RENDERERS`
+map so the CLI and playground can target it by name:
+
+```js
+import { __RENDER_FN__ } from "__PACKAGE_NAME__";
+// in packages/core/src/index.mjs:
+export const RENDERERS = {
+  page: renderPage,
+  slides: renderSlides,
+  flyer: renderFlyer,
+  __SLUG__: __RENDER_FN__,
+};
+```
+
+## Note on `_tokens.mjs`
+
+The starter vendors a minimal `src/_tokens.mjs` so the document is styled without
+an `@mdp/core` install. When `@mdp/core` is published, delete it and
+`import { baseStyle } from "@mdp/core"` for the full themed design system.
+
+## License
+
+__LICENSE_ID__.

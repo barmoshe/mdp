@@ -1,0 +1,105 @@
+// __PACKAGE_NAME__: an MDP artifact extension.
+//
+// An artifact is a SOLVER over the whole IR { meta, blocks }: it owns the layout
+// and returns a complete, standalone HTML document. This starter renders the IR
+// as one centered card. Unlike a block, an artifact consumes the public parse()
+// output directly, so it is used as render<Name>(parse(source)).
+//
+// IR shape (from @mdp/core's parse()):
+//   { meta: { title, theme, lang, dir, ... }, blocks: [ { type, ... }, ... ] }
+
+import { inline, escapeHtml } from "./_inline.mjs";
+import { baseStyle } from "./_tokens.mjs";
+
+// Layout CSS for this artifact. TODO: make it yours. Tokens only (var(--mdp-*)),
+// logical properties, so it respects the design lock and flips under dir="rtl".
+export const __STYLE_CONST__ = `.__CSS_CLASS__ {
+  max-width: 32rem;
+  margin: var(--mdp-space-8) auto;
+  padding: var(--mdp-space-7) var(--mdp-space-6);
+  background: var(--mdp-bg);
+  border: 1px solid var(--mdp-border);
+  border-radius: 16px;
+}
+.__CSS_CLASS__-title {
+  font-size: var(--mdp-text-title);
+  font-weight: var(--mdp-weight-medium);
+  line-height: var(--mdp-leading-tight);
+  letter-spacing: -0.02em;
+  color: var(--mdp-ink);
+  margin: 0 0 var(--mdp-space-5);
+}
+.__CSS_CLASS__ h2 {
+  font-size: var(--mdp-text-h2);
+  font-weight: var(--mdp-weight-medium);
+  color: var(--mdp-ink);
+  margin: var(--mdp-space-6) 0 var(--mdp-space-3);
+}
+.__CSS_CLASS__ p {
+  font-size: var(--mdp-text-body);
+  line-height: var(--mdp-leading-body);
+  color: var(--mdp-ink);
+  margin: 0 0 var(--mdp-space-4);
+}
+.__CSS_CLASS__ ul,
+.__CSS_CLASS__ ol {
+  color: var(--mdp-ink);
+  padding-inline-start: var(--mdp-space-5);
+  margin: 0 0 var(--mdp-space-4);
+}`;
+
+// Resolve the document title: explicit meta.title, else the first title block,
+// else a stable fallback. Mirrors @mdp/core's deriveTitle.
+function deriveTitle(ir) {
+  const meta = (ir && ir.meta) || {};
+  if (typeof meta.title === "string" && meta.title) return meta.title;
+  const t = (ir.blocks || []).find((b) => b.type === "title");
+  return t ? t.text : "Untitled";
+}
+
+// Render one block. A minimal set; unknown blocks are skipped (return ""), the
+// same graceful-degradation rule the core renderers use.
+function renderBlock(block) {
+  switch (block.type) {
+    case "title":
+      return `<h1 class="__CSS_CLASS__-title">${inline(block.text)}</h1>`;
+    case "lead":
+    case "paragraph":
+      return `<p>${inline(block.text)}</p>`;
+    case "heading":
+      return `<h2>${inline(block.text)}</h2>`;
+    case "list": {
+      const tag = block.ordered ? "ol" : "ul";
+      const items = (block.items || [])
+        .map((it) => `<li>${inline(it)}</li>`)
+        .join("\n");
+      return `<${tag}>\n${items}\n</${tag}>`;
+    }
+    case "quote":
+      return `<blockquote>${inline(block.text)}</blockquote>`;
+    default:
+      return "";
+  }
+}
+
+// Render the whole IR to a complete HTML document string. Pure + deterministic:
+// no clocks, no randomness, stable iteration order.
+export function __RENDER_FN__(ir) {
+  const meta = (ir && ir.meta) || {};
+  const theme = typeof meta.theme === "string" ? meta.theme : "studio";
+  const lang = typeof meta.lang === "string" ? meta.lang : "en";
+  const dir = typeof meta.dir === "string" ? meta.dir : "ltr";
+  const title = deriveTitle(ir);
+
+  const body = (ir.blocks || []).map(renderBlock).filter(Boolean).join("\n");
+
+  return (
+    `<!doctype html>\n` +
+    `<html lang="${escapeHtml(lang)}" dir="${escapeHtml(dir)}">\n` +
+    `<head>\n<meta charset="utf-8">\n` +
+    `<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
+    `<title>${escapeHtml(title)}</title>\n` +
+    `<style>\n${baseStyle(theme)}\n${__STYLE_CONST__}\n</style>\n</head>\n` +
+    `<body>\n<main class="__CSS_CLASS__">\n${body}\n</main>\n</body>\n</html>\n`
+  );
+}

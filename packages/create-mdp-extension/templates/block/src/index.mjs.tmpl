@@ -1,0 +1,51 @@
+// __PACKAGE_NAME__: an MDP block extension.
+//
+// Shape mirrors @mdp/core's src/compare.mjs: export a STYLE string and a
+// render<Name>(block) that returns an HTML string. This module is RENDER-ONLY -
+// turning fenced source into the IR node below happens in the host engine (see
+// README, "Use it in a document"). Every author-supplied string flows through
+// inline() so it is escaped and link schemes are defanged.
+//
+// IR node this renderer expects:
+//   { type: "__NODE_TYPE__", label, tags: [string, ...] }
+
+import { inline } from "./_inline.mjs";
+
+// The block's stylesheet, injected once by each host renderer that emits this
+// block. TODO: make it yours. Two rules keep it on-brand with MDP:
+//   1. Tokens only - var(--mdp-*). No literal colors, ever.
+//   2. Logical properties - margin-inline-start, padding-inline-end, ... - so
+//      the block flips correctly under dir="rtl".
+export const __STYLE_CONST__ = `.__CSS_CLASS__ {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--mdp-space-3);
+}
+.__CSS_CLASS__-label {
+  font-size: var(--mdp-text-eyebrow);
+  font-weight: var(--mdp-weight-medium);
+  color: var(--mdp-ink-soft);
+  margin-inline-end: var(--mdp-space-2);
+}
+.__CSS_CLASS__-tag {
+  font-size: var(--mdp-text-small);
+  color: var(--mdp-ink-soft);
+  background: var(--mdp-surface);
+  border: 1px solid var(--mdp-border);
+  border-radius: 999px;
+  padding: var(--mdp-space-1) var(--mdp-space-3);
+  line-height: 1.4;
+}`;
+
+// Render the block to an HTML string. Keep it pure: no clocks, no randomness,
+// stable iteration order, so two renders of the same node are byte-identical.
+export function __RENDER_FN__(block) {
+  const label = block.label
+    ? `<span class="__CSS_CLASS__-label">${inline(block.label)}</span>`
+    : "";
+  const tags = (block.tags || [])
+    .map((t) => `<span class="__CSS_CLASS__-tag">${inline(t)}</span>`)
+    .join("\n");
+  return `<div class="__CSS_CLASS__">\n${label}${tags}\n</div>`;
+}

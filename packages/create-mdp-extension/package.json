@@ -1,0 +1,41 @@
+{
+  "name": "create-mdp-extension",
+  "version": "0.2.0",
+  "description": "Scaffold a correctly named, tagged MDP block or artifact extension package.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Bar Moshe",
+  "homepage": "https://github.com/barmoshe/mdp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barmoshe/mdp.git",
+    "directory": "packages/create-mdp-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/barmoshe/mdp/issues"
+  },
+  "keywords": [
+    "mdp",
+    "mdp-block",
+    "mdp-artifact",
+    "scaffold",
+    "create",
+    "generator"
+  ],
+  "bin": {
+    "create-mdp-extension": "bin/create-mdp-extension.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test.mjs"
+  }
+}

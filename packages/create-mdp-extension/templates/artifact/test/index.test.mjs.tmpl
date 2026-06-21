@@ -1,0 +1,46 @@
+// Tests for __PACKAGE_NAME__. Zero-dep: node:test + node:assert. Run `npm test`.
+
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { __RENDER_FN__, __STYLE_CONST__ } from "../src/index.mjs";
+
+const ir = {
+  meta: { title: "Quarterly Review", theme: "studio" },
+  blocks: [
+    { type: "title", text: "Quarterly Review" },
+    { type: "paragraph", text: "Shipped *fast*, with <b>x</b> caveats." },
+    { type: "heading", level: 2, text: "Highlights" },
+    { type: "list", ordered: false, items: ["One", "Two"] },
+  ],
+};
+
+test("returns a complete HTML document", () => {
+  const html = __RENDER_FN__(ir);
+  assert.match(html, /^<!doctype html>/);
+  assert.match(html, /<title>Quarterly Review<\/title>/);
+  assert.match(html, /class="__CSS_CLASS__"/);
+});
+
+test("renders blocks from the IR", () => {
+  const html = __RENDER_FN__(ir);
+  assert.match(html, /Highlights/);
+  assert.equal((html.match(/<li>/g) || []).length, 2);
+});
+
+test("escapes author content (no raw HTML leaks through)", () => {
+  const html = __RENDER_FN__(ir);
+  assert.ok(!html.includes("<b>x</b>"), "raw markup must not survive");
+  assert.match(html, /&lt;b&gt;x&lt;\/b&gt;/);
+});
+
+test("STYLE holds the design lock (tokens only, logical properties)", () => {
+  assert.ok(!/#[0-9a-fA-F]{3,8}\b/.test(__STYLE_CONST__), "no literal hex colors");
+  assert.ok(
+    !/\b(margin|padding|inset|border)-(left|right)\b/.test(__STYLE_CONST__),
+    "no physical left/right properties"
+  );
+});
+
+test("deterministic: identical output across two renders", () => {
+  assert.equal(__RENDER_FN__(ir), __RENDER_FN__(ir));
+});

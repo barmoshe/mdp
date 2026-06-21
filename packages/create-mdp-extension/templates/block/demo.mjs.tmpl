@@ -1,0 +1,49 @@
+// demo.mjs: render a sample of this block into a standalone HTML file you can
+// open in a browser. Self-contained: it inlines a minimal slice of the MDP token
+// system so the block's var(--mdp-*) references resolve without installing
+// @mdp/core. In a real document the host engine supplies the full design system
+// and the artifact layout; this is a preview only.
+//
+// When @mdp/core is published you can drop MIN_TOKENS and use the real system:
+//   import { baseStyle } from "@mdp/core";   // then baseStyle("studio")
+
+import { mkdirSync, writeFileSync } from "node:fs";
+import { __RENDER_FN__, __STYLE_CONST__ } from "./src/index.mjs";
+
+const sample = {
+  type: "__NODE_TYPE__",
+  label: "Stack",
+  tags: ["Node", "Zero-dep", "ESM"],
+};
+
+// A minimal token slice. The only literal colors in this package live here, in
+// the preview harness - never in the block itself.
+const MIN_TOKENS = `:root {
+  --mdp-bg: #fdfcfb;
+  --mdp-surface: #f4f3f0;
+  --mdp-ink: #1c1b19;
+  --mdp-ink-soft: #56544f;
+  --mdp-border: rgba(28, 27, 25, 0.12);
+  --mdp-space-1: 0.25rem;
+  --mdp-space-2: 0.5rem;
+  --mdp-space-3: 0.75rem;
+  --mdp-text-eyebrow: 0.78rem;
+  --mdp-text-small: 0.9rem;
+  --mdp-weight-medium: 500;
+}
+body {
+  margin: 3rem;
+  background: var(--mdp-bg);
+  color: var(--mdp-ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}`;
+
+const html =
+  `<!doctype html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="utf-8">\n` +
+  `<title>__PACKAGE_NAME__ preview</title>\n` +
+  `<style>\n${MIN_TOKENS}\n${__STYLE_CONST__}\n</style>\n</head>\n` +
+  `<body>\n${__RENDER_FN__(sample)}\n</body>\n</html>\n`;
+
+mkdirSync("dist", { recursive: true });
+writeFileSync("dist/preview.html", html);
+console.log("Wrote dist/preview.html");

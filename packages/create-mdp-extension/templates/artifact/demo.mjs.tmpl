@@ -1,0 +1,27 @@
+// demo.mjs: render a sample document with this artifact into dist/preview.html.
+// Self-contained: it uses a sample IR literal so it runs with no @mdp/core
+// install. In real use an artifact consumes the public parser:
+//   import { parse } from "@mdp/core";
+//   writeFileSync("dist/preview.html", __RENDER_FN__(parse(source)));
+
+import { mkdirSync, writeFileSync } from "node:fs";
+import { __RENDER_FN__ } from "./src/index.mjs";
+
+const ir = {
+  meta: { title: "Hello from __PACKAGE_NAME__", theme: "studio" },
+  blocks: [
+    { type: "title", text: "Hello from __PACKAGE_NAME__" },
+    { type: "lead", text: "An MDP artifact extension renders the whole document." },
+    { type: "heading", level: 2, text: "What an artifact does" },
+    { type: "paragraph", text: "It solves the **whole IR** into one layout." },
+    {
+      type: "list",
+      ordered: false,
+      items: ["Owns the document", "Reuses the design tokens", "Stays deterministic"],
+    },
+  ],
+};
+
+mkdirSync("dist", { recursive: true });
+writeFileSync("dist/preview.html", __RENDER_FN__(ir));
+console.log("Wrote dist/preview.html");

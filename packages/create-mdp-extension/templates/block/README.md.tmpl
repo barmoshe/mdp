@@ -1,0 +1,81 @@
+# __PACKAGE_NAME__
+
+An [MDP](https://github.com/barmoshe/mdp) **block** extension.
+
+> Scaffolded with `create-mdp-extension`. This starter renders a labeled row of
+> tag pills; edit `src/index.mjs` to make it your own block.
+
+## Try it
+
+```sh
+npm test          # markup, escaping, the design lock, determinism
+npm run demo      # writes dist/preview.html - open it in a browser
+```
+
+Zero dependencies: it runs anywhere Node 18+ does.
+
+## The source it's designed for
+
+A block adds a fenced directive the host turns into an IR node:
+
+````
+```__FENCE__
+label: Stack
+tags: Node, ESM, Zero-dep
+```
+````
+
+The IR node this package renders:
+
+```js
+{ type: "__NODE_TYPE__", label, tags: [string, ...] }
+```
+
+It exports the engine's block shape - a STYLE string and a render function:
+
+```js
+import { __RENDER_FN__, __STYLE_CONST__ } from "__PACKAGE_NAME__";
+```
+
+## Publish (the convention)
+
+MDP discovers extensions with no central registry - just npm + GitHub search:
+
+1. Keep `"keywords": ["mdp", "__KEYWORD__"]` in `package.json` (already set).
+2. `npm publish`
+3. Add the **`__KEYWORD__`** topic to the GitHub repo.
+
+It's then found by `npm search keywords:__KEYWORD__` and GitHub's `__KEYWORD__`
+topic page.
+
+## Use it in a document
+
+`@mdp/core` has no runtime plugin loader yet, so the host wires a block in. To
+render `__FENCE__` in a real page / slides / flyer, fork or patch
+[`@mdp/core`](https://github.com/barmoshe/mdp) and:
+
+1. **Parse** - in `packages/core/src/parse.mjs`, emit the node for your fence
+   (model it on the `mdp:compare` branch):
+
+   ```js
+   } else if (fenceInfo === "__FENCE__") {
+     blocks.push({ type: "__NODE_TYPE__", /* ...parse bodyLines... */ });
+   }
+   ```
+
+2. **Render** - in each of `render-page.mjs`, `render-slides.mjs`,
+   `render-flyer.mjs`, import this package, add a case to the block switch, and
+   inject the STYLE where the other block styles are injected:
+
+   ```js
+   import { __RENDER_FN__, __STYLE_CONST__ } from "__PACKAGE_NAME__";
+   // in the stylesheet:  ${__STYLE_CONST__}
+   // in renderBlock:     case "__NODE_TYPE__": return __RENDER_FN__(block);
+   ```
+
+An unknown fence already degrades to readable text, so an un-wired block never
+breaks a document.
+
+## License
+
+__LICENSE_ID__.
