@@ -2,14 +2,14 @@ import { LINKS } from "../links";
 
 const SHIPPED = [
   { name: "Live playground", note: "The real engine, compiling in your browser." },
-  { name: "MCP server", note: "mdp_compile, mdp_present, and mdp_validate from any host." },
+  { name: "MCP server", note: "mdp-mcp on npm: mdp_compile, mdp_present, and mdp_validate from any host." },
+  { name: "create-mdp-extension", note: "On npm: scaffold a new block or artifact with one command." },
   { name: "Brand logo", note: "A frontmatter slot the engine places, sanitized and locked." },
   { name: "Examples & templates", note: "A conventioned library on one manifest." },
 ];
 
 const PLANNED = [
   { name: "mdp:chart", note: "A typed chart block every artifact can render." },
-  { name: "create-mdp-extension", note: "A scaffolder for new blocks and new artifacts." },
   { name: "Schema conformance", note: "A JSON Schema and a conformance test for the format." },
 ];
 

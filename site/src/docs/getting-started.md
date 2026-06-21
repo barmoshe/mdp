@@ -9,8 +9,20 @@ A markdown viewer gives you one rendering. MDP gives you a compiler.
 
 ## Install
 
-There is nothing to install. The engine is plain Node ESM with zero
-dependencies, and it runs on Node 18 or newer.
+The engine is published on npm as `mdp-compiler`, zero dependencies, Node 18 or
+newer:
+
+```bash
+npm i mdp-compiler
+```
+
+```js
+import { compile } from "mdp-compiler";
+
+const html = compile(source, "slides"); // "page" | "slides" | "flyer"
+```
+
+Or clone and run it straight from source, no install:
 
 ```bash
 git clone https://github.com/barmoshe/mdp
