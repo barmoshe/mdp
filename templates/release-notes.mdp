@@ -1,0 +1,31 @@
+---
+mdp: 1
+theme: amber
+forms: [page, slides]
+kicker: Release
+title: <RELEASE NAME> is live
+---
+
+# <RELEASE NAME> is live
+{.lead} <ONE LINE ON WHAT CHANGED AND WHY IT MATTERS>
+
+```mdp:stats
+<HEADLINE METRIC>: <VALUE>
+<HEADLINE METRIC>: <VALUE>
+<HEADLINE METRIC>: <VALUE>
+```
+
+---
+
+:::callout tip
+How to upgrade: <ONE OR TWO STEPS>.
+:::
+
+:::callout warning
+Breaking change: <WHAT BROKE AND THE MIGRATION>.
+:::
+
+---
+
+> "<A SHORT REACTION FROM A USER OR TESTER>"
+> {.cite} <NAME, ROLE>

@@ -1,0 +1,28 @@
+---
+mdp: 1
+theme: mono
+forms: [page]
+kicker: Notes
+title: <MEETING TITLE>
+---
+
+# <MEETING TITLE>
+{.lead} <YYYY-MM-DD> // <PURPOSE IN ONE LINE>
+
+## Attendees
+- <NAME, ROLE>
+- <NAME, ROLE>
+
+## Discussion
+> TODO: One short paragraph per topic.
+<TOPIC ONE: WHAT WAS SAID>
+
+<TOPIC TWO: WHAT WAS SAID>
+
+:::callout recommendation
+Decisions: <DECISION ONE>; <DECISION TWO>.
+:::
+
+## Action items
+- <OWNER>: <TASK> (<DUE>)
+- <OWNER>: <TASK> (<DUE>)
