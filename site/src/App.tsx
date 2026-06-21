@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
+import Gap from "./components/Gap";
+import Steps from "./components/Steps";
 import Playground from "./components/Playground";
-import PlaygroundPreview from "./components/PlaygroundPreview";
-import Pitch from "./components/Pitch";
-import HowItWorks from "./components/HowItWorks";
-import Blocks from "./components/Blocks";
-import Tools from "./components/Tools";
-import Roadmap from "./components/Roadmap";
+import Format from "./components/Format";
+import Themes from "./components/Themes";
+import Install from "./components/Install";
+import Library from "./components/Library";
+import Extend from "./components/Extend";
+import FinalCta from "./components/FinalCta";
 import Footer from "./components/Footer";
 import Docs from "./components/Docs";
 
@@ -35,13 +37,13 @@ export default function App() {
         <Nav active="playground" />
         <main id="top" className="pg-page">
           <div className="pg-page-head wrap">
-            <div className="section-head wrap-narrow">
+            <div className="masthead">
               <p className="eyebrow eyebrow-accent">Live playground</p>
-              <h1 className="h2">Edit a source, watch it compile</h1>
+              <h1 className="h2">Change a line. Watch all three artifacts change.</h1>
               <p className="lead">
-                This runs the real engine, bundled straight from{" "}
-                <code>packages/core</code>. Change the source, switch the form,
-                pick a theme. The same source becomes all three artifacts.
+                This is the real engine, bundled straight from{" "}
+                <code>packages/core</code>. Edit the source, switch the form, pick
+                a theme. The same source becomes all three artifacts.
               </p>
             </div>
           </div>
@@ -70,28 +72,32 @@ export default function App() {
   return (
     <>
       <Nav />
-      <main>
+      <main id="top">
         <Hero />
+        <Gap />
+        <Steps />
 
-        <section className="section" id="playground" style={{ borderTop: "1px solid var(--mdp-border)" }}>
-          <div className="wrap">
-            <div className="section-head wrap-narrow">
+        <section className="sec" id="playground">
+          <div className="sec-rail-wide">
+            <div className="masthead">
               <p className="eyebrow eyebrow-accent">Live playground</p>
-              <h2 className="h2">One source, three artifacts</h2>
+              <h2 className="h2">Change a line. Watch all three artifacts change.</h2>
               <p className="lead">
-                This runs the real engine from <code>packages/core</code>. See it
-                here, then open the full playground for room to edit.
+                The real engine, compiling in your browser, bundled straight from{" "}
+                <code>packages/core</code>. Edit the source, switch the form, pick
+                a theme, then open the full playground for room to work.
               </p>
             </div>
-            <PlaygroundPreview />
+            <Playground variant="embed" />
           </div>
         </section>
 
-        <Pitch />
-        <HowItWorks />
-        <Blocks />
-        <Tools />
-        <Roadmap />
+        <Format />
+        <Themes />
+        <Install />
+        <Library />
+        <Extend />
+        <FinalCta />
       </main>
       <Footer />
     </>

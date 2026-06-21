@@ -25,7 +25,7 @@ const ARTIFACT_HINT: Record<string, string> = {
   flyer: "One composed surface. The at-a-glance form.",
 };
 
-export default function Playground({ variant = "full" }: { variant?: "full" }) {
+export default function Playground({ variant = "full" }: { variant?: "full" | "embed" }) {
   const [source, setSource] = useState(EXAMPLES[0].source);
   const [artifact, setArtifact] = useState("page");
   const [debounced, setDebounced] = useState(source);

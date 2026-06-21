@@ -26,7 +26,7 @@ export default function Nav({
     <header className="nav">
       <div className="nav-inner">
         <a className="brand" href="#top" aria-label="MDP home">
-          <img className="brand-mark" src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={24} height={24} />
+          <img className="brand-mark" src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={26} height={26} />
           <span>MDP</span>
         </a>
 
@@ -52,21 +52,14 @@ export default function Nav({
             <a className="nav-link" href={active === "playground" ? "#/" : "#top"}>Home</a>
           ) : (
             <>
-              <a
-                className="nav-link"
-                href="#/playground"
-                aria-current={active === "playground" ? "page" : undefined}
-              >
-                Playground
-              </a>
               <a className="nav-link" href="#how">How it works</a>
-              <a className="nav-link" href="#blocks">Blocks</a>
+              <a className="nav-link" href="#blocks">Format</a>
+              <a className="nav-link" href="#library">Examples</a>
             </>
           )}
           <a className="nav-link" href="#/docs/getting-started">Docs</a>
-          <a className="nav-link" href={LINKS.repo} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
+          <a className="nav-link" href={LINKS.repo} target="_blank" rel="noreferrer">GitHub</a>
+          <a className="btn btn-primary btn-small nav-cta" href="#/playground">Playground</a>
         </nav>
       </div>
     </header>

@@ -12,7 +12,7 @@ const CATEGORIES = [
     name: "Data & diagrams",
     blocks: [
       { name: "mdp:stats", desc: "Key and value figures. A table on a page, a figure band in slides and flyer." },
-      { name: "mdp:compare", desc: "Options side by side, each with a badge, a note, pros, and a call-to-action button." },
+      { name: "mdp:compare", desc: "Options side by side, each with a badge, a note, pros, and a call-to-action." },
       { name: "mdp:flow", desc: "An a -> b -> c pipeline, rendered as bordered chips joined by an arrow." },
     ],
   },
@@ -21,27 +21,26 @@ const CATEGORIES = [
     blocks: [
       { name: ":::callout", desc: "A bordered aside: note, tip, cost, recommendation, or warning." },
       { name: "---", desc: "A section break: a divider on a page, a slide break in slides, a panel on a flyer." },
-      { name: "lang / dir", desc: "Set dir: rtl in the frontmatter and the whole layout flips. The author positions nothing." },
+      { name: "lang / dir", desc: "Set dir: rtl in the frontmatter and the whole layout flips. You position nothing." },
     ],
   },
 ];
 
-export default function Blocks() {
+export default function Format() {
   return (
-    <section className="section" id="blocks">
-      <div className="wrap">
-        <div className="section-head wrap-narrow">
+    <section className="sec" id="blocks">
+      <div className="sec-rail-wide">
+        <div className="masthead">
           <p className="eyebrow eyebrow-accent">The format</p>
-          <h2 className="h2">Plain Markdown, plus typed elements</h2>
+          <h2 className="h2">Plain Markdown, plus a few typed elements</h2>
           <p className="lead">
             Any valid MDP file is also readable as ordinary Markdown, with no
             color, size, or font in the source. Beyond Markdown, MDP adds typed
-            elements in three categories today, with more on the way. The design
-            lives in the engine.
+            elements in three groups. The design lives in the engine.
           </p>
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))", gap: "var(--mdp-space-7)" }}>
+        <div className="format-grid">
           <pre className="codeblock" aria-label="An MDP source example">
 {`---
 `}<span className="c-key">mdp</span>{`: 1
@@ -62,10 +61,10 @@ Start self-hosted, move later if you prefer.
 :::`}
           </pre>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--mdp-space-6)" }}>
+          <div className="format-cats">
             {CATEGORIES.map((cat) => (
-              <div key={cat.name}>
-                <p className="eyebrow eyebrow-accent" style={{ marginBottom: "var(--mdp-space-2)" }}>{cat.name}</p>
+              <div className="format-cat" key={cat.name}>
+                <p className="eyebrow eyebrow-accent">{cat.name}</p>
                 <dl className="deflist">
                   {cat.blocks.map((b) => (
                     <div className="defrow" key={b.name}>
@@ -80,9 +79,8 @@ Start self-hosted, move later if you prefer.
         </div>
 
         <p className="prose" style={{ marginTop: "var(--mdp-space-6)" }}>
-          More elements are on the way, starting with a chart block. Wrong input
-          still renders: an unknown directive degrades to readable text, never a
-          blank or black screen. See the full grammar in the{" "}
+          An unknown directive degrades to readable text, never a blank or black
+          screen. See the full grammar in the{" "}
           <a href={LINKS.spec} target="_blank" rel="noreferrer">spec</a>.
         </p>
       </div>
