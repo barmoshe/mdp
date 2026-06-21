@@ -28,9 +28,11 @@
   ],
   "scripts": {
     "build": "node packages/core/build.mjs",
-    "test": "node scripts/check-contrast.mjs && node scripts/check-logo.mjs && node scripts/check-examples.mjs",
+    "test": "node scripts/check-contrast.mjs && node scripts/check-logo.mjs && node scripts/check-examples.mjs && node scripts/check-schema.mjs",
     "check:examples": "node scripts/check-examples.mjs",
+    "check:schema": "node scripts/check-schema.mjs",
     "gen:docs": "node scripts/gen-docs.mjs",
+    "gen:schema": "node scripts/gen-schema.mjs",
     "sync:codex": "node scripts/sync-codex.mjs",
     "sync:mcp": "node scripts/sync-mcp.mjs"
   }

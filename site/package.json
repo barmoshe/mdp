@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/inter-tight": "^5.2.7",
     "marked": "^12.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

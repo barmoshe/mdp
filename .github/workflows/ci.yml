@@ -41,6 +41,14 @@ jobs:
           echo "all 11 themes render"
       - name: Drift gate (manifests match disk, roles clean, coverage complete)
         run: node scripts/check-examples.mjs
+      - name: Schema conformance (every source's IR validates against the versioned schema)
+        run: node scripts/check-schema.mjs
+      - name: Schema freshness (spec/schema.json regenerated from @mdp/core)
+        run: |
+          node scripts/gen-schema.mjs
+          git diff --quiet -- spec/schema.json \
+            || { echo "::error::spec/schema.json is stale. Run 'npm run gen:schema' and commit."; git --no-pager diff -- spec/schema.json; exit 1; }
+          echo "schema is fresh"
       - name: Docs freshness (examples/README table is regenerated)
         run: |
           node scripts/gen-docs.mjs
