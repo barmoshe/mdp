@@ -6,6 +6,10 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- Published to npm: the engine as `mdp-compiler`, the MCP server as `mdp-mcp`, and
+  the scaffolder as `create-mdp-extension` (all unscoped and public). `npm i
+  mdp-compiler` to embed the engine, `npx -y mdp-mcp` for the MCP server, and
+  `npm create mdp-extension` to scaffold a block or artifact.
 - An MCP server (`mdp-mcp`, in `packages/mcp/`), so any MCP host (Claude Desktop,
   Cursor, ...) can compile MDP. It exposes `mdp_compile` (writes a file, returns
   the absolute path), `mdp_present` (a loopback browser preview), and
@@ -25,6 +29,9 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
   swatches never drift from the real accents.
 
 ### Changed
+- The engine package was renamed from `@mdp/core` to `mdp-compiler` for its npm
+  publish (the `@mdp` scope is owned by an unrelated party). The playground alias,
+  the build scripts, and the docs were updated to match.
 - The masthead now carries the theme accent so the chosen palette reads at a
   glance, not only in links and buttons: the kicker is accent-colored and a short
   accent rule sits under the title, in all three artifacts. Both are meaning-spot
