@@ -1,76 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { compile, ARTIFACTS, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "mdp-compiler";
+import { compile, ARTIFACTS, THEMES, THEME_SWATCHES } from "mdp-compiler";
 import { EXAMPLES } from "../examples";
 import { TEMPLATES } from "../templates";
-
-// Read the theme the source currently declares, so the theme control stays in
-// sync with the editor (the editor is the single source of truth).
-function currentTheme(src: string): string {
-  const m = src.match(/^theme:[ \t]*(\S+)/m);
-  return m && THEMES.includes(m[1]) ? m[1] : DEFAULT_THEME;
-}
-
-// Rewrite the frontmatter theme line so picking a theme is one click. If the
-// source has no theme line yet, insert one after `mdp:`.
-function withTheme(src: string, theme: string): string {
-  if (/^theme:[ \t]*\S+/m.test(src)) {
-    return src.replace(/^theme:[ \t]*\S+.*$/m, `theme: ${theme}`);
-  }
-  return src.replace(/^(mdp:[ \t]*\d+.*)$/m, `$1\ntheme: ${theme}`);
-}
-
-// The brand colors the source currently declares (empty string when none), so the
-// color inputs stay in sync with the editor.
-function currentAccent(src: string): string {
-  const m = src.match(/^brand-accent:[ \t]*(#[0-9a-fA-F]{6})/m);
-  return m ? m[1] : "";
-}
-function currentAccent2(src: string): string {
-  const m = src.match(/^brand-accent-2:[ \t]*(#[0-9a-fA-F]{6})/m);
-  return m ? m[1] : "";
-}
-
-// Set, replace, or (with an empty hex) remove a frontmatter line, inserting it
-// after an anchor line when it does not exist yet. Used for both brand fields.
-function setFrontmatterLine(src: string, key: string, value: string, anchor: RegExp): string {
-  const line = new RegExp(`^${key}:[ \\t]*\\S.*$`, "m");
-  if (!value) return src.replace(new RegExp(`^${key}:[ \\t]*\\S.*$\\n?`, "m"), "");
-  if (line.test(src)) return src.replace(line, `${key}: ${value}`);
-  return src.replace(anchor, `$1\n${key}: ${value}`);
-}
-function withAccent(src: string, hex: string): string {
-  // anchor after `theme:`, else after `mdp:`
-  const anchor = /^theme:[ \t]*\S+.*$/m.test(src) ? /^(theme:[ \t]*\S+.*)$/m : /^(mdp:[ \t]*\d+.*)$/m;
-  return setFrontmatterLine(src, "brand-accent", hex, anchor);
-}
-function withAccent2(src: string, hex: string): string {
-  // anchor after `brand-accent:`, else `theme:`, else `mdp:`
-  const anchor = /^brand-accent:[ \t]*\S+.*$/m.test(src)
-    ? /^(brand-accent:[ \t]*\S+.*)$/m
-    : /^theme:[ \t]*\S+.*$/m.test(src)
-      ? /^(theme:[ \t]*\S+.*)$/m
-      : /^(mdp:[ \t]*\d+.*)$/m;
-  return setFrontmatterLine(src, "brand-accent-2", hex, anchor);
-}
-
-// The brand-font the source declares ("" for none/system, the theme default).
-function currentFont(src: string): string {
-  const m = src.match(/^brand-font:[ \t]*([A-Za-z]+)/m);
-  const k = m ? m[1].toLowerCase() : "";
-  return k === "system" ? "" : k;
-}
-function withFont(src: string, key: string): string {
-  // anchor after the last brand line that exists, else theme, else mdp
-  const anchor = /^brand-accent-2:[ \t]*\S+.*$/m.test(src)
-    ? /^(brand-accent-2:[ \t]*\S+.*)$/m
-    : /^brand-accent:[ \t]*\S+.*$/m.test(src)
-      ? /^(brand-accent:[ \t]*\S+.*)$/m
-      : /^theme:[ \t]*\S+.*$/m.test(src)
-        ? /^(theme:[ \t]*\S+.*)$/m
-        : /^(mdp:[ \t]*\d+.*)$/m;
-  return setFrontmatterLine(src, "brand-font", key, anchor);
-}
+import {
+  currentTheme,
+  withTheme,
+  currentAccent,
+  currentAccent2,
+  withAccent,
+  withAccent2,
+  currentFont,
+  withFont,
+} from "../mdp-frontmatter";
 
 const ARTIFACT_HINT: Record<string, string> = {
   page: "A calm scrolling document. The reading form.",
