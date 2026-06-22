@@ -68,9 +68,9 @@ solves against. See `src/parse.mjs` for the node types.
 The same engine ships to agent tools three ways. All author MDP, run the engine,
 and surface the result; none adds anything to the format.
 
-- **Claude Code** — the repo root is the plugin (`.claude-plugin/`, a single
+- **Claude Code**: the repo root is the plugin (`.claude-plugin/`, a single
   `/mdp` command in `commands/`). It runs the engine in place at `packages/core/`.
-- **Codex** — a self-contained plugin in `codex/` (`.codex-plugin/plugin.json`,
+- **Codex**: a self-contained plugin in `codex/` (`.codex-plugin/plugin.json`,
   an `mdp` skill in `codex/skills/`). Codex caches a copy of a plugin on install,
   so the engine, `bin/`, `SPEC.md`, and one example are **vendored** into `codex/`
   by `npm run sync:codex`. They are a copy of the root, not a second source;
@@ -79,7 +79,7 @@ and surface the result; none adds anything to the format.
   skill would collide with the `/mdp` command. To check it, rebuild a source
   through `codex/bin/mdp` and confirm the HTML is byte-identical to the root
   engine.
-- **MCP server** — a self-contained server in `packages/mcp/` (`mdp-mcp`),
+- **MCP server**: a self-contained server in `packages/mcp/` (`mdp-mcp`),
   published to npm and runnable via `npx -y mdp-mcp`, so any MCP host (Claude
   Desktop, Cursor, ...) can compile MDP. It exposes the `mdp_compile`,
   `mdp_present`, and `mdp_validate` tools plus `mdp://spec` and `mdp://example/*`
@@ -141,3 +141,9 @@ ADR. Hierarchy comes from type size, weight, and whitespace.
 2. Handle the new node in each `render-*.mjs` (and add shared CSS to
    `tokens.mjs` if the primitive is cross-artifact).
 3. Update `spec/schema.json` and the SPEC once the shape settles.
+
+The current block set: `{.lead}` / `{.cite}` (line roles), `mdp:stats`,
+`mdp:compare`, `mdp:flow`, `mdp:table`, `mdp:chart`, `mdp:diagram` (flow,
+sequence, tree kinds), `mdp:timeline`, `mdp:faq`, `mdp:pricing`, and
+`:::callout` (note, tip, cost, recommendation, warning variants). Every block
+must degrade to readable text if the renderer does not recognise it.

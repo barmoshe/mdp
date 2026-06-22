@@ -38,6 +38,12 @@ differently per form.
 | `mdp:stats` | table | big figures | figure band |
 | `mdp:compare` | card grid | own card slide | own full-width grid |
 | `mdp:flow` | chip row | chip row | own full-width chip row |
+| `mdp:table` | bordered table | bordered table | own full-width table |
+| `mdp:chart` | bar chart | bar chart | own full-width bar chart |
+| `mdp:diagram` | inline SVG | inline SVG | own full-width SVG |
+| `mdp:timeline` | rail of steps | rail of steps | own full-width rail |
+| `mdp:faq` | disclosures | disclosures | expanded Q/A |
+| `mdp:pricing` | tier cards | tier cards | own full-width tier cards |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 

@@ -252,8 +252,9 @@ Issues and ideas are welcome.
 ## Roadmap
 
 The live playground, the `mdp-mcp` MCP server, and the `create-mdp-extension`
-scaffolder are shipped and published to npm. Next: an `mdp:chart` block and a
-JSON Schema conformance test.
+scaffolder are shipped and published to npm. The block set continues to grow;
+more diagram kinds (gantt, state, ER) are planned behind the existing
+`mdp:diagram` syntax.
 
 ## Contributing
 
