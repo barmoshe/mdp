@@ -23,6 +23,7 @@
 // "wrong input still renders" principle). No dependencies.
 
 import { CALLOUT_VARIANTS } from "./callout.mjs";
+import { DIAGRAM_KINDS } from "./diagram.mjs";
 
 // Split a `[a, b, c]` inline array into trimmed string parts.
 function parseInlineArray(raw) {
@@ -156,6 +157,110 @@ function splitRole(line) {
   return { role: m[1], text: m[2] };
 }
 
+// Parse a `mdp:chart` body into label/value pairs. Same grammar as stats, but the
+// value is coerced to a number; a line whose value is not numeric is dropped, so a
+// malformed chart still renders the rows it can read.
+function parseChartBody(bodyLines) {
+  const items = [];
+  for (const bl of bodyLines) {
+    const colon = bl.indexOf(":");
+    if (colon === -1) continue;
+    const label = bl.slice(0, colon).trim();
+    const value = parseFloat(bl.slice(colon + 1).trim());
+    if (label && Number.isFinite(value)) items.push({ label, value });
+  }
+  return items;
+}
+
+// Split one GFM table row into trimmed cells, tolerating optional outer pipes.
+function splitPipeRow(line) {
+  let s = line.trim();
+  if (s.startsWith("|")) s = s.slice(1);
+  if (s.endsWith("|")) s = s.slice(0, -1);
+  return s.split("|").map((c) => c.trim());
+}
+
+// A GFM delimiter row: every cell is dashes with optional leading/trailing colons.
+function isDelimiterRow(line) {
+  const s = line.trim();
+  if (!s.includes("-")) return false;
+  return splitPipeRow(s).every((c) => /^:?-+:?$/.test(c));
+}
+
+// Column alignment from a delimiter cell, as a LOGICAL keyword (RTL-safe).
+function alignFromDelim(cell) {
+  const left = cell.startsWith(":");
+  const right = cell.endsWith(":");
+  if (left && right) return "center";
+  if (right) return "end";
+  return "start";
+}
+
+// Parse pipe-table lines (header, delimiter, then body rows) into the table IR.
+// Returns null when the second line is not a delimiter, so a caller can degrade.
+// Rows are padded/truncated to the header width, and align is normalised to it.
+function parseTableRows(lines) {
+  const nonEmpty = lines.filter((l) => l.trim() !== "");
+  if (nonEmpty.length < 2 || !isDelimiterRow(nonEmpty[1])) return null;
+  const header = splitPipeRow(nonEmpty[0]);
+  const width = header.length;
+  const align = splitPipeRow(nonEmpty[1]).map(alignFromDelim);
+  while (align.length < width) align.push("start");
+  const rows = nonEmpty.slice(2).map((l) => {
+    const cells = splitPipeRow(l);
+    while (cells.length < width) cells.push("");
+    return cells.slice(0, width);
+  });
+  return { align: align.slice(0, width), header, rows };
+}
+
+// Parse a `mdp:diagram` body into nodes + edges (shared across every kind).
+//   `A -> B` / `A --> B`              an edge (--> is dashed), optional `: label`
+//   `id: label` / `actor id: label`   declare or label a node
+//   bare token                        a node whose label is the token itself
+// Nodes appear in first-seen order; an edge endpoint not declared is auto-created.
+function parseDiagramBody(bodyLines) {
+  const labels = new Map();
+  const order = [];
+  const edges = [];
+  const ensure = (id) => {
+    if (!labels.has(id)) {
+      labels.set(id, id);
+      order.push(id);
+    }
+  };
+  for (const raw of bodyLines) {
+    const line = raw.trim();
+    if (line === "") continue;
+    const edge = line.match(/^(.+?)\s*(-->|->)\s*([^:]+?)(?:\s*:\s*(.*))?$/);
+    if (edge) {
+      const from = edge[1].trim();
+      const to = edge[3].trim();
+      ensure(from);
+      ensure(to);
+      edges.push({
+        from,
+        to,
+        label: edge[4] != null ? edge[4].trim() : null,
+        dashed: edge[2] === "-->",
+      });
+      continue;
+    }
+    let decl = line;
+    const actor = decl.match(/^actor\s+(.*)$/i);
+    if (actor) decl = actor[1].trim();
+    const node = decl.match(/^([^:]+):\s*(.*)$/);
+    if (node) {
+      const id = node[1].trim();
+      ensure(id);
+      if (node[2].trim()) labels.set(id, node[2].trim());
+      continue;
+    }
+    ensure(line);
+  }
+  return { nodes: order.map((id) => ({ id, label: labels.get(id) })), edges };
+}
+
 // Parse the body into the flat blocks array.
 export function parseBody(body) {
   const lines = body.split("\n");
@@ -205,6 +310,24 @@ export function parseBody(body) {
         blocks.push({ type: "compare", options: parseCompareBody(bodyLines) });
       } else if (fenceInfo === "mdp:flow") {
         blocks.push({ type: "flow", steps: parseFlowBody(bodyLines) });
+      } else if (fenceInfo === "mdp:chart") {
+        blocks.push({ type: "chart", items: parseChartBody(bodyLines) });
+      } else if (fenceInfo === "mdp:table") {
+        const table = parseTableRows(bodyLines);
+        if (table) {
+          blocks.push({ type: "table", ...table });
+        } else {
+          const text = bodyLines.join(" ").trim();
+          if (text) blocks.push({ type: "paragraph", text });
+        }
+      } else if (fenceInfo === "mdp:diagram" || fenceInfo.startsWith("mdp:diagram ")) {
+        const kind = fenceInfo.slice("mdp:diagram".length).trim() || "flow";
+        if (DIAGRAM_KINDS.includes(kind)) {
+          blocks.push({ type: "diagram", kind, ...parseDiagramBody(bodyLines) });
+        } else {
+          const text = bodyLines.join(" ").trim();
+          if (text) blocks.push({ type: "paragraph", text });
+        }
       } else {
         const text = bodyLines.join(" ").trim();
         if (text) blocks.push({ type: "paragraph", text });
@@ -306,6 +429,26 @@ export function parseBody(body) {
         i++;
       }
       blocks.push({ type: "list", ordered: true, items });
+      continue;
+    }
+
+    // GFM pipe table: a row containing `|` immediately followed by a delimiter
+    // row (`| --- | :--: |`). Consume the contiguous pipe rows; an unexpected
+    // non-table run degrades to a paragraph so nothing is lost.
+    if (line.includes("|") && i + 1 < lines.length && isDelimiterRow(lines[i + 1])) {
+      const tableLines = [lines[i], lines[i + 1]];
+      i += 2;
+      while (i < lines.length && lines[i].trim() !== "" && lines[i].includes("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      const table = parseTableRows(tableLines);
+      if (table) {
+        blocks.push({ type: "table", ...table });
+      } else {
+        const text = tableLines.join(" ").trim();
+        if (text) blocks.push({ type: "paragraph", text });
+      }
       continue;
     }
 

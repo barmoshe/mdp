@@ -42,6 +42,24 @@
     "lead": "page"
   },
   {
+    "id": "block-table",
+    "file": "block-table.mdp",
+    "label": "Table",
+    "lead": "page"
+  },
+  {
+    "id": "block-chart",
+    "file": "block-chart.mdp",
+    "label": "Chart",
+    "lead": "page"
+  },
+  {
+    "id": "block-diagram",
+    "file": "block-diagram.mdp",
+    "label": "Diagram",
+    "lead": "page"
+  },
+  {
     "id": "theme-gallery",
     "file": "theme-gallery.mdp",
     "label": "Theme gallery",

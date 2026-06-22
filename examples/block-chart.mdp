@@ -1,0 +1,30 @@
+---
+mdp: 1
+theme: amber
+forms: [page, slides, flyer]
+title: Funnel metrics
+demonstrates: [chart, lead]
+---
+
+# Funnel metrics
+{.lead} A probe for the mdp:chart block: a pure-CSS bar chart from label and value pairs, accent-coloured by the theme.
+
+```mdp:chart
+Visitors: 1000
+Signups: 420
+Activated: 280
+Paid: 120
+```
+
+---
+
+## Retention by week
+
+The same syntax as stats, but each value becomes a proportional bar so the trend reads at a glance.
+
+```mdp:chart
+Week 1: 88
+Week 2: 71
+Week 3: 64
+Week 4: 59
+```

@@ -21,11 +21,12 @@
 
 import { THEMES, DEFAULT_THEME } from "./tokens.mjs";
 import { CALLOUT_VARIANTS } from "./callout.mjs";
+import { DIAGRAM_KINDS } from "./diagram.mjs";
 
 // Semantic version of the grammar this schema describes. Bump on any change to
 // the frontmatter vocabulary or the block set. Independent of the `mdp:` format
 // version (which gates source-level compatibility).
-export const SCHEMA_VERSION = "1.0.0";
+export const SCHEMA_VERSION = "1.1.0";
 
 // The presentation forms a source can declare (the allowed enum). Matches
 // ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
@@ -162,6 +163,61 @@ const definitions = {
     required: ["type", "text"],
     properties: { type: { const: "paragraph" }, text: { type: "string" } },
   },
+  table: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "align", "header", "rows"],
+    properties: {
+      type: { const: "table" },
+      // One logical alignment per column (RTL-safe), from the delimiter row.
+      align: { type: "array", items: { enum: ["start", "end", "center"] } },
+      header: { type: "array", items: { type: "string" } },
+      rows: { type: "array", items: { type: "array", items: { type: "string" } } },
+    },
+  },
+  chart: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "items"],
+    properties: {
+      type: { const: "chart" },
+      items: { type: "array", items: { $ref: "#/definitions/chartItem" } },
+    },
+  },
+  chartItem: {
+    type: "object",
+    additionalProperties: false,
+    required: ["label", "value"],
+    properties: { label: { type: "string" }, value: { type: "number" } },
+  },
+  diagram: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "kind", "nodes", "edges"],
+    properties: {
+      type: { const: "diagram" },
+      kind: { enum: [...DIAGRAM_KINDS] },
+      nodes: { type: "array", items: { $ref: "#/definitions/diagramNode" } },
+      edges: { type: "array", items: { $ref: "#/definitions/diagramEdge" } },
+    },
+  },
+  diagramNode: {
+    type: "object",
+    additionalProperties: false,
+    required: ["id", "label"],
+    properties: { id: { type: "string" }, label: { type: "string" } },
+  },
+  diagramEdge: {
+    type: "object",
+    additionalProperties: false,
+    required: ["from", "to", "label", "dashed"],
+    properties: {
+      from: { type: "string" },
+      to: { type: "string" },
+      label: stringOrNull,
+      dashed: { type: "boolean" },
+    },
+  },
 };
 
 // The frontmatter object (the IR's `meta`). Closed to the keys the engine reads
@@ -286,6 +342,9 @@ export const SCHEMA = {
           { $ref: "#/definitions/callout" },
           { $ref: "#/definitions/quote" },
           { $ref: "#/definitions/paragraph" },
+          { $ref: "#/definitions/table" },
+          { $ref: "#/definitions/chart" },
+          { $ref: "#/definitions/diagram" },
         ],
       },
     },

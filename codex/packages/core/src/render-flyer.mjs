@@ -32,6 +32,9 @@ import {
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
+import { renderTable, TABLE_STYLE } from "./table.mjs";
+import { renderChart, CHART_STYLE } from "./chart.mjs";
+import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 
 const FLYER_STYLE = `.mdp-flyer-stage {
   min-height: 100vh;
@@ -124,7 +127,13 @@ ${CALLOUT_STYLE}
 
 /* On the flyer surface the callout sits tighter and reads at small body size. */
 .mdp-flyer .mdp-callout { padding: var(--mdp-space-4); }
-.mdp-flyer .mdp-callout-p { font-size: var(--mdp-text-small); }`;
+.mdp-flyer .mdp-callout-p { font-size: var(--mdp-text-small); }
+
+${TABLE_STYLE}
+
+${CHART_STYLE}
+
+${DIAGRAM_STYLE}`;
 
 // Render one flyer block in flow. Handles every body block type, so a block that
 // shares a section with another (e.g. a stats band beside a callout) or a
@@ -152,6 +161,12 @@ function renderFlyerBlock(block) {
       return renderFlow(block);
     case "callout":
       return renderCallout(block);
+    case "table":
+      return renderTable(block);
+    case "chart":
+      return renderChart(block);
+    case "diagram":
+      return renderDiagram(block);
     default:
       return "";
   }
@@ -208,6 +223,9 @@ function classify(section) {
   if (types.includes("stats")) return "stats";
   if (types.includes("quote")) return "quote";
   if (types.includes("flow")) return "flow";
+  // table / chart / diagram are wide blocks: their own full-width element, never
+  // squeezed into a two-column pairing (reuses the full-width "flow" treatment).
+  if (types.includes("table") || types.includes("chart") || types.includes("diagram")) return "flow";
   return "text";
 }
 

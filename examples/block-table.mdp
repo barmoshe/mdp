@@ -1,0 +1,29 @@
+---
+mdp: 1
+theme: teal
+forms: [page, slides, flyer, report]
+title: Pricing at a glance
+demonstrates: [table, lead]
+---
+
+# Pricing at a glance
+{.lead} A probe for the mdp:table block: GitHub-style pipe tables with per-column alignment, owned by the engine.
+
+| Plan | Price | Seats | Support |
+| --- | ---: | :---: | --- |
+| Starter | $0 | 1 | Community |
+| Team | $40 | 10 | Email |
+| Business | $120 | 50 | Priority |
+
+---
+
+## Fenced alias
+
+An agent can also write the same table inside a fenced block, for tools that prefer explicit directives.
+
+```mdp:table
+| Metric | Q1 | Q2 |
+| --- | ---: | ---: |
+| Revenue | $1.2M | $1.8M |
+| Customers | 240 | 410 |
+```

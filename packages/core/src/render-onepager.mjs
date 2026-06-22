@@ -32,6 +32,9 @@ import {
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
+import { renderTable, TABLE_STYLE } from "./table.mjs";
+import { renderChart, CHART_STYLE } from "./chart.mjs";
+import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 
 const ONEPAGER_STYLE = `.mdp-onepager-stage {
   min-height: 100vh;
@@ -111,6 +114,12 @@ ${CALLOUT_STYLE}
 .mdp-onepager .mdp-callout { padding: var(--mdp-space-4); }
 .mdp-onepager .mdp-callout-p { font-size: var(--mdp-text-small); }
 
+${TABLE_STYLE}
+
+${CHART_STYLE}
+
+${DIAGRAM_STYLE}
+
 /* Print to PDF (Cmd or Ctrl + P): one sheet, light, no frame. */
 @media print {
   :root {
@@ -173,6 +182,12 @@ function renderOnepagerBlock(block) {
       return renderFlow(block);
     case "callout":
       return renderCallout(block);
+    case "table":
+      return renderTable(block);
+    case "chart":
+      return renderChart(block);
+    case "diagram":
+      return renderDiagram(block);
     default:
       return "";
   }
@@ -192,6 +207,7 @@ function classify(section) {
   if (types.includes("flow")) return "wide";
   if (types.includes("stats")) return "wide";
   if (types.includes("quote")) return "wide";
+  if (types.includes("table") || types.includes("chart") || types.includes("diagram")) return "wide";
   return "text";
 }
 

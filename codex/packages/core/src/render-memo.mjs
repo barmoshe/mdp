@@ -29,6 +29,9 @@ import {
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
+import { renderTable, TABLE_STYLE } from "./table.mjs";
+import { renderChart, CHART_STYLE } from "./chart.mjs";
+import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 
 const MEMO_STYLE = `.mdp-memo {
   max-width: 44rem;
@@ -71,6 +74,12 @@ ${COMPARE_STYLE}
 ${FLOW_STYLE}
 
 ${CALLOUT_STYLE}
+
+${TABLE_STYLE}
+
+${CHART_STYLE}
+
+${DIAGRAM_STYLE}
 
 /* Print to PDF (Cmd or Ctrl + P): light, full-page column. */
 @media print {
@@ -127,6 +136,12 @@ function renderMemoBlock(block) {
       return renderFlow(block);
     case "callout":
       return renderCallout(block);
+    case "table":
+      return renderTable(block);
+    case "chart":
+      return renderChart(block);
+    case "diagram":
+      return renderDiagram(block);
     default:
       return "";
   }

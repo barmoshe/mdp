@@ -233,6 +233,63 @@ Four reports by email -> the AI writes the summary -> one Telegram message
    the row flips and the arrow is mirrored (`→` reads as `←`) so it always
    points in the reading direction. The row wraps on narrow widths.
 
+   A fourth directive is `mdp:table`, a data table in GitHub-flavored pipe
+   syntax. It can also be written as a bare pipe table in the body, with no
+   fence:
+
+````
+| Plan | Price | Seats |
+| --- | ---: | :--: |
+| Starter | $0 | 1 |
+| Team | $40 | 10 |
+````
+
+   The delimiter row sets each column's alignment from its colons: `:---` is
+   start, `---:` is end, `:--:` is center. Alignment is stored as a logical
+   keyword, so an end-aligned column flips under `dir: rtl`. Rows are padded or
+   truncated to the header width, and every cell runs through inline Markdown. A
+   header row whose next line is not a delimiter is not a table; it degrades to a
+   paragraph.
+
+   A fifth directive is `mdp:chart`, a horizontal bar chart from `label: value`
+   pairs (the same input as `mdp:stats`, but the value is a number):
+
+````
+```mdp:chart
+Visitors: 1000
+Signups: 420
+Paid: 120
+```
+````
+
+   Each bar's length is its value as a share of the largest, computed by the
+   engine (the author never sets a width). The bar carries the theme accent and
+   grows from the inline-start edge, so it flips under `dir: rtl`. A non-numeric
+   value is dropped; labels and values always read as text, so the data survives
+   even where a bar cannot.
+
+   A sixth directive is `mdp:diagram`, a connector diagram the engine renders to
+   pure inline SVG (no dependency, no script). The fence names a kind:
+
+````
+```mdp:diagram flow
+A: Brief
+B: Draft
+A -> B
+B -> A: changes
+```
+````
+
+   `A: label` declares or labels a node; `A -> B` is an edge, `A --> B` a dashed
+   one, and a trailing `: text` labels the edge. Three kinds ship: `flow` (a
+   layered top-to-bottom flowchart), `sequence` (actors as lifelines with ordered
+   messages, with an `actor A: Alice` alias accepted), and `tree` (a tidy
+   hierarchy). The layout is deterministic (integer coordinates, no randomness)
+   and design-locked (geometry only; every colour is a theme token). Diagrams
+   render left to right in every form for now; an unknown kind degrades to
+   readable text. More kinds (gantt, state, ER) are planned behind the same
+   syntax.
+
 4. Triple-colon containers. A fenced block opened with `:::<directive>` and
    closed by a line that is exactly `:::`. v1 ships one: `callout`, a bordered
    aside that lifts a short passage out of the flow.
@@ -261,7 +318,7 @@ source. Those are the doors slop walks through.
 
 ## Forms (v1)
 
-A form is an output shape. Three forms compile by default; four document forms
+A form is an output shape. The core forms compile by default; the document forms
 are opt-in, together enough to prove the claim that one source yields many
 polished outputs.
 
@@ -314,6 +371,9 @@ differently per form:
 | `mdp:stats` | table | big figures | figure band |
 | `mdp:compare` | card grid | own card slide | own full-width card grid |
 | `mdp:flow` | chip row | chip row | own full-width chip row |
+| `mdp:table` | bordered table | bordered table | own full-width table |
+| `mdp:chart` | bar chart | bar chart | own full-width bar chart |
+| `mdp:diagram` | inline SVG | inline SVG | own full-width SVG |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 

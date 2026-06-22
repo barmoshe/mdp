@@ -31,6 +31,9 @@ import {
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
+import { renderTable, TABLE_STYLE } from "./table.mjs";
+import { renderChart, CHART_STYLE } from "./chart.mjs";
+import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 
 const SLIDES_STYLE = `.mdp-deck {
   /* No-JS fallback: slides stack and scroll, fully readable. */
@@ -156,6 +159,12 @@ ${FLOW_STYLE}
 .mdp-slide .mdp-flow-arrow { font-size: clamp(1rem, 2vw, 1.375rem); }
 
 ${CALLOUT_STYLE}
+
+${TABLE_STYLE}
+
+${CHART_STYLE}
+
+${DIAGRAM_STYLE}
 
 /* On a slide the callout body reads at presentation scale. */
 .mdp-slide .mdp-callout { padding: var(--mdp-space-6); }
@@ -333,6 +342,15 @@ function renderSlideBlock(block) {
 
     case "callout":
       return renderCallout(block);
+
+    case "table":
+      return renderTable(block);
+
+    case "chart":
+      return renderChart(block);
+
+    case "diagram":
+      return renderDiagram(block);
 
     default:
       return "";

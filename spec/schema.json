@@ -3,7 +3,7 @@
   "$id": "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
   "title": "MDP intermediate representation",
   "description": "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from mdp-compiler as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -172,6 +172,15 @@
           },
           {
             "$ref": "#/definitions/paragraph"
+          },
+          {
+            "$ref": "#/definitions/table"
+          },
+          {
+            "$ref": "#/definitions/chart"
+          },
+          {
+            "$ref": "#/definitions/diagram"
           }
         ]
       }
@@ -463,6 +472,158 @@
         },
         "text": {
           "type": "string"
+        }
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "align",
+        "header",
+        "rows"
+      ],
+      "properties": {
+        "type": {
+          "const": "table"
+        },
+        "align": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "start",
+              "end",
+              "center"
+            ]
+          }
+        },
+        "header": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "chart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "chart"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/chartItem"
+          }
+        }
+      }
+    },
+    "chartItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "value"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      }
+    },
+    "diagram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "kind",
+        "nodes",
+        "edges"
+      ],
+      "properties": {
+        "type": {
+          "const": "diagram"
+        },
+        "kind": {
+          "enum": [
+            "flow",
+            "sequence",
+            "tree"
+          ]
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diagramNode"
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diagramEdge"
+          }
+        }
+      }
+    },
+    "diagramNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "diagramEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "label",
+        "dashed"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dashed": {
+          "type": "boolean"
         }
       }
     }

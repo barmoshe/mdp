@@ -28,6 +28,9 @@ import {
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
+import { renderTable, TABLE_STYLE } from "./table.mjs";
+import { renderChart, CHART_STYLE } from "./chart.mjs";
+import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 
 const PAGE_STYLE = `.mdp-page {
   max-width: 40rem;
@@ -60,7 +63,13 @@ ${COMPARE_STYLE}
 
 ${FLOW_STYLE}
 
-${CALLOUT_STYLE}`;
+${CALLOUT_STYLE}
+
+${TABLE_STYLE}
+
+${CHART_STYLE}
+
+${DIAGRAM_STYLE}`;
 
 // Render one content block (everything except title/lead, handled in masthead).
 function renderBlock(block) {
@@ -111,6 +120,15 @@ function renderBlock(block) {
 
     case "callout":
       return renderCallout(block);
+
+    case "table":
+      return renderTable(block);
+
+    case "chart":
+      return renderChart(block);
+
+    case "diagram":
+      return renderDiagram(block);
 
     default:
       return "";

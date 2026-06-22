@@ -20,12 +20,15 @@ by hand.
 | file | demonstrates | blocks | forms | theme |
 |---|---|---|---|---|
 | `block-callouts.mdp` | callout:note, callout:tip, callout:cost, callout:recommendation, callout:warning, lead | callout | page, slides, flyer | amber |
+| `block-chart.mdp` | chart, lead | chart | page, slides, flyer | amber |
 | `block-compare.mdp` | compare, flow, callout:cost, callout:recommendation, lead | callout, compare, flow | page, slides, flyer | studio |
+| `block-diagram.mdp` | diagram, lead | diagram | page, slides, flyer | studio |
 | `block-flow.mdp` | flow, lead | flow | flyer, page, slides | ocean |
 | `block-lists.mdp` | list, lead | list | page, slides, flyer | terracotta |
 | `block-quote.mdp` | quote, cite, lead | quote | slides, page, flyer | forest |
 | `block-roles.mdp` | lead, cite | quote | page, slides, flyer | coral |
 | `block-stats.mdp` | stats, lead, quote, cite, list | list, quote, stats | page, slides, flyer | teal |
+| `block-table.mdp` | table, lead | table | page, slides, flyer, report | teal |
 | `brand-accent.mdp` | brand-accent, brand-accent-2, brand-font, stats, flow, lead | callout, flow, stats | page, slides, flyer | studio |
 | `brand-logo.mdp` | brand-logo, flow, callout:note, lead | callout, flow | page, slides, flyer | studio |
 | `form-flyer-heavy.mdp` | stats, quote, compare, list, lead | compare, list, quote, stats | flyer, page | violet |

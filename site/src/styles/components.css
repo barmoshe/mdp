@@ -2,7 +2,7 @@
  * Component + section layer. Mobile-first. Editorial, not generic-SaaS:
  * section intros are left-aligned mastheads (a kicker tick + a Fraunces heading),
  * compositions vary section to section, one restrained accent (studio indigo) is
- * used site-wide, and the full eleven-color spectrum appears only in the design-
+ * used site-wide, and the full color spectrum appears only in the design-
  * lock section. The playground, docs, and doc-prose rules are carried over intact.
  */
 
@@ -189,7 +189,7 @@
 }
 .chip b { color: var(--mdp-ink); font-weight: var(--mdp-weight-medium); }
 
-/* ---- hero visual: a static "one source -> three forms" panel (no live engine,
+/* ---- hero visual: a static "one source -> many forms" panel (no live engine,
    zero layout shift). The mini frames echo the engine's real masthead language
    built from the design tokens. ---- */
 .ha {

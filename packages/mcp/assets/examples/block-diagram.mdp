@@ -1,0 +1,52 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+title: Three diagrams, one syntax
+demonstrates: [diagram, lead]
+---
+
+# Three diagrams, one syntax
+{.lead} A probe for the mdp:diagram block: native zero-dependency SVG. One text syntax, three deterministic layouts.
+
+## Flowchart
+
+```mdp:diagram flow
+A: Brief
+B: Draft
+C: Review
+D: Ship
+A -> B
+B -> C
+C -> D: approved
+C -> B: changes
+```
+
+---
+
+## Sequence
+
+```mdp:diagram sequence
+actor U: User
+actor A: Agent
+actor E: Engine
+U -> A: one source
+A -> E: compile
+E --> A: artifacts
+A --> U: page, deck, flyer
+```
+
+---
+
+## Tree
+
+```mdp:diagram tree
+root: MDP
+root -> blocks: Blocks
+root -> forms: Forms
+blocks -> b1: table
+blocks -> b2: chart
+blocks -> b3: diagram
+forms -> f1: page
+forms -> f2: slides
+```
