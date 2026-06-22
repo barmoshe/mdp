@@ -1,7 +1,7 @@
 {
   "name": "mdp-mcp",
   "version": "0.2.0",
-  "description": "MCP server for MDP: compile one .mdp source into design-locked page/slides/flyer HTML from any MCP host.",
+  "description": "MCP server for MDP: compile one .mdp source into design-locked HTML (page, slides, flyer, report, one-pager, memo, letter) from any MCP host.",
   "type": "module",
   "license": "Apache-2.0",
   "author": "Bar Moshe",
