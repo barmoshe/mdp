@@ -12,6 +12,19 @@ import { renderFlyer } from "./render-flyer.mjs";
 export { parse } from "./parse.mjs";
 export { inline, escapeHtml } from "./inline.mjs";
 export { baseStyle, themeTokens, BASE, THEMES, DEFAULT_THEME, THEME_SWATCHES } from "./tokens.mjs";
+// Color math + the WCAG AA oracle + brand-accent derivation. The oracle
+// (contrast/TEXT_MIN/FILL_MIN) is the single source of truth shared by the
+// render-time derivation and the build-time check-contrast gate.
+export {
+  deriveAccent,
+  deriveAccent2,
+  contrast,
+  relativeLuminance,
+  hexToOklch,
+  oklchToHex,
+  TEXT_MIN,
+  FILL_MIN,
+} from "./color.mjs";
 // The versioned JSON Schema for the parsed IR (frontmatter + the closed block
 // set). Generated into spec/schema.json; enforced by scripts/check-schema.mjs.
 export { SCHEMA, SCHEMA_VERSION } from "./schema.mjs";

@@ -199,6 +199,18 @@ const meta = {
         "Optional brand logo for the masthead: a URL, relative path, or data:image URI. Size and position are engine-locked; unsafe values are dropped.",
       type: "string",
     },
+    "brand-accent": {
+      description:
+        "Optional custom brand color: one 6-digit hex (e.g. #7DB74B). The engine derives a full WCAG-AA accent set (5 roles, light + dark) from it; a malformed or inaccessible value falls back to `theme`. A reference to one color, never a style.",
+      type: "string",
+      pattern: "^#[0-9a-fA-F]{6}$",
+    },
+    "brand-accent-2": {
+      description:
+        "Optional secondary brand color (one 6-digit hex), used sparingly in engine-chosen accents (title underline, flow connectors, active slide dot). Applies only alongside brand-accent and falls back to it when inaccessible.",
+      type: "string",
+      pattern: "^#[0-9a-fA-F]{6}$",
+    },
     demonstrates: {
       description:
         "Optional authoring/CI metadata: feature tags the coverage gate reads. Not rendered.",

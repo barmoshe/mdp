@@ -36,11 +36,16 @@ This is a strawman. Anything marked (open) is not yet settled.
 
 1. The spec is a prompt. It is written so an LLM can read it and emit valid MDP
    with no examples. The examples are first-class.
-2. The author cannot style. There is no color, size, or font in the source.
-   Slop becomes structurally impossible, not something you prompt against.
-   (One deliberate, narrow amendment: the optional `brand-logo` field names a
-   single brand asset. It is a reference, not a color, size, or font; the engine
-   still owns where and how big it renders. See Frontmatter.)
+2. The author cannot style. There is no styling, no sizing, and no font in the
+   source; the only color an author may name is a brand color the engine fully
+   derives and places. Slop becomes structurally impossible, not something you
+   prompt against. (Two deliberate, narrow amendments: `brand-logo` names a
+   single brand asset, and `brand-accent` (with an optional `brand-accent-2`)
+   names one or two brand colors. The engine derives all five accent roles in
+   light and dark from each hex, gates them to WCAG AA, owns every spot the
+   color appears, and falls back to a named `theme` when a color cannot be made
+   accessible. The author picks a mark and a color, never how or where they
+   render. See Frontmatter.)
 3. Wrong input still renders. An unknown directive or a malformed block degrades
    to readable text, never a blank or black screen. A validator returns a
    precise fix so an agent can self-heal.
@@ -66,6 +71,8 @@ kicker: Brief                # optional, the small eyebrow above the masthead
 lang: he                     # optional, the document language; default "en"
 dir: rtl                     # optional, writing direction; auto from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
+brand-accent: #2f8f6b        # optional, one brand hex; the engine derives the accent set
+brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
 ---
 ```
 
@@ -107,6 +114,19 @@ unsafe or malformed value is dropped and the masthead renders without a logo. It
 is the one amendment to Principle 2: an asset slot is not a color, size, or font.
 Prefer SVG or a 2x raster; an agent should normally omit it or use a known URL,
 not synthesize a large `data:` URI.
+
+`brand-accent` is an optional custom brand color: one 6-digit hex with a leading
+`#`. The engine derives a full accent set from it, the five roles (the fill, the
+on-fill label, the link/label text, a surface wash, and a border) in both light
+and dark, and gates the load-bearing roles to WCAG AA exactly as the named themes
+are. It overrides only the accent; the warm neutral ramp and the type scale are
+untouched. A malformed value (quoted, missing the `#`, or not six hex digits), or
+a color that cannot be made accessible, is ignored and the document falls back to
+`theme`, then `studio`. `brand-accent-2` names an optional second brand color used
+sparingly in engine-chosen spots only (the title underline, the flow connectors,
+and the active slide dot); it applies only alongside `brand-accent` and falls back
+to it. Like the logo, this amends Principle 2: the author names a color, never a
+style, and never where it lands.
 
 ### Body
 

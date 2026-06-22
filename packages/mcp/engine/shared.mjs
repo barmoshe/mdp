@@ -6,6 +6,7 @@
 
 import { escapeHtml, safeImgUrl } from "./inline.mjs";
 import { baseStyle, THEMES, DEFAULT_THEME } from "./tokens.mjs";
+import { deriveAccent, deriveAccent2 } from "./color.mjs";
 
 // Languages that default to a right-to-left script when no explicit dir is set.
 const RTL_LANGS = new Set(["he", "ar", "fa", "ur", "yi"]);
@@ -17,6 +18,31 @@ export function deriveTheme(ir) {
   const meta = (ir && ir.meta) || {};
   const name = typeof meta.theme === "string" ? meta.theme.trim() : "";
   return THEMES.includes(name) ? name : DEFAULT_THEME;
+}
+
+// A bare 6-digit hex like #7DB74B. The frontmatter scanner does NOT strip quotes
+// and coerces all-digit values to Number, so the leading `#` is mandatory: a
+// quoted "#7db74b", a non-`#` value, or a numeric coercion all fail this guard
+// and fall through to the named theme.
+const HEX6 = /^#[0-9a-fA-F]{6}$/;
+
+// Resolve a custom primary accent from `brand-accent`: validate the hex, then ask
+// the engine to derive a full AA-gated accent set. Returns the {light,dark} set
+// or null (bad hex, or a color that cannot be made accessible) so the caller
+// falls back to the named theme.
+export function deriveBrandAccent(ir) {
+  const raw = (ir && ir.meta && ir.meta["brand-accent"]) || "";
+  if (typeof raw !== "string" || !HEX6.test(raw.trim())) return null;
+  return deriveAccent(raw.trim());
+}
+
+// The optional secondary accent from `brand-accent-2`, same validation. Only
+// applied when a primary brand accent is also present (it has no meaning on its
+// own), and it falls back to the primary if the color cannot be made accessible.
+export function deriveBrandAccent2(ir) {
+  const raw = (ir && ir.meta && ir.meta["brand-accent-2"]) || "";
+  if (typeof raw !== "string" || !HEX6.test(raw.trim())) return null;
+  return deriveAccent2(raw.trim());
 }
 
 // Resolve the document language and writing direction from the frontmatter.
@@ -46,6 +72,8 @@ export function htmlDocument({
   lang = "en",
   dir = "ltr",
   theme = "studio",
+  accent = null,
+  accent2 = null,
 }) {
   const head =
     `<!doctype html>\n` +
@@ -55,7 +83,7 @@ export function htmlDocument({
     `<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
     `<meta name="generator" content="MDP">\n` +
     `<title>${escapeHtml(title)}</title>\n` +
-    `<style>\n${baseStyle(theme)}\n${style}\n</style>\n` +
+    `<style>\n${baseStyle(theme, accent, accent2 && accent ? accent2 : null)}\n${style}\n</style>\n` +
     `</head>\n`;
   const scriptTag = script ? `<script>\n${script}\n</script>\n` : "";
   return `${head}<body>\n${body}\n${scriptTag}</body>\n</html>\n`;

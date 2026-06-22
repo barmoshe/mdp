@@ -72,6 +72,12 @@
     "lead": "page"
   },
   {
+    "id": "brand-accent",
+    "file": "brand-accent.mdp",
+    "label": "Custom accent",
+    "lead": "page"
+  },
+  {
     "id": "release-notes",
     "file": "release-notes.mdp",
     "label": "Release note",

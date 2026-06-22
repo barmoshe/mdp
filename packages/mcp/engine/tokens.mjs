@@ -158,14 +158,34 @@ function accentVars(a, indent) {
   );
 }
 
+// The secondary accent: a smaller var set (fill + on-fill label + text) emitted
+// only when a `brand-accent-2` is supplied. Use sites read it with a fallback to
+// the primary (var(--mdp-accent2-x, var(--mdp-accent-x))), so single-color docs
+// are unaffected.
+function accent2Vars(a, indent) {
+  return (
+    `${indent}--mdp-accent2: ${a.fill};\n` +
+    `${indent}--mdp-accent2-contrast: ${a.contrast};\n` +
+    `${indent}--mdp-accent2-text: ${a.text};`
+  );
+}
+
 // Emit the full token block for one theme: the shared scale + warm neutral ramp
-// + the theme's accent set, for both light and dark.
-export function themeTokens(theme) {
-  const accent = ACCENTS[theme] || ACCENTS[DEFAULT_THEME];
+// + the theme's accent set, for both light and dark. `accentOverride` (a derived
+// {light,dark} set from a brand hex) replaces the named accent when present;
+// `accent2Override` adds the secondary accent vars. Both null -> byte-identical to
+// the named-theme output, so existing docs are unchanged.
+export function themeTokens(theme, accentOverride = null, accent2Override = null) {
+  const accent = accentOverride || ACCENTS[theme] || ACCENTS[DEFAULT_THEME];
+  const a2 = accent2Override;
   return (
     `:root {\n${SCALE}\n\n  /* Warm neutral ramp */\n${NEUTRAL_LIGHT}\n\n` +
-    `  /* Accent (the one restrained color, in meaning-spots only) */\n${accentVars(accent.light, "  ")}\n}\n\n` +
-    `@media (prefers-color-scheme: dark) {\n  :root {\n${NEUTRAL_DARK}\n\n${accentVars(accent.dark, "    ")}\n  }\n}`
+    `  /* Accent (the one restrained color, in meaning-spots only) */\n${accentVars(accent.light, "  ")}` +
+    (a2 ? `\n\n  /* Secondary accent (sparing, engine-placed spots) */\n${accent2Vars(a2.light, "  ")}` : "") +
+    `\n}\n\n` +
+    `@media (prefers-color-scheme: dark) {\n  :root {\n${NEUTRAL_DARK}\n\n${accentVars(accent.dark, "    ")}` +
+    (a2 ? `\n\n${accent2Vars(a2.dark, "    ")}` : "") +
+    `\n  }\n}`
   );
 }
 
@@ -239,8 +259,14 @@ em { font-style: italic; }
   height: 3px;
   margin-top: var(--mdp-space-4);
   border-radius: 999px;
-  background: var(--mdp-accent);
+  background: var(--mdp-accent2, var(--mdp-accent));
 }
+/* When a brand logo is present it already carries the masthead's brand signal,
+   so drop the title's accent underline: one clean lockup instead of three
+   stacked marks (logo + accent eyebrow + underline). The logo and title are
+   siblings in every form's masthead (logo first), so the general sibling
+   combinator targets exactly the logo case and leaves logo-less docs untouched. */
+.mdp-logo ~ .mdp-title::after { display: none; }
 
 /* Lead / standfirst: serif, softer ink */
 .mdp-lead {
@@ -365,6 +391,6 @@ em { font-style: italic; }
 
 // Assemble the shared stylesheet (the selected theme's tokens + base) injected
 // into every artifact. Defaults to the studio theme when none is given.
-export function baseStyle(theme = DEFAULT_THEME) {
-  return `${themeTokens(theme)}\n\n${BASE}`;
+export function baseStyle(theme = DEFAULT_THEME, accentOverride = null, accent2Override = null) {
+  return `${themeTokens(theme, accentOverride, accent2Override)}\n\n${BASE}`;
 }

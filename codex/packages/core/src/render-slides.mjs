@@ -20,6 +20,8 @@ import {
   deriveEyebrow,
   deriveLangDir,
   deriveTheme,
+  deriveBrandAccent,
+  deriveBrandAccent2,
   splitSections,
   extractMasthead,
   deriveLogo,
@@ -105,7 +107,7 @@ const SLIDES_STYLE = `.mdp-deck {
   cursor: pointer;
   transition: opacity 120ms ease, background 120ms ease;
 }
-.mdp-dot.is-active { opacity: 1; background: var(--mdp-accent); }
+.mdp-dot.is-active { opacity: 1; background: var(--mdp-accent2, var(--mdp-accent)); }
 
 .mdp-nav { display: flex; align-items: center; gap: var(--mdp-space-3); }
 .mdp-counter {
@@ -395,5 +397,7 @@ export function renderSlides(ir) {
     lang,
     dir,
     theme: deriveTheme(ir),
+    accent: deriveBrandAccent(ir),
+    accent2: deriveBrandAccent2(ir),
   });
 }

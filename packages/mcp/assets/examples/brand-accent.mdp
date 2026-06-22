@@ -1,0 +1,36 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+kicker: Brand
+title: Northwind Labs
+demonstrates: [brand-accent, brand-accent-2, stats, flow, lead]
+brand-accent: #2f8f6b
+brand-accent-2: #e8a33d
+---
+
+# Northwind Labs
+{.lead} One brand color in the frontmatter, and the engine derives the whole accent set, light and dark, every role gated to WCAG AA.
+
+Set `brand-accent` to your brand hex. The engine re-lights it into the five accent roles for both light and dark mode and keeps the type, spacing, and neutral ramp exactly as the theme defines them. You pick a color, never how it is used.
+
+```mdp:flow
+Name a brand color -> The engine derives five roles, light + dark -> Every form stays on brand and AA
+```
+
+---
+
+## Where the color lands
+
+```mdp:stats
+Roles derived: 5
+Modes: light + dark
+Contrast floor: AA
+Brand inputs: 2
+```
+
+The primary color carries the links, the eyebrow, the stat figures, and the fills. An optional `brand-accent-2` is reserved for a few engine-chosen accents, the title underline, the flow connectors, and the active slide dot, so a second brand color reads without taking over the page.
+
+:::callout note
+A malformed or inaccessible color is simply ignored: the document falls back to its named `theme`. The author can never push the look off the rails.
+:::
