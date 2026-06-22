@@ -19,6 +19,7 @@ by hand.
 
 | file | demonstrates | blocks | forms | theme |
 |---|---|---|---|---|
+| `accordion.mdp` | accordion, list, callout:tip, table | callout, list, table | accordion, page | studio |
 | `block-callouts.mdp` | callout:note, callout:tip, callout:cost, callout:recommendation, callout:warning, lead | callout | page, slides, flyer | amber |
 | `block-chart.mdp` | chart, lead | chart | page, slides, flyer | amber |
 | `block-compare.mdp` | compare, flow, callout:cost, callout:recommendation, lead | callout, compare, flow | page, slides, flyer | studio |
@@ -39,7 +40,10 @@ by hand.
 | `release-notes.mdp` | stats, callout:tip, callout:warning, quote, cite, lead | callout, quote, stats | page, slides, flyer | amber |
 | `report.mdp` | report, stats, quote, list, lead, callout:recommendation | callout, list, quote, stats | report, page | ocean |
 | `rtl.mdp` | rtl, flow, stats, list, callout:recommendation, quote, cite, lead | callout, flow, list, quote, stats | page, slides, flyer | rose |
+| `scroll.mdp` | scroll, stats, flow, quote, callout:note | callout, flow, quote, stats | scroll, page | ocean |
 | `starter.mdp` | (none) | list, stats | page, slides, flyer | studio |
+| `stepper.mdp` | stepper, list, flow, callout:recommendation | callout, flow, list | stepper, page | forest |
+| `tabs.mdp` | tabs, compare, table, list | compare, list, table | tabs, page | teal |
 | `theme-gallery.mdp` | stats, flow, callout:note, quote, cite, lead | callout, flow, quote, stats | page, slides, flyer | plum |
 
 <!-- examples:end -->

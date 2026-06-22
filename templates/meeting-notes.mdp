@@ -1,7 +1,7 @@
 ---
 mdp: 1
 theme: mono
-forms: [page]
+forms: [page, accordion]
 kicker: Notes
 title: <MEETING TITLE>
 ---

@@ -46,5 +46,29 @@
     "file": "meeting-notes.mdp",
     "label": "Meeting notes",
     "lead": "page"
+  },
+  {
+    "id": "story",
+    "file": "story.mdp",
+    "label": "Scroll story",
+    "lead": "scroll"
+  },
+  {
+    "id": "faq",
+    "file": "faq.mdp",
+    "label": "FAQ",
+    "lead": "accordion"
+  },
+  {
+    "id": "explorer",
+    "file": "explorer.mdp",
+    "label": "Tabbed explorer",
+    "lead": "tabs"
+  },
+  {
+    "id": "walkthrough",
+    "file": "walkthrough.mdp",
+    "label": "Walkthrough",
+    "lead": "stepper"
   }
 ]

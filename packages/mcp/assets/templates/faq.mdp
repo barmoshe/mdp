@@ -1,0 +1,39 @@
+---
+mdp: 1
+theme: studio
+forms: [accordion, page]
+kicker: <FAQ KICKER>
+title: <FAQ TITLE>
+---
+
+# <FAQ TITLE>
+{.lead} <ONE SENTENCE ON WHAT THIS COVERS. THE FIRST QUESTION OPENS BY DEFAULT.>
+
+## <QUESTION ONE?>
+
+<A DIRECT ANSWER IN A SENTENCE OR TWO.>
+
+---
+
+## <QUESTION TWO?>
+
+<ANSWER. USE A LIST WHEN IT HELPS:>
+
+- <POINT>
+- <POINT>
+
+---
+
+## <QUESTION THREE?>
+
+<ANSWER.>
+
+:::callout tip
+<AN OPTIONAL TIP OR CAVEAT WORTH CALLING OUT.>
+:::
+
+---
+
+## <QUESTION FOUR?>
+
+<ANSWER.>

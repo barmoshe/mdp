@@ -26,7 +26,7 @@ import { DIAGRAM_KINDS } from "./diagram.mjs";
 // Semantic version of the grammar this schema describes. Bump on any change to
 // the frontmatter vocabulary or the block set. Independent of the `mdp:` format
 // version (which gates source-level compatibility).
-export const SCHEMA_VERSION = "1.1.0";
+export const SCHEMA_VERSION = "1.2.0";
 
 // The presentation forms a source can declare (the allowed enum). Matches
 // ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
@@ -218,6 +218,58 @@ const definitions = {
       dashed: { type: "boolean" },
     },
   },
+  timeline: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "steps"],
+    properties: {
+      type: { const: "timeline" },
+      steps: { type: "array", items: { $ref: "#/definitions/timelineStep" } },
+    },
+  },
+  timelineStep: {
+    type: "object",
+    additionalProperties: false,
+    required: ["title", "body"],
+    properties: { title: { type: "string" }, body: { type: "string" } },
+  },
+  faq: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "items"],
+    properties: {
+      type: { const: "faq" },
+      items: { type: "array", items: { $ref: "#/definitions/faqItem" } },
+    },
+  },
+  faqItem: {
+    type: "object",
+    additionalProperties: false,
+    required: ["q", "a"],
+    properties: { q: { type: "string" }, a: { type: "string" } },
+  },
+  pricing: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "tiers"],
+    properties: {
+      type: { const: "pricing" },
+      tiers: { type: "array", items: { $ref: "#/definitions/pricingTier" } },
+    },
+  },
+  pricingTier: {
+    type: "object",
+    additionalProperties: false,
+    required: ["name", "badge", "price", "period", "cta", "features"],
+    properties: {
+      name: { type: "string" },
+      badge: stringOrNull,
+      price: stringOrNull,
+      period: stringOrNull,
+      cta: stringOrNull,
+      features: { type: "array", items: { type: "string" } },
+    },
+  },
 };
 
 // The frontmatter object (the IR's `meta`). Closed to the keys the engine reads
@@ -345,6 +397,9 @@ export const SCHEMA = {
           { $ref: "#/definitions/table" },
           { $ref: "#/definitions/chart" },
           { $ref: "#/definitions/diagram" },
+          { $ref: "#/definitions/timeline" },
+          { $ref: "#/definitions/faq" },
+          { $ref: "#/definitions/pricing" },
         ],
       },
     },

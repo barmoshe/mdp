@@ -51,7 +51,11 @@
               "report",
               "onepager",
               "memo",
-              "letter"
+              "letter",
+              "scroll",
+              "accordion",
+              "tabs",
+              "stepper"
             ]
           },
           "uniqueItems": true,

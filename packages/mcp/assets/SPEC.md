@@ -2,7 +2,8 @@
 
 MDP ("Markdown Presentation") is a presentation compiler for
 AI-written content. One plain-text source compiles into many polished forms: a
-page, a slide deck, a flyer, a report, a one-pager, a memo, a letter. The design
+page, a slide deck, a flyer, a report, a one-pager, a memo, a letter, and
+interactive forms: a scroll story, an accordion, tabs, a stepper. The design
 is locked in the renderer, so the output
 cannot drift into the over-decorated "junky artifact" look. The source stays as
 clean and diffable as ordinary Markdown. The author writes content and light
@@ -22,7 +23,7 @@ representation, not templates and not live AI:
 1. The declarative source parses into a tree of typed meaning (a lead, a hero
    stat, a quote, a call to action), Markdoc-shaped, with no arbitrary code.
 2. Each artifact (the forms below: page, slides, flyer, report, onepager, memo,
-   letter) is a solver, not a template. It lays that meaning out against locked
+   letter, scroll, accordion, tabs, stepper) is a solver, not a template. It lays that meaning out against locked
    design tokens and reflows so it cannot look bad.
 3. AI authors the source. The engine composes. The render is pure and
    reproducible: the same source produces the same output every time.
@@ -318,9 +319,9 @@ source. Those are the doors slop walks through.
 
 ## Forms (v1)
 
-A form is an output shape. The core forms compile by default; the document forms
-are opt-in, together enough to prove the claim that one source yields many
-polished outputs.
+A form is an output shape. The core forms compile by default; the document and
+interactive forms are opt-in, together enough to prove the claim that one source
+yields many polished outputs.
 
 - `page` a calm scrolling document. The reading form.
 - `slides` a full-screen click-through deck. The presenting form.
@@ -334,9 +335,18 @@ polished outputs.
   single column. Print-tuned.
 - `letter` formal correspondence: a letterhead, date, recipient, salutation,
   body, and sign-off. Print-tuned.
+- `scroll` a scroll-driven narrative: each `---` section is a scene that reveals
+  as it enters view, with a reading-progress bar and a dot rail. The storytelling
+  form.
+- `accordion` collapsible stacked sections, built on native `<details>`: scan the
+  headings, open the one you need. The reference and FAQ form.
+- `tabs` a tabbed explorer: each section becomes a panel, with arrow-key
+  navigation and a deep-linkable URL hash. The lateral form.
+- `stepper` a guided walkthrough: one numbered step at a time, with a progress bar
+  and Back / Next. The process form.
 
 The default set (`page, slides, flyer`) compiles when a source omits `forms:`;
-the four document forms are opt-in via an explicit `forms:` list.
+the other forms are opt-in via an explicit `forms:` list.
 
 Later: a social card or OG image. (open)
 
@@ -377,9 +387,10 @@ differently per form:
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
-The document forms inherit these readings rather than redefining them: `report`,
-`memo`, and `letter` read each block exactly as `page` does, and `onepager`
-composes them like `flyer` (full-width bands plus a packed grid).
+The document and interactive forms inherit these readings rather than redefining
+them: `report`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, and `stepper`
+read each block exactly as `page` does, and `onepager` composes them like `flyer`
+(full-width bands plus a packed grid).
 
 ## House style (the part the author cannot reach)
 

@@ -1,0 +1,47 @@
+---
+mdp: 1
+theme: forest
+forms: [stepper, page]
+kicker: <WALKTHROUGH KICKER>
+title: <TASK TITLE>
+---
+
+# <TASK TITLE>
+{.lead} <ONE SENTENCE ON THE OUTCOME. EACH SECTION BELOW BECOMES A STEP.>
+
+## <STEP ONE HEADING>
+
+<WHAT TO DO FIRST.>
+
+- <DETAIL>
+- <DETAIL>
+
+---
+
+## <STEP TWO HEADING>
+
+<THE NEXT ACTION.>
+
+```mdp:flow
+<INPUT> -> <ACTION> -> <RESULT>
+```
+
+---
+
+## <STEP THREE HEADING>
+
+<KEEP EACH STEP TO ONE CLEAR ACTION.>
+
+---
+
+## <STEP FOUR HEADING>
+
+:::callout recommendation
+<A RECOMMENDED DEFAULT OR BEST PRACTICE FOR THIS STEP.>
+:::
+
+---
+
+## <FINAL STEP HEADING>
+
+<HOW TO FINISH AND VERIFY THE RESULT.>

@@ -126,6 +126,30 @@
     "lead": "letter"
   },
   {
+    "id": "scroll",
+    "file": "scroll.mdp",
+    "label": "Scroll story",
+    "lead": "scroll"
+  },
+  {
+    "id": "accordion",
+    "file": "accordion.mdp",
+    "label": "Accordion",
+    "lead": "accordion"
+  },
+  {
+    "id": "tabs",
+    "file": "tabs.mdp",
+    "label": "Tabs",
+    "lead": "tabs"
+  },
+  {
+    "id": "stepper",
+    "file": "stepper.mdp",
+    "label": "Stepper",
+    "lead": "stepper"
+  },
+  {
     "id": "starter",
     "file": "starter.mdp",
     "label": "Starter",

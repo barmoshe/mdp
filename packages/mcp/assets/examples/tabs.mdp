@@ -1,0 +1,58 @@
+---
+mdp: 1
+theme: teal
+forms: [tabs, page]
+kicker: Product
+title: Fieldline at a glance
+demonstrates: [tabs, compare, table, list]
+---
+
+# Fieldline at a glance
+{.lead} The same brief, split into tabs you can jump between. Each section becomes a tab.
+
+## Overview
+
+Fieldline turns scattered operational data into one daily digest your team actually reads.
+
+- Connects the systems you already run.
+- Writes a plain-language summary every morning.
+- Delivers it where the team already looks.
+
+---
+
+## Compare
+
+```mdp:compare
+# Fieldline
+badge: managed
+note: A hosted digest, configured for you.
+- Live the same day, with no setup work.
+- Runs on our platform and account.
+
+# Roll your own
+badge: in your stack
+note: A small script inside your own environment.
+- Everything stays in your account.
+- You maintain the code over time.
+```
+
+---
+
+## Specs
+
+| Item | Detail |
+| --- | --- |
+| Sources | CSV, email, webhook |
+| Cadence | Daily or hourly |
+| Delivery | Email, Slack, Telegram |
+| Retention | 18 months |
+
+---
+
+## FAQ
+
+The questions that come up most, kept short.
+
+- It does not replace your systems; it reads from them.
+- Your data stays in your own account.
+- You can export every digest as a file.

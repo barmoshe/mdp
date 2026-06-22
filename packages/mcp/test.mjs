@@ -31,6 +31,10 @@ const MARKERS = {
   onepager: ['<article class="mdp-onepager">', "mdp-onepager-header"],
   memo: ['<article class="mdp-memo">', "mdp-memo-meta"],
   letter: ['<article class="mdp-letter">', "mdp-letter-body"],
+  scroll: ['<div class="mdp-scroll">', "mdp-scene-hero"],
+  accordion: ['<main class="mdp-accordion">', "mdp-acc-item"],
+  tabs: ['<main class="mdp-tabs">', "mdp-tablist"],
+  stepper: ['<main class="mdp-stepper">', "mdp-step-rail"],
 };
 
 const GOOD = `---

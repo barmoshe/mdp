@@ -1,0 +1,53 @@
+---
+mdp: 1
+theme: teal
+forms: [tabs, page]
+kicker: <EXPLORER KICKER>
+title: <SUBJECT NAME>
+---
+
+# <SUBJECT NAME>
+{.lead} <ONE SENTENCE OVERVIEW. EACH SECTION BELOW BECOMES A TAB.>
+
+## Overview
+
+<WHAT IT IS, IN A FEW LINES.>
+
+- <KEY POINT>
+- <KEY POINT>
+
+---
+
+## Details
+
+<SWAP THIS HEADING FOR YOUR OWN. ONE TAB PER SECTION.>
+
+| <COLUMN> | <COLUMN> |
+| --- | --- |
+| <CELL> | <CELL> |
+| <CELL> | <CELL> |
+
+---
+
+## Compare
+
+```mdp:compare
+# <OPTION ONE>
+note: <ONE LINE ON WHAT IT IS>
+- <PRO>
+- <PRO>
+
+# <OPTION TWO>
+note: <ONE LINE ON WHAT IT IS>
+- <PRO>
+- <PRO>
+```
+
+---
+
+## FAQ
+
+<SHORT ANSWERS TO COMMON QUESTIONS.>
+
+- <QUESTION AND ANSWER IN ONE LINE.>
+- <QUESTION AND ANSWER IN ONE LINE.>

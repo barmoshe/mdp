@@ -31,7 +31,7 @@ export const SCHEMA_VERSION = "1.1.0";
 // The presentation forms a source can declare (the allowed enum). Matches
 // ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
 // (index.mjs re-exports SCHEMA).
-const FORMS = ["page", "slides", "flyer", "report", "onepager", "memo", "letter"];
+const FORMS = ["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper"];
 
 // The forms compiled when a source omits `forms:`. The three core forms stay the
 // default, so an unannotated source (and the playground) build the familiar set;

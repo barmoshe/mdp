@@ -9,7 +9,7 @@ title: The MDP vision
 # The MDP vision
 {.lead} A presentation compiler for AI-written content, with the design locked in the engine.
 
-One declarative source is composed, deterministically, into many polished artifacts — a page, a deck, a flyer, a report, a one-pager, a memo, a letter, the interactive forms (scroll, accordion, tabs, stepper), and whatever the ecosystem builds next. The design is locked in the engine, so the output cannot look junky.
+One declarative source is composed, deterministically, into many polished artifacts: a page, a deck, a flyer, a report, a one-pager, a memo, a letter, the interactive forms (scroll, accordion, tabs, stepper), and whatever the ecosystem builds next. The design is locked in the engine, so the output cannot look junky.
 
 ---
 

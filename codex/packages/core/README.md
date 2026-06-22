@@ -1,8 +1,8 @@
 # mdp-compiler
 
 The MDP engine: compile one `.mdp` source, deterministically, into design-locked
-**page**, **slides**, **flyer**, **report**, **one-pager**, **memo**, and
-**letter** artifacts. Zero dependencies, pure ESM.
+**page**, **slides**, **flyer**, **report**, **one-pager**, **memo**, **letter**,
+**scroll**, **accordion**, **tabs**, and **stepper** artifacts. Zero dependencies, pure ESM.
 
 The author writes meaning, never styling. There is no color, size, or font in the
 source, so the output cannot drift into the generic "AI look", and the same source
@@ -21,14 +21,15 @@ theme: ocean
 A quarterly update.
 `;
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter" | "scroll" | "accordion" | "tabs" | "stepper"
 ```
 
 ## API
 
 - `compile(source, artifact = "page")` returns the rendered HTML string for one
   artifact (any artifact name: `"page"`, `"slides"`, `"flyer"`, `"report"`,
-  `"onepager"`, `"memo"`, or `"letter"`).
+  `"onepager"`, `"memo"`, `"letter"`, `"scroll"`, `"accordion"`, `"tabs"`,
+  or `"stepper"`).
 - `parse(source)` returns the semantic tree (frontmatter plus the ordered, closed
   set of body blocks).
 - `ARTIFACTS` is the list of artifacts the engine can compile.

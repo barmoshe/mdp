@@ -80,7 +80,7 @@ The eleven themes: studio, ocean, teal, forest, amber, terracotta, coral, rose, 
 
 ## Status and roadmap
 
-Early and honest: a working engine that proves the core claim — one source composes deterministically into many clean artifacts, with a first set of blocks and right-to-left support. The format will move before 1.0.
+Early and honest. A working engine that proves the core claim: one source composes deterministically into many clean artifacts, with a first set of blocks and right-to-left support. The format will move before 1.0.
 
 The live playground, the `mdp-mcp` server, and the `create-mdp-extension` scaffolder are shipped and published to npm. Next: an `mdp:chart` block and a JSON Schema conformance test.
 

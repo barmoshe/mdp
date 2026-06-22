@@ -1,0 +1,54 @@
+---
+mdp: 1
+theme: forest
+forms: [stepper, page]
+kicker: Walkthrough
+title: Ship your first MDP source
+demonstrates: [stepper, list, flow, callout:recommendation]
+---
+
+# Ship your first MDP source
+{.lead} Five steps from a blank file to a compiled set of forms. Use Back and Next, or click a step in the rail.
+
+## Write the source
+
+Create a file ending in `.mdp`. Add a short frontmatter block, then write plain Markdown.
+
+- A heading becomes a section.
+- A thematic break starts the next one.
+- You never write color or layout.
+
+---
+
+## Choose the forms
+
+List the forms you want in the frontmatter. Omit the list and you get the core set.
+
+```mdp:flow
+One source -> List the forms -> The engine composes each
+```
+
+---
+
+## Compile
+
+Run the compiler. Each form is written as a standalone HTML file you can open or host.
+
+- No build server, no runtime.
+- The same source always produces the same output.
+
+---
+
+## Review
+
+Open the forms and read them. Switch between a page, a deck, and the interactive forms without touching the content.
+
+:::callout recommendation
+Start with page and slides to check the content reads well, then add the interactive form that fits how people will actually use it.
+:::
+
+---
+
+## Ship
+
+Host the HTML anywhere static, or hand the file to whoever needs it. There is nothing else to install.

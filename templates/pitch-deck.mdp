@@ -1,7 +1,7 @@
 ---
 mdp: 1
 theme: studio
-forms: [slides, page]
+forms: [slides, scroll, page]
 kicker: Pitch
 title: <COMPANY OR PROJECT>
 ---
