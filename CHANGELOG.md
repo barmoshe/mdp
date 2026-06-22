@@ -5,7 +5,21 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-22
+
 ### Added
+- Interactive forms. Four artifacts that compile the same source into client-side
+  experiences: `scroll` (a scroll-driven narrative with reveal-on-enter, a
+  reading-progress bar, and a dot rail), `accordion` (collapsible stacked sections
+  on native `<details>`, with Expand all / Collapse all), `tabs` (a tabbed explorer
+  with arrow-key navigation and a deep-linkable URL hash), and `stepper` (a guided
+  walkthrough with a progress bar and Back / Next). Each is opt-in via `forms:`,
+  degrades to readable HTML with no JavaScript, respects `prefers-reduced-motion`,
+  and keeps WCAG-AA contrast and keyboard navigation. The four share one
+  content-flow block renderer (`content-blocks.mjs`); new examples and fill-in
+  templates ship for each.
+- Timeline, FAQ, and pricing blocks (`mdp:timeline`, `mdp:faq`, `mdp:pricing`),
+  rendered across every form, with a new example for each.
 - Custom brand color. A `brand-accent` frontmatter field (one 6-digit hex) that
   the engine derives a full WCAG-AA accent set from (five roles, light and dark),
   falling back to the named `theme` when a color cannot be made accessible. An
