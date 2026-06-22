@@ -338,16 +338,27 @@ em { font-style: italic; }
   margin: 0;
 }
 
-/* Brand logo: an engine-placed mark in the masthead. The author supplies only
-   the asset reference; size and position are locked here. display:block aligns
-   it to the inline-start edge, so a single dir=rtl flip lands it correctly.
-   Per-form size overrides live in each renderer's stylesheet. */
+/* Brand logo: an engine-placed mark in the masthead, set on a white "lockup"
+   plate (padding + background + hairline border + radius + soft shadow) so a
+   dark or full-color logo stays legible on every theme and in dark mode, where
+   a bare mark would otherwise bleed into the surface. The author supplies only
+   the asset reference; size, plate, and position are locked here. display:block
+   aligns it to the inline-start edge, so a single dir=rtl flip lands it
+   correctly. box-sizing:content-box keeps the height value the logo height (not
+   the plate) under the global border-box reset. Per-form size overrides live in
+   each renderer's stylesheet. */
 .mdp-logo {
   display: block;
+  box-sizing: content-box;
   height: 2rem;
   width: auto;
   max-width: 12rem;
   object-fit: contain;
+  padding: var(--mdp-space-2) var(--mdp-space-3);
+  background: #ffffff;
+  border: 1px solid rgba(15, 18, 20, 0.1);
+  border-radius: 0.625rem;
+  box-shadow: 0 1px 2px rgba(15, 18, 20, 0.08), 0 6px 18px rgba(15, 18, 20, 0.06);
   margin-block-end: var(--mdp-space-5);
 }
 `;
