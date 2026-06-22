@@ -8,6 +8,7 @@ const EXAMPLE_BLURB: Record<string, string> = {
   "block-stats": "Key figures rendered as a clean stat band.",
   "theme-gallery": "The same source shown across all eleven themes.",
   "brand-logo": "A masthead logo, sanitized and design-locked.",
+  "brand-accent": "Name a brand color; the engine derives the full light and dark accent set.",
   "release-notes": "Announce a version, calmly.",
   "starter": "The smallest source to copy and build on.",
 };

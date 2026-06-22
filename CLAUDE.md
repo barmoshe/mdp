@@ -218,6 +218,7 @@ forms: [page, slides, flyer]
 title: A clear title
 kicker: Optional eyebrow label
 theme: studio
+brand-accent: #2f8f6b        # optional: one brand hex; the engine derives the accent set
 lang: en
 dir: ltr
 ---

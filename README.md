@@ -159,8 +159,9 @@ Start self-hosted, then move later if you prefer a visual builder.
 :::
 ````
 
-It is valid, readable Markdown. There is no color, size, or font anywhere in the
-source. The design lives in the engine.
+It is valid, readable Markdown. There is no styling in the source: no sizes, no
+fonts, and the only color you may name is a brand color the engine derives and
+gates. The design lives in the engine.
 
 ## Blocks
 
@@ -173,6 +174,7 @@ source. The design lives in the engine.
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
+| `brand-logo` / `brand-accent` | Add a logo, or name a brand color (one hex) the engine re-lights into a full WCAG-AA accent set, light and dark. |
 
 Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks)
 and the [spec](SPEC.md).
