@@ -4,9 +4,10 @@ theme: studio
 forms: [page, slides, flyer]
 kicker: Brand
 title: Northwind Labs
-demonstrates: [brand-accent, brand-accent-2, stats, flow, lead]
+demonstrates: [brand-accent, brand-accent-2, brand-font, stats, flow, lead]
 brand-accent: #2f8f6b
 brand-accent-2: #e8a33d
+brand-font: rounded
 ---
 
 # Northwind Labs

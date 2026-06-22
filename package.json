@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build": "node packages/core/build.mjs",
-    "test": "node scripts/check-contrast.mjs && node scripts/check-brand-accent.mjs && node scripts/check-logo.mjs && node scripts/check-examples.mjs && node scripts/check-schema.mjs && node scripts/check-scaffold.mjs",
+    "test": "node scripts/check-contrast.mjs && node scripts/check-brand-accent.mjs && node scripts/check-brand-font.mjs && node scripts/check-logo.mjs && node scripts/check-examples.mjs && node scripts/check-schema.mjs && node scripts/check-scaffold.mjs",
     "check:examples": "node scripts/check-examples.mjs",
     "check:schema": "node scripts/check-schema.mjs",
     "check:scaffold": "node scripts/check-scaffold.mjs",

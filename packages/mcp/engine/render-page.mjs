@@ -19,6 +19,7 @@ import {
   deriveTheme,
   deriveBrandAccent,
   deriveBrandAccent2,
+  deriveBrandFont,
   splitSections,
   extractMasthead,
   deriveLogo,
@@ -156,5 +157,6 @@ export function renderPage(ir) {
     theme: deriveTheme(ir),
     accent: deriveBrandAccent(ir),
     accent2: deriveBrandAccent2(ir),
+    font: deriveBrandFont(ir),
   });
 }

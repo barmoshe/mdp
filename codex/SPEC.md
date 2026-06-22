@@ -37,16 +37,17 @@ This is a strawman. Anything marked (open) is not yet settled.
 
 1. The spec is a prompt. It is written so an LLM can read it and emit valid MDP
    with no examples. The examples are first-class.
-2. The author cannot style. There is no styling, no sizing, and no font in the
-   source; the only color an author may name is a brand color the engine fully
-   derives and places. Slop becomes structurally impossible, not something you
-   prompt against. (Two deliberate, narrow amendments: `brand-logo` names a
-   single brand asset, and `brand-accent` (with an optional `brand-accent-2`)
-   names one or two brand colors. The engine derives all five accent roles in
-   light and dark from each hex, gates them to WCAG AA, owns every spot the
-   color appears, and falls back to a named `theme` when a color cannot be made
-   accessible. The author picks a mark and a color, never how or where they
-   render. See Frontmatter.)
+2. The author cannot style. There is no styling and no sizing in the source; the
+   only color an author may name is a brand color the engine fully derives, and
+   the only font choice is one of a closed set of system families. Slop becomes
+   structurally impossible, not something you prompt against. (Three deliberate,
+   narrow amendments: `brand-logo` names a single brand asset; `brand-accent`
+   (with an optional `brand-accent-2`) names one or two brand colors, which the
+   engine derives into all five accent roles in light and dark, gates to WCAG AA,
+   places, and falls back to a named `theme` when inaccessible; and `brand-font`
+   picks the body family from a fixed set of system stacks, no web fonts. The
+   author picks a mark, a color, and a font character, never how, where, or what
+   size they render. See Frontmatter.)
 3. Wrong input still renders. An unknown directive or a malformed block degrades
    to readable text, never a blank or black screen. A validator returns a
    precise fix so an agent can self-heal.
@@ -74,6 +75,7 @@ dir: rtl                     # optional, writing direction; auto from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 brand-accent: #2f8f6b        # optional, one brand hex; the engine derives the accent set
 brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+brand-font: rounded          # optional, body font: system serif mono rounded humanist
 to: Engineering              # optional, read by memo and letter (recipient)
 from: Bar Moshe              # optional, read by memo and letter (sender)
 date: 2026-06-22             # optional, read by memo and letter
@@ -133,6 +135,14 @@ sparingly in engine-chosen spots only (the title underline, the flow connectors,
 and the active slide dot); it applies only alongside `brand-accent` and falls back
 to it. Like the logo, this amends Principle 2: the author names a color, never a
 style, and never where it lands.
+
+`brand-font` selects the body and UI font from a closed set of system font stacks:
+`system` (the default), `serif`, `mono`, `rounded`, and `humanist`. The serif role
+used for the lead and quotes is unchanged, so the two-family character is kept.
+These are system families only, no `@font-face` and no network, so determinism and
+the offline posture hold; an unknown value falls back to the theme default. This is
+the third amendment to Principle 2: the author picks a font character from a fixed
+set, never an arbitrary font or a size.
 
 `to`, `from`, `date`, `salutation`, and `signoff` are optional plain-string
 fields read only by the document forms that need them: `memo` and `letter` use

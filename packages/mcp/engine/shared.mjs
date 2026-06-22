@@ -5,7 +5,7 @@
 // block list into sections split on `break` nodes.
 
 import { escapeHtml, safeImgUrl } from "./inline.mjs";
-import { baseStyle, THEMES, DEFAULT_THEME } from "./tokens.mjs";
+import { baseStyle, THEMES, DEFAULT_THEME, FONT_STACKS } from "./tokens.mjs";
 import { deriveAccent, deriveAccent2 } from "./color.mjs";
 
 // Languages that default to a right-to-left script when no explicit dir is set.
@@ -45,6 +45,16 @@ export function deriveBrandAccent2(ir) {
   return deriveAccent2(raw.trim());
 }
 
+// Resolve `brand-font` to a system font stack from the closed FONT_STACKS set, or
+// null when absent/unknown (the engine then keeps the theme's default sans). Only
+// the body/UI family is overridden; the serif role is fixed. System stacks only,
+// so determinism and the no-network posture are preserved.
+export function deriveBrandFont(ir) {
+  const raw = (ir && ir.meta && ir.meta["brand-font"]) || "";
+  if (typeof raw !== "string") return null;
+  return FONT_STACKS[raw.trim().toLowerCase()] || null;
+}
+
 // Resolve the document language and writing direction from the frontmatter.
 //   lang: meta.lang, else "en"
 //   dir : meta.dir if explicitly set (it wins), else "rtl" for an RTL language
@@ -74,6 +84,7 @@ export function htmlDocument({
   theme = "studio",
   accent = null,
   accent2 = null,
+  font = null,
 }) {
   const head =
     `<!doctype html>\n` +
@@ -83,7 +94,7 @@ export function htmlDocument({
     `<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
     `<meta name="generator" content="MDP">\n` +
     `<title>${escapeHtml(title)}</title>\n` +
-    `<style>\n${baseStyle(theme, accent, accent2 && accent ? accent2 : null)}\n${style}\n</style>\n` +
+    `<style>\n${baseStyle(theme, accent, accent2 && accent ? accent2 : null, font)}\n${style}\n</style>\n` +
     `</head>\n`;
   const scriptTag = script ? `<script>\n${script}\n</script>\n` : "";
   return `${head}<body>\n${body}\n${scriptTag}</body>\n</html>\n`;

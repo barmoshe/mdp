@@ -96,6 +96,16 @@
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$"
         },
+        "brand-font": {
+          "description": "Optional brand font for the body/UI family, one of a closed set of system font stacks (no web fonts). The serif role (lead and quotes) is unchanged; an unknown value falls back to the theme default.",
+          "enum": [
+            "system",
+            "serif",
+            "mono",
+            "rounded",
+            "humanist"
+          ]
+        },
         "to": {
           "description": "Optional addressee for the memo and letter forms (the To: line). Plain text; ignored by the other forms.",
           "type": "string"

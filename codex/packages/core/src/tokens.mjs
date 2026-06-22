@@ -6,8 +6,10 @@
 // the three forms read as one designed system.
 //
 // Constraints encoded here (do not loosen without an ADR):
-//   - Two font families only: a system sans for body/UI, a serif reserved for
-//     the lead and quotes.
+//   - Two font families: a sans for body/UI, a serif reserved for the lead and
+//     quotes. The sans is selectable from a closed set of system stacks via
+//     `brand-font` (FONT_STACKS); the serif role is fixed (ADR 0096). No
+//     @font-face, no web fonts, so determinism and the offline guarantee hold.
 //   - Two weights only (400, 500). Sentence case. No ALL CAPS except a small
 //     letterspaced eyebrow.
 //   - One warm neutral ramp plus ONE restrained accent. Color encodes meaning,
@@ -170,18 +172,34 @@ function accent2Vars(a, indent) {
   );
 }
 
+// The closed set of brand fonts. `brand-font` selects one of these for the
+// body/UI family only; the serif role (lead and quotes) is unchanged, so the
+// two-family character is preserved. System stacks only: no @font-face and no
+// network, so determinism and the offline guarantee hold, and each ends in a
+// generic family so an unfamiliar system degrades gracefully. An unknown key
+// falls back to the theme default (the SCALE sans).
+export const FONT_STACKS = {
+  system: `system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`,
+  serif: `Georgia, "Iowan Old Style", "Palatino Linotype", serif`,
+  mono: `ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace`,
+  rounded: `ui-rounded, "SF Pro Rounded", "Hiragino Maru Gothic ProN", system-ui, sans-serif`,
+  humanist: `Optima, Candara, "Segoe UI", "Helvetica Neue", system-ui, sans-serif`,
+};
+
 // Emit the full token block for one theme: the shared scale + warm neutral ramp
 // + the theme's accent set, for both light and dark. `accentOverride` (a derived
 // {light,dark} set from a brand hex) replaces the named accent when present;
-// `accent2Override` adds the secondary accent vars. Both null -> byte-identical to
+// `accent2Override` adds the secondary accent vars; `fontOverride` (a resolved
+// FONT_STACKS value) replaces the body/UI family. All null -> byte-identical to
 // the named-theme output, so existing docs are unchanged.
-export function themeTokens(theme, accentOverride = null, accent2Override = null) {
+export function themeTokens(theme, accentOverride = null, accent2Override = null, fontOverride = null) {
   const accent = accentOverride || ACCENTS[theme] || ACCENTS[DEFAULT_THEME];
   const a2 = accent2Override;
   return (
     `:root {\n${SCALE}\n\n  /* Warm neutral ramp */\n${NEUTRAL_LIGHT}\n\n` +
     `  /* Accent (the one restrained color, in meaning-spots only) */\n${accentVars(accent.light, "  ")}` +
     (a2 ? `\n\n  /* Secondary accent (sparing, engine-placed spots) */\n${accent2Vars(a2.light, "  ")}` : "") +
+    (fontOverride ? `\n\n  /* Brand font: overrides the body/UI family; the serif role is unchanged */\n  --mdp-font-sans: ${fontOverride};` : "") +
     `\n}\n\n` +
     `@media (prefers-color-scheme: dark) {\n  :root {\n${NEUTRAL_DARK}\n\n${accentVars(accent.dark, "    ")}` +
     (a2 ? `\n\n${accent2Vars(a2.dark, "    ")}` : "") +
@@ -391,6 +409,6 @@ em { font-style: italic; }
 
 // Assemble the shared stylesheet (the selected theme's tokens + base) injected
 // into every artifact. Defaults to the studio theme when none is given.
-export function baseStyle(theme = DEFAULT_THEME, accentOverride = null, accent2Override = null) {
-  return `${themeTokens(theme, accentOverride, accent2Override)}\n\n${BASE}`;
+export function baseStyle(theme = DEFAULT_THEME, accentOverride = null, accent2Override = null, fontOverride = null) {
+  return `${themeTokens(theme, accentOverride, accent2Override, fontOverride)}\n\n${BASE}`;
 }
