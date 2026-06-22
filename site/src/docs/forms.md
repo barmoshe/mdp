@@ -1,12 +1,20 @@
 # Forms
 
 A form is an output shape. One source compiles into every form it lists in
-`forms`. v1 ships three, which is enough to prove the claim that one source
-yields many polished outputs.
+`forms`. Seven ship today: three visual forms and four document forms, all
+solvers over the same semantic representation.
 
 - **page** a calm scrolling document. The reading form.
 - **slides** a full-screen click-through deck. The presenting form.
-- **flyer** one composed surface, a poster or one-pager. The at-a-glance form.
+- **flyer** one composed surface, a poster. The at-a-glance form.
+- **report** a paginated long-form document: a cover, an auto table of contents
+  from the `##` headings, and numbered sections. The structured reading form.
+- **one-pager** a single dense sheet: a header band, a packed two-column grid,
+  and a footer. Print-first. The executive leave-behind.
+- **memo** an internal business memo: a To / From / Date / Re header over a tight
+  single column.
+- **letter** formal correspondence: letterhead, date, salutation, body, and
+  sign-off.
 
 The renderer, not the file, owns presentation. The same blocks compile
 differently per form.
@@ -24,6 +32,11 @@ differently per form.
 | `mdp:flow` | chip row | chip row | own full-width chip row |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+
+The four document forms reuse these block readings: **report**, **memo**, and
+**letter** render each block exactly as **page** does; **one-pager** composes them
+like **flyer** (full-width bands and a packed grid). Only the surrounding
+structure differs.
 
 ## Presenting the deck
 
@@ -45,6 +58,9 @@ forms: [page, slides, flyer]
 From the command line you can also compile a single form with `--only`, or open
 one with `--open`. See the [CLI reference](#/docs/cli).
 
-Later forms, such as a social card or a paginated print, are open questions. They
-arrive as new solvers over the same semantic representation, with no change to the
-sources you already wrote.
+Omitting `forms` compiles the three core forms (`page`, `slides`, `flyer`). The
+document forms (`report`, `onepager`, `memo`, `letter`) are opt-in: name them
+explicitly, for example `forms: [report]`.
+
+Further forms arrive as new solvers over the same semantic representation, with no
+change to the sources you already wrote.

@@ -23,6 +23,11 @@ dir: rtl                     # optional, writing direction, inferred from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 brand-accent: #2f8f6b        # optional, one brand hex; engine derives the accent set
 brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+to: All engineering          # optional, memo + letter recipient
+from: Platform team          # optional, memo + letter sender / signature
+date: June 22, 2026          # optional, memo + letter date line
+salutation: Dear team,       # optional, letter greeting
+signoff: Warm regards,       # optional, letter closing
 ---
 ```
 
@@ -38,6 +43,11 @@ brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
 | `brand-logo` | A brand logo the engine places in the masthead: a URL, a relative path, or a base64 `data:image` URI. Validated and sanitized; an unsafe or missing value renders no logo. |
 | `brand-accent` | A custom brand color: one 6-digit hex (with a leading `#`). The engine derives the full accent set (five roles, light and dark) from it, all WCAG AA. A malformed or inaccessible value falls back to `theme`. |
 | `brand-accent-2` | An optional secondary brand color (6-digit hex), used sparingly in a few engine-chosen accents (the title underline, flow connectors, the active slide dot). Applies only alongside `brand-accent`. |
+| `to` | Memo and letter only: the addressee (the To: line). Plain text. |
+| `from` | Memo and letter only: the sender (the From: line, the letterhead, and the signature). Plain text. |
+| `date` | Memo and letter only: the date line. A free string; the engine never inserts a clock. |
+| `salutation` | Letter only: the greeting, for example "Dear Dr. Lin,". Plain text. |
+| `signoff` | Letter only: the closing above the signature, for example "Sincerely,". Plain text. |
 
 `theme` selects a designed system, not individual styles. Every theme shares one
 warm neutral ramp and differs only in a single restrained accent. See
@@ -68,6 +78,10 @@ optional second color the engine uses sparingly, in the title underline, the flo
 connectors, and the active slide dot, and applies only alongside `brand-accent`.
 You pick the colors; the engine still owns where they land.
 
+`to`, `from`, `date`, `salutation`, and `signoff` are optional plain-text fields
+read only by the memo and letter forms: the memo header, and the letter's
+letterhead, salutation, and sign-off. Every other form ignores them.
+
 ## Body
 
 Standard Markdown blocks work as you expect: headings, paragraphs, lists,
@@ -78,8 +92,9 @@ On top of plain Markdown there is a small, closed set of additions:
 ### Section breaks
 
 A thematic break (`---` on its own line) marks a boundary. It is a section
-divider on a page, a slide break in slides, and a panel divider on a flyer. If no
-MDP renderer runs, it is just a horizontal rule.
+divider on a page, a slide break in slides, a panel divider on a flyer, and a
+section boundary in the document forms. If no MDP renderer runs, it is just a
+horizontal rule.
 
 ### Line roles
 

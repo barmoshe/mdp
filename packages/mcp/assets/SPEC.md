@@ -2,7 +2,8 @@
 
 MDP (working name, "Markdown Presentation") is a presentation compiler for
 AI-written content. One plain-text source compiles into many polished forms: a
-page, a slide deck, a flyer. The design is locked in the renderer, so the output
+page, a slide deck, a flyer, a report, a one-pager, a memo, a letter. The design
+is locked in the renderer, so the output
 cannot drift into the over-decorated "junky artifact" look. The source stays as
 clean and diffable as ordinary Markdown. The author writes content and light
 intent only. The renderer composes each form and applies the presentation
@@ -20,9 +21,9 @@ representation, not templates and not live AI:
 
 1. The declarative source parses into a tree of typed meaning (a lead, a hero
    stat, a quote, a call to action), Markdoc-shaped, with no arbitrary code.
-2. Each artifact (the forms below: page, slides, flyer) is a solver, not a
-   template. It lays that meaning out against locked design tokens and reflows
-   so it cannot look bad.
+2. Each artifact (the forms below: page, slides, flyer, report, onepager, memo,
+   letter) is a solver, not a template. It lays that meaning out against locked
+   design tokens and reflows so it cannot look bad.
 3. AI authors the source. The engine composes. The render is pure and
    reproducible: the same source produces the same output every time.
 
@@ -73,6 +74,11 @@ dir: rtl                     # optional, writing direction; auto from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 brand-accent: #2f8f6b        # optional, one brand hex; the engine derives the accent set
 brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+to: Engineering              # optional, read by memo and letter (recipient)
+from: Bar Moshe              # optional, read by memo and letter (sender)
+date: 2026-06-22             # optional, read by memo and letter
+salutation: Dear team,       # optional, read by letter
+signoff: Best regards,       # optional, read by letter
 ---
 ```
 
@@ -127,6 +133,12 @@ sparingly in engine-chosen spots only (the title underline, the flow connectors,
 and the active slide dot); it applies only alongside `brand-accent` and falls back
 to it. Like the logo, this amends Principle 2: the author names a color, never a
 style, and never where it lands.
+
+`to`, `from`, `date`, `salutation`, and `signoff` are optional plain-string
+fields read only by the document forms that need them: `memo` and `letter` use
+`to`, `from`, and `date` for their headers; `letter` additionally uses
+`salutation` and `signoff` for the opening line and the sign-off. They carry no
+styling, only text, and every other form ignores them.
 
 ### Body
 
@@ -239,14 +251,27 @@ source. Those are the doors slop walks through.
 
 ## Forms (v1)
 
-A form is an output shape. v1 ships three, which is enough to prove the claim
-that one source yields many polished outputs.
+A form is an output shape. Three forms compile by default; four document forms
+are opt-in, together enough to prove the claim that one source yields many
+polished outputs.
 
 - `page` a calm scrolling document. The reading form.
 - `slides` a full-screen click-through deck. The presenting form.
-- `flyer` one composed surface, a poster or one-pager. The at-a-glance form.
+- `flyer` one composed surface, a poster. The at-a-glance form.
+- `report` a paginated long-form document: a cover, an auto table of contents
+  built from the `##` headings, and numbered sections. Prints to a clean
+  multi-page PDF. The structured reading form.
+- `onepager` a single dense sheet: a header band, a packed two-column grid of
+  sections, and a footer strip. Print-first. The executive leave-behind.
+- `memo` an internal business memo: a To / From / Date / Re header over a tight
+  single column. Print-tuned.
+- `letter` formal correspondence: a letterhead, date, recipient, salutation,
+  body, and sign-off. Print-tuned.
 
-Later: a social card or OG image, a paginated print or PDF. (open)
+The default set (`page, slides, flyer`) compiles when a source omits `forms:`;
+the four document forms are opt-in via an explicit `forms:` list.
+
+Later: a social card or OG image. (open)
 
 ## Mechanics (v1)
 
@@ -281,6 +306,10 @@ differently per form:
 | `mdp:flow` | chip row | chip row | own full-width chip row |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+
+The document forms inherit these readings rather than redefining them: `report`,
+`memo`, and `letter` read each block exactly as `page` does, and `onepager`
+composes them like `flyer` (full-width bands plus a packed grid).
 
 ## House style (the part the author cannot reach)
 

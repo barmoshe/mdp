@@ -15,7 +15,7 @@ default it compiles all three artifacts.
 | Option | Effect |
 |---|---|
 | `--out <dir>` | Write the artifacts to `<dir>` instead of `dist/`. |
-| `--only <artifact>` | Build just one of `page`, `slides`, or `flyer`. |
+| `--only <artifact>` | Build just one artifact: `page`, `slides`, `flyer`, `report`, `onepager`, `memo`, or `letter`. |
 | `--theme <name>` | Override the frontmatter theme with one of the 11 named themes. |
 | `--open [artifact]` | Show or present in the browser after building. With no name it opens the first built artifact. |
 

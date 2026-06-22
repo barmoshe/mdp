@@ -84,6 +84,30 @@
     "lead": "page"
   },
   {
+    "id": "report",
+    "file": "report.mdp",
+    "label": "Report",
+    "lead": "report"
+  },
+  {
+    "id": "onepager",
+    "file": "onepager.mdp",
+    "label": "One-pager",
+    "lead": "onepager"
+  },
+  {
+    "id": "memo",
+    "file": "memo.mdp",
+    "label": "Memo",
+    "lead": "memo"
+  },
+  {
+    "id": "letter",
+    "file": "letter.mdp",
+    "label": "Letter",
+    "lead": "letter"
+  },
+  {
     "id": "starter",
     "file": "starter.mdp",
     "label": "Starter",

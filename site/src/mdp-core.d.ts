@@ -6,7 +6,7 @@ declare module "mdp-compiler" {
   export function compile(source: string, artifact?: string): string;
   /** Parse an MDP source into the semantic representation (the typed tree). */
   export function parse(source: string): unknown;
-  /** The artifacts this engine can compile: ["page", "slides", "flyer"]. */
+  /** The artifacts this engine can compile: ["page", "slides", "flyer", "report", "onepager", "memo", "letter"]. */
   export const ARTIFACTS: string[];
   /** The curated theme names, in spectrum order: studio, ocean, teal, forest,
    *  amber, terracotta, coral, rose, plum, violet, mono. */

@@ -3,7 +3,8 @@
 MDP is not an app to visit and not a syntax to learn. It is a capability the
 agent reaches for inside the tool you already use. You ask in plain language; the
 agent authors clean MDP, compiles it with the bundled engine, and opens the page,
-deck, or flyer. The same engine ships to agent tools three ways.
+deck, flyer, or document form (report, one-pager, memo, letter). The same engine
+ships to agent tools three ways.
 
 ## Claude Code
 

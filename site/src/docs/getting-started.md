@@ -2,8 +2,9 @@
 
 MDP is a presentation compiler for AI-written content. One declarative `.mdp`
 source compiles, deterministically, into many polished, design-locked artifacts:
-a page, a slide deck, and a flyer. The author writes meaning; the engine owns all
-design, so the output cannot drift into the over-decorated "junky artifact" look.
+a page, a slide deck, a flyer, and four document forms (report, one-pager, memo,
+letter). The author writes meaning; the engine owns all design, so the output
+cannot drift into the over-decorated "junky artifact" look.
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -19,7 +20,7 @@ npm i mdp-compiler
 ```js
 import { compile } from "mdp-compiler";
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter"
 ```
 
 Or clone and run it straight from source, no install:
@@ -30,7 +31,8 @@ cd mdp
 node packages/core/build.mjs examples/block-compare.mdp
 ```
 
-That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open
+That writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
+`flyer.html`, `report.html`, `onepager.html`, `memo.html`, `letter.html`). Open
 them in a browser. The render path is pure, so two builds of the same source are
 byte-identical.
 
@@ -62,13 +64,13 @@ node packages/core/build.mjs hello.mdp --open page
 ```
 
 `--open` shows the result in your browser. Use `--open slides` to present the
-deck, or `--open flyer` for the one-pager.
+deck, `--open flyer` for the at-a-glance card, or any other form by name.
 
 ## What to read next
 
 - The [format](#/docs/format) covers the frontmatter and the body.
 - [Blocks](#/docs/blocks) is the full grammar: stats, compare, flow, callout.
-- [Forms](#/docs/forms) explains how one source maps to a page, slides, and a flyer.
+- [Forms](#/docs/forms) explains how one source maps to each form.
 - [Examples & templates](#/docs/examples): browse the example probes, or copy a
   fill-in template (or `examples/starter.mdp`) to start a real document.
 - Or skip the install and try the [live playground](#playground): edit a source

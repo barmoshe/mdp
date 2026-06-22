@@ -30,7 +30,11 @@ by hand.
 | `brand-logo.mdp` | brand-logo, flow, callout:note, lead | callout, flow | page, slides, flyer | studio |
 | `form-flyer-heavy.mdp` | stats, quote, compare, list, lead | compare, list, quote, stats | flyer, page | violet |
 | `form-slides-heavy.mdp` | quote, list, lead | list, quote | slides, page | mono |
+| `letter.mdp` | letter, list | (prose) | letter, page | terracotta |
+| `memo.mdp` | memo, list, callout:note | callout, list | memo, page | studio |
+| `onepager.mdp` | onepager, stats, flow, list | flow, stats | onepager, flyer | forest |
 | `release-notes.mdp` | stats, callout:tip, callout:warning, quote, cite, lead | callout, quote, stats | page, slides, flyer | amber |
+| `report.mdp` | report, stats, quote, list, lead, callout:recommendation | callout, list, quote, stats | report, page | ocean |
 | `rtl.mdp` | rtl, flow, stats, list, callout:recommendation, quote, cite, lead | callout, flow, list, quote, stats | page, slides, flyer | rose |
 | `starter.mdp` | (none) | list, stats | page, slides, flyer | studio |
 | `theme-gallery.mdp` | stats, flow, callout:note, quote, cite, lead | callout, flow, quote, stats | page, slides, flyer | plum |

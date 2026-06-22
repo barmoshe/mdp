@@ -20,10 +20,48 @@ function withTheme(src: string, theme: string): string {
   return src.replace(/^(mdp:[ \t]*\d+.*)$/m, `$1\ntheme: ${theme}`);
 }
 
+// The brand colors the source currently declares (empty string when none), so the
+// color inputs stay in sync with the editor.
+function currentAccent(src: string): string {
+  const m = src.match(/^brand-accent:[ \t]*(#[0-9a-fA-F]{6})/m);
+  return m ? m[1] : "";
+}
+function currentAccent2(src: string): string {
+  const m = src.match(/^brand-accent-2:[ \t]*(#[0-9a-fA-F]{6})/m);
+  return m ? m[1] : "";
+}
+
+// Set, replace, or (with an empty hex) remove a frontmatter line, inserting it
+// after an anchor line when it does not exist yet. Used for both brand fields.
+function setFrontmatterLine(src: string, key: string, value: string, anchor: RegExp): string {
+  const line = new RegExp(`^${key}:[ \\t]*\\S.*$`, "m");
+  if (!value) return src.replace(new RegExp(`^${key}:[ \\t]*\\S.*$\\n?`, "m"), "");
+  if (line.test(src)) return src.replace(line, `${key}: ${value}`);
+  return src.replace(anchor, `$1\n${key}: ${value}`);
+}
+function withAccent(src: string, hex: string): string {
+  // anchor after `theme:`, else after `mdp:`
+  const anchor = /^theme:[ \t]*\S+.*$/m.test(src) ? /^(theme:[ \t]*\S+.*)$/m : /^(mdp:[ \t]*\d+.*)$/m;
+  return setFrontmatterLine(src, "brand-accent", hex, anchor);
+}
+function withAccent2(src: string, hex: string): string {
+  // anchor after `brand-accent:`, else `theme:`, else `mdp:`
+  const anchor = /^brand-accent:[ \t]*\S+.*$/m.test(src)
+    ? /^(brand-accent:[ \t]*\S+.*)$/m
+    : /^theme:[ \t]*\S+.*$/m.test(src)
+      ? /^(theme:[ \t]*\S+.*)$/m
+      : /^(mdp:[ \t]*\d+.*)$/m;
+  return setFrontmatterLine(src, "brand-accent-2", hex, anchor);
+}
+
 const ARTIFACT_HINT: Record<string, string> = {
   page: "A calm scrolling document. The reading form.",
   slides: "A click-through deck. Arrow keys or space move; F is fullscreen.",
   flyer: "One composed surface. The at-a-glance form.",
+  report: "A paginated long-form document: cover, contents, numbered sections.",
+  onepager: "A single dense sheet. The executive leave-behind.",
+  memo: "An internal memo: To / From / Date / Re over a tight column.",
+  letter: "Formal correspondence: letterhead, salutation, body, sign-off.",
 };
 
 export default function Playground({
@@ -55,6 +93,8 @@ export default function Playground({
   }, [source]);
 
   const theme = currentTheme(source);
+  const accent = currentAccent(source);
+  const accent2 = currentAccent2(source);
 
   // The starter picker merges the example probes and the fill-in templates. Ids
   // collide across the two sets (both have "release-notes"), so options are keyed
@@ -167,6 +207,36 @@ export default function Playground({
               );
             })}
           </div>
+        </div>
+
+        <div className="pg-control pg-brand">
+          <span>brand</span>
+          <input
+            type="color"
+            aria-label="Brand color (brand-accent)"
+            title="Brand color: sets brand-accent; the engine derives the accent set"
+            value={accent || THEME_SWATCHES[theme]?.fill || "#5b54d6"}
+            onChange={(e) => setSource((s) => withAccent(s, e.target.value))}
+            style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
+          />
+          <input
+            type="color"
+            aria-label="Secondary brand color (brand-accent-2)"
+            title="Secondary brand color: sets brand-accent-2"
+            value={accent2 || THEME_SWATCHES[theme]?.text || "#e8a33d"}
+            onChange={(e) => setSource((s) => withAccent2(s, e.target.value))}
+            style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
+          />
+          {(accent || accent2) && (
+            <button
+              type="button"
+              className="btn btn-small"
+              title="Clear brand colors (fall back to the theme)"
+              onClick={() => setSource((s) => withAccent2(withAccent(s, ""), ""))}
+            >
+              clear
+            </button>
+          )}
         </div>
 
         <button className="btn btn-small" onClick={openInNewTab}>
