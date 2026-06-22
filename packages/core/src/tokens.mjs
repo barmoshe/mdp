@@ -230,17 +230,17 @@ a {
   color: var(--mdp-accent-text);
   text-decoration: underline;
   text-underline-offset: 0.15em;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--mdp-accent-border);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--mdp-accent-text);
   transition: text-decoration-color 120ms ease;
 }
-a:hover { text-decoration-color: var(--mdp-accent-text); }
+a:hover { text-decoration-color: var(--mdp-accent); }
 
 code {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.92em;
-  background: var(--mdp-surface);
-  border: 1px solid var(--mdp-border);
+  background: var(--mdp-accent-surface);
+  border: 1px solid var(--mdp-accent-border);
   border-radius: 4px;
   padding: 0.08em 0.36em;
 }
@@ -262,7 +262,7 @@ em { font-style: italic; }
 
 /* Title masthead. A short accent rule under the title echoes the kicker so the
    theme is visible even on a title slide that has no links or figures. The rule
-   is decorative weight only (a 3px hairline), never a colored surface. */
+   is a bold mark (a 4px bar), never a colored surface. */
 .mdp-title {
   font-family: var(--mdp-font-sans);
   font-weight: var(--mdp-weight-medium);
@@ -273,8 +273,8 @@ em { font-style: italic; }
 .mdp-title::after {
   content: "";
   display: block;
-  width: 2.75rem;
-  height: 3px;
+  width: 3.5rem;
+  height: 4px;
   margin-top: var(--mdp-space-4);
   border-radius: 999px;
   background: var(--mdp-accent2, var(--mdp-accent));
@@ -312,7 +312,7 @@ em { font-style: italic; }
 .mdp-list { margin: 0; padding-inline-start: 1.3em; color: var(--mdp-ink-soft); }
 .mdp-list li { margin: 0; padding-inline-start: 0.2em; }
 .mdp-list li + li { margin-top: var(--mdp-space-2); }
-.mdp-list li::marker { color: var(--mdp-ink-faint); }
+.mdp-list li::marker { color: var(--mdp-accent2-text, var(--mdp-accent-text)); }
 
 /* Stats as a clean bordered table (page form) */
 .mdp-stats-table {
@@ -347,7 +347,7 @@ em { font-style: italic; }
   font-weight: var(--mdp-weight-medium);
   letter-spacing: -0.02em;
   line-height: 1;
-  color: var(--mdp-ink);
+  color: var(--mdp-accent2-text, var(--mdp-accent-text));
   font-variant-numeric: tabular-nums;
 }
 .mdp-figure-label {
@@ -355,11 +355,14 @@ em { font-style: italic; }
   color: var(--mdp-ink-faint);
 }
 
-/* Pull quote: serif, inline-start hairline border */
+/* Pull quote: serif, on a subtle accent wash with a bold inline-start accent
+   edge so the theme color carries the quote (logical edge flips under RTL). */
 .mdp-quote {
   margin: 0;
-  border-inline-start: 2px solid var(--mdp-border);
-  padding-inline-start: var(--mdp-space-5);
+  background: var(--mdp-accent-surface);
+  border-inline-start: 3px solid var(--mdp-accent);
+  border-radius: 8px;
+  padding: var(--mdp-space-4) var(--mdp-space-5);
 }
 .mdp-quote-text {
   font-family: var(--mdp-font-serif);
