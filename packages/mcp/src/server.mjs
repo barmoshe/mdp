@@ -51,7 +51,7 @@ export async function startServer() {
         "Returns the absolute output path(s) and byte size. No browser. Deterministic.",
       inputSchema: {
         source: z.string().describe("The raw .mdp source text."),
-        form: z.enum([...ARTIFACTS, "all"]).default("page").describe('Which artifact: "page", "slides", "flyer", or "all".'),
+        form: z.enum([...ARTIFACTS, "all"]).default("page").describe('Which artifact to compile (any MDP form), or "all".'),
         out_dir: z.string().optional().describe("Output directory. Defaults to $MDP_OUT_DIR or the OS temp dir."),
       },
       annotations: { readOnlyHint: false, openWorldHint: false },
@@ -79,7 +79,7 @@ export async function startServer() {
         "default browser, and return the URL and absolute path.",
       inputSchema: {
         source: z.string().describe("The raw .mdp source text."),
-        form: z.enum([...ARTIFACTS]).default("slides").describe('Artifact to present ("page", "slides", or "flyer").'),
+        form: z.enum([...ARTIFACTS]).default("slides").describe("Which artifact to present (any MDP form). Defaults to slides."),
         out_dir: z.string().optional().describe("Output directory. Defaults to $MDP_OUT_DIR or the OS temp dir."),
       },
       annotations: { readOnlyHint: false, openWorldHint: false },

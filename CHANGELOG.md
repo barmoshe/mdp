@@ -6,6 +6,15 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- Custom brand color. A `brand-accent` frontmatter field (one 6-digit hex) that
+  the engine derives a full WCAG-AA accent set from (five roles, light and dark),
+  falling back to the named `theme` when a color cannot be made accessible. An
+  optional `brand-accent-2` adds a secondary color used sparingly in engine-chosen
+  spots (the title underline, the flow connectors, the active slide dot). The WCAG
+  contrast oracle now lives in the engine (`packages/core/src/color.mjs`) and is
+  shared by the build-time contrast gate. The masthead logo sits on a lockup plate
+  so it stays legible in dark mode, and the title underline yields when a logo is
+  present. New `examples/brand-accent.mdp`.
 - Published to npm: the engine as `mdp-compiler`, the MCP server as `mdp-mcp`, and
   the scaffolder as `create-mdp-extension` (all unscoped and public). `npm i
   mdp-compiler` to embed the engine, `npx -y mdp-mcp` for the MCP server, and

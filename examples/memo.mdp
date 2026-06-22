@@ -1,0 +1,30 @@
+---
+mdp: 1
+theme: studio
+forms: [memo, page]
+title: Default branch rename, this Friday
+to: All engineering
+from: Platform team
+date: June 22, 2026
+demonstrates: [memo, list, callout:note]
+---
+
+{.lead} A short note on a repository change landing Friday, and the one minute it asks of you.
+
+We are renaming the default branch from master to main across all repositories on Friday. The change is automated and should be invisible for everyday work.
+
+---
+
+## What changes
+- New clones check out main by default.
+- Open pull requests retarget automatically.
+- Branch protection and CI move with the branch.
+
+---
+
+## What to do
+For an existing local clone, run the three commands in the runbook. It takes under a minute.
+
+:::callout note
+If you reference the branch name in a script or a webhook, update it to main before Friday.
+:::

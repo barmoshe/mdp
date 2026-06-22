@@ -1,0 +1,49 @@
+---
+mdp: 1
+theme: ocean
+forms: [report, page]
+kicker: Research
+title: Q2 Platform Review
+demonstrates: [report, stats, quote, list, lead, callout:recommendation]
+---
+
+# Q2 Platform Review
+{.lead} What shipped, what moved the numbers, and where we focus next.
+
+---
+
+## Summary
+The platform had its strongest quarter yet. Adoption rose across every segment and the core workflow is measurably faster. Three numbers tell the story, and one decision follows from them.
+
+- Onboarding completion climbed to 81 percent.
+- Median time to first value fell by half.
+- Support volume held flat despite more users.
+
+---
+
+## The numbers
+```mdp:stats
+Active teams: 1,240
+Time to value: 3.5 days
+Retention (90d): 88%
+```
+
+---
+
+## What changed
+We rebuilt the import pipeline, simplified the first run, and cut the setup checklist from nine steps to four. The result is a shorter path from sign-up to a working project.
+
+---
+
+## Recommendation
+:::callout recommendation
+Invest in the import pipeline next. It is the single biggest lever on time to value, and it unblocks the three largest deals in the pipeline.
+:::
+
+---
+
+## Closing
+The product is on a strong line. Holding this pace through Q3 puts the annual target within reach a quarter early.
+
+> "This is the first quarter the product felt inevitable."
+> {.cite} Internal review, Q2

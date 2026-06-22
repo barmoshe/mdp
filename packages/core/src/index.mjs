@@ -8,6 +8,10 @@ import { parse } from "./parse.mjs";
 import { renderPage } from "./render-page.mjs";
 import { renderSlides } from "./render-slides.mjs";
 import { renderFlyer } from "./render-flyer.mjs";
+import { renderReport } from "./render-report.mjs";
+import { renderOnepager } from "./render-onepager.mjs";
+import { renderMemo } from "./render-memo.mjs";
+import { renderLetter } from "./render-letter.mjs";
 
 export { parse } from "./parse.mjs";
 export { inline, escapeHtml } from "./inline.mjs";
@@ -35,6 +39,10 @@ export const RENDERERS = {
   page: renderPage,
   slides: renderSlides,
   flyer: renderFlyer,
+  report: renderReport,
+  onepager: renderOnepager,
+  memo: renderMemo,
+  letter: renderLetter,
 };
 
 // The list of artifacts this engine can compile.
@@ -42,7 +50,8 @@ export const ARTIFACTS = Object.keys(RENDERERS);
 
 // Compile an MDP source string into the HTML for one artifact.
 //   source  : the raw .mdp text
-//   artifact: one of ARTIFACTS ("page" | "slides" | "flyer")
+//   artifact: one of ARTIFACTS ("page" | "slides" | "flyer" | "report" |
+//             "onepager" | "memo" | "letter")
 // Returns the complete HTML document as a string.
 export function compile(source, artifact = "page") {
   const render = RENDERERS[artifact];

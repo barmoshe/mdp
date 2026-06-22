@@ -13,5 +13,9 @@
   { "id": "brand-logo", "file": "brand-logo.mdp", "label": "Branded", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "brand-accent", "file": "brand-accent.mdp", "label": "Custom accent", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "release-notes", "file": "release-notes.mdp", "label": "Release note", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "report", "file": "report.mdp", "label": "Report", "lead": "report", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "onepager", "file": "onepager.mdp", "label": "One-pager", "lead": "onepager", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "memo", "file": "memo.mdp", "label": "Memo", "lead": "memo", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "letter", "file": "letter.mdp", "label": "Letter", "lead": "letter", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "starter", "file": "starter.mdp", "label": "Starter", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] }
 ]

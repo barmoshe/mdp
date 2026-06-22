@@ -1,8 +1,9 @@
 # Themes and design
 
-Color is owned entirely by the engine. The author selects a named theme, a vibe,
-never a raw color. This is the whole point of MDP: the design lives in the
-engine, not the source.
+Color is owned by the engine. The author selects a named theme, a vibe, or names
+one brand color the engine derives a full accent set from, never a raw per-element
+color. This is the whole point of MDP: the design lives in the engine, not the
+source.
 
 ## The theme set
 
@@ -26,6 +27,18 @@ restrained accent over the shared warm-neutral ramp, ordered as a spectrum:
 An unknown theme name falls back to `studio`. Try them live in the
 [playground](#playground): click a swatch in the theme strip and watch the same
 source recompose.
+
+## A custom brand color
+
+When no named theme is close enough, set `brand-accent` to a single brand hex (for
+example `brand-accent: #7db74b`). The engine re-lights that one color into the full
+accent set, the fill, the on-fill label, the link and label text, a surface wash,
+and a border, for both light and dark, and gates every load-bearing role to WCAG
+AA. If the color cannot be made accessible, the document falls back to the named
+`theme`. An optional `brand-accent-2` adds a second color the engine uses sparingly
+(the title underline, the flow connectors, the active slide dot). You name the
+color; the engine still owns every role and every placement, so a brand color
+cannot drift the look or break contrast. See [the format](#/docs/format).
 
 ## The design lock
 
@@ -54,10 +67,10 @@ Every artifact ships both light and dark, switched automatically by
 `prefers-color-scheme`. Each theme's accent has two shades, tuned so it passes
 WCAG AA both as text on the background and as a fill behind near-white text.
 
-## Why you cannot set colors
+## Why you cannot drift the look
 
-Because the author cannot style, the over-decorated, every-block-a-card,
-multi-color look is impossible by construction. A flatly written file still reads
-as designed. That discipline is enforced by the format, not by taste. Extending
-the design is a deliberate, curated act, not a per-document free-for-all; see
-[architecture](#/docs/architecture).
+You may name a theme or one brand color, but never a per-element color, size, or
+font. So the over-decorated, every-block-a-card, multi-color look stays impossible
+by construction: a brand color flows only into the same meaning-spots, still gated
+to AA. A flatly written file still reads as designed. That discipline is enforced
+by the format, not by taste; see [architecture](#/docs/architecture).

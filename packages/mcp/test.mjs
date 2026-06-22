@@ -9,6 +9,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { mdpCompile, mdpValidate, mdpPresent } from "./src/tools.mjs";
 import { artifactFilename } from "./src/io.mjs";
+import { ARTIFACTS } from "./src/engine.mjs";
 
 const ASSETS = join(dirname(fileURLToPath(import.meta.url)), "assets");
 
@@ -26,6 +27,10 @@ const MARKERS = {
   page: ['<main class="mdp-page">', "mdp-page-masthead"],
   slides: ["mdp-deck", '<section class="mdp-slide'],
   flyer: ["mdp-flyer", "mdp-flyer-band"],
+  report: ['<article class="mdp-report">', "mdp-report-cover"],
+  onepager: ['<article class="mdp-onepager">', "mdp-onepager-header"],
+  memo: ['<article class="mdp-memo">', "mdp-memo-meta"],
+  letter: ['<article class="mdp-letter">', "mdp-letter-body"],
 };
 
 const GOOD = `---
@@ -58,7 +63,7 @@ async function main() {
 
   // 1. compile all forms: file written, markers present, stats value rendered.
   const all = await mdpCompile({ source: GOOD, form: "all", out_dir: dir });
-  check("compile all -> 3 artifacts", all.artifacts.length === 3);
+  check(`compile all -> ${ARTIFACTS.length} artifacts`, all.artifacts.length === ARTIFACTS.length);
   for (const art of all.artifacts) {
     const html = readFileSync(art.path, "utf8");
     check(`${art.form}: file has bytes`, art.bytes > 0 && Buffer.byteLength(html, "utf8") === art.bytes);

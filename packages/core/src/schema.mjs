@@ -27,9 +27,16 @@ import { CALLOUT_VARIANTS } from "./callout.mjs";
 // version (which gates source-level compatibility).
 export const SCHEMA_VERSION = "1.0.0";
 
-// The presentation forms a source can declare. Matches ARTIFACTS in index.mjs;
-// kept as a literal here to avoid a circular import (index.mjs re-exports SCHEMA).
-const FORMS = ["page", "slides", "flyer"];
+// The presentation forms a source can declare (the allowed enum). Matches
+// ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
+// (index.mjs re-exports SCHEMA).
+const FORMS = ["page", "slides", "flyer", "report", "onepager", "memo", "letter"];
+
+// The forms compiled when a source omits `forms:`. The three core forms stay the
+// default, so an unannotated source (and the playground) build the familiar set;
+// the document forms (report/onepager/memo/letter) are opt-in via an explicit
+// `forms:` list.
+const DEFAULT_FORMS = ["page", "slides", "flyer"];
 
 // A field the parser always sets, but which is null when the author omits it.
 const stringOrNull = { type: ["string", "null"] };
@@ -176,7 +183,7 @@ const meta = {
       items: { enum: FORMS },
       uniqueItems: true,
       minItems: 1,
-      default: FORMS,
+      default: DEFAULT_FORMS,
     },
     title: {
       description: "Optional. Defaults to the first H1 in the body.",
@@ -210,6 +217,31 @@ const meta = {
         "Optional secondary brand color (one 6-digit hex), used sparingly in engine-chosen accents (title underline, flow connectors, active slide dot). Applies only alongside brand-accent and falls back to it when inaccessible.",
       type: "string",
       pattern: "^#[0-9a-fA-F]{6}$",
+    },
+    to: {
+      description:
+        "Optional addressee for the memo and letter forms (the To: line). Plain text; ignored by the other forms.",
+      type: "string",
+    },
+    from: {
+      description:
+        "Optional sender for the memo and letter forms (the From: line, the letterhead, and the signature). Plain text; ignored by the other forms.",
+      type: "string",
+    },
+    date: {
+      description:
+        "Optional date line for the memo and letter forms. A free string (e.g. \"June 22, 2026\"); the engine never inserts a clock, so the value is exactly what the author writes.",
+      type: "string",
+    },
+    salutation: {
+      description:
+        "Optional greeting for the letter form (e.g. \"Dear Dr. Lin,\"). Plain text; ignored by the other forms.",
+      type: "string",
+    },
+    signoff: {
+      description:
+        "Optional closing for the letter form (e.g. \"Sincerely,\"), placed above the signature. Plain text; ignored by the other forms.",
+      type: "string",
     },
     demonstrates: {
       description:
