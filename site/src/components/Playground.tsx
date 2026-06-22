@@ -68,6 +68,12 @@ export default function Playground({
   const [debounced, setDebounced] = useState(source);
   const [split, setSplit] = useState(readSplit);
   const [expanded, setExpanded] = useState(false);
+  // On a phone the editor and preview can't sit side by side, so a toggle shows
+  // one at a time. Ignored at >=64rem, where both panes split horizontally.
+  const [pane, setPane] = useState<"source" | "preview">("preview");
+  // On mobile the style controls (start-from, theme, brand, font) collapse behind
+  // a Customize toggle so the default view is just the form tabs and the preview.
+  const [showStyle, setShowStyle] = useState(false);
   const blobUrl = useRef<string | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
 
@@ -191,6 +197,15 @@ export default function Playground({
           <div className="pg-spacer" />
 
           <button
+            type="button"
+            className="btn btn-small pg-customize"
+            aria-expanded={showStyle}
+            onClick={() => setShowStyle((v) => !v)}
+          >
+            {showStyle ? "Hide" : "Customize"}
+          </button>
+
+          <button
             className="btn btn-small"
             onClick={() => setExpanded((v) => !v)}
             aria-pressed={expanded}
@@ -203,7 +218,7 @@ export default function Playground({
           </button>
         </div>
 
-        <div className="pg-bar-row pg-bar-style">
+        <div className={`pg-bar-row pg-bar-style${showStyle ? " is-open" : ""}`}>
           <label className="pg-control">
             <span>start from</span>
             <select
@@ -310,7 +325,7 @@ export default function Playground({
         </div>
       </div>
 
-      <div className="pg-body" ref={bodyRef} style={{ "--pg-ed": `${split}%` } as CSSProperties}>
+      <div className="pg-body" data-pane={pane} ref={bodyRef} style={{ "--pg-ed": `${split}%` } as CSSProperties}>
         <div className="pg-editor-wrap">
           <div className="pg-editor-head">source.mdp</div>
           <textarea
@@ -351,8 +366,19 @@ export default function Playground({
         </div>
       </div>
 
+      <div className="pg-mobilebar">
+        <div className="pg-panetoggle" role="tablist" aria-label="Show the source or the preview">
+          <button type="button" role="tab" aria-selected={pane === "source"} className="pg-panebtn" onClick={() => setPane("source")}>
+            Source
+          </button>
+          <button type="button" role="tab" aria-selected={pane === "preview"} className="pg-panebtn" onClick={() => setPane("preview")}>
+            Preview
+          </button>
+        </div>
+      </div>
+
       <p className="pg-hint">
-        Editing on the left compiles the real engine on the right. {ARTIFACT_HINT[artifact]}
+        Edit the source and the engine recompiles live. {ARTIFACT_HINT[artifact]}
       </p>
     </div>
   );
