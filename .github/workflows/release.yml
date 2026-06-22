@@ -1,0 +1,57 @@
+name: release
+
+# Publish any package whose package.json version is not yet on npm. Trigger by
+# pushing a version tag (e.g. v0.2.2) or publishing a GitHub Release. Each package
+# is checked independently against the registry, so a tag that bumped only one
+# package publishes only that one; the rest are already published and skipped.
+#
+# Auth: set an npm automation token as the NPM_TOKEN repository secret
+# (npmjs.com -> Access Tokens -> Generate -> Classic -> Automation; it bypasses
+# 2FA and can create new packages). Provenance is signed via GitHub OIDC (the
+# id-token permission below), no extra setup. To switch to npm trusted publishing
+# later, register this repo + this workflow as a trusted publisher on each package
+# and remove the NPM_TOKEN secret.
+
+on:
+  push:
+    tags: ["v*"]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # npm provenance via OIDC
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - packages/core
+          - packages/mcp
+          - packages/create-mdp-extension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+      # The engine is dependency-free and needs no build. mdp-mcp has a `prepack`
+      # (scripts/sync-mcp.mjs, zero-dep) that re-vendors the engine at pack time;
+      # npm runs it automatically, so no install step is required to publish.
+      - name: Publish ${{ matrix.package }} if its version is new
+        working-directory: ${{ matrix.package }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "$name@$version is already on npm. Skipping."
+          else
+            echo "Publishing $name@$version with provenance."
+            npm publish --provenance --access public
+          fi

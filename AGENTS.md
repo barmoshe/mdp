@@ -77,6 +77,27 @@ and surface the result; none adds anything to the format.
   engine change; CI fails if it is stale). It is the one package with
   dependencies (the MCP SDK + zod); the engine itself stays dependency-free.
 
+## Releasing
+
+Each package versions independently and publishes from CI
+(`.github/workflows/release.yml`):
+
+1. Bump the version in the changed package's `package.json` (`mdp-compiler`,
+   `mdp-mcp`, and/or `create-mdp-extension`), update `CHANGELOG.md`, and land it
+   on `main`.
+2. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z` (or publish a GitHub
+   Release).
+3. CI publishes every package whose `package.json` version is not yet on npm,
+   with provenance, and skips the rest. A tag that bumped only one package
+   publishes only that one.
+
+A published version is immutable: to fix a mistake, bump and ship a new version
+(`npm deprecate` retires a bad one). Auth: the `NPM_TOKEN` repository secret must
+hold an npm automation token (npmjs.com -> Access Tokens -> Classic -> Automation,
+which bypasses 2FA). Provenance is signed via GitHub OIDC; to move to npm trusted
+publishing instead, register this repo + `release.yml` as a trusted publisher on
+each package and remove the token.
+
 ## The design lock
 
 `src/tokens.mjs` is the single source of the look: two font families, two
