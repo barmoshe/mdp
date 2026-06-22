@@ -1,0 +1,21 @@
+---
+mdp: 1
+theme: ocean
+forms: [page, slides, flyer]
+title: Common questions
+demonstrates: [faq, lead]
+---
+
+# Common questions
+{.lead} A probe for the mdp:faq block: question and answer pairs as native, keyboard-accessible disclosures.
+
+```mdp:faq
+Q: Does MDP need a build step?
+A: No. It is plain Node ESM and runs directly, with no dependencies.
+
+Q: Can I theme it?
+A: Pick a named theme; the engine owns the look. You write meaning, not style.
+
+Q: Where does it run?
+A: A Claude Code command, a Codex plugin, and an MCP server for any host.
+```

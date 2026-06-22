@@ -60,6 +60,24 @@
     "lead": "page"
   },
   {
+    "id": "block-timeline",
+    "file": "block-timeline.mdp",
+    "label": "Timeline",
+    "lead": "page"
+  },
+  {
+    "id": "block-faq",
+    "file": "block-faq.mdp",
+    "label": "FAQ",
+    "lead": "page"
+  },
+  {
+    "id": "block-pricing",
+    "file": "block-pricing.mdp",
+    "label": "Pricing",
+    "lead": "page"
+  },
+  {
     "id": "theme-gallery",
     "file": "theme-gallery.mdp",
     "label": "Theme gallery",

@@ -1,0 +1,37 @@
+---
+mdp: 1
+theme: violet
+forms: [page, slides, flyer]
+title: Plans
+demonstrates: [pricing, lead]
+---
+
+# Plans
+{.lead} A probe for the mdp:pricing block: priced tiers with a feature checklist and one call to action each.
+
+```mdp:pricing
+# Starter
+price: $0
+period: /mo
+- 1 project
+- Community support
+- Public demos
+cta: [Start free](#)
+
+# Team
+badge: Popular
+price: $40
+period: /mo
+- 10 projects
+- Email support
+- Private demos
+cta: [Choose Team](#)
+
+# Business
+price: $120
+period: /mo
+- Unlimited projects
+- Priority support
+- SSO and audit log
+cta: [Contact sales](#)
+```

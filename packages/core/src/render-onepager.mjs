@@ -197,6 +197,12 @@ function renderOnepagerBlock(block) {
       return renderChart(block);
     case "diagram":
       return renderDiagram(block);
+    case "timeline":
+      return renderTimeline(block);
+    case "faq":
+      return renderFaq(block);
+    case "pricing":
+      return renderPricing(block);
     default:
       return "";
   }
@@ -216,7 +222,10 @@ function classify(section) {
   if (types.includes("flow")) return "wide";
   if (types.includes("stats")) return "wide";
   if (types.includes("quote")) return "wide";
-  if (types.includes("table") || types.includes("chart") || types.includes("diagram")) return "wide";
+  if (
+    types.includes("table") || types.includes("chart") || types.includes("diagram") ||
+    types.includes("timeline") || types.includes("faq") || types.includes("pricing")
+  ) return "wide";
   return "text";
 }
 

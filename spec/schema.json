@@ -3,7 +3,7 @@
   "$id": "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
   "title": "MDP intermediate representation",
   "description": "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from mdp-compiler as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -185,6 +185,15 @@
           },
           {
             "$ref": "#/definitions/diagram"
+          },
+          {
+            "$ref": "#/definitions/timeline"
+          },
+          {
+            "$ref": "#/definitions/faq"
+          },
+          {
+            "$ref": "#/definitions/pricing"
           }
         ]
       }
@@ -628,6 +637,142 @@
         },
         "dashed": {
           "type": "boolean"
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "steps"
+      ],
+      "properties": {
+        "type": {
+          "const": "timeline"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/timelineStep"
+          }
+        }
+      }
+    },
+    "timelineStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+    "faq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "faq"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/faqItem"
+          }
+        }
+      }
+    },
+    "faqItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "q",
+        "a"
+      ],
+      "properties": {
+        "q": {
+          "type": "string"
+        },
+        "a": {
+          "type": "string"
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "tiers"
+      ],
+      "properties": {
+        "type": {
+          "const": "pricing"
+        },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pricingTier"
+          }
+        }
+      }
+    },
+    "pricingTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "badge",
+        "price",
+        "period",
+        "cta",
+        "features"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "badge": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cta": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

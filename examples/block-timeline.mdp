@@ -1,0 +1,24 @@
+---
+mdp: 1
+theme: forest
+forms: [page, slides, flyer]
+title: How an engagement runs
+demonstrates: [timeline, lead]
+---
+
+# How an engagement runs
+{.lead} A probe for the mdp:timeline block: a vertical sequence of steps, each a title and a short body, on one accent rail.
+
+```mdp:timeline
+# Brief
+We turn a short brief and a few questions into a scoped plan.
+
+# Build
+A working MVP in hours to days, not weeks.
+
+# Review
+You see it running, and we iterate on what matters.
+
+# Ship
+One file, deployed and measured.
+```

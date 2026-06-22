@@ -261,6 +261,74 @@ function parseDiagramBody(bodyLines) {
   return { nodes: order.map((id) => ({ id, label: labels.get(id) })), edges };
 }
 
+// Parse a `mdp:timeline` body into steps: a `# Title` starts a step; the following
+// non-empty lines are its body (joined with spaces). Same scanner as compare.
+function parseTimelineBody(bodyLines) {
+  const steps = [];
+  let current = null;
+  for (const raw of bodyLines) {
+    const line = raw.trim();
+    if (line === "") continue;
+    const head = line.match(/^#\s+(.*)$/);
+    if (head) {
+      current = { title: head[1].trim(), body: "" };
+      steps.push(current);
+      continue;
+    }
+    if (!current) continue;
+    current.body = current.body ? current.body + " " + line : line;
+  }
+  return steps;
+}
+
+// Parse a `mdp:faq` body into Q/A pairs: a `Q:` line starts an item; an `A:` line
+// (and any following lines) is its answer.
+function parseFaqBody(bodyLines) {
+  const items = [];
+  let current = null;
+  for (const raw of bodyLines) {
+    const line = raw.trim();
+    if (line === "") continue;
+    const q = line.match(/^Q:\s*(.*)$/i);
+    if (q) {
+      current = { q: q[1].trim(), a: "" };
+      items.push(current);
+      continue;
+    }
+    if (!current) continue;
+    const a = line.match(/^A:\s*(.*)$/i);
+    const text = a ? a[1].trim() : line;
+    current.a = current.a ? current.a + " " + text : text;
+  }
+  return items;
+}
+
+// Parse a `mdp:pricing` body into tiers: a `# Name` starts a tier; `badge:`,
+// `price:`, `period:`, `cta:` set fields; `- feature` appends to the checklist.
+function parsePricingBody(bodyLines) {
+  const tiers = [];
+  let current = null;
+  for (const raw of bodyLines) {
+    const line = raw.trim();
+    if (line === "") continue;
+    const head = line.match(/^#\s+(.*)$/);
+    if (head) {
+      current = { name: head[1].trim(), badge: null, price: null, period: null, cta: null, features: [] };
+      tiers.push(current);
+      continue;
+    }
+    if (!current) continue;
+    const feat = line.match(/^-\s+(.*)$/);
+    if (feat) {
+      current.features.push(feat[1].trim());
+      continue;
+    }
+    const field = line.match(/^(badge|price|period|cta):\s*(.*)$/);
+    if (field) current[field[1]] = field[2].trim();
+  }
+  return tiers;
+}
+
 // Parse the body into the flat blocks array.
 export function parseBody(body) {
   const lines = body.split("\n");
@@ -328,6 +396,12 @@ export function parseBody(body) {
           const text = bodyLines.join(" ").trim();
           if (text) blocks.push({ type: "paragraph", text });
         }
+      } else if (fenceInfo === "mdp:timeline") {
+        blocks.push({ type: "timeline", steps: parseTimelineBody(bodyLines) });
+      } else if (fenceInfo === "mdp:faq") {
+        blocks.push({ type: "faq", items: parseFaqBody(bodyLines) });
+      } else if (fenceInfo === "mdp:pricing") {
+        blocks.push({ type: "pricing", tiers: parsePricingBody(bodyLines) });
       } else {
         const text = bodyLines.join(" ").trim();
         if (text) blocks.push({ type: "paragraph", text });

@@ -33,6 +33,9 @@ import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
 import { renderTable, TABLE_STYLE } from "./table.mjs";
 import { renderChart, CHART_STYLE } from "./chart.mjs";
 import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
+import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
+import { renderFaq, FAQ_STYLE } from "./faq.mjs";
+import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
 
 const REPORT_STYLE = `.mdp-report {
   max-width: 44rem;
@@ -107,6 +110,12 @@ ${CHART_STYLE}
 
 ${DIAGRAM_STYLE}
 
+${TIMELINE_STYLE}
+
+${FAQ_STYLE}
+
+${PRICING_STYLE}
+
 /* Print to PDF (Cmd or Ctrl + P): light, cover/TOC/sections each on a new page. */
 @media print {
   :root {
@@ -179,6 +188,15 @@ function renderReportBlock(block) {
 
     case "diagram":
       return renderDiagram(block);
+
+    case "timeline":
+      return renderTimeline(block);
+
+    case "faq":
+      return renderFaq(block);
+
+    case "pricing":
+      return renderPricing(block);
 
     default:
       return "";

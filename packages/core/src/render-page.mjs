@@ -139,6 +139,15 @@ function renderBlock(block) {
     case "diagram":
       return renderDiagram(block);
 
+    case "timeline":
+      return renderTimeline(block);
+
+    case "faq":
+      return renderFaq(block);
+
+    case "pricing":
+      return renderPricing(block);
+
     default:
       return "";
   }

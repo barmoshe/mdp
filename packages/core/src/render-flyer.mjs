@@ -176,6 +176,12 @@ function renderFlyerBlock(block) {
       return renderChart(block);
     case "diagram":
       return renderDiagram(block);
+    case "timeline":
+      return renderTimeline(block);
+    case "faq":
+      return renderFaq(block);
+    case "pricing":
+      return renderPricing(block);
     default:
       return "";
   }
@@ -232,9 +238,13 @@ function classify(section) {
   if (types.includes("stats")) return "stats";
   if (types.includes("quote")) return "quote";
   if (types.includes("flow")) return "flow";
-  // table / chart / diagram are wide blocks: their own full-width element, never
-  // squeezed into a two-column pairing (reuses the full-width "flow" treatment).
-  if (types.includes("table") || types.includes("chart") || types.includes("diagram")) return "flow";
+  // table / chart / diagram / timeline / faq / pricing are wide blocks: their own
+  // full-width element, never squeezed into a two-column pairing (reuses the
+  // full-width "flow" treatment).
+  if (
+    types.includes("table") || types.includes("chart") || types.includes("diagram") ||
+    types.includes("timeline") || types.includes("faq") || types.includes("pricing")
+  ) return "flow";
   return "text";
 }
 

@@ -31,6 +31,9 @@ import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
 import { renderTable, TABLE_STYLE } from "./table.mjs";
 import { renderChart, CHART_STYLE } from "./chart.mjs";
 import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
+import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
+import { renderFaq, FAQ_STYLE } from "./faq.mjs";
+import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
 
 const PAGE_STYLE = `.mdp-page {
   max-width: 40rem;
@@ -69,7 +72,13 @@ ${TABLE_STYLE}
 
 ${CHART_STYLE}
 
-${DIAGRAM_STYLE}`;
+${DIAGRAM_STYLE}
+
+${TIMELINE_STYLE}
+
+${FAQ_STYLE}
+
+${PRICING_STYLE}`;
 
 // Render one content block (everything except title/lead, handled in masthead).
 function renderBlock(block) {
@@ -129,6 +138,15 @@ function renderBlock(block) {
 
     case "diagram":
       return renderDiagram(block);
+
+    case "timeline":
+      return renderTimeline(block);
+
+    case "faq":
+      return renderFaq(block);
+
+    case "pricing":
+      return renderPricing(block);
 
     default:
       return "";

@@ -291,6 +291,55 @@ B -> A: changes
    readable text. More kinds (gantt, state, ER) are planned behind the same
    syntax.
 
+   A seventh directive is `mdp:timeline`, a vertical sequence of steps (distinct
+   from the horizontal `mdp:flow` chips). A `# Title` starts a step; the lines
+   under it are its body:
+
+````
+```mdp:timeline
+# Brief
+We scope the work from a short brief.
+
+# Ship
+One file, deployed and measured.
+```
+````
+
+   Steps render on a single accent rail with a dot each. A step with no body
+   shows just its title. Every form reads it the same way.
+
+   An eighth directive is `mdp:faq`, question and answer pairs:
+
+````
+```mdp:faq
+Q: Does it need a build step?
+A: No, it runs directly.
+```
+````
+
+   Each pair renders as a native `<details>` / `<summary>` disclosure: open by
+   default so the answers show on the static and print forms, and collapsible
+   with the keyboard on page and slides. No script.
+
+   A ninth directive is `mdp:pricing`, a set of priced tiers:
+
+````
+```mdp:pricing
+# Team
+badge: Popular
+price: $40
+period: /mo
+- 10 projects
+- Email support
+cta: [Choose Team](#)
+```
+````
+
+   A `# Name` starts a tier; `badge:`, `price:`, `period:`, and `cta:` set its
+   fields, and `- feature` appends to the checklist. It is the priced sibling of
+   `mdp:compare`: the same locked card grid, standardised around a price and a
+   single call to action. The `cta:` takes a `[text](url)` link.
+
 4. Triple-colon containers. A fenced block opened with `:::<directive>` and
    closed by a line that is exactly `:::`. v1 ships one: `callout`, a bordered
    aside that lifts a short passage out of the flow.
@@ -384,6 +433,9 @@ differently per form:
 | `mdp:table` | bordered table | bordered table | own full-width table |
 | `mdp:chart` | bar chart | bar chart | own full-width bar chart |
 | `mdp:diagram` | inline SVG | inline SVG | own full-width SVG |
+| `mdp:timeline` | rail of steps | rail of steps | own full-width rail |
+| `mdp:faq` | disclosures | disclosures | expanded Q/A |
+| `mdp:pricing` | tier cards | tier cards | own full-width tier cards |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
