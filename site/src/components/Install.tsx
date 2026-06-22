@@ -33,7 +33,7 @@ export default function Install() {
   return (
     <section className="sec" id="install">
       <div className="sec-rail-wide">
-        <div className="masthead">
+        <div className="masthead reveal">
           <p className="eyebrow eyebrow-accent">Where it reaches you</p>
           <h2 className="h2">Not an app to visit. A capability inside your agent.</h2>
           <p className="lead">
@@ -43,7 +43,7 @@ export default function Install() {
           </p>
         </div>
 
-        <div className="install-grid">
+        <div className="install-grid reveal-stagger">
           {CHANNELS.map((c) => (
             <div className="card install-card" key={c.name}>
               <h3>{c.name}</h3>

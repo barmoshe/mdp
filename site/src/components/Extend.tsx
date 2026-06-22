@@ -4,20 +4,20 @@ const SHIPPED = [
   { name: "Live playground", note: "The real engine, compiling in your browser." },
   { name: "MCP server", note: "mdp-mcp on npm: mdp_compile, mdp_present, and mdp_validate from any host." },
   { name: "create-mdp-extension", note: "On npm: scaffold a new block or artifact with one command." },
-  { name: "Brand logo", note: "A frontmatter slot the engine places, sanitized and locked." },
+  { name: "Brand layer", note: "Name a brand color; the engine derives a full AA-gated accent set, light and dark, plus a logo plate and a system-font selector." },
   { name: "Examples & templates", note: "A conventioned library on one manifest." },
 ];
 
 const PLANNED = [
   { name: "mdp:chart", note: "A typed chart block every artifact can render." },
-  { name: "Schema conformance", note: "A JSON Schema and a conformance test for the format." },
+  { name: "Schema conformance test", note: "A conformance test that pins the engine to the published JSON Schema." },
 ];
 
 export default function Extend() {
   return (
     <section className="sec" id="extend">
       <div className="sec-rail-wide">
-        <div className="masthead">
+        <div className="masthead reveal">
           <p className="eyebrow eyebrow-accent">Extend the compiler</p>
           <h2 className="h2">A compiler you can extend, with the design lock intact</h2>
           <p className="lead">
@@ -28,7 +28,7 @@ export default function Extend() {
           </p>
         </div>
 
-        <div className="extend-grid">
+        <div className="extend-grid reveal-stagger">
           <div>
             <p className="eyebrow eyebrow-accent">Shipped</p>
             <dl className="deflist">

@@ -6,7 +6,7 @@ import { LINKS } from "../links";
 const EXAMPLE_BLURB: Record<string, string> = {
   "block-compare": "Compare options side by side, with a flow and callouts.",
   "block-stats": "Key figures rendered as a clean stat band.",
-  "theme-gallery": "The same source shown across all eleven themes.",
+  "theme-gallery": "The same source shown across the full theme spectrum.",
   "brand-logo": "A masthead logo, sanitized and design-locked.",
   "brand-accent": "Name a brand color; the engine derives the full light and dark accent set.",
   "release-notes": "Announce a version, calmly.",
@@ -59,7 +59,7 @@ export default function Library() {
   return (
     <section className="sec" id="library">
       <div className="sec-rail-wide">
-        <div className="masthead">
+        <div className="masthead reveal">
           <p className="eyebrow eyebrow-accent">Examples &amp; templates</p>
           <h2 className="h2">Start from a working source, not a blank page</h2>
           <p className="lead">

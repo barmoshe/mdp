@@ -30,7 +30,7 @@ export default function Format() {
   return (
     <section className="sec" id="blocks">
       <div className="sec-rail-wide">
-        <div className="masthead">
+        <div className="masthead reveal">
           <p className="eyebrow eyebrow-accent">The format</p>
           <h2 className="h2">Plain Markdown, plus a few typed elements</h2>
           <p className="lead">
@@ -61,7 +61,7 @@ Start self-hosted, move later if you prefer.
 :::`}
           </pre>
 
-          <div className="format-cats">
+          <div className="format-cats reveal-stagger">
             {CATEGORIES.map((cat) => (
               <div className="format-cat" key={cat.name}>
                 <p className="eyebrow eyebrow-accent">{cat.name}</p>

@@ -1,8 +1,10 @@
+import type { CSSProperties } from "react";
+
 export default function Gap() {
   return (
     <section className="sec sec-tint" id="why">
       <div className="sec-rail-wide">
-        <div className="masthead">
+        <div className="masthead reveal">
           <p className="eyebrow eyebrow-accent">The gap</p>
           <h2 className="h2">AI writes oceans of Markdown. Then what?</h2>
           <p className="lead">
@@ -14,16 +16,16 @@ export default function Gap() {
           </p>
         </div>
 
-        <div className="gap-grid">
-          <div className="card gap-card">
+        <div className="gap-grid reveal-stagger">
+          <div className="card gap-card" style={{ "--reveal-i": 0 } as CSSProperties}>
             <h3 className="gap-label">Plain Markdown</h3>
             <p>Diffable and honest, but flat. A wall of text with no hierarchy and nothing to present.</p>
           </div>
-          <div className="card gap-card">
+          <div className="card gap-card" style={{ "--reveal-i": 1 } as CSSProperties}>
             <h3 className="gap-label">The one-off artifact</h3>
             <p>Hand-built HTML that over-decorates, drifts, and rots. Beautiful for a day, junky by the next.</p>
           </div>
-          <div className="card gap-card is-win">
+          <div className="card gap-card is-win" style={{ "--reveal-i": 2 } as CSSProperties}>
             <h3 className="gap-label">MDP</h3>
             <p>You write meaning. The engine owns all design, so the output cannot look junky, and one source becomes many forms.</p>
           </div>
