@@ -14,12 +14,18 @@ const CATEGORIES = [
       { name: "mdp:stats", desc: "Key and value figures. A table on a page, a figure band in slides and flyer." },
       { name: "mdp:compare", desc: "Options side by side, each with a badge, a note, pros, and a call-to-action." },
       { name: "mdp:flow", desc: "An a -> b -> c pipeline, rendered as bordered chips joined by an arrow." },
+      { name: "mdp:table", desc: "GitHub-style pipe tables with per-column alignment, owned by the engine." },
+      { name: "mdp:chart", desc: "label: value pairs as a proportional bar chart, accent-colored by the theme." },
+      { name: "mdp:diagram", desc: "Native SVG flow, sequence, and tree diagrams from one text syntax." },
+      { name: "mdp:timeline", desc: "A vertical sequence of steps on a single accent rail." },
     ],
   },
   {
     name: "Callouts & layout",
     blocks: [
       { name: ":::callout", desc: "A bordered aside: note, tip, cost, recommendation, or warning." },
+      { name: "mdp:faq", desc: "Question and answer pairs as native disclosures, open by default." },
+      { name: "mdp:pricing", desc: "Priced tiers as a locked card grid, the priced sibling of compare." },
       { name: "---", desc: "A section break: a divider on a page, a slide break in slides, a panel on a flyer." },
       { name: "lang / dir", desc: "Set dir: rtl in the frontmatter and the whole layout flips. You position nothing." },
     ],

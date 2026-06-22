@@ -6,10 +6,24 @@ import { LINKS } from "../links";
 const EXAMPLE_BLURB: Record<string, string> = {
   "block-compare": "Compare options side by side, with a flow and callouts.",
   "block-stats": "Key figures rendered as a clean stat band.",
+  "block-table": "GitHub-style pipe tables with per-column alignment.",
+  "block-chart": "Label and value pairs as a proportional, accent-colored bar chart.",
+  "block-diagram": "Native SVG flow, sequence, and tree diagrams from one syntax.",
+  "block-timeline": "A vertical sequence of steps on a single accent rail.",
+  "block-faq": "Question and answer pairs as native, keyboard-friendly disclosures.",
+  "block-pricing": "Priced tiers as a locked card grid, the priced sibling of compare.",
   "theme-gallery": "The same source shown across the full theme spectrum.",
   "brand-logo": "A masthead logo, sanitized and design-locked.",
   "brand-accent": "Name a brand color; the engine derives the full light and dark accent set.",
   "release-notes": "Announce a version, calmly.",
+  "report": "A paginated long-form document: cover, contents, and numbered sections.",
+  "onepager": "A single dense sheet, the executive leave-behind.",
+  "memo": "An internal memo: To, From, Date, and Re over a tight column.",
+  "letter": "Formal correspondence: letterhead, salutation, body, and sign-off.",
+  "scroll": "A scroll-driven narrative that reveals each section as you read.",
+  "accordion": "Collapsible sections to scan and open on demand.",
+  "tabs": "A tabbed explorer with arrow-key navigation and deep links.",
+  "stepper": "A guided walkthrough, one numbered step at a time.",
   "starter": "The smallest source to copy and build on.",
 };
 
@@ -18,6 +32,10 @@ const TEMPLATE_BLURB: Record<string, string> = {
   "product-one-pager": "A single, at-a-glance product pitch.",
   "release-notes": "Announce a versioned release.",
   "resume": "A clean, design-locked CV.",
+  "story": "Tell a launch or case study as a scroll narrative.",
+  "faq": "Answer common questions as a collapsible list.",
+  "explorer": "Lay out a product across tabs to jump between.",
+  "walkthrough": "Guide a task step by step.",
 };
 
 function LibCard({ label, lead, blurb, source, href, play }: {

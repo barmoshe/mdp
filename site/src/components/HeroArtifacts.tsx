@@ -4,7 +4,18 @@
 // with zero layout shift and no compile on the critical path. The live engine
 // lives in the playground section below. The form set is data-driven, so the
 // panel grows when a form is added and never states a count.
-type FormId = "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter";
+type FormId =
+  | "page"
+  | "slides"
+  | "flyer"
+  | "report"
+  | "onepager"
+  | "memo"
+  | "letter"
+  | "scroll"
+  | "accordion"
+  | "tabs"
+  | "stepper";
 
 const FORMS: { id: FormId; label: string }[] = [
   { id: "page", label: "page" },
@@ -14,6 +25,10 @@ const FORMS: { id: FormId; label: string }[] = [
   { id: "onepager", label: "one-pager" },
   { id: "memo", label: "memo" },
   { id: "letter", label: "letter" },
+  { id: "scroll", label: "scroll" },
+  { id: "accordion", label: "accordion" },
+  { id: "tabs", label: "tabs" },
+  { id: "stepper", label: "stepper" },
 ];
 
 // One small token-built preview per form. The same title rides every frame, so
