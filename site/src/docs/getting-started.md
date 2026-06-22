@@ -2,9 +2,10 @@
 
 MDP is a presentation compiler for AI-written content. One declarative `.mdp`
 source compiles, deterministically, into many polished, design-locked artifacts:
-a page, a slide deck, a flyer, and four document forms (report, one-pager, memo,
-letter). The author writes meaning; the engine owns all design, so the output
-cannot drift into the over-decorated "junky artifact" look.
+a page, a slide deck, a flyer, the document forms (report, one-pager, memo,
+letter), and the interactive forms (scroll, accordion, tabs, stepper). The author
+writes meaning; the engine owns all design, so the output cannot drift into the
+over-decorated "junky artifact" look.
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -20,7 +21,7 @@ npm i mdp-compiler
 ```js
 import { compile } from "mdp-compiler";
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter" | "scroll" | "accordion" | "tabs" | "stepper"
 ```
 
 Or clone and run it straight from source, no install:
@@ -32,8 +33,9 @@ node packages/core/build.mjs examples/block-compare.mdp
 ```
 
 That writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
-`flyer.html`, `report.html`, `onepager.html`, `memo.html`, `letter.html`). Open
-them in a browser. The render path is pure, so two builds of the same source are
+`flyer.html`, `report.html`, `onepager.html`, `memo.html`, `letter.html`,
+`scroll.html`, `accordion.html`, `tabs.html`, `stepper.html`). Open them in a
+browser. The render path is pure, so two builds of the same source are
 byte-identical.
 
 ## Your first source

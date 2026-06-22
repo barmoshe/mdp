@@ -1,20 +1,26 @@
 ---
-description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a report, a memo, a letter, a brief, or to render or compile MDP.
-argument-hint: [present|page|slides|flyer|report|onepager|memo|letter|all] [content, a file path, or nothing for the current content]
+description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, scroll, accordion, tabs, or stepper and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a report, a memo, a letter, a scroll, a brief, or to render or compile MDP.
+argument-hint: [present|page|slides|flyer|report|onepager|memo|letter|scroll|accordion|tabs|stepper|all] [content, a file path, or nothing for the current content]
 ---
 
 # Show and present content with MDP
 
-MDP compiles one plain `.mdp` source into seven design-locked artifacts: a `page`
+MDP compiles one plain `.mdp` source into design-locked artifacts: a `page`
 (a calm scrolling document), `slides` (a full-screen deck), a `flyer` (a single
 promotional poster), a `report` (a paginated long-form document: cover, auto table
 of contents, numbered sections), a one-pager (`onepager`, a single dense sheet:
 header band, packed two-column grid, footer, the executive leave-behind), a `memo`
 (an internal business memo: a To / From / Date / Re header over a tight column),
-and a `letter` (formal correspondence: letterhead, date, salutation, body,
-sign-off). The author writes meaning only; the engine owns all design, so the
-output cannot look junky. Turn the user's content into one of those forms and open
-it to show or present it.
+a `letter` (formal correspondence: letterhead, date, salutation, body, sign-off),
+a `scroll` (a scroll-driven narrative: each `---` section is a scene that reveals
+as it scrolls into view, with a reading-progress bar and a dot rail), an
+`accordion` (collapsible stacked sections built on native `<details>`: scan the
+headings, open the one you need), `tabs` (a tabbed explorer: each section becomes
+a panel you switch between, with arrow-key navigation and a deep-linkable URL
+hash), and a `stepper` (a guided walkthrough: one numbered step at a time, with a
+progress bar and Back / Next). The author writes meaning only; the engine owns all
+design, so the output cannot look junky. Turn the user's content into one of those
+forms and open it to show or present it.
 
 Arguments: $ARGUMENTS
 
@@ -25,7 +31,12 @@ Arguments: $ARGUMENTS
    `report` (a paginated long-form document with a cover, auto table of contents,
    and numbered sections), `onepager` (a single dense executive leave-behind
    sheet), `memo` (an internal To / From / Date / Re business memo), `letter`
-   (formal correspondence with a letterhead, salutation, and sign-off), or `all`.
+   (formal correspondence with a letterhead, salutation, and sign-off), `scroll`
+   (a scroll-driven narrative with scene reveals and a progress bar), `accordion`
+   (collapsible stacked sections for reference or FAQ content), `tabs` (a tabbed
+   explorer with arrow-key navigation and deep-linkable URL hashes), `stepper`
+   (a guided walkthrough with one step at a time and Back / Next controls), or
+   `all`.
    The rest is the content: a file path, pasted text, or empty (then use the most
    relevant content in the conversation or the file in focus). If the content is
    already a `.mdp` file, skip to step 3.

@@ -1,7 +1,7 @@
 {
   "name": "mdp",
   "version": "0.2.0",
-  "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter with MDP, then show or present it.",
+  "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper) with MDP, then show or present it.",
   "author": {
     "name": "Bar Moshe",
     "url": "https://github.com/barmoshe"
@@ -13,8 +13,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "MDP",
-    "shortDescription": "Show content as a page, deck, flyer, report, one-pager, memo, or letter",
-    "longDescription": "MDP compiles one plain .mdp source into design-locked artifacts: a calm reading page, a full-screen slide deck, a promotional flyer, a paginated report with a cover and auto table of contents, a dense one-pager leave-behind, an internal memo, and a formal letter. The author writes meaning only and the engine owns all design, so the output cannot look junky. Use it to present, show, or hand off content.",
+    "shortDescription": "Show content as a page, deck, flyer, report, one-pager, memo, letter, or interactive form",
+    "longDescription": "MDP compiles one plain .mdp source into design-locked artifacts: a calm reading page, a full-screen slide deck, a promotional flyer, a paginated report with a cover and auto table of contents, a dense one-pager leave-behind, an internal memo, a formal letter, and the interactive forms: scroll (scrollytelling narrative), accordion (collapsible reference), tabs (tabbed explorer), and stepper (guided walkthrough). The author writes meaning only and the engine owns all design, so the output cannot look junky. Use it to present, show, or hand off content.",
     "developerName": "Bar Moshe",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],

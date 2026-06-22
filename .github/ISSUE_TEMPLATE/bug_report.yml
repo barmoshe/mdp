@@ -21,7 +21,7 @@ body:
     id: artifact
     attributes:
       label: Which artifact
-      description: page, slides, or flyer
+      description: "which form: page, slides, flyer, report, onepager, memo, letter, scroll, accordion, tabs, or stepper"
   - type: input
     id: node
     attributes:

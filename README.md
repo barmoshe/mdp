@@ -3,7 +3,7 @@
 **Markdown Presentation.** A presentation compiler for AI-written content. One
 declarative `.mdp` source composes, deterministically, into many polished,
 design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a
-memo, and a letter.
+memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper).
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -68,7 +68,7 @@ npm i mdp-compiler
 ```js
 import { compile } from "mdp-compiler";
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter" | "scroll" | "accordion" | "tabs" | "stepper"
 ```
 
 ### From source
@@ -83,7 +83,8 @@ node packages/core/build.mjs examples/block-compare.mdp
 
 This writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
 `flyer.html`, and, when a source opts into them, `report.html`, `onepager.html`,
-`memo.html`, `letter.html`). Open them in a browser. The render path is pure, so
+`memo.html`, `letter.html`, `scroll.html`, `accordion.html`, `tabs.html`,
+`stepper.html`). Open them in a browser. The render path is pure, so
 two runs produce byte-identical output.
 
 Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp`
@@ -195,6 +196,8 @@ and the [spec](SPEC.md).
 
 The document forms inherit these readings: `report`, `memo`, and `letter` read
 each block exactly as `page` does, and the one-pager composes them like `flyer`.
+The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`) each reframe the
+same block set into their respective navigation model.
 
 ## The design lock
 
@@ -230,7 +233,7 @@ build. It deploys to GitHub Pages on every push to `main`.
 ## Status
 
 Early and honest. A working engine that proves the core claim: one source
-composes deterministically into three clean artifacts, with a first set of blocks
+composes deterministically into many clean artifacts, with a first set of blocks
 and right-to-left support. The format and the block grammar will move before 1.0.
 Issues and ideas are welcome.
 

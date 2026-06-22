@@ -12,9 +12,11 @@ this file and one of those disagree, the specialized doc wins; fix the drift.
 MDP (Markdown Presentation) is a presentation compiler for AI-written content.
 One declarative `.mdp` source compiles, deterministically, into several
 design-locked HTML artifacts: a `page`, a `slides` deck, a `flyer`, a `report`,
-a one-pager (`onepager`), a `memo`, and a `letter`. The
-author (a person or an agent) writes meaning; the engine owns all design, so the
-output cannot look junky. It is a compiler, not a viewer and not live AI.
+a one-pager (`onepager`), a `memo`, a `letter`, and the interactive forms: a
+`scroll` (scrollytelling narrative), an `accordion` (collapsible reference),
+`tabs` (tabbed explorer), and a `stepper` (guided walkthrough). The author (a
+person or an agent) writes meaning; the engine owns all design, so the output
+cannot look junky. It is a compiler, not a viewer and not live AI.
 
 The data flow is one direction:
 
@@ -107,7 +109,7 @@ playground) calls:
 
 - `compile(source, artifact = "page")` -> complete HTML document string.
 - `parse(source)` -> the IR `{ meta, blocks }`.
-- `RENDERERS` (keyed by name) and `ARTIFACTS` (`["page", "slides", "flyer", "report", "onepager", "memo", "letter"]`).
+- `RENDERERS` (keyed by name) and `ARTIFACTS` (`["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper"]`).
 - `inline`, `escapeHtml` from `inline.mjs`.
 - `baseStyle`, `themeTokens`, `BASE`, `THEMES`, `DEFAULT_THEME`, `THEME_SWATCHES`
   from `tokens.mjs`.

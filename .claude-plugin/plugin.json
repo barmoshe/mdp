@@ -3,7 +3,7 @@
   "name": "mdp",
   "displayName": "MDP",
   "version": "0.2.0",
-  "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter with MDP, then show or present it.",
+  "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper) with MDP, then show or present it.",
   "author": { "name": "Bar Moshe", "url": "https://github.com/barmoshe" },
   "homepage": "https://github.com/barmoshe/mdp",
   "repository": "https://github.com/barmoshe/mdp",

@@ -18,7 +18,8 @@ meaning, the renderer guarantees the look.
 - Compile a different source: `node packages/core/build.mjs path/to/file.mdp`.
 - Output: one HTML file per artifact under `dist/` at the repo root
   (`page.html`, `slides.html`, `flyer.html`, plus `report.html`, `onepager.html`,
-  `memo.html`, `letter.html` when a source opts into them).
+  `memo.html`, `letter.html`, `scroll.html`, `accordion.html`, `tabs.html`,
+  `stepper.html` when a source opts into them).
 
 ## Determinism (a hard rule)
 
@@ -43,6 +44,11 @@ mdp/
       render-onepager.mjs   the one-pager artifact solver
       render-memo.mjs       the `memo` artifact solver
       render-letter.mjs     the `letter` artifact solver
+      content-blocks.mjs    the shared content-flow block renderer used by scroll, accordion, tabs, and stepper
+      render-scroll.mjs     the `scroll` artifact solver
+      render-accordion.mjs  the `accordion` artifact solver
+      render-tabs.mjs       the `tabs` artifact solver
+      render-stepper.mjs    the `stepper` artifact solver
       index.mjs             exports parse() and compile(source, artifact)
     build.mjs               CLI: read a source, compile all artifacts, write dist
   commands/mdp.md           the Claude Code /mdp command

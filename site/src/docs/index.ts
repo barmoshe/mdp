@@ -26,7 +26,7 @@ export const DOCS: DocPage[] = [
   { id: "getting-started", title: "Getting started", group: "Guide", blurb: "Install, compile, and open your first source.", content: gettingStarted },
   { id: "format", title: "The format", group: "Guide", blurb: "Frontmatter, body, and line roles.", content: format },
   { id: "blocks", title: "Blocks", group: "Guide", blurb: "Stats, compare, flow, callout, quotes, RTL.", content: blocks },
-  { id: "forms", title: "Forms", group: "Guide", blurb: "Page, slides, flyer, report, one-pager, memo, letter, and the mapping table.", content: forms },
+  { id: "forms", title: "Forms", group: "Guide", blurb: "Page, slides, flyer, the document forms (report, one-pager, memo, letter), the interactive forms (scroll, accordion, tabs, stepper), and the mapping table.", content: forms },
   { id: "themes", title: "Themes & design", group: "Guide", blurb: "The theme set and the design lock.", content: themes },
   { id: "examples", title: "Examples & templates", group: "Guide", blurb: "Example probes and fill-in templates.", content: examplesDoc },
   { id: "cli", title: "CLI reference", group: "Tools", blurb: "build.mjs flags and determinism.", content: cli },

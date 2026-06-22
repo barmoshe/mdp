@@ -21,8 +21,9 @@ export default function Hero() {
             <p className="hero-lead" style={{ "--reveal-i": 2 } as CSSProperties}>
               MDP is a presentation compiler for AI-written content. You write the
               meaning; the engine owns the design. One <code>.mdp</code> source
-              compiles into a page, a deck, a flyer, a report, a one-pager, a memo,
-              or a letter, and every one looks shipped.
+              compiles into a page, a deck, a flyer, the document forms (report,
+              one-pager, memo, letter), or the interactive forms (scroll, accordion,
+              tabs, stepper), and every one looks shipped.
             </p>
 
             <div className="hero-actions" style={{ "--reveal-i": 3 } as CSSProperties}>

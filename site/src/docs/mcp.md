@@ -32,8 +32,8 @@ Set `MDP_NO_OPEN=1` to compile and serve without auto-opening a browser.
 
 - **mdp_compile(source, form, out_dir?)** — compile to HTML and write a file.
   `form` is any artifact (`page`, `slides`, `flyer`, `report`, `onepager`,
-  `memo`, `letter`), or `all`. Returns the absolute output path(s) and byte
-  size. No browser. Deterministic.
+  `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`), or `all`.
+  Returns the absolute output path(s) and byte size. No browser. Deterministic.
 - **mdp_present(source, form?, out_dir?)** — compile (default `slides`), serve it
   on a loopback (127.0.0.1) preview server, open your browser, and return the URL
   and path.

@@ -9,7 +9,7 @@ title: MDP — Markdown Presentation
 # MDP — Markdown Presentation
 {.lead} A presentation compiler for AI-written content: one source, many design-locked artifacts.
 
-One declarative `.mdp` source composes, deterministically, into a page, a slide deck, a flyer, a report, a one-pager, a memo, and a letter. A markdown viewer gives you one rendering. MDP gives you a compiler.
+One declarative `.mdp` source composes, deterministically, into a page, a slide deck, a flyer, a report, a one-pager, a memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper). A markdown viewer gives you one rendering. MDP gives you a compiler.
 
 ---
 
@@ -38,7 +38,7 @@ The rendering method is deterministic composition over a semantic representation
 
 The engine ships as `mdp-compiler` on npm — zero dependencies, plain ESM, Node 18 or newer. Install it with `npm i mdp-compiler` and call `compile(source, "slides")`.
 
-Or clone the repo and run the engine directly with no install: `node packages/core/build.mjs examples/block-compare.mdp`. That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Add `--open slides` to show or present an artifact in the browser.
+Or clone the repo and run the engine directly with no install: `node packages/core/build.mjs examples/block-compare.mdp`. That writes `dist/page.html`, `dist/slides.html`, `dist/flyer.html`, and, when a source opts into them, the other forms. Add `--open slides` to show or present an artifact in the browser.
 
 ---
 
@@ -80,7 +80,7 @@ The eleven themes: studio, ocean, teal, forest, amber, terracotta, coral, rose, 
 
 ## Status and roadmap
 
-Early and honest: a working engine that proves the core claim — one source composes deterministically into three clean artifacts, with a first set of blocks and right-to-left support. The format will move before 1.0.
+Early and honest: a working engine that proves the core claim — one source composes deterministically into many clean artifacts, with a first set of blocks and right-to-left support. The format will move before 1.0.
 
 The live playground, the `mdp-mcp` server, and the `create-mdp-extension` scaffolder are shipped and published to npm. Next: an `mdp:chart` block and a JSON Schema conformance test.
 

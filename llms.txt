@@ -1,6 +1,6 @@
 # MDP
 
-> A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into design-locked artifacts: a page, a slide deck, and a flyer. The author writes meaning; the engine owns all design.
+> A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into design-locked artifacts: a page, a slide deck, a flyer, the document forms (report, one-pager, memo, letter), and the interactive forms (scroll, accordion, tabs, stepper). The author writes meaning; the engine owns all design.
 
 ## Docs
 
@@ -19,7 +19,7 @@
 
 ## Use in agent tools
 
-MDP ships to agent tools three ways: a Claude Code plugin (a `/mdp` command), a Codex plugin (an `mdp` skill, self-contained in `codex/`), and an MCP server (`mdp-mcp` in `packages/mcp/`, run via `npx -y mdp-mcp`) exposing `mdp_compile`, `mdp_present`, and `mdp_validate` to any MCP host (Claude Desktop, Cursor, ...). The agent authors `.mdp`, runs the bundled engine, and opens the page, deck, or flyer. Same engine, no styling in the source any way.
+MDP ships to agent tools three ways: a Claude Code plugin (a `/mdp` command), a Codex plugin (an `mdp` skill, self-contained in `codex/`), and an MCP server (`mdp-mcp` in `packages/mcp/`, run via `npx -y mdp-mcp`) exposing `mdp_compile`, `mdp_present`, and `mdp_validate` to any MCP host (Claude Desktop, Cursor, ...). The agent authors `.mdp`, runs the bundled engine, and opens the result. Same engine, no styling in the source any way.
 
 ## Authoring MDP
 
