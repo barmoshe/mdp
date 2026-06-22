@@ -20,5 +20,9 @@
   { "id": "onepager", "file": "onepager.mdp", "label": "One-pager", "lead": "onepager", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "memo", "file": "memo.mdp", "label": "Memo", "lead": "memo", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "letter", "file": "letter.mdp", "label": "Letter", "lead": "letter", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "scroll", "file": "scroll.mdp", "label": "Scroll story", "lead": "scroll", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "accordion", "file": "accordion.mdp", "label": "Accordion", "lead": "accordion", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "tabs", "file": "tabs.mdp", "label": "Tabs", "lead": "tabs", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "stepper", "file": "stepper.mdp", "label": "Stepper", "lead": "stepper", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "starter", "file": "starter.mdp", "label": "Starter", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] }
 ]

@@ -1,0 +1,57 @@
+---
+mdp: 1
+theme: ocean
+forms: [scroll, page]
+kicker: Field story
+title: The week the line went quiet
+demonstrates: [scroll, stats, flow, quote, callout:note]
+---
+
+# The week the line went quiet
+{.lead} A small change on the factory floor, told one scene at a time. Scroll to move through it.
+
+## It started with a clipboard
+
+Every morning, the floor lead walked the line with a paper checklist. By the time a problem reached the right desk, the shift was already over.
+
+---
+
+## The signal nobody could see
+
+The data existed. It just sat in four systems that never spoke to each other.
+
+```mdp:stats
+Reports reconciled by hand: 3 hrs/day
+Issues caught the same shift: 18%
+Systems involved: 4
+```
+
+---
+
+## One screen instead of four
+
+We did not add a system. We connected the ones already on the floor.
+
+```mdp:flow
+Machine sensors -> Daily digest -> Floor tablet -> Morning standup
+```
+
+---
+
+## What the floor felt
+
+> The line tells us when it is unhappy now, not the next morning.
+{.cite} Dana, floor lead
+
+```mdp:stats
+Issues caught the same shift: 71%
+Hand reconciliation: 0 hrs/day
+```
+
+---
+
+## The takeaway
+
+:::callout note
+The win was not more software. It was making the signal that already existed arrive in time to act on.
+:::

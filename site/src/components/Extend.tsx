@@ -6,10 +6,11 @@ const SHIPPED = [
   { name: "create-mdp-extension", note: "On npm: scaffold a new block or artifact with one command." },
   { name: "Brand layer", note: "Name a brand color; the engine derives a full AA-gated accent set, light and dark, plus a logo plate and a system-font selector." },
   { name: "Examples & templates", note: "A conventioned library on one manifest." },
+  { name: "Table, chart & diagram blocks", note: "A typed pipe table, a pure-CSS bar chart, and native zero-dependency SVG diagrams (flow, sequence, tree), rendered by every form." },
 ];
 
 const PLANNED = [
-  { name: "mdp:chart", note: "A typed chart block every artifact can render." },
+  { name: "More diagram kinds", note: "Gantt, state, and ER diagrams behind the same mdp:diagram syntax." },
   { name: "Schema conformance test", note: "A conformance test that pins the engine to the published JSON Schema." },
 ];
 

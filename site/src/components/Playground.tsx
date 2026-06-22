@@ -26,6 +26,10 @@ const ARTIFACT_HINT: Record<string, string> = {
   onepager: "A single dense sheet. The executive leave-behind.",
   memo: "An internal memo: To / From / Date / Re over a tight column.",
   letter: "Formal correspondence: letterhead, salutation, body, sign-off.",
+  scroll: "A scroll-driven narrative. Each section reveals as it scrolls into view.",
+  accordion: "Collapsible sections. Click a heading to open one; the rest stay tidy.",
+  tabs: "A tabbed explorer. Click a tab or use the arrow keys to switch sections.",
+  stepper: "A guided walkthrough. Back and Next move through numbered steps.",
 };
 
 // The editor/preview split is a draggable, persisted percentage (editor width).

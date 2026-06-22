@@ -247,6 +247,21 @@
 .ha-bar.w1 { width: 92%; } .ha-bar.w2 { width: 78%; } .ha-bar.w3 { width: 64%; }
 .ha-figs { display: flex; gap: 0.3rem; margin-top: auto; }
 .ha-fig { flex: 1; height: 0.85rem; border-radius: 3px; background: var(--mdp-surface-2); border: 1px solid var(--mdp-border); }
+/* Interactive-form thumbs: a tab strip, a step row, a scroll progress sliver,
+   and collapsible rows, all from the same token palette as the static thumbs. */
+.ha-tabs { display: flex; gap: 0.25rem; }
+.ha-tab { height: 4px; width: 1.1rem; border-radius: var(--mdp-radius-full); background: var(--mdp-border-strong); }
+.ha-tab.is-on { background: var(--mdp-accent); }
+.ha-steps { display: flex; gap: 0.32rem; align-items: center; }
+.ha-step { width: 6px; height: 6px; border-radius: 50%; background: var(--mdp-border-strong); }
+.ha-step.is-on { background: var(--mdp-accent); }
+.ha-prog { height: 3px; border-radius: var(--mdp-radius-full); background: var(--mdp-border); overflow: hidden; }
+.ha-prog > span { display: block; height: 100%; width: 45%; border-radius: var(--mdp-radius-full); background: var(--mdp-accent); }
+.ha-acc-row { display: flex; align-items: center; gap: 0.35rem; }
+.ha-acc-row .ha-bar { flex: 1; }
+.ha-chev { width: 0; height: 0; flex: none; border-style: solid; border-width: 3px 0 3px 4px; border-color: transparent transparent transparent var(--mdp-accent); }
+.ha-acc-row.is-open .ha-chev { transform: rotate(90deg); }
+.ha-acc-sub { height: 3px; width: 58%; border-radius: var(--mdp-radius-full); background: var(--mdp-border-strong); opacity: 0.55; margin-inline-start: 0.75rem; }
 .ha-frame-tag {
   position: absolute;
   inset-block-end: 0.3rem;

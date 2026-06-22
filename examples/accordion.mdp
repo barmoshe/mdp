@@ -1,0 +1,52 @@
+---
+mdp: 1
+theme: studio
+forms: [accordion, page]
+kicker: Reference
+title: MDP, frequently asked
+demonstrates: [accordion, list, callout:tip, table]
+---
+
+# MDP, frequently asked
+{.lead} The questions that come up most, collapsed so you can scan the headings and open only the one you need.
+
+## What is a form?
+
+A form is one output shape compiled from your source. The same content becomes a page, a deck, a flyer, and the interactive forms, with the design decided by the engine rather than the author.
+
+---
+
+## Do I write a separate file per form?
+
+No. You write one `.mdp` source and list the forms you want:
+
+- One source, many outputs.
+- The renderer composes each form.
+- Switching forms never touches your content.
+
+---
+
+## Can I change the colors?
+
+The author picks a theme, not individual colors. That is the point: over-decorated output becomes structurally impossible.
+
+:::callout tip
+If you have a brand color, set `brand-accent` to a single hex. The engine derives an accessible accent set from it, in light and dark.
+:::
+
+---
+
+## Which form should I use when?
+
+| Need | Reach for |
+| --- | --- |
+| Read top to bottom | page or scroll |
+| Present live | slides |
+| Scan and jump | tabs or accordion |
+| Walk through steps | stepper |
+
+---
+
+## Is the output accessible?
+
+Yes. Every form ships semantic HTML, WCAG AA contrast, keyboard navigation, and a readable fallback when scripting is off.
