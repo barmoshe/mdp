@@ -16,8 +16,9 @@ meaning, the renderer guarantees the look.
 - Build all artifacts: `node packages/core/build.mjs` (or `npm run build` /
   `pnpm build` from the repo root).
 - Compile a different source: `node packages/core/build.mjs path/to/file.mdp`.
-- Output: `dist/page.html`, `dist/slides.html`, `dist/flyer.html` at the repo
-  root.
+- Output: one HTML file per artifact under `dist/` at the repo root
+  (`page.html`, `slides.html`, `flyer.html`, plus `report.html`, `onepager.html`,
+  `memo.html`, `letter.html` when a source opts into them).
 
 ## Determinism (a hard rule)
 
@@ -38,6 +39,10 @@ mdp/
       render-page.mjs       the `page` artifact solver
       render-slides.mjs     the `slides` artifact solver
       render-flyer.mjs      the `flyer` artifact solver
+      render-report.mjs     the `report` artifact solver
+      render-onepager.mjs   the one-pager artifact solver
+      render-memo.mjs       the `memo` artifact solver
+      render-letter.mjs     the `letter` artifact solver
       index.mjs             exports parse() and compile(source, artifact)
     build.mjs               CLI: read a source, compile all artifacts, write dist
   commands/mdp.md           the Claude Code /mdp command
