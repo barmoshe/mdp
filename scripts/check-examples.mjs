@@ -52,7 +52,7 @@ else fail("examples: no entry carries ci-determinism");
 // the engine implements today. note/columns/reveals are intentionally excluded
 // (unimplemented), so this required set is satisfiable.
 const REQUIRED = [
-  "stats", "compare", "flow", "quote", "list", "lead", "cite", "brand-logo", "rtl",
+  "stats", "compare", "flow", "quote", "list", "lead", "cite", "brand-logo", "brand-accent", "rtl",
   "callout:note", "callout:tip", "callout:cost", "callout:recommendation", "callout:warning",
 ];
 const seen = new Set();
