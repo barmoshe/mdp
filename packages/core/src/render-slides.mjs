@@ -34,6 +34,9 @@ import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
 import { renderTable, TABLE_STYLE } from "./table.mjs";
 import { renderChart, CHART_STYLE } from "./chart.mjs";
 import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
+import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
+import { renderFaq, FAQ_STYLE } from "./faq.mjs";
+import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
 
 const SLIDES_STYLE = `.mdp-deck {
   /* No-JS fallback: slides stack and scroll, fully readable. */
@@ -165,6 +168,12 @@ ${TABLE_STYLE}
 ${CHART_STYLE}
 
 ${DIAGRAM_STYLE}
+
+${TIMELINE_STYLE}
+
+${FAQ_STYLE}
+
+${PRICING_STYLE}
 
 /* On a slide the callout body reads at presentation scale. */
 .mdp-slide .mdp-callout { padding: var(--mdp-space-6); }
