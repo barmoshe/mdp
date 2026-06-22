@@ -206,13 +206,16 @@
   background: var(--mdp-bg);
   border: 1px solid var(--mdp-border);
   border-radius: var(--mdp-radius);
-  padding: var(--mdp-space-3) var(--mdp-space-4);
+  padding: var(--mdp-space-3);
   font-family: var(--mdp-font-mono);
-  font-size: 0.74rem;
-  line-height: 1.7;
+  font-size: 0.64rem;
+  line-height: 1.5;
   color: var(--mdp-ink-soft);
   overflow: hidden;
+  white-space: nowrap;
 }
+.ha-source > div { overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 40rem) { .ha-source { font-size: 0.72rem; } }
 .ha-source .c-key { color: var(--mdp-accent-text); }
 .ha-source .c-ink { color: var(--mdp-ink); }
 .ha-caption {
@@ -317,10 +320,10 @@
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: translateY(8px) scale(0.985);
-  transition: opacity 480ms ease, transform 480ms ease;
+  transform: translateY(6px) scale(0.99);
+  transition: opacity 340ms ease, transform 340ms ease;
 }
-.ha-pv.is-on { opacity: 1; transform: none; }
+.ha-pv.is-on { opacity: 1; transform: none; transition-delay: 90ms; }
 .ha-pv-body { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; position: relative; }
 .ha-pv-body.is-center { justify-content: center; }
 .ha-screen .ha-title { font-size: 0.82rem; }
@@ -329,6 +332,23 @@
 .ha-screen .ha-kicker { width: 30%; }
 .ha-screen .ha-rule { width: 1.8rem; }
 .ha-screen .ha-figs { margin-top: auto; }
+
+.ha-statrow { display: flex; gap: 1.1rem; margin-top: 0.15rem; }
+.ha-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+.ha-stat-val {
+  font-family: var(--mdp-font-display);
+  font-optical-sizing: auto;
+  font-weight: var(--mdp-weight-semibold);
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--mdp-accent-text);
+}
+.ha-stat-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mdp-ink-faint);
+}
 
 .ha-screen-tag {
   position: absolute;
