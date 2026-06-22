@@ -1,0 +1,69 @@
+---
+mdp: 1
+theme: amber
+forms: [page, slides, flyer]
+kicker: Changelog
+title: MDP changelog
+---
+
+# MDP changelog
+{.lead} All notable changes, following Keep a Changelog and Semantic Versioning.
+
+This is a presentation distillation of the changelog. The authoritative, full history lives in [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+## Unreleased
+
+The engine, server, and scaffolder are now published to npm.
+
+```mdp:stats
+Engine: mdp-compiler
+MCP server: mdp-mcp
+Scaffolder: create-mdp-extension
+Curated themes: 11
+```
+
+### Added
+
+- **Published to npm** — `npm i mdp-compiler` to embed the engine, `npx -y mdp-mcp` for the MCP server, and `npm create mdp-extension` to scaffold a block or artifact.
+- **An MCP server** (`mdp-mcp`) so any MCP host can compile MDP. It exposes `mdp_compile`, `mdp_present`, and `mdp_validate`, plus `mdp://spec` and `mdp://example/*` resources.
+- **Five more themes**, bringing the curated set to eleven: ocean, forest, terracotta, coral, and plum. The set is now ordered as a spectrum, every accent WCAG-AA verified.
+- **An AA-conformance test** (`npm test`) that compiles the real token CSS for every theme and asserts the contrast guarantees, so a future theme cannot regress accessibility.
+- **A visual theme picker** in the playground, reading colors from a new `THEME_SWATCHES` export so the swatches never drift from the real accents.
+
+### Changed
+
+- The engine package was renamed from `@mdp/core` to `mdp-compiler` for its npm publish.
+- The masthead now carries the theme accent (an accent-colored kicker and a short rule under the title) in all three artifacts — meaning-spot accents, so the design lock is unchanged.
+- A hub and live playground at barmoshe.github.io/mdp, deployed to GitHub Pages, bundling the real engine and carrying the full documentation.
+- A Codex plugin, self-contained in `codex/`, exposing an `mdp` skill that auto-triggers on "show this", "make a deck", and similar.
+
+---
+
+## 0.2.0
+
+### Added
+
+- **A color and theme system.** The `theme` field is wired to a curated set selected by name: studio (the default), teal, amber, violet, rose, and mono. An unknown theme falls back to studio.
+- **A semantic accent token set** — a two-shade system tuned to pass WCAG AA in light and dark. The accent appears only in meaning-spots: links, the compare button, the recommendation callout, stat figures, the active slide dot, and flow arrows.
+- **A Claude Code plugin** (this repo is the marketplace): a self-contained `/mdp` command that auto-triggers on "show this", "make a deck", and similar.
+- The CLI gained `--open [artifact]`, `--out <dir>`, and `--only <artifact>`.
+- The slides deck gained a fullscreen toggle, a print-to-PDF stylesheet, space-bar advance, and a keyboard hint.
+
+### Changed
+
+- Warmed the neutral ramp (a warm off-white background and near-black ink instead of pure white and black) so the default reads designed, not stark.
+
+---
+
+## 0.0.0
+
+Initial public release — the spike that proves the core claim.
+
+### Added
+
+- A dependency-free Node ESM engine: one `.mdp` source compiles to three artifacts (page, slides, flyer).
+- Blocks: `mdp:stats`, `mdp:compare`, `mdp:flow`, and `:::callout` (note, tip, cost, recommendation, warning).
+- Line roles `{.lead}` and `{.cite}`, and right-to-left support via `lang` and `dir`.
+- A single locked "studio" theme, and deterministic output: two builds of the same source are byte-identical.
