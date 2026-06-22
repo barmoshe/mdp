@@ -93,21 +93,22 @@ export default function Playground({
   return (
     <div className={`pg pg-${variant}`} id="playground-app">
       <div className="pg-bar">
-        <div className="pg-tabs" role="tablist" aria-label="Artifact">
-          {ARTIFACTS.map((a) => (
-            <button
-              key={a}
-              role="tab"
-              aria-selected={artifact === a}
-              className="pg-tab"
-              onClick={() => setArtifact(a)}
-            >
-              {a}
-            </button>
-          ))}
+        <div className="pg-control pg-forms">
+          <span>form</span>
+          <div className="pg-tabs" role="tablist" aria-label="Output form">
+            {ARTIFACTS.map((a) => (
+              <button
+                key={a}
+                role="tab"
+                aria-selected={artifact === a}
+                className="pg-tab"
+                onClick={() => setArtifact(a)}
+              >
+                {a}
+              </button>
+            ))}
+          </div>
         </div>
-
-        <div className="pg-spacer" />
 
         <label className="pg-control">
           <span>start from</span>
@@ -121,14 +122,14 @@ export default function Playground({
             }}
           >
             {!currentKey && <option value="">edited</option>}
-            <optgroup label="Examples">
+            <optgroup label="Examples (feature demos)">
               {EXAMPLES.map((e) => (
                 <option key={`example:${e.id}`} value={`example:${e.id}`}>
                   {e.label}
                 </option>
               ))}
             </optgroup>
-            <optgroup label="Templates">
+            <optgroup label="Templates (fill-in starters)">
               {TEMPLATES.map((t) => (
                 <option key={`template:${t.id}`} value={`template:${t.id}`}>
                   {t.label}
@@ -137,6 +138,8 @@ export default function Playground({
             </optgroup>
           </select>
         </label>
+
+        <div className="pg-spacer" />
 
         <div className="pg-control pg-themes" role="radiogroup" aria-label="Theme">
           <span>theme</span>
