@@ -174,6 +174,12 @@ gates. The design lives in the engine.
 | `mdp:stats` | Key and value figures. |
 | `mdp:compare` | Options side by side, each with a badge, note, pros, and a CTA. |
 | `mdp:flow` | An `a -> b -> c` pipeline. |
+| `mdp:table` | A data table in GitHub-flavored pipe syntax, with logical column alignment. |
+| `mdp:chart` | A horizontal bar chart from label: value pairs. |
+| `mdp:diagram` | A connector diagram (flow, sequence, or tree) rendered to pure inline SVG. |
+| `mdp:timeline` | A vertical sequence of steps on an accent rail. |
+| `mdp:faq` | Question and answer pairs as native disclosure elements. |
+| `mdp:pricing` | Priced tiers in a locked card grid: the priced sibling of compare. |
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
@@ -192,6 +198,12 @@ and the [spec](SPEC.md).
 | `mdp:stats` | table | big figures | figure band |
 | `mdp:compare` | card grid | own slide | full-width grid |
 | `mdp:flow` | chip row | chip row | full-width chip row |
+| `mdp:table` | bordered table | bordered table | full-width table |
+| `mdp:chart` | bar chart | bar chart | full-width bar chart |
+| `mdp:diagram` | inline SVG | inline SVG | full-width SVG |
+| `mdp:timeline` | rail of steps | rail of steps | full-width rail |
+| `mdp:faq` | disclosures | disclosures | expanded Q/A |
+| `mdp:pricing` | tier cards | tier cards | full-width tier cards |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
 The document forms inherit these readings: `report`, `memo`, and `letter` read
