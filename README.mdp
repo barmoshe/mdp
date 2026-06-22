@@ -9,7 +9,7 @@ title: MDP — Markdown Presentation
 # MDP — Markdown Presentation
 {.lead} A presentation compiler for AI-written content: one source, many design-locked artifacts.
 
-One declarative `.mdp` source composes, deterministically, into a page, a slide deck, and a flyer. A markdown viewer gives you one rendering. MDP gives you a compiler.
+One declarative `.mdp` source composes, deterministically, into a page, a slide deck, a flyer, a report, a one-pager, a memo, and a letter. A markdown viewer gives you one rendering. MDP gives you a compiler.
 
 ---
 
@@ -24,7 +24,7 @@ AI writes oceans of Markdown. It is clean and cheap but reads as a flat wall of 
 The rendering method is deterministic composition over a semantic representation — not templates, not live AI.
 
 ```mdp:flow
-.mdp source -> parse() -> IR { meta, blocks } -> page / slides / flyer
+.mdp source -> parse() -> IR { meta, blocks } -> page / slides / flyer / report / onepager / memo / letter
 ```
 
 1. A declarative source: typed tags filled with data, no arbitrary code. Agent-emittable, statically checkable, safe.

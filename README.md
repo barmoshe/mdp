@@ -2,7 +2,8 @@
 
 **Markdown Presentation.** A presentation compiler for AI-written content. One
 declarative `.mdp` source composes, deterministically, into many polished,
-design-locked artifacts: a page, a slide deck, and a flyer.
+design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a
+memo, and a letter.
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -67,7 +68,7 @@ npm i mdp-compiler
 ```js
 import { compile } from "mdp-compiler";
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter"
 ```
 
 ### From source
@@ -80,9 +81,10 @@ cd mdp
 node packages/core/build.mjs examples/block-compare.mdp
 ```
 
-This writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open
-them in a browser. The render path is pure, so two runs produce byte-identical
-output.
+This writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
+`flyer.html`, and, when a source opts into them, `report.html`, `onepager.html`,
+`memo.html`, `letter.html`). Open them in a browser. The render path is pure, so
+two runs produce byte-identical output.
 
 Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp`
 for the full block set. To show or present an artifact, add `--open`:
@@ -190,6 +192,9 @@ and the [spec](SPEC.md).
 | `mdp:compare` | card grid | own slide | full-width grid |
 | `mdp:flow` | chip row | chip row | full-width chip row |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+
+The document forms inherit these readings: `report`, `memo`, and `letter` read
+each block exactly as `page` does, and the one-pager composes them like `flyer`.
 
 ## The design lock
 

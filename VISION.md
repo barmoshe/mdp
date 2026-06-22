@@ -4,8 +4,9 @@
 
 MDP is a presentation compiler for AI-written content. One declarative source is
 composed, deterministically, into many polished artifacts: a page, a deck, a
-flyer, and whatever the ecosystem builds next. The design is locked in the
-engine, so the output cannot look junky.
+flyer, a report, a one-pager, a memo, a letter, and whatever the ecosystem
+builds next. The design is locked in the engine, so the output cannot look
+junky.
 
 ## The name
 
@@ -90,7 +91,7 @@ built.
 
 ## v1 scope
 
-- Reference artifacts: page, slides, flyer.
+- Reference artifacts: page, slides, flyer, report, onepager, memo, letter.
 - Blocks shipped: stat figures, pull quote, compare, callout, and flow, with
   right-to-left support.
 - A curated set of locked themes. The author writes meaning only and picks a

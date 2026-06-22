@@ -19,7 +19,7 @@ No dependencies. Plain Node ESM (`.mjs`), run with `node` directly — no instal
 
 - Build all artifacts: `node packages/core/build.mjs` (or `npm run build`).
 - Compile a different source: `node packages/core/build.mjs path/to/file.mdp`.
-- Output: `dist/page.html`, `dist/slides.html`, `dist/flyer.html` at the repo root.
+- Output: one `dist/<form>.html` per form (`dist/page.html`, `dist/slides.html`, `dist/flyer.html`, `dist/report.html`, `dist/onepager.html`, `dist/memo.html`, `dist/letter.html`) at the repo root.
 
 :::callout warning
 Determinism is a hard rule. The render path must be pure: no `Date.now()`, no `Math.random()`, no clocks, stable iteration order. Running the build twice must produce byte-identical files. Any change that breaks this is a bug.

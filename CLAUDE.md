@@ -11,7 +11,8 @@ this file and one of those disagree, the specialized doc wins; fix the drift.
 
 MDP (Markdown Presentation) is a presentation compiler for AI-written content.
 One declarative `.mdp` source compiles, deterministically, into several
-design-locked HTML artifacts: a `page`, a `slides` deck, and a `flyer`. The
+design-locked HTML artifacts: a `page`, a `slides` deck, a `flyer`, a `report`,
+a one-pager (`onepager`), a `memo`, and a `letter`. The
 author (a person or an agent) writes meaning; the engine owns all design, so the
 output cannot look junky. It is a compiler, not a viewer and not live AI.
 
@@ -106,7 +107,7 @@ playground) calls:
 
 - `compile(source, artifact = "page")` -> complete HTML document string.
 - `parse(source)` -> the IR `{ meta, blocks }`.
-- `RENDERERS` (keyed by name) and `ARTIFACTS` (`["page", "slides", "flyer"]`).
+- `RENDERERS` (keyed by name) and `ARTIFACTS` (`["page", "slides", "flyer", "report", "onepager", "memo", "letter"]`).
 - `inline`, `escapeHtml` from `inline.mjs`.
 - `baseStyle`, `themeTokens`, `BASE`, `THEMES`, `DEFAULT_THEME`, `THEME_SWATCHES`
   from `tokens.mjs`.
@@ -127,7 +128,7 @@ npm run build                                   # same, default source
 
 # Compile + open one artifact in the browser (side effect only; does not change output bytes)
 node packages/core/build.mjs <file.mdp> --open slides
-# flags: [--out <dir>] [--only page|slides|flyer] [--theme <name>] [--open [artifact]]
+# flags: [--out <dir>] [--only <artifact>] [--theme <name>] [--open [artifact]]
 
 npm test            # the full gate: check-contrast + check-logo + check-examples + check-schema
 npm run check:examples   # drift gate: manifests match disk, roles clean, feature coverage complete

@@ -53,7 +53,7 @@ The frontmatter carries the format version (`mdp: 1`, required), a named `theme`
 
 Standard Markdown blocks plus a small, closed set of additions.
 
-- **Section breaks.** A `---` on its own line: a divider on a page, a slide break in slides, a panel divider on a flyer.
+- **Section breaks.** A `---` on its own line: a divider on a page, a slide break in slides, a panel divider on a flyer, a numbered section in a report, a column break on a one-pager, a paragraph break in a memo or letter.
 - **Line roles.** A block may open with a role tag: `{.lead}` a standfirst, `{.cite}` an attribution. An unknown role is ignored and the text renders plainly.
 - **Fenced directives.** `mdp:stats` (label-and-value figures), `mdp:compare` (options as side-by-side cards), and `mdp:flow` (a left-to-right sequence of steps joined by `->`). An unknown kind falls back to a normal code block, so it is never lost.
 - **Triple-colon containers.** `:::callout <variant>` lifts a short passage out of the flow; variants are note, tip, cost, recommendation, and warning.
@@ -64,7 +64,7 @@ There is deliberately no raw HTML, no inline CSS, and no scripting in the source
 
 ## Forms and mechanics (v1)
 
-A form is an output shape. v1 ships three.
+A form is an output shape. v1 ships seven.
 
 ```mdp:compare
 # page
@@ -81,6 +81,26 @@ note: A full-screen click-through deck — the presenting form.
 note: One composed surface, a poster or one-pager — the at-a-glance form.
 - Stats render as a figure band.
 - Compare and callout go full-width.
+
+# report
+note: A paginated long-form document — the structured reading form.
+- A cover and an auto table of contents.
+- Numbered sections throughout.
+
+# onepager
+note: A single dense sheet, print-first — the executive leave-behind.
+- A header band over a packed two-column grid.
+- A footer closes the sheet.
+
+# memo
+note: An internal business memo.
+- A To / From / Date / Re header.
+- A tight single column under it.
+
+# letter
+note: Formal correspondence.
+- Letterhead, date, and salutation.
+- A body and a sign-off.
 ```
 
 The mechanics the renderer owns: stat figures, pull quotes, columns (adjacent short sections compose side by side), and reveals (list items appear one at a time in slides).
