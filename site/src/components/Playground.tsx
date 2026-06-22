@@ -47,6 +47,19 @@ function readSplit(): number {
   return 42;
 }
 
+// A phone can't fit the editor and preview side by side, so the inline view is
+// cramped. The dedicated playground route therefore opens maximized on mobile —
+// a real full-screen tool from the first tap. The homepage embed never does:
+// auto-expanding a fixed, scroll-locking pane would hijack the page it sits in.
+function initialExpanded(variant: "full" | "embed"): boolean {
+  if (variant !== "full") return false;
+  try {
+    return window.matchMedia("(max-width: 63.99rem)").matches;
+  } catch {
+    return false;
+  }
+}
+
 export default function Playground({
   variant = "full",
   initialId,
@@ -67,7 +80,7 @@ export default function Playground({
   const [artifact, setArtifact] = useState("page");
   const [debounced, setDebounced] = useState(source);
   const [split, setSplit] = useState(readSplit);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(() => initialExpanded(variant));
   // On a phone the editor and preview can't sit side by side, so a toggle shows
   // one at a time. Ignored at >=64rem, where both panes split horizontally.
   const [pane, setPane] = useState<"source" | "preview">("preview");

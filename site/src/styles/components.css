@@ -559,6 +559,16 @@
 @media (min-width: 64rem) { .pg-preview { min-height: 0; } }
 .pg-frame { width: 100%; height: 100%; min-height: 60vh; border: 0; background: #fff; display: block; }
 @media (min-width: 64rem) { .pg-frame { min-height: 0; } }
+/* Mobile: the compiled document is laid out for a wide page (a 640px column with
+   generous top spacing), which looks empty cramped into a phone-width pane. So
+   render the preview at a near-desktop width and scale it to fit: the whole
+   composed artifact shows at a glance, and switching forms shows the full layout
+   change. Expand or Open give a 1:1 view. */
+@media (max-width: 63.99rem) {
+  .pg:not(.pg-expanded) .pg-preview { height: 58vh; min-height: 0; overflow: hidden; background: #fff; }
+  .pg:not(.pg-expanded) .pg-editor-wrap { height: 58vh; min-height: 0; }
+  .pg:not(.pg-expanded) .pg-frame { width: 154%; height: 154%; min-height: 0; transform: scale(0.65); transform-origin: top left; }
+}
 
 /* Mobile: a Source/Preview toggle shows one pane at a time (the side-by-side
    split needs width a phone does not have). Hidden at >=64rem, where both show. */
