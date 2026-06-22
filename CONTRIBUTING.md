@@ -14,10 +14,11 @@ cd mdp
 node packages/core/build.mjs examples/block-compare.mdp
 ```
 
-That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Open
-them in a browser. Pass any `.mdp` path to compile a different source; the full
-set of probes lives in `examples/` (indexed in `examples/README.md`), and
-fill-in starters in `templates/`.
+That writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
+`flyer.html`, and, when a source opts into them, `report.html`, `onepager.html`,
+`memo.html`, `letter.html`). Open them in a browser. Pass any `.mdp` path to
+compile a different source; the full set of probes lives in `examples/` (indexed
+in `examples/README.md`), and fill-in starters in `templates/`.
 
 ## Project layout
 

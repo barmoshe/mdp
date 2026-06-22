@@ -1,15 +1,20 @@
 ---
 name: mdp
-description: Turn content into a polished page, slide deck, or flyer and show or present it. Use when the user asks to present, show something nicely, make a deck, build slides, a one-pager, a flyer, or a brief, or to render or compile MDP (.mdp) content. MDP compiles one plain source into three design-locked artifacts with no styling in the source.
+description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter and show or present it. Use when the user asks to present, show something nicely, make a deck, build slides, a one-pager, a flyer, a report, a memo, a letter, or a brief, or to render or compile MDP (.mdp) content. MDP compiles one plain source into design-locked artifacts with no styling in the source.
 ---
 
 # Show and present content with MDP
 
-MDP compiles one plain `.mdp` source into three design-locked artifacts: a `page`
-(a calm scrolling document), `slides` (a full-screen deck), and a `flyer` (a
-one-page surface). The author writes meaning only; the engine owns all design, so
-the output cannot look junky. Turn the user's content into one of those forms and
-open it to show or present it.
+MDP compiles one plain `.mdp` source into seven design-locked artifacts: a `page`
+(a calm scrolling document), `slides` (a full-screen deck), a `flyer` (a single
+promotional poster), a `report` (a paginated long-form document: cover, auto table
+of contents, numbered sections), a one-pager (`onepager`, a single dense sheet:
+header band, packed two-column grid, footer, the executive leave-behind), a `memo`
+(an internal business memo: a To / From / Date / Re header over a tight column),
+and a `letter` (formal correspondence: letterhead, date, salutation, body,
+sign-off). The author writes meaning only; the engine owns all design, so the
+output cannot look junky. Turn the user's content into one of those forms and open
+it to show or present it.
 
 The plugin root is this plugin's own folder: the directory that contains
 `packages/`, `bin/`, `SPEC.md`, and `skills/`. Paths below are relative to it.
@@ -17,11 +22,15 @@ The plugin root is this plugin's own folder: the directory that contains
 ## Steps
 
 1. Decide the form from the request. `present` or `slides` means the deck; `page`
-   means a document; `flyer` means a one-pager; `all` (or no clear preference)
-   builds every form and opens the page. Then decide the content: a file path the
-   user named, text they pasted, or, if neither, the most relevant content in the
-   conversation or the file in focus. If the content is already a `.mdp` file,
-   skip to step 3.
+   means a document; `flyer` means a promotional poster; `report` means a
+   paginated long-form document with a cover, auto table of contents, and numbered
+   sections; `onepager` means a single dense executive leave-behind sheet; `memo`
+   means an internal To / From / Date / Re business memo; `letter` means formal
+   correspondence with a letterhead, salutation, and sign-off; `all` (or no clear
+   preference) builds every form and opens the page. Then decide the content: a
+   file path the user named, text they pasted, or, if neither, the most relevant
+   content in the conversation or the file in focus. If the content is already a
+   `.mdp` file, skip to step 3.
 
 2. Author a `.mdp` file (a temp file is fine), following the format crib below.
    The full spec is at `<plugin-root>/SPEC.md` and a complete example is at
@@ -44,9 +53,10 @@ The plugin root is this plugin's own folder: the directory that contains
    ```
 
    Map the form to `<artifact>`: `present` becomes `slides`; otherwise use the
-   named form (`page`, `slides`, or `flyer`). For `all` or no clear form, drop the
-   artifact name and pass just `--open` (it opens the page). Add `--out <dir>` to
-   also save the files to a folder.
+   named form (`page`, `slides`, `flyer`, `report`, `onepager`, `memo`, or
+   `letter`). For `all` or no clear form, drop the artifact name and pass just
+   `--open` (it opens the page). Add `--out <dir>` to also save the files to a
+   folder.
 
 4. Tell the user what you made, which file opened, and the deck controls: arrows
    or space to move, `F` for fullscreen, print (Cmd or Ctrl + P) for a PDF.

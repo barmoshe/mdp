@@ -1,7 +1,7 @@
 {
   "name": "mdp",
   "version": "0.2.0",
-  "description": "Turn content into a polished page, slide deck, or flyer with MDP, then show or present it.",
+  "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter with MDP, then show or present it.",
   "author": {
     "name": "Bar Moshe",
     "url": "https://github.com/barmoshe"
@@ -9,12 +9,12 @@
   "homepage": "https://github.com/barmoshe/mdp",
   "repository": "https://github.com/barmoshe/mdp",
   "license": "Apache-2.0",
-  "keywords": ["mdp", "markdown", "presentation", "slides", "deck", "flyer", "present", "show"],
+  "keywords": ["mdp", "markdown", "presentation", "slides", "deck", "flyer", "report", "memo", "letter", "document", "present", "show"],
   "skills": "./skills/",
   "interface": {
     "displayName": "MDP",
-    "shortDescription": "Show content as a page, deck, or flyer",
-    "longDescription": "MDP compiles one plain .mdp source into design-locked artifacts: a calm reading page, a full-screen slide deck, and a one-page flyer. The author writes meaning only and the engine owns all design, so the output cannot look junky. Use it to present, show, or hand off content.",
+    "shortDescription": "Show content as a page, deck, flyer, report, one-pager, memo, or letter",
+    "longDescription": "MDP compiles one plain .mdp source into design-locked artifacts: a calm reading page, a full-screen slide deck, a promotional flyer, a paginated report with a cover and auto table of contents, a dense one-pager leave-behind, an internal memo, and a formal letter. The author writes meaning only and the engine owns all design, so the output cannot look junky. Use it to present, show, or hand off content.",
     "developerName": "Bar Moshe",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
@@ -22,7 +22,9 @@
     "defaultPrompt": [
       "Show this as a slide deck.",
       "Make a one-page flyer from these notes.",
-      "Render this README as a clean page."
+      "Render this README as a clean page.",
+      "Turn this into a report with a table of contents.",
+      "Draft this as a memo to the team."
     ],
     "brandColor": "#4F46E5"
   }

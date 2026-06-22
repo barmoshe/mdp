@@ -1,22 +1,31 @@
 ---
-description: Turn content into a polished page, slide deck, or flyer and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a brief, or to render or compile MDP.
-argument-hint: [present|page|slides|flyer|all] [content, a file path, or nothing for the current content]
+description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, or letter and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a report, a memo, a letter, a brief, or to render or compile MDP.
+argument-hint: [present|page|slides|flyer|report|onepager|memo|letter|all] [content, a file path, or nothing for the current content]
 ---
 
 # Show and present content with MDP
 
-MDP compiles one plain `.mdp` source into three design-locked artifacts: a `page`
-(a calm scrolling document), `slides` (a full-screen deck), and a `flyer` (a
-one-page surface). The author writes meaning only; the engine owns all design, so
-the output cannot look junky. Turn the user's content into one of those forms and
-open it to show or present it.
+MDP compiles one plain `.mdp` source into seven design-locked artifacts: a `page`
+(a calm scrolling document), `slides` (a full-screen deck), a `flyer` (a single
+promotional poster), a `report` (a paginated long-form document: cover, auto table
+of contents, numbered sections), a one-pager (`onepager`, a single dense sheet:
+header band, packed two-column grid, footer, the executive leave-behind), a `memo`
+(an internal business memo: a To / From / Date / Re header over a tight column),
+and a `letter` (formal correspondence: letterhead, date, salutation, body,
+sign-off). The author writes meaning only; the engine owns all design, so the
+output cannot look junky. Turn the user's content into one of those forms and open
+it to show or present it.
 
 Arguments: $ARGUMENTS
 
 ## Steps
 
 1. Decide the content. The first word of the arguments may be a mode: `present`
-   or `slides` (the deck), `page` (a document), `flyer` (a one-pager), or `all`.
+   or `slides` (the deck), `page` (a document), `flyer` (a promotional poster),
+   `report` (a paginated long-form document with a cover, auto table of contents,
+   and numbered sections), `onepager` (a single dense executive leave-behind
+   sheet), `memo` (an internal To / From / Date / Re business memo), `letter`
+   (formal correspondence with a letterhead, salutation, and sign-off), or `all`.
    The rest is the content: a file path, pasted text, or empty (then use the most
    relevant content in the conversation or the file in focus). If the content is
    already a `.mdp` file, skip to step 3.
