@@ -53,11 +53,6 @@ export default function App() {
             <div className="masthead reveal">
               <p className="eyebrow eyebrow-accent">Live playground</p>
               <h1 className="h2">Change a line. Watch every form change.</h1>
-              <p className="lead">
-                This is the real engine, bundled straight from{" "}
-                <code>packages/core</code>. Edit the source, switch the form, pick
-                a theme. Every form compiles from the one source.
-              </p>
             </div>
           </div>
           <div className="pg-page-stage">
@@ -96,11 +91,6 @@ export default function App() {
             <div className="masthead reveal">
               <p className="eyebrow eyebrow-accent">Live playground</p>
               <h2 className="h2">Change a line. Watch every form change.</h2>
-              <p className="lead">
-                The real engine, compiling in your browser, bundled straight from{" "}
-                <code>packages/core</code>. Edit the source, switch the form, pick
-                a theme, then open the full playground for room to work.
-              </p>
             </div>
             <Playground variant="embed" />
           </div>

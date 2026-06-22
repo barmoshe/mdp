@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties } from "react";
+import type {
+  CSSProperties,
+  PointerEvent as ReactPointerEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { compile, ARTIFACTS, THEMES, THEME_SWATCHES } from "mdp-compiler";
 import { EXAMPLES } from "../examples";
 import { TEMPLATES } from "../templates";
@@ -24,6 +28,21 @@ const ARTIFACT_HINT: Record<string, string> = {
   letter: "Formal correspondence: letterhead, salutation, body, sign-off.",
 };
 
+// The editor/preview split is a draggable, persisted percentage (editor width).
+const SPLIT_MIN = 28;
+const SPLIT_MAX = 72;
+const SPLIT_KEY = "mdp-pg-split";
+
+function readSplit(): number {
+  try {
+    const v = Number(localStorage.getItem(SPLIT_KEY));
+    if (Number.isFinite(v) && v >= SPLIT_MIN && v <= SPLIT_MAX) return v;
+  } catch {
+    /* ignore */
+  }
+  return 42;
+}
+
 export default function Playground({
   variant = "full",
   initialId,
@@ -43,7 +62,10 @@ export default function Playground({
   });
   const [artifact, setArtifact] = useState("page");
   const [debounced, setDebounced] = useState(source);
+  const [split, setSplit] = useState(readSplit);
+  const [expanded, setExpanded] = useState(false);
   const blobUrl = useRef<string | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
 
   // Keep typing smooth: the textarea updates instantly, the compile runs a
   // beat after you stop.
@@ -82,6 +104,22 @@ export default function Playground({
     };
   }, []);
 
+  // Maximize takes over the viewport; Escape closes it and body scroll is locked
+  // while it is open.
+  useEffect(() => {
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpanded(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [expanded]);
+
   function openInNewTab() {
     if (!html) return;
     if (blobUrl.current) URL.revokeObjectURL(blobUrl.current);
@@ -90,138 +128,185 @@ export default function Playground({
     window.open(blobUrl.current, "_blank", "noopener");
   }
 
+  // Drag the divider to rebalance editor vs preview; the choice persists.
+  function startResize(e: ReactPointerEvent) {
+    e.preventDefault();
+    const body = bodyRef.current;
+    if (!body) return;
+    const move = (ev: PointerEvent) => {
+      const rect = body.getBoundingClientRect();
+      const pct = ((ev.clientX - rect.left) / rect.width) * 100;
+      setSplit(Math.min(SPLIT_MAX, Math.max(SPLIT_MIN, pct)));
+    };
+    const up = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      setSplit((s) => {
+        try {
+          localStorage.setItem(SPLIT_KEY, String(Math.round(s)));
+        } catch {
+          /* ignore */
+        }
+        return s;
+      });
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  }
+  function onResizeKey(e: ReactKeyboardEvent) {
+    if (e.key === "ArrowLeft") {
+      setSplit((s) => Math.max(SPLIT_MIN, s - 2));
+      e.preventDefault();
+    } else if (e.key === "ArrowRight") {
+      setSplit((s) => Math.min(SPLIT_MAX, s + 2));
+      e.preventDefault();
+    }
+  }
+
   return (
-    <div className={`pg pg-${variant}`} id="playground-app">
+    <div className={`pg pg-${variant}${expanded ? " pg-expanded" : ""}`} id="playground-app">
       <div className="pg-bar">
-        <div className="pg-control pg-forms">
-          <span>form</span>
-          <div className="pg-tabs" role="tablist" aria-label="Output form">
-            {ARTIFACTS.map((a) => (
-              <button
-                key={a}
-                role="tab"
-                aria-selected={artifact === a}
-                className="pg-tab"
-                onClick={() => setArtifact(a)}
-              >
-                {a}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <label className="pg-control">
-          <span>start from</span>
-          <select
-            className="pg-select"
-            aria-label="Start from an example or template"
-            value={currentKey}
-            onChange={(e) => {
-              const item = SOURCES.find((s) => s.key === e.target.value);
-              if (item) setSource(item.source);
-            }}
-          >
-            {!currentKey && <option value="">edited</option>}
-            <optgroup label="Examples (feature demos)">
-              {EXAMPLES.map((e) => (
-                <option key={`example:${e.id}`} value={`example:${e.id}`}>
-                  {e.label}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Templates (fill-in starters)">
-              {TEMPLATES.map((t) => (
-                <option key={`template:${t.id}`} value={`template:${t.id}`}>
-                  {t.label}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-        </label>
-
-        <div className="pg-spacer" />
-
-        <div className="pg-control pg-themes" role="radiogroup" aria-label="Theme">
-          <span>theme</span>
-          <div className="pg-swatches">
-            {THEMES.map((t) => {
-              const sw = THEME_SWATCHES[t];
-              const selected = theme === t;
-              return (
+        <div className="pg-bar-row">
+          <div className="pg-control pg-forms">
+            <span>form</span>
+            <div className="pg-tabs" role="tablist" aria-label="Output form">
+              {ARTIFACTS.map((a) => (
                 <button
-                  key={t}
-                  type="button"
-                  role="radio"
-                  aria-checked={selected}
-                  className={`pg-swatch${selected ? " is-selected" : ""}`}
-                  title={t}
-                  aria-label={`${t} theme`}
-                  onClick={() => setSource((s) => withTheme(s, t))}
-                  style={
-                    {
-                      "--sw-fill": sw?.fill,
-                      "--sw-surface": sw?.surface,
-                      "--sw-text": sw?.text,
-                    } as CSSProperties
-                  }
+                  key={a}
+                  role="tab"
+                  aria-selected={artifact === a}
+                  className="pg-tab"
+                  onClick={() => setArtifact(a)}
                 >
-                  <span className="pg-swatch-dot" aria-hidden="true" />
-                  <span className="pg-swatch-name">{t}</span>
+                  {a}
                 </button>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+
+          <div className="pg-spacer" />
+
+          <button
+            className="btn btn-small"
+            onClick={() => setExpanded((v) => !v)}
+            aria-pressed={expanded}
+            title={expanded ? "Exit full screen (Esc)" : "Fill the screen"}
+          >
+            {expanded ? "Minimize" : "Expand"}
+          </button>
+          <button className="btn btn-small" onClick={openInNewTab} title="Open the compiled artifact in a new tab">
+            Open
+          </button>
+        </div>
+
+        <div className="pg-bar-row pg-bar-style">
+          <label className="pg-control">
+            <span>start from</span>
+            <select
+              className="pg-select"
+              aria-label="Start from an example or template"
+              value={currentKey}
+              onChange={(e) => {
+                const item = SOURCES.find((s) => s.key === e.target.value);
+                if (item) setSource(item.source);
+              }}
+            >
+              {!currentKey && <option value="">edited</option>}
+              <optgroup label="Examples (feature demos)">
+                {EXAMPLES.map((e) => (
+                  <option key={`example:${e.id}`} value={`example:${e.id}`}>
+                    {e.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Templates (fill-in starters)">
+                {TEMPLATES.map((t) => (
+                  <option key={`template:${t.id}`} value={`template:${t.id}`}>
+                    {t.label}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+          </label>
+
+          <div className="pg-control pg-themes" role="radiogroup" aria-label="Theme">
+            <span>theme</span>
+            <div className="pg-swatches">
+              {THEMES.map((t) => {
+                const sw = THEME_SWATCHES[t];
+                const selected = theme === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    role="radio"
+                    aria-checked={selected}
+                    className={`pg-swatch${selected ? " is-selected" : ""}`}
+                    title={t}
+                    aria-label={`${t} theme`}
+                    onClick={() => setSource((s) => withTheme(s, t))}
+                    style={
+                      {
+                        "--sw-fill": sw?.fill,
+                        "--sw-surface": sw?.surface,
+                        "--sw-text": sw?.text,
+                      } as CSSProperties
+                    }
+                  >
+                    <span className="pg-swatch-dot" aria-hidden="true" />
+                    <span className="pg-swatch-name">{t}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="pg-control pg-brand">
+            <span>brand</span>
+            <input
+              type="color"
+              aria-label="Brand color (brand-accent)"
+              title="Brand color: sets brand-accent; the engine derives the accent set"
+              value={accent || THEME_SWATCHES[theme]?.fill || "#5b54d6"}
+              onChange={(e) => setSource((s) => withAccent(s, e.target.value))}
+              style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
+            />
+            <input
+              type="color"
+              aria-label="Secondary brand color (brand-accent-2)"
+              title="Secondary brand color: sets brand-accent-2"
+              value={accent2 || THEME_SWATCHES[theme]?.text || "#e8a33d"}
+              onChange={(e) => setSource((s) => withAccent2(s, e.target.value))}
+              style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
+            />
+            {(accent || accent2) && (
+              <button
+                type="button"
+                className="btn btn-small"
+                title="Clear brand colors (fall back to the theme)"
+                onClick={() => setSource((s) => withAccent2(withAccent(s, ""), ""))}
+              >
+                clear
+              </button>
+            )}
+            <select
+              className="pg-select"
+              aria-label="Brand font (brand-font)"
+              title="Body font: a closed set of system stacks; the serif role is unchanged"
+              value={font}
+              onChange={(e) => setSource((s) => withFont(s, e.target.value))}
+            >
+              <option value="">font: default</option>
+              <option value="serif">font: serif</option>
+              <option value="mono">font: mono</option>
+              <option value="rounded">font: rounded</option>
+              <option value="humanist">font: humanist</option>
+            </select>
           </div>
         </div>
-
-        <div className="pg-control pg-brand">
-          <span>brand</span>
-          <input
-            type="color"
-            aria-label="Brand color (brand-accent)"
-            title="Brand color: sets brand-accent; the engine derives the accent set"
-            value={accent || THEME_SWATCHES[theme]?.fill || "#5b54d6"}
-            onChange={(e) => setSource((s) => withAccent(s, e.target.value))}
-            style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
-          />
-          <input
-            type="color"
-            aria-label="Secondary brand color (brand-accent-2)"
-            title="Secondary brand color: sets brand-accent-2"
-            value={accent2 || THEME_SWATCHES[theme]?.text || "#e8a33d"}
-            onChange={(e) => setSource((s) => withAccent2(s, e.target.value))}
-            style={{ width: 30, height: 26, padding: 0, border: "none", background: "none", cursor: "pointer" }}
-          />
-          {(accent || accent2) && (
-            <button
-              type="button"
-              className="btn btn-small"
-              title="Clear brand colors (fall back to the theme)"
-              onClick={() => setSource((s) => withAccent2(withAccent(s, ""), ""))}
-            >
-              clear
-            </button>
-          )}
-          <select
-            className="pg-select"
-            aria-label="Brand font (brand-font)"
-            title="Body font: a closed set of system stacks; the serif role is unchanged"
-            value={font}
-            onChange={(e) => setSource((s) => withFont(s, e.target.value))}
-          >
-            <option value="">font: default</option>
-            <option value="serif">font: serif</option>
-            <option value="mono">font: mono</option>
-            <option value="rounded">font: rounded</option>
-            <option value="humanist">font: humanist</option>
-          </select>
-        </div>
-
-        <button className="btn btn-small" onClick={openInNewTab}>
-          Open
-        </button>
       </div>
 
-      <div className="pg-body">
+      <div className="pg-body" ref={bodyRef} style={{ "--pg-ed": `${split}%` } as CSSProperties}>
         <div className="pg-editor-wrap">
           <div className="pg-editor-head">source.mdp</div>
           <textarea
@@ -232,6 +317,19 @@ export default function Playground({
             onChange={(e) => setSource(e.target.value)}
           />
         </div>
+
+        <div
+          className="pg-resizer"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize editor and preview"
+          aria-valuenow={Math.round(split)}
+          aria-valuemin={SPLIT_MIN}
+          aria-valuemax={SPLIT_MAX}
+          tabIndex={0}
+          onPointerDown={startResize}
+          onKeyDown={onResizeKey}
+        />
 
         <div className="pg-preview">
           {error ? (

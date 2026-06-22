@@ -379,14 +379,18 @@
 }
 .pg-bar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   gap: var(--mdp-space-2);
   padding: var(--mdp-space-3) var(--mdp-space-4);
   border-bottom: 1px solid var(--mdp-border);
   background: var(--mdp-surface);
 }
-@media (min-width: 48rem) { .pg-bar { gap: var(--mdp-space-3); } }
+.pg-bar-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--mdp-space-2); }
+@media (min-width: 48rem) { .pg-bar-row { gap: var(--mdp-space-3); } }
+/* The second row holds the styling controls; the theme strip flexes and scrolls
+   so the toolbar stays two tidy rows instead of wrapping into many. */
+.pg-bar-style { padding-top: var(--mdp-space-2); border-top: 1px solid var(--mdp-border); }
+.pg-bar-style .pg-themes { flex: 1 1 12rem; min-width: 0; }
 .pg-forms { flex-wrap: wrap; }
 .pg-tabs { display: inline-flex; flex-wrap: wrap; gap: var(--mdp-space-1); border: 1px solid var(--mdp-border); border-radius: 8px; padding: 2px; background: var(--mdp-bg); }
 .pg-tab {
@@ -414,8 +418,7 @@
   cursor: pointer;
 }
 .pg-themes { align-items: center; }
-.pg-swatches { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: var(--mdp-space-1); scrollbar-width: thin; padding-bottom: 2px; }
-@media (min-width: 48rem) { .pg-swatches { flex-wrap: wrap; overflow: visible; } }
+.pg-swatches { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: var(--mdp-space-1); scrollbar-width: thin; padding-bottom: 2px; min-width: 0; }
 .pg-swatch {
   display: inline-flex;
   align-items: center;
@@ -435,10 +438,15 @@
 .pg-swatch-dot { width: 11px; height: 11px; border-radius: var(--mdp-radius-full); background: var(--sw-fill); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); flex: none; }
 .pg-swatch.is-selected { color: var(--sw-text); background: var(--sw-surface); border-color: var(--sw-fill); font-weight: var(--mdp-weight-medium); }
 .pg-swatch:focus-visible { outline: 2px solid var(--sw-fill); outline-offset: 2px; }
-.pg-body { display: grid; grid-template-columns: 1fr; min-height: 30rem; }
-@media (min-width: 64rem) { .pg-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
-.pg-editor-wrap { display: flex; flex-direction: column; border-bottom: 1px solid var(--mdp-border); min-height: 18rem; }
-@media (min-width: 64rem) { .pg-editor-wrap { border-bottom: 0; border-inline-end: 1px solid var(--mdp-border); } }
+.pg-body { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 64rem) {
+  .pg-body {
+    grid-template-columns: minmax(0, var(--pg-ed, 42%)) 8px minmax(0, 1fr);
+    height: clamp(36rem, 64vh, 54rem);
+  }
+}
+.pg-editor-wrap { display: flex; flex-direction: column; border-bottom: 1px solid var(--mdp-border); min-height: 17rem; }
+@media (min-width: 64rem) { .pg-editor-wrap { border-bottom: 0; min-height: 0; } }
 .pg-editor-head { font-size: var(--mdp-text-eyebrow); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mdp-ink-faint); padding: var(--mdp-space-2) var(--mdp-space-4); border-bottom: 1px solid var(--mdp-border); }
 .pg-editor {
   flex: 1;
@@ -454,8 +462,41 @@
   padding: var(--mdp-space-4);
   tab-size: 2;
 }
-.pg-preview { position: relative; background: var(--mdp-surface); min-height: 18rem; }
-.pg-frame { width: 100%; height: 100%; min-height: 30rem; border: 0; background: #fff; display: block; }
+.pg-preview { position: relative; background: var(--mdp-surface); min-height: 24rem; }
+@media (min-width: 64rem) { .pg-preview { min-height: 0; } }
+.pg-frame { width: 100%; height: 100%; min-height: 24rem; border: 0; background: #fff; display: block; }
+@media (min-width: 64rem) { .pg-frame { min-height: 0; } }
+
+/* The drag handle between editor and preview (desktop only; mobile stacks). */
+.pg-resizer { display: none; }
+@media (min-width: 64rem) {
+  .pg-resizer {
+    display: block;
+    align-self: stretch;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background: var(--mdp-border);
+    cursor: col-resize;
+    position: relative;
+    touch-action: none;
+  }
+  .pg-resizer::before { content: ""; position: absolute; inset-block: 0; inset-inline: -4px; }
+  .pg-resizer::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    width: 2px;
+    height: 1.6rem;
+    transform: translate(-50%, -50%);
+    border-radius: var(--mdp-radius-full);
+    background: var(--mdp-ink-faint);
+  }
+  .pg-resizer:hover, .pg-resizer:focus-visible { background: var(--mdp-accent); }
+  .pg-resizer:hover::after, .pg-resizer:focus-visible::after { background: var(--mdp-accent-contrast); }
+  .pg-resizer:focus-visible { outline: 2px solid var(--mdp-accent); outline-offset: 0; }
+}
 .pg-error {
   position: absolute;
   inset: var(--mdp-space-4);
@@ -469,13 +510,31 @@
   overflow: auto;
 }
 .pg-hint { font-size: var(--mdp-text-eyebrow); color: var(--mdp-ink-faint); padding: var(--mdp-space-3) var(--mdp-space-4) 0; }
-.pg-page { padding-block: var(--mdp-space-6) var(--mdp-space-8); }
-.pg-page-head { margin-bottom: var(--mdp-space-6); }
-.pg-page-stage { max-width: 80rem; margin-inline: auto; padding-inline: var(--mdp-space-4); }
+.pg-page { padding-block: var(--mdp-space-5) var(--mdp-space-6); }
+.pg-page-head { margin-bottom: var(--mdp-space-4); }
+.pg-page-stage { max-width: 92rem; margin-inline: auto; padding-inline: var(--mdp-space-4); }
 @media (min-width: 40rem) { .pg-page-stage { padding-inline: var(--mdp-space-5); } }
-.pg-full .pg-body { height: clamp(28rem, calc(100vh - 18rem), 60rem); min-height: 0; }
 .pg-full .pg-frame { min-height: 0; height: 100%; }
 .pg-full .pg-editor-wrap, .pg-full .pg-preview { min-height: 0; }
+@media (min-width: 64rem) {
+  .pg-full .pg-body { height: clamp(38rem, calc(100vh - 12rem), 96rem); }
+}
+
+/* Maximize: take over the viewport, a real-tool full-screen. Toggled in the bar,
+   closed with Escape; body scroll is locked while open. */
+.pg-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+.pg-expanded .pg-bar { border-radius: 0; }
+.pg-expanded .pg-body { flex: 1; min-height: 0; height: auto; }
+.pg-expanded .pg-hint { display: none; }
 
 /* ---- footer ---- */
 .footer { border-top: 1px solid var(--mdp-border); padding-block: var(--mdp-space-8); color: var(--mdp-ink-faint); }
