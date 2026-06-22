@@ -272,6 +272,99 @@
   color: var(--mdp-ink-faint);
 }
 
+/* Hero "compiles to" composition: the source card, a seam, and a layered preview
+   stage that cross-fades a span of forms. Reuses the thumb primitives above. */
+.ha-source .c-accent { color: var(--mdp-accent-text); }
+
+.ha-compile {
+  display: flex;
+  align-items: center;
+  gap: var(--mdp-space-3);
+  color: var(--mdp-ink-faint);
+}
+.ha-compile-rule { flex: 1; height: 1px; background: var(--mdp-border); }
+.ha-compile-tag {
+  font-size: var(--mdp-text-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.ha-stage { position: relative; width: 100%; aspect-ratio: 3 / 2; }
+.ha-stage-back {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--mdp-border);
+  border-radius: var(--mdp-radius);
+  background: var(--mdp-bg);
+}
+.ha-stage-back.one { transform: translate(6px, 6px) rotate(1.5deg); opacity: 0.6; z-index: 1; }
+.ha-stage-back.two { transform: translate(11px, 11px) rotate(3deg); opacity: 0.32; z-index: 0; }
+
+.ha-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 1px solid var(--mdp-border);
+  border-radius: var(--mdp-radius);
+  background: var(--mdp-bg);
+  box-shadow: var(--mdp-shadow-2);
+  overflow: hidden;
+}
+.ha-pv {
+  position: absolute;
+  inset: 0;
+  padding: var(--mdp-space-4);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+.ha-pv.is-on { opacity: 1; transform: none; }
+.ha-pv-body { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; position: relative; }
+.ha-pv-body.is-center { justify-content: center; }
+.ha-screen .ha-title { font-size: 0.82rem; }
+.ha-screen .ha-title-lg { font-size: 1.1rem; }
+.ha-screen .ha-bar { height: 4px; }
+.ha-screen .ha-kicker { width: 30%; }
+.ha-screen .ha-rule { width: 1.8rem; }
+.ha-screen .ha-figs { margin-top: auto; }
+
+.ha-screen-tag {
+  position: absolute;
+  inset-block-start: var(--mdp-space-2);
+  inset-inline-end: var(--mdp-space-2);
+  font-family: var(--mdp-font-mono);
+  font-size: 0.58rem;
+  color: var(--mdp-ink-faint);
+  background: var(--mdp-surface);
+  border: 1px solid var(--mdp-border);
+  border-radius: var(--mdp-radius-full);
+  padding: 0.05rem 0.45rem;
+}
+
+.ha-toc { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.2rem; }
+.ha-toc-row { display: flex; align-items: center; gap: 0.45rem; }
+.ha-toc-row i { width: 5px; height: 5px; border-radius: 50%; background: var(--mdp-accent); flex: none; }
+.ha-toc-row .ha-bar { flex: 1; }
+
+.ha-pv-body.has-rail { padding-inline-end: 0.9rem; }
+.ha-rail {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.ha-rail i { width: 5px; height: 5px; border-radius: 50%; background: var(--mdp-border-strong); }
+.ha-rail i.is-on { background: var(--mdp-accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-pv { transition: none; }
+}
+
 /* ---- the gap: three states, the third one wins ---- */
 .gap-grid { display: grid; grid-template-columns: 1fr; gap: var(--mdp-space-4); }
 @media (min-width: 48rem) { .gap-grid { grid-template-columns: repeat(3, 1fr); gap: var(--mdp-space-5); } }
