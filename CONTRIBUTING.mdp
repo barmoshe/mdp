@@ -1,0 +1,83 @@
+---
+mdp: 1
+theme: teal
+forms: [page, slides, flyer]
+kicker: Contributing
+title: Contributing to MDP
+---
+
+# Contributing to MDP
+{.lead} Keep the engine pure and keep the look locked — that is the bar for a change.
+
+MDP is small on purpose: a dependency-free engine that compiles one `.mdp` source into design-locked artifacts. Thanks for helping.
+
+---
+
+## Build and run
+
+No install. Plain Node ESM, Node 18 or newer. Clone the repo and run `node packages/core/build.mjs examples/block-compare.mdp`.
+
+That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Pass any `.mdp` path to compile a different source. The full set of probes lives in `examples/` (indexed in `examples/README.md`), and fill-in starters in `templates/`.
+
+---
+
+## Project layout
+
+The engine lives in `packages/core/`. Data flows one direction.
+
+```mdp:flow
+source -> parse() -> IR { meta, blocks } -> render() -> HTML
+```
+
+- `build.mjs` — the CLI: read a source, compile all artifacts, write `dist/`.
+- `src/parse.mjs` — source string to the IR.
+- `src/inline.mjs` — inline markdown to escaped, safe HTML.
+- `src/tokens.mjs` — the locked design system, as CSS.
+- `src/render-page.mjs` / `render-slides.mjs` / `render-flyer.mjs` — the artifact solvers.
+- `src/stats.mjs` / `compare.mjs` / `callout.mjs` / `flow.mjs` — the shipped blocks.
+
+---
+
+## Adding a new block
+
+A block is a small shared module exporting a `STYLE` string and a `render` function, reused by every renderer so it reads as one designed component. Use `src/compare.mjs` as the model.
+
+1. Create `packages/core/src/<name>.mjs` with a `STYLE` constant and a `render<Name>(block)`. Pass every author string through `inline()` so it is escaped and link schemes are defanged.
+2. Use **monochrome tokens only** — `var(--mdp-ink)`, the spacing scale — never literal colors.
+3. Use **logical CSS** so the block flips under `dir="rtl"`: `margin-inline-start`, never `left` / `right`.
+4. Teach `src/parse.mjs` to emit your typed node; an unknown directive must degrade to readable text.
+5. Wire the node into all three renderers and inject your `STYLE`.
+6. Update `spec/schema.json` and `SPEC.md` once the shape settles.
+
+---
+
+## Extensions
+
+Core ships a curated block set. Anything beyond it lives in **its own repo** and is discovered the zero-maintenance way: a naming convention plus an npm keyword plus a GitHub topic (the model `eslint-plugin-*` and `slidev-theme-*` use).
+
+Scaffold one in a single command: `npm create mdp-extension my-block` (add `-- --type artifact` for an artifact). Name it `mdp-block-<name>` or `mdp-artifact-<name>`, add the `mdp` / `mdp-block` keywords and a matching GitHub topic, and follow `src/compare.mjs` for the block shape.
+
+:::callout note
+`mdp-compiler` has no runtime plugin loader yet, by design. To render a third-party block in a real document you fork or patch core; each generated package's README spells out the exact lines.
+:::
+
+---
+
+## Code style
+
+- Plain ESM (`.mjs`). No dependencies, no build step, no bundler.
+- **Deterministic.** The render path is pure: no `Date.now()`, no `Math.random()`, no clocks, stable iteration order. Two builds of the same source must be byte-identical. Anything that breaks this is a bug.
+
+---
+
+## Pull requests
+
+Before opening a PR, confirm each of these.
+
+- Every `examples/*.mdp` and `templates/*.mdp` builds and is byte-identical across two runs, and `npm run check:examples` passes. If you add or rename a seed, update its `manifest.json` and run `npm run gen:docs`.
+- Output is deterministic: build twice, the HTML is identical.
+- The **design lock holds**: no gradients, no shadows, one ink ramp, two weights. A second accent color needs an ADR, not a PR.
+- Spec and docs are updated if the format changed.
+- If you changed the engine, re-sync the vendored copies: `npm run sync:codex` and `npm run sync:mcp`. CI fails if either is stale.
+
+Keep PRs focused and the diff small. Friendly review, fast merges.

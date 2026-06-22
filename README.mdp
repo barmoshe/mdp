@@ -1,0 +1,91 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+kicker: Overview
+title: MDP — Markdown Presentation
+---
+
+# MDP — Markdown Presentation
+{.lead} A presentation compiler for AI-written content: one source, many design-locked artifacts.
+
+One declarative `.mdp` source composes, deterministically, into a page, a slide deck, and a flyer. A markdown viewer gives you one rendering. MDP gives you a compiler.
+
+---
+
+## Why
+
+AI writes oceans of Markdown. It is clean and cheap but reads as a flat wall of text. Ask to "show it nicely" and you get a one-off HTML artifact that looks fine once and is junky the next day. MDP closes that gap: the author writes meaning, the engine owns all design, and the same source becomes a page, a deck, and a flyer.
+
+---
+
+## How it works
+
+The rendering method is deterministic composition over a semantic representation — not templates, not live AI.
+
+```mdp:flow
+.mdp source -> parse() -> IR { meta, blocks } -> page / slides / flyer
+```
+
+1. A declarative source: typed tags filled with data, no arbitrary code. Agent-emittable, statically checkable, safe.
+2. A semantic representation: the source parses into typed meaning, the IR. Intent, not layout.
+3. Deterministic composition: each artifact is a solver, not a template, laid out against locked design tokens.
+4. AI authors, the engine composes: the same source produces byte-identical output every time.
+
+---
+
+## Quick start
+
+The engine ships as `mdp-compiler` on npm — zero dependencies, plain ESM, Node 18 or newer. Install it with `npm i mdp-compiler` and call `compile(source, "slides")`.
+
+Or clone the repo and run the engine directly with no install: `node packages/core/build.mjs examples/block-compare.mdp`. That writes `dist/page.html`, `dist/slides.html`, and `dist/flyer.html`. Add `--open slides` to show or present an artifact in the browser.
+
+---
+
+## Use it in your agent
+
+MDP is not an app to visit and not a syntax to learn. It ships as a plugin, so you go from content to a polished artifact without leaving your editor.
+
+- **Claude Code** — this repo is the marketplace: `/plugin marketplace add barmoshe/mdp`, then ask "show this as a deck".
+- **Codex** — a self-contained plugin in `codex/`: `codex marketplace add barmoshe/mdp`, then enable MDP from the app.
+- **Any MCP host** — the `mdp-mcp` server via `claude mcp add mdp -- npx -y mdp-mcp`, exposing `mdp_compile`, `mdp_present`, and `mdp_validate`.
+
+---
+
+## Blocks
+
+A small, closed set of typed additions on top of plain Markdown.
+
+- `{.lead}` / `{.cite}` — a standfirst under the title; an attribution under a quote.
+- `mdp:stats` — key and value figures.
+- `mdp:compare` — options side by side, each with a badge, note, pros, and a CTA.
+- `mdp:flow` — an `a -> b -> c` pipeline.
+- `:::callout` — a note, tip, cost, recommendation, or warning aside.
+- `---` — a section break: a divider on a page, a slide break in slides.
+- `lang` / `dir` — set `dir: rtl` in the frontmatter and the whole layout flips.
+
+---
+
+## The design lock
+
+`packages/core/src/tokens.mjs` is the single source of the look: two font families, two weights, one warm neutral ink ramp plus a single restrained accent, light and dark, no gradients or shadows.
+
+The author writes meaning only and cannot reach the design, so the over-decorated "junky artifact" look is impossible by construction. Pick a vibe with the `theme` field — one of eleven curated palettes, every one passing WCAG AA in light and dark.
+
+:::callout note
+The eleven themes: studio, ocean, teal, forest, amber, terracotta, coral, rose, plum, violet, and mono.
+:::
+
+---
+
+## Status and roadmap
+
+Early and honest: a working engine that proves the core claim — one source composes deterministically into three clean artifacts, with a first set of blocks and right-to-left support. The format will move before 1.0.
+
+The live playground, the `mdp-mcp` server, and the `create-mdp-extension` scaffolder are shipped and published to npm. Next: an `mdp:chart` block and a JSON Schema conformance test.
+
+---
+
+## Contributing and license
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the machine-facing [AGENTS.md](AGENTS.md). The bar for a change: keep the engine pure (deterministic, byte-identical across runs) and keep the design locked. Licensed Apache-2.0.

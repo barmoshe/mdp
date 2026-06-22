@@ -1,0 +1,30 @@
+---
+mdp: 1
+theme: forest
+forms: [page, slides, flyer]
+kicker: Conduct
+title: Code of conduct
+---
+
+# Code of conduct
+{.lead} Be respectful and considerate; harassment is not acceptable in any project space.
+
+This project follows the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/), version 2.1.
+
+---
+
+## In short
+
+Be respectful and considerate. Harassment, insults, and other unwelcome behavior are not acceptable in any project space, public or private.
+
+---
+
+## Reporting
+
+If you experience or witness unacceptable behavior, report it privately.
+
+:::callout note
+Email Barprojectsandbuilds@gmail.com. Reports are handled confidentially. Maintainers may take any action they consider appropriate, up to and including a ban.
+:::
+
+The full standards and enforcement guidelines are at the Contributor Covenant link above.

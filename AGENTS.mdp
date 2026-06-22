@@ -1,0 +1,93 @@
+---
+mdp: 1
+theme: ocean
+forms: [page, slides, flyer]
+kicker: Build guide
+title: AGENTS — the MDP build guide
+---
+
+# AGENTS — the MDP build guide
+{.lead} Machine-facing build and contribution guide for the MDP engine.
+
+MDP compiles one declarative `.mdp` source into several design-locked HTML artifacts. The design lives in the engine, not the source: authors write meaning, the renderer guarantees the look.
+
+---
+
+## Build and run
+
+No dependencies. Plain Node ESM (`.mjs`), run with `node` directly — no install, no build step, no bundler.
+
+- Build all artifacts: `node packages/core/build.mjs` (or `npm run build`).
+- Compile a different source: `node packages/core/build.mjs path/to/file.mdp`.
+- Output: `dist/page.html`, `dist/slides.html`, `dist/flyer.html` at the repo root.
+
+:::callout warning
+Determinism is a hard rule. The render path must be pure: no `Date.now()`, no `Math.random()`, no clocks, stable iteration order. Running the build twice must produce byte-identical files. Any change that breaks this is a bug.
+:::
+
+---
+
+## Package layout
+
+The data flow is one direction. The IR is the semantic representation every artifact solves against.
+
+```mdp:flow
+source string -> parse() -> IR { meta, blocks } -> render() -> HTML
+```
+
+- `packages/core/` — `mdp-compiler`, the engine (`src/` plus the `build.mjs` CLI).
+- `commands/mdp.md` — the Claude Code `/mdp` command.
+- `codex/` — the Codex plugin (vendored engine).
+- `packages/mcp/` — the `mdp-mcp` server (vendored engine).
+- `spec/schema.json` — JSON Schema for the `.mdp` frontmatter.
+- `examples/` and `templates/` — example probes and fill-in starters.
+
+---
+
+## Plugin surfaces
+
+The same engine ships to agent tools three ways. All author MDP, run the engine, and surface the result; none adds anything to the format.
+
+```mdp:compare
+# Claude Code
+note: The repo root is the plugin.
+- A single /mdp command in commands/.
+- Runs the engine in place at packages/core/.
+
+# Codex
+note: A self-contained plugin in codex/.
+- An mdp skill; engine vendored by sync:codex.
+- Its own folder so each host sees one mdp component.
+
+# MCP server
+note: packages/mcp/ (mdp-mcp), via npx -y mdp-mcp.
+- Exposes mdp_compile, mdp_present, mdp_validate.
+- Engine vendored by sync:mcp; the one package with deps.
+```
+
+The vendored copies are a copy of the root, not a second source. Re-run the sync after any engine change — CI fails if either is stale.
+
+---
+
+## The design lock
+
+`src/tokens.mjs` is the single source of the look: two font families, two weights, one neutral ink ramp, light and dark, no gradients or shadows.
+
+Every renderer imports `baseStyle()` and shares the same block primitives. Do not add per-element styling to the source format, and do not introduce a second accent color without an ADR. Hierarchy comes from type size, weight, and whitespace.
+
+---
+
+## Adding a new artifact renderer
+
+1. Create `packages/core/src/render-<name>.mjs` exporting `render<Name>(ir) -> htmlString`. Import `inline` and the helpers from `shared.mjs`.
+2. Build the layout CSS as a string and pass it to `htmlDocument(...)`. Reuse the shared block classes; only add layout, never new colors or fonts.
+3. Register it in `src/index.mjs` by adding one entry to `RENDERERS`. `ARTIFACTS` and the CLI pick it up automatically.
+4. Keep the render pure: solve the IR, never reach back to the raw source or external state.
+
+---
+
+## Adding a new block type
+
+1. Teach `src/parse.mjs` to emit a new typed node. Unknown directives must degrade to readable text, never throw or blank.
+2. Handle the new node in each `render-*.mjs`, adding shared CSS to `tokens.mjs` if the primitive is cross-artifact.
+3. Update `spec/schema.json` and the SPEC once the shape settles.

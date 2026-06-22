@@ -1,0 +1,98 @@
+---
+mdp: 1
+theme: mono
+forms: [page, slides, flyer]
+kicker: Spec v0.1
+title: The MDP format
+---
+
+# The MDP format
+{.lead} One plain-text source compiles into many polished forms; the design is locked in the renderer.
+
+The source stays as clean and diffable as ordinary Markdown. The author writes content and light intent only; the renderer composes each form and applies the presentation mechanics. This is the syntax strawman — see [VISION.md](VISION.md) for positioning.
+
+---
+
+## Architecture in brief
+
+The rendering method is deterministic composition over a semantic representation, not templates and not live AI.
+
+```mdp:flow
+Declarative source -> Tree of typed meaning -> Each artifact is a solver -> Pure, reproducible render
+```
+
+The substrate is extensible in two units, both with the design lock intact: blocks (new typed content rendered across every artifact) and artifacts (new output types as new solvers over the tree).
+
+---
+
+## Principles
+
+1. **The spec is a prompt.** It is written so an LLM can read it and emit valid MDP with no examples.
+2. **The author cannot style.** There is no color, size, or font in the source. Slop becomes structurally impossible.
+3. **Wrong input still renders.** An unknown directive or malformed block degrades to readable text, never a blank screen.
+4. **Git-native.** Line-oriented and diffable. Humans and agents edit it like code.
+5. **Many forms, one source.** The renderer compiles the same source into every form.
+
+---
+
+## The file
+
+- Extension `.mdp`, UTF-8.
+- A superset of CommonMark. Any valid MDP file is also readable as plain Markdown.
+- Optional YAML frontmatter, then a Markdown body.
+
+The frontmatter carries the format version (`mdp: 1`, required), a named `theme`, the `forms` to compile, an optional `title` and `kicker`, the `lang` and `dir` for writing direction, and an optional `brand-logo` asset reference. None of these carry colors or sizes — the author picks a designed system, not individual styles.
+
+:::callout note
+`dir: rtl` (auto-inferred for he, ar, fa, ur, yi) flips the whole layout, because the renderer uses logical CSS properties throughout. The author never positions anything.
+:::
+
+---
+
+## Body additions
+
+Standard Markdown blocks plus a small, closed set of additions.
+
+- **Section breaks.** A `---` on its own line: a divider on a page, a slide break in slides, a panel divider on a flyer.
+- **Line roles.** A block may open with a role tag: `{.lead}` a standfirst, `{.cite}` an attribution. An unknown role is ignored and the text renders plainly.
+- **Fenced directives.** `mdp:stats` (label-and-value figures), `mdp:compare` (options as side-by-side cards), and `mdp:flow` (a left-to-right sequence of steps joined by `->`). An unknown kind falls back to a normal code block, so it is never lost.
+- **Triple-colon containers.** `:::callout <variant>` lifts a short passage out of the flow; variants are note, tip, cost, recommendation, and warning.
+
+There is deliberately no raw HTML, no inline CSS, and no scripting in the source. Those are the doors slop walks through.
+
+---
+
+## Forms and mechanics (v1)
+
+A form is an output shape. v1 ships three.
+
+```mdp:compare
+# page
+note: A calm scrolling document — the reading form.
+- Stats render as a table.
+- Quotes become indented pull quotes.
+
+# slides
+note: A full-screen click-through deck — the presenting form.
+- Stats become big figures.
+- List items reveal one at a time.
+
+# flyer
+note: One composed surface, a poster or one-pager — the at-a-glance form.
+- Stats render as a figure band.
+- Compare and callout go full-width.
+```
+
+The mechanics the renderer owns: stat figures, pull quotes, columns (adjacent short sections compose side by side), and reveals (list items appear one at a time in slides).
+
+---
+
+## House style and non-goals
+
+The house style is identical across forms and the author cannot reach it: one sans and one serif, two weights, a fixed modular scale; one neutral ink ramp plus a single restrained accent; a single spacing scale; no gradients, no shadows, no decorative icons; minimal motion; WCAG AA contrast and full keyboard navigation.
+
+Non-goals for v1: no arbitrary HTML or JavaScript, no inline styling, no per-form authoring, no animation authoring.
+
+:::callout warning
+A conforming tool validates the frontmatter and each directive body and returns line-level errors with a suggested fix, so an agent can correct its own output in one pass. (v0.1: contract defined, validator to follow.)
+:::
