@@ -17,26 +17,10 @@
 //
 // Run: npm test   (from the repo root)
 
-import { THEMES, themeTokens } from "../packages/core/src/index.mjs";
-
-// --- WCAG relative luminance + contrast ratio (sRGB) ---
-const toRgb = (h) => {
-  const m = h.trim().replace("#", "");
-  return [0, 2, 4].map((i) => parseInt(m.slice(i, i + 2), 16));
-};
-const channel = (c) => {
-  const s = c / 255;
-  return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-};
-const luminance = (hex) => {
-  const [r, g, b] = toRgb(hex);
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
-};
-const contrast = (a, b) => {
-  const la = luminance(a) + 0.05;
-  const lb = luminance(b) + 0.05;
-  return la > lb ? la / lb : lb / la;
-};
+// The WCAG oracle (contrast + the AA thresholds) now lives in the engine
+// (packages/core/src/color.mjs) so this gate and the render-time brand-accent
+// derivation use the exact same math. Imported here, not redefined.
+import { THEMES, themeTokens, contrast, TEXT_MIN, FILL_MIN } from "../packages/core/src/index.mjs";
 
 // Pull the resolved hex of one custom property out of a CSS chunk.
 const readVar = (css, name) => {
@@ -62,8 +46,6 @@ const modes = (theme) => {
   return { light: grab(light), dark: grab(dark) };
 };
 
-const TEXT_MIN = 4.5; // AA, normal text
-const FILL_MIN = 3.0; // AA, large text / UI component
 const f = (n) => n.toFixed(2);
 
 let failures = 0;

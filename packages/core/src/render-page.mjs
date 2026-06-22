@@ -17,6 +17,8 @@ import {
   deriveEyebrow,
   deriveLangDir,
   deriveTheme,
+  deriveBrandAccent,
+  deriveBrandAccent2,
   splitSections,
   extractMasthead,
   deriveLogo,
@@ -145,5 +147,14 @@ export function renderPage(ir) {
   const body = `<main class="mdp-page">\n${masthead}\n${sectionHtml}\n</main>`;
 
   const { lang, dir } = deriveLangDir(ir);
-  return htmlDocument({ title: docTitle, style: PAGE_STYLE, body, lang, dir, theme: deriveTheme(ir) });
+  return htmlDocument({
+    title: docTitle,
+    style: PAGE_STYLE,
+    body,
+    lang,
+    dir,
+    theme: deriveTheme(ir),
+    accent: deriveBrandAccent(ir),
+    accent2: deriveBrandAccent2(ir),
+  });
 }

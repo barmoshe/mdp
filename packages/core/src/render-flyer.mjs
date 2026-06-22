@@ -21,6 +21,8 @@ import {
   deriveEyebrow,
   deriveLangDir,
   deriveTheme,
+  deriveBrandAccent,
+  deriveBrandAccent2,
   splitSections,
   extractMasthead,
   deriveLogo,
@@ -314,5 +316,14 @@ export function renderFlyer(ir) {
     `</div>`;
 
   const { lang, dir } = deriveLangDir(ir);
-  return htmlDocument({ title: docTitle, style: FLYER_STYLE, body, lang, dir, theme: deriveTheme(ir) });
+  return htmlDocument({
+    title: docTitle,
+    style: FLYER_STYLE,
+    body,
+    lang,
+    dir,
+    theme: deriveTheme(ir),
+    accent: deriveBrandAccent(ir),
+    accent2: deriveBrandAccent2(ir),
+  });
 }
