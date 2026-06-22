@@ -10,7 +10,7 @@ small, throwaway sources that each isolate one block, theme, form, fallback, or
 frontmatter slot. They are how you see a mechanic in action, and how CI proves it
 keeps working. Each declares what it shows in a parser-inert `demonstrates:`
 frontmatter key, and `examples/README.md` carries a generated index. Together they
-cover every block, all five callout variants, all eleven themes, each form, a
+cover every block, every callout variant, every theme, each form, a
 right-to-left document, and the brand-logo slot.
 
 To start from scratch, copy `examples/starter.mdp`.

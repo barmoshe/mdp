@@ -7,7 +7,7 @@ source.
 
 ## The theme set
 
-Set `theme` in the frontmatter to one of eleven curated palettes. Each is one
+Set `theme` in the frontmatter to a curated palette from the spectrum. Each is one
 restrained accent over the shared warm-neutral ramp, ordered as a spectrum:
 
 <div class="theme-gallery">

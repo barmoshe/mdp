@@ -1,6 +1,6 @@
-# MDP specification (v0.1 draft)
+# MDP specification
 
-MDP (working name, "Markdown Presentation") is a presentation compiler for
+MDP ("Markdown Presentation") is a presentation compiler for
 AI-written content. One plain-text source compiles into many polished forms: a
 page, a slide deck, a flyer, a report, a one-pager, a memo, a letter. The design
 is locked in the renderer, so the output
@@ -91,7 +91,7 @@ author picks a designed system, not individual styles.
 The themes share one warm neutral ramp and differ only in a single restrained
 accent, used in meaning-spots (links, the compare button, the recommendation
 callout, stat figures, the active slide dot, flow arrows), never to color a whole
-surface. The set, eleven in all and ordered as a spectrum: `studio` (the default, an
+surface. The set, ordered as a spectrum: `studio` (the default, an
 indigo accent), `ocean` (a true blue), `teal` (a blue-green), `forest` (a natural
 green), `amber` (a warm gold), `terracotta` (an earthy burnt clay), `coral` (a
 warm coral red), `rose` (a muted pink-red), `plum` (a deep berry), `violet` (a

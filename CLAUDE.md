@@ -53,7 +53,7 @@ mdp/
     src/
       parse.mjs           source string -> IR { meta, blocks }
       inline.mjs          inline markdown -> escaped, link-safe HTML (escapeHtml, inline)
-      tokens.mjs          the locked design system + the 11 themes, as CSS
+      tokens.mjs          the locked design system + the named themes, as CSS
       shared.mjs          doc scaffold + section helpers shared by every renderer
       render-page.mjs     the page artifact solver
       render-slides.mjs   the slides artifact solver
@@ -113,7 +113,7 @@ playground) calls:
   from `tokens.mjs`.
 - `SCHEMA`, `SCHEMA_VERSION` from `schema.mjs`.
 
-The 11 themes: `studio` (default, indigo), `ocean`, `teal`, `forest`, `amber`,
+The themes: `studio` (default, indigo), `ocean`, `teal`, `forest`, `amber`,
 `terracotta`, `coral`, `rose`, `plum`, `violet`, `mono`. Every theme passes
 WCAG AA in light and dark, verified by `npm test`.
 
@@ -122,7 +122,7 @@ WCAG AA in light and dark, verified by `npm test`.
 Run from the repo root unless noted. No install needed for the engine.
 
 ```bash
-# Build all three artifacts from a source into dist/ (default source: examples/block-compare.mdp)
+# Build the default forms from a source into dist/ (default source: examples/block-compare.mdp)
 node packages/core/build.mjs examples/block-compare.mdp
 npm run build                                   # same, default source
 
@@ -173,7 +173,7 @@ a `STYLE` string and `render<Name>(block)`; pass every author string through
 only (`var(--mdp-ink)`, the spacing scale, never literal colors); use logical CSS
 (`margin-inline-start`, never `left`/`right`) so it flips under `dir="rtl"`; teach
 `parse.mjs` to emit the typed node (an unknown directive must degrade to readable
-text, never throw or blank); wire it into all three `render-*.mjs`; update
+text, never throw or blank); wire it into every `render-*.mjs`; update
 `spec/schema.json` (via `gen:schema`) and `SPEC.md` once the shape settles; then
 re-sync the vendored copies.
 
@@ -191,10 +191,10 @@ check:examples` passes, and re-sync the vendored copies if the seed is vendored.
 
 A change must pass all of these:
 
-- **Build coverage**: every `examples/*.mdp` and `templates/*.mdp` emits all three
-  artifacts.
+- **Build coverage**: every `examples/*.mdp` and `templates/*.mdp` compiles cleanly
+  to each of its forms.
 - **Determinism**: each seed is byte-identical across two builds.
-- **Theme gallery**: `examples/theme-gallery.mdp` renders under all 11 themes.
+- **Theme gallery**: `examples/theme-gallery.mdp` renders under every theme.
 - **Drift gate**: `scripts/check-examples.mjs` (manifests match disk, role
   vocabulary clean, feature coverage complete).
 - **Schema conformance + freshness**: every seed's IR validates; `spec/schema.json`

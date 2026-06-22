@@ -96,7 +96,7 @@ built.
   right-to-left support.
 - A curated set of locked themes. The author writes meaning only and picks a
   named vibe; the engine owns all design.
-- The proof: one source composes deterministically into the three artifacts and
+- The proof: one source composes deterministically into every form and
   looks shipped, demonstrated on a real bilingual comparison document.
 
 ## Differentiation, in one breath

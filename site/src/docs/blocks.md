@@ -1,11 +1,11 @@
 # Blocks
 
-Beyond plain Markdown, MDP adds a typed set of elements, organized in three
+Beyond plain Markdown, MDP adds a typed set of elements, organized in a few
 categories today, with more on the way. Each one is content and light intent,
-never styling. Every element renders across all three forms, and the renderer
+never styling. Every element renders across every form, and the renderer
 decides how it looks in each.
 
-The three categories are **Text & quotes**, **Data & diagrams**, and **Callouts
+The categories are **Text & quotes**, **Data & diagrams**, and **Callouts
 & layout**.
 
 ## Text & quotes

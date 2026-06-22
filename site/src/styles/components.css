@@ -387,7 +387,8 @@
   background: var(--mdp-surface);
 }
 @media (min-width: 48rem) { .pg-bar { gap: var(--mdp-space-3); } }
-.pg-tabs { display: inline-flex; gap: var(--mdp-space-1); border: 1px solid var(--mdp-border); border-radius: 8px; padding: 2px; background: var(--mdp-bg); }
+.pg-forms { flex-wrap: wrap; }
+.pg-tabs { display: inline-flex; flex-wrap: wrap; gap: var(--mdp-space-1); border: 1px solid var(--mdp-border); border-radius: 8px; padding: 2px; background: var(--mdp-bg); }
 .pg-tab {
   font: inherit;
   font-size: var(--mdp-text-small);

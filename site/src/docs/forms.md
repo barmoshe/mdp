@@ -1,8 +1,8 @@
 # Forms
 
 A form is an output shape. One source compiles into every form it lists in
-`forms`. Seven ship today: three visual forms and four document forms, all
-solvers over the same semantic representation.
+`forms`. The set covers visual forms and document forms, all solvers over the
+same semantic representation.
 
 - **page** a calm scrolling document. The reading form.
 - **slides** a full-screen click-through deck. The presenting form.
