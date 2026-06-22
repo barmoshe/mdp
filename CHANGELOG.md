@@ -14,7 +14,9 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
   contrast oracle now lives in the engine (`packages/core/src/color.mjs`) and is
   shared by the build-time contrast gate. The masthead logo sits on a lockup plate
   so it stays legible in dark mode, and the title underline yields when a logo is
-  present. New `examples/brand-accent.mdp`.
+  present. A `brand-font` field selects the body/UI family from a closed set of
+  system font stacks (system, serif, mono, rounded, humanist; no web fonts), the
+  one allowed relaxation of the two-family lock. New `examples/brand-accent.mdp`.
 - Published to npm: the engine as `mdp-compiler`, the MCP server as `mdp-mcp`, and
   the scaffolder as `create-mdp-extension` (all unscoped and public). `npm i
   mdp-compiler` to embed the engine, `npx -y mdp-mcp` for the MCP server, and

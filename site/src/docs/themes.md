@@ -38,7 +38,9 @@ AA. If the color cannot be made accessible, the document falls back to the named
 `theme`. An optional `brand-accent-2` adds a second color the engine uses sparingly
 (the title underline, the flow connectors, the active slide dot). You name the
 color; the engine still owns every role and every placement, so a brand color
-cannot drift the look or break contrast. See [the format](#/docs/format).
+cannot drift the look or break contrast. You can also set `brand-font` to change
+the body typeface to one of a few system families (`serif`, `mono`, `rounded`,
+`humanist`); the serif used for leads and quotes stays. See [the format](#/docs/format).
 
 ## The design lock
 

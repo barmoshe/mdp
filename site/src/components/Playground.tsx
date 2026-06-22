@@ -54,6 +54,24 @@ function withAccent2(src: string, hex: string): string {
   return setFrontmatterLine(src, "brand-accent-2", hex, anchor);
 }
 
+// The brand-font the source declares ("" for none/system, the theme default).
+function currentFont(src: string): string {
+  const m = src.match(/^brand-font:[ \t]*([A-Za-z]+)/m);
+  const k = m ? m[1].toLowerCase() : "";
+  return k === "system" ? "" : k;
+}
+function withFont(src: string, key: string): string {
+  // anchor after the last brand line that exists, else theme, else mdp
+  const anchor = /^brand-accent-2:[ \t]*\S+.*$/m.test(src)
+    ? /^(brand-accent-2:[ \t]*\S+.*)$/m
+    : /^brand-accent:[ \t]*\S+.*$/m.test(src)
+      ? /^(brand-accent:[ \t]*\S+.*)$/m
+      : /^theme:[ \t]*\S+.*$/m.test(src)
+        ? /^(theme:[ \t]*\S+.*)$/m
+        : /^(mdp:[ \t]*\d+.*)$/m;
+  return setFrontmatterLine(src, "brand-font", key, anchor);
+}
+
 const ARTIFACT_HINT: Record<string, string> = {
   page: "A calm scrolling document. The reading form.",
   slides: "A click-through deck. Arrow keys or space move; F is fullscreen.",
@@ -95,6 +113,7 @@ export default function Playground({
   const theme = currentTheme(source);
   const accent = currentAccent(source);
   const accent2 = currentAccent2(source);
+  const font = currentFont(source);
 
   // The starter picker merges the example probes and the fill-in templates. Ids
   // collide across the two sets (both have "release-notes"), so options are keyed
@@ -237,6 +256,19 @@ export default function Playground({
               clear
             </button>
           )}
+          <select
+            className="pg-select"
+            aria-label="Brand font (brand-font)"
+            title="Body font: a closed set of system stacks; the serif role is unchanged"
+            value={font}
+            onChange={(e) => setSource((s) => withFont(s, e.target.value))}
+          >
+            <option value="">font: default</option>
+            <option value="serif">font: serif</option>
+            <option value="mono">font: mono</option>
+            <option value="rounded">font: rounded</option>
+            <option value="humanist">font: humanist</option>
+          </select>
         </div>
 
         <button className="btn btn-small" onClick={openInNewTab}>

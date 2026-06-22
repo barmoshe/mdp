@@ -23,6 +23,7 @@ dir: rtl                     # optional, writing direction, inferred from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
 brand-accent: #2f8f6b        # optional, one brand hex; engine derives the accent set
 brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+brand-font: rounded          # optional, body font: system serif mono rounded humanist
 to: All engineering          # optional, memo + letter recipient
 from: Platform team          # optional, memo + letter sender / signature
 date: June 22, 2026          # optional, memo + letter date line
@@ -43,6 +44,7 @@ signoff: Warm regards,       # optional, letter closing
 | `brand-logo` | A brand logo the engine places in the masthead: a URL, a relative path, or a base64 `data:image` URI. Validated and sanitized; an unsafe or missing value renders no logo. |
 | `brand-accent` | A custom brand color: one 6-digit hex (with a leading `#`). The engine derives the full accent set (five roles, light and dark) from it, all WCAG AA. A malformed or inaccessible value falls back to `theme`. |
 | `brand-accent-2` | An optional secondary brand color (6-digit hex), used sparingly in a few engine-chosen accents (the title underline, flow connectors, the active slide dot). Applies only alongside `brand-accent`. |
+| `brand-font` | The body/UI font, one of a closed set of system stacks: `system`, `serif`, `mono`, `rounded`, `humanist`. No web fonts. The serif used for leads and quotes is unchanged; an unknown value falls back to the theme default. |
 | `to` | Memo and letter only: the addressee (the To: line). Plain text. |
 | `from` | Memo and letter only: the sender (the From: line, the letterhead, and the signature). Plain text. |
 | `date` | Memo and letter only: the date line. A free string; the engine never inserts a clock. |
@@ -77,6 +79,12 @@ and the document falls back to its named `theme`. `brand-accent-2` names an
 optional second color the engine uses sparingly, in the title underline, the flow
 connectors, and the active slide dot, and applies only alongside `brand-accent`.
 You pick the colors; the engine still owns where they land.
+
+`brand-font` sets the body and UI typeface from a closed set of system stacks:
+`system` (the default), `serif`, `mono`, `rounded`, and `humanist`. The serif used
+for the lead and quotes is unchanged, so the two-family character holds. These are
+system families only, with no `@font-face` and no network, so the output stays
+deterministic and offline; an unknown value falls back to the theme default.
 
 `to`, `from`, `date`, `salutation`, and `signoff` are optional plain-text fields
 read only by the memo and letter forms: the memo header, and the letter's

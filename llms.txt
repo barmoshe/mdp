@@ -25,8 +25,8 @@ MDP ships to agent tools three ways: a Claude Code plugin (a `/mdp` command), a 
 
 An .mdp file is valid Markdown plus a few typed blocks. There is no styling in the source; the engine composes the design.
 
-- Frontmatter: `mdp: 1`, `forms: [page, slides, flyer]`, `title`, optional `kicker`, `lang`, `dir`, `theme` (a named theme), `brand-logo` (an asset reference), `brand-accent` and optional `brand-accent-2` (one 6-digit hex each; the engine derives a full AA-gated accent set).
+- Frontmatter: `mdp: 1`, `forms: [page, slides, flyer]`, `title`, optional `kicker`, `lang`, `dir`, `theme` (a named theme), `brand-logo` (an asset reference), `brand-accent` and optional `brand-accent-2` (one 6-digit hex each; the engine derives a full AA-gated accent set), `brand-font` (the body font: one of system, serif, mono, rounded, humanist).
 - `# Title`, then `{.lead} a standfirst`. Sections start with `## Heading`. A line that is exactly `---` is a section or slide break.
 - Lists with `- ` or `1. `. A quote with `> ...` and an optional `{.cite} attribution`.
 - `mdp:stats` (key: value lines), `mdp:compare` (options as `# Name` plus `badge:`, `note:`, `cta:`, and `- ` pros), `mdp:flow` (steps joined by `->`), and `:::callout <variant>` ... `:::`.
-- Never put styling in the source: no sizes, no fonts, no inline CSS. The only color you may set is a brand color via `brand-accent` (a hex the engine derives and gates to WCAG AA); otherwise pick a named `theme`.
+- Never put styling in the source: no sizes, no inline CSS, no arbitrary fonts. The only color you may set is `brand-accent` (a hex the engine derives and gates to WCAG AA), and the only font is `brand-font` from a fixed set of system stacks; otherwise pick a named `theme`.

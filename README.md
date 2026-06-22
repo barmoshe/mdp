@@ -176,7 +176,7 @@ gates. The design lives in the engine.
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
-| `brand-logo` / `brand-accent` | Add a logo, or name a brand color (one hex) the engine re-lights into a full WCAG-AA accent set, light and dark. |
+| `brand-logo` / `brand-accent` / `brand-font` | Add a logo, name a brand color (one hex) the engine re-lights into a full WCAG-AA accent set, or set the body font from a closed set of system stacks. |
 
 Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks)
 and the [spec](SPEC.md).
