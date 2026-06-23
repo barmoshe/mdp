@@ -14,7 +14,8 @@ type FormId =
   | "scroll"
   | "accordion"
   | "tabs"
-  | "stepper";
+  | "stepper"
+  | "plan";
 
 const FORMS: { id: FormId; label: string; line: string }[] = [
   { id: "page", label: "Page", line: "A calm scrolling document. The reading form." },
@@ -28,6 +29,7 @@ const FORMS: { id: FormId; label: string; line: string }[] = [
   { id: "accordion", label: "Accordion", line: "Collapsible sections to scan and open on demand." },
   { id: "tabs", label: "Tabs", line: "A tabbed explorer for lateral, jump-anywhere reading." },
   { id: "stepper", label: "Stepper", line: "A guided walkthrough, one numbered step at a time." },
+  { id: "plan", label: "Plan", line: "An implementation plan: phases, checklists, and live progress." },
 ];
 
 function Thumb({ id }: { id: FormId }) {
@@ -79,6 +81,19 @@ function Thumb({ id }: { id: FormId }) {
         <div className="ha-title">Nightly digest</div>
         <div className="ha-bar w1" />
         <div className="ha-bar w2" />
+      </div>
+    );
+  }
+  if (id === "plan") {
+    return (
+      <div className="ha-frame" aria-hidden="true">
+        <div className="ha-title">Nightly digest</div>
+        <div className="ha-prog">
+          <span />
+        </div>
+        <div className="ha-bar w1" />
+        <div className="ha-bar w2" />
+        <div className="ha-bar w3" />
       </div>
     );
   }

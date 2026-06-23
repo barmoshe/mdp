@@ -3,7 +3,7 @@
 **Markdown Presentation.** A presentation compiler for AI-written content. One
 declarative `.mdp` source composes, deterministically, into many polished,
 design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a
-memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper).
+memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper, plan).
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -180,6 +180,7 @@ gates. The design lives in the engine.
 | `mdp:timeline` | A vertical sequence of steps on an accent rail. |
 | `mdp:faq` | Question and answer pairs as native disclosure elements. |
 | `mdp:pricing` | Priced tiers in a locked card grid: the priced sibling of compare. |
+| `mdp:tasks` | A status-aware checklist (`- [x]` done, `- [~]` in progress, `- [ ]` to-do); drives the live progress meter in the `plan` form. |
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
@@ -204,12 +205,13 @@ and the [spec](SPEC.md).
 | `mdp:timeline` | rail of steps | rail of steps | full-width rail |
 | `mdp:faq` | disclosures | disclosures | expanded Q/A |
 | `mdp:pricing` | tier cards | tier cards | full-width tier cards |
+| `mdp:tasks` | checklist | checklist | checklist |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
 The document forms inherit these readings: `report`, `memo`, and `letter` read
 each block exactly as `page` does, and the one-pager composes them like `flyer`.
-The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`) each reframe the
-same block set into their respective navigation model.
+The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`, `plan`) each
+reframe the same block set into their respective navigation model.
 
 ## The design lock
 

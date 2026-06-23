@@ -23,6 +23,9 @@ solvers over the same semantic representation.
   arrow-key navigation and a deep-linkable URL hash. The lateral form.
 - **stepper** a guided walkthrough: one numbered step at a time, with a progress
   bar and Back / Next. The process form.
+- **plan** an implementation plan: each `---` section is a phase you can collapse,
+  the `{.lead}` standfirst is the goal, and a `mdp:tasks` checklist inside a phase
+  drives a live progress meter you tick off. The planning form.
 
 The renderer, not the file, owns presentation. The same blocks compile
 differently per form.
@@ -44,12 +47,13 @@ differently per form.
 | `mdp:timeline` | rail of steps | rail of steps | own full-width rail |
 | `mdp:faq` | disclosures | disclosures | expanded Q/A |
 | `mdp:pricing` | tier cards | tier cards | own full-width tier cards |
+| `mdp:tasks` | checklist | checklist | checklist |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
 The other forms reuse these block readings rather than redefining them:
 **report**, **memo**, **letter**, and the interactive forms (**scroll**,
-**accordion**, **tabs**, **stepper**) render each block exactly as **page** does;
+**accordion**, **tabs**, **stepper**, **plan**) render each block exactly as **page** does;
 **one-pager** composes them like **flyer** (full-width bands and a packed grid).
 Only the surrounding structure differs.
 
@@ -75,6 +79,9 @@ degrades to readable HTML when scripting is off:
   named in the URL hash.
 - **stepper** moves through numbered steps with Back / Next, the arrow keys, or a
   click on the step rail.
+- **plan** keeps every phase open and readable; click a task box (or focus it and
+  press Enter / Space) to toggle it done, and the per-phase and overall progress
+  meters update live.
 
 Motion is disabled under `prefers-reduced-motion`, and every form keeps WCAG AA
 contrast and full keyboard navigation.
@@ -92,7 +99,7 @@ one with `--open`. See the [CLI reference](#/docs/cli).
 
 Omitting `forms` compiles the three core forms (`page`, `slides`, `flyer`). Every
 other form (the document forms `report`, `onepager`, `memo`, `letter` and the
-interactive forms `scroll`, `accordion`, `tabs`, `stepper`) is opt-in: name it
+interactive forms `scroll`, `accordion`, `tabs`, `stepper`, `plan`) is opt-in: name it
 explicitly, for example `forms: [scroll]`.
 
 Further forms arrive as new solvers over the same semantic representation, with no

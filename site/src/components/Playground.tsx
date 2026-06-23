@@ -30,6 +30,7 @@ const ARTIFACT_HINT: Record<string, string> = {
   accordion: "Collapsible sections. Click a heading to open one; the rest stay tidy.",
   tabs: "A tabbed explorer. Click a tab or use the arrow keys to switch sections.",
   stepper: "A guided walkthrough. Back and Next move through numbered steps.",
+  plan: "An implementation plan: phases you can collapse, checklists you tick off, live progress.",
 };
 
 // The editor/preview split is a draggable, persisted percentage (editor width).

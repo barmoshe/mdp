@@ -16,6 +16,7 @@ import { renderScroll } from "./render-scroll.mjs";
 import { renderAccordion } from "./render-accordion.mjs";
 import { renderTabs } from "./render-tabs.mjs";
 import { renderStepper } from "./render-stepper.mjs";
+import { renderPlan } from "./render-plan.mjs";
 
 export { parse } from "./parse.mjs";
 export { inline, escapeHtml } from "./inline.mjs";
@@ -51,6 +52,7 @@ export const RENDERERS = {
   accordion: renderAccordion,
   tabs: renderTabs,
   stepper: renderStepper,
+  plan: renderPlan,
 };
 
 // The list of artifacts this engine can compile.
@@ -60,7 +62,7 @@ export const ARTIFACTS = Object.keys(RENDERERS);
 //   source  : the raw .mdp text
 //   artifact: one of ARTIFACTS ("page" | "slides" | "flyer" | "report" |
 //             "onepager" | "memo" | "letter" | "scroll" | "accordion" |
-//             "tabs" | "stepper")
+//             "tabs" | "stepper" | "plan")
 // Returns the complete HTML document as a string.
 export function compile(source, artifact = "page") {
   const render = RENDERERS[artifact];

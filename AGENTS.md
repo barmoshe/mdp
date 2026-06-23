@@ -44,11 +44,13 @@ mdp/
       render-onepager.mjs   the one-pager artifact solver
       render-memo.mjs       the `memo` artifact solver
       render-letter.mjs     the `letter` artifact solver
-      content-blocks.mjs    the shared content-flow block renderer used by scroll, accordion, tabs, and stepper
+      content-blocks.mjs    the shared content-flow block renderer used by scroll, accordion, tabs, stepper, and plan
       render-scroll.mjs     the `scroll` artifact solver
       render-accordion.mjs  the `accordion` artifact solver
       render-tabs.mjs       the `tabs` artifact solver
       render-stepper.mjs    the `stepper` artifact solver
+      render-plan.mjs       the `plan` artifact solver
+      tasks.mjs             the `mdp:tasks` checklist block (STYLE + render)
       index.mjs             exports parse() and compile(source, artifact)
     build.mjs               CLI: read a source, compile all artifacts, write dist
   commands/mdp.md           the Claude Code /mdp command
@@ -144,6 +146,7 @@ ADR. Hierarchy comes from type size, weight, and whitespace.
 
 The current block set: `{.lead}` / `{.cite}` (line roles), `mdp:stats`,
 `mdp:compare`, `mdp:flow`, `mdp:table`, `mdp:chart`, `mdp:diagram` (flow,
-sequence, tree kinds), `mdp:timeline`, `mdp:faq`, `mdp:pricing`, and
+sequence, tree kinds), `mdp:timeline`, `mdp:faq`, `mdp:pricing`, `mdp:tasks`
+(a status-aware checklist: todo / done / active), and
 `:::callout` (note, tip, cost, recommendation, warning variants). Every block
 must degrade to readable text if the renderer does not recognise it.

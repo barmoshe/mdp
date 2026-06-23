@@ -19,6 +19,7 @@ import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
 import { renderFaq, FAQ_STYLE } from "./faq.mjs";
 import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
+import { renderTasks, TASKS_STYLE } from "./tasks.mjs";
 
 // The CSS for every block module these forms can render. The base block classes
 // (.mdp-h2, .mdp-list, .mdp-quote, .mdp-stats-table, ...) already live in
@@ -34,6 +35,7 @@ export const CONTENT_BLOCK_STYLE = [
   TIMELINE_STYLE,
   FAQ_STYLE,
   PRICING_STYLE,
+  TASKS_STYLE,
 ].join("\n\n");
 
 // Render one content block in document flow. title/lead are composed by each
@@ -103,6 +105,9 @@ export function renderContentBlock(block) {
 
     case "pricing":
       return renderPricing(block);
+
+    case "tasks":
+      return renderTasks(block);
 
     default:
       return "";

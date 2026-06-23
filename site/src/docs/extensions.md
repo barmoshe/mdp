@@ -67,7 +67,7 @@ The host turns a fence into the IR node and renders it. Wiring a block touches
 3. **The shared interactive renderer**, in `packages/core/src/content-blocks.mjs`:
    add the same `case` to `renderContentBlock`, and add the `STYLE` to the
    `CONTENT_BLOCK_STYLE` array. That single file renders the block in all four
-   interactive forms (scroll, accordion, tabs, stepper). A block wired only into
+   interactive forms (scroll, accordion, tabs, stepper, plan). A block wired only into
    page, slides, and flyer renders blank in those four.
 
 An unknown fence already degrades to readable text, so an un-wired block never

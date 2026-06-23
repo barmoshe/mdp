@@ -228,6 +228,29 @@ fields, and `- feature` appends to the checklist. The `cta:` takes a
 by side where there is width and stacking on narrow. On the flyer it is its own
 full-width element.
 
+### Tasks
+
+A status-aware checklist: the natural unit of work inside a `plan` phase, where
+ticking tasks drives the live progress meter. It renders as a plain checklist in
+every other form.
+
+````text
+```mdp:tasks
+- [x] A task already done
+- [~] The task in progress now
+- [ ] A task still to do
+- A bare bullet is a to-do
+```
+````
+
+Each non-blank line is one task. The marker sets its status: `[x]` (or `[X]`) is
+done, `[~]` is in progress, `[ ]` (or a bare `-` / `*` bullet) is to-do; a line
+that matches nothing still becomes a to-do, so the block never throws or drops a
+line. Status reads through the design lock with no new colour: a done item fills
+its box with the accent and a check and recedes to faint ink, the in-progress
+item rings its box in the accent and goes medium-weight, and a to-do item is a
+hairline box and body ink.
+
 ## Callouts & layout
 
 ### Callout

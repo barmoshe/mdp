@@ -70,5 +70,11 @@
     "file": "walkthrough.mdp",
     "label": "Walkthrough",
     "lead": "stepper"
+  },
+  {
+    "id": "implementation-plan",
+    "file": "implementation-plan.mdp",
+    "label": "Implementation plan",
+    "lead": "plan"
   }
 ]

@@ -3,7 +3,7 @@
   "$id": "https://github.com/barmoshe/mdp/blob/main/spec/schema.json",
   "title": "MDP intermediate representation",
   "description": "The semantic tree parse() emits from an .mdp source: frontmatter (meta) plus the ordered, closed set of body blocks. Exported from mdp-compiler as SCHEMA and enforced as a conformance test so the spec cannot drift from the engine.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -55,7 +55,8 @@
               "scroll",
               "accordion",
               "tabs",
-              "stepper"
+              "stepper",
+              "plan"
             ]
           },
           "uniqueItems": true,
@@ -194,6 +195,9 @@
           },
           {
             "$ref": "#/definitions/pricing"
+          },
+          {
+            "$ref": "#/definitions/tasks"
           }
         ]
       }
@@ -773,6 +777,45 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "tasks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "tasks"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tasksItem"
+          }
+        }
+      }
+    },
+    "tasksItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "text"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "todo",
+            "done",
+            "active"
+          ]
+        },
+        "text": {
+          "type": "string"
         }
       }
     }

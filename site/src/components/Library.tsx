@@ -24,6 +24,7 @@ const EXAMPLE_BLURB: Record<string, string> = {
   "accordion": "Collapsible sections to scan and open on demand.",
   "tabs": "A tabbed explorer with arrow-key navigation and deep links.",
   "stepper": "A guided walkthrough, one numbered step at a time.",
+  "form-plan": "An implementation plan: phases, status-aware checklists, and live progress.",
   "starter": "The smallest source to copy and build on.",
 };
 
@@ -36,6 +37,7 @@ const TEMPLATE_BLURB: Record<string, string> = {
   "faq": "Answer common questions as a collapsible list.",
   "explorer": "Lay out a product across tabs to jump between.",
   "walkthrough": "Guide a task step by step.",
+  "implementation-plan": "Lay out an implementation as phases and checklists.",
 };
 
 function LibCard({ label, lead, blurb, source, href, play }: {

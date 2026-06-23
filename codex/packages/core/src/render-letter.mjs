@@ -35,6 +35,7 @@ import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
 import { renderFaq, FAQ_STYLE } from "./faq.mjs";
 import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
+import { renderTasks, TASKS_STYLE } from "./tasks.mjs";
 
 const LETTER_STYLE = `.mdp-letter {
   max-width: 44rem;
@@ -79,6 +80,8 @@ ${TIMELINE_STYLE}
 ${FAQ_STYLE}
 
 ${PRICING_STYLE}
+
+${TASKS_STYLE}
 
 /* Print to PDF (Cmd or Ctrl + P): light, full-page column. */
 @media print {
@@ -146,6 +149,8 @@ function renderLetterBlock(block) {
       return renderFaq(block);
     case "pricing":
       return renderPricing(block);
+    case "tasks":
+      return renderTasks(block);
     default:
       return "";
   }

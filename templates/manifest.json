@@ -10,5 +10,6 @@
   { "id": "story", "file": "story.mdp", "label": "Scroll story", "lead": "scroll", "roles": ["vendor-mcp", "site-template"] },
   { "id": "faq", "file": "faq.mdp", "label": "FAQ", "lead": "accordion", "roles": ["vendor-mcp", "site-template"] },
   { "id": "explorer", "file": "explorer.mdp", "label": "Tabbed explorer", "lead": "tabs", "roles": ["vendor-mcp", "site-template"] },
-  { "id": "walkthrough", "file": "walkthrough.mdp", "label": "Walkthrough", "lead": "stepper", "roles": ["vendor-mcp", "site-template"] }
+  { "id": "walkthrough", "file": "walkthrough.mdp", "label": "Walkthrough", "lead": "stepper", "roles": ["vendor-mcp", "site-template"] },
+  { "id": "implementation-plan", "file": "implementation-plan.mdp", "label": "Implementation plan", "lead": "plan", "roles": ["vendor-mcp", "site-template"] }
 ]

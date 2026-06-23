@@ -69,8 +69,8 @@ keeping the lock intact:
   and a `render` function, using the design tokens and logical CSS so it flips
   under right-to-left automatically. Wiring a block into the engine touches the
   three per-form renderers (page, slides, flyer) and the shared
-  `content-blocks.mjs`, which covers the four interactive forms (scroll, accordion,
-  tabs, stepper) in one place.
+  `content-blocks.mjs`, which covers the five interactive forms (scroll, accordion,
+  tabs, stepper, plan) in one place.
 - **Artifacts.** New output types, such as a resume or a changelog, as new solvers
   over the same semantic representation. Register one entry in `RENDERERS` and the
   CLI picks it up.

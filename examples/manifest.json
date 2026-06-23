@@ -27,5 +27,6 @@
   { "id": "accordion", "file": "accordion.mdp", "label": "Accordion", "lead": "accordion", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "tabs", "file": "tabs.mdp", "label": "Tabs", "lead": "tabs", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "stepper", "file": "stepper.mdp", "label": "Stepper", "lead": "stepper", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "form-plan", "file": "form-plan.mdp", "label": "Implementation plan", "lead": "plan", "roles": ["ci-build", "ci-determinism", "vendor-mcp", "site"] },
   { "id": "starter", "file": "starter.mdp", "label": "Starter", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] }
 ]
