@@ -434,6 +434,35 @@
 .lib-copy { font: inherit; font-size: var(--mdp-text-small); color: var(--mdp-accent-text); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.15em; text-decoration-color: var(--mdp-accent-border); }
 .lib-copy:hover { text-decoration-color: var(--mdp-accent-text); }
 
+/* ---- extension showcase (Extensions.tsx): live previews of the examples ---- */
+.ext-grid { display: grid; grid-template-columns: 1fr; gap: var(--mdp-space-3); }
+@media (min-width: 40rem) { .ext-grid { grid-template-columns: repeat(2, 1fr); } }
+.ext-card { display: flex; flex-direction: column; gap: var(--mdp-space-3); }
+.ext-card-wide { grid-column: 1 / -1; }
+.ext-preview {
+  width: 100%;
+  min-height: 9rem;
+  border: 1px solid var(--mdp-border);
+  border-radius: var(--mdp-radius-lg);
+  background: var(--mdp-bg);
+}
+.ext-mini { display: grid; grid-template-columns: 1fr; gap: var(--mdp-space-3); align-items: stretch; }
+@media (min-width: 48rem) { .ext-mini { grid-template-columns: minmax(0, 24rem) 1fr; } }
+.ext-src {
+  width: 100%;
+  min-height: 17rem;
+  resize: vertical;
+  font-family: var(--mdp-font-mono);
+  font-size: var(--mdp-text-small);
+  line-height: 1.55;
+  color: var(--mdp-ink);
+  background: var(--mdp-surface);
+  border: 1px solid var(--mdp-border);
+  border-radius: var(--mdp-radius-lg);
+  padding: var(--mdp-space-3);
+}
+.ext-mini .ext-preview { min-height: 17rem; }
+
 /* ---- extend + final CTA ---- */
 .extend-grid { display: grid; grid-template-columns: 1fr; gap: var(--mdp-space-5); }
 @media (min-width: 48rem) { .extend-grid { grid-template-columns: repeat(2, 1fr); } }

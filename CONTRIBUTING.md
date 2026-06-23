@@ -58,10 +58,15 @@ component everywhere. Use `src/compare.mjs` as the model.
    physical `left` / `right` variants.
 4. Teach `src/parse.mjs` to emit your typed node. An unknown directive must
    degrade to readable text, never throw or blank.
-5. Wire the node into all three renderers (`render-page.mjs`,
-   `render-slides.mjs`, `render-flyer.mjs`) and inject your `STYLE` where the
-   other block styles are injected.
-6. Update `spec/schema.json` and `SPEC.md` once the shape settles.
+5. Wire the node into the three per-form renderers (`render-page.mjs`,
+   `render-slides.mjs`, `render-flyer.mjs`): add a `case` and inject your `STYLE`
+   where the other block styles are injected.
+6. Wire it into the shared interactive renderer too, `src/content-blocks.mjs`: add
+   the same `case` to `renderContentBlock`, and add your `STYLE` to the
+   `CONTENT_BLOCK_STYLE` array. That one file covers all four interactive forms
+   (scroll, accordion, tabs, stepper); a block wired only into page/slides/flyer
+   renders blank in them.
+7. Update `spec/schema.json` and `SPEC.md` once the shape settles.
 
 ## Extensions
 
@@ -103,10 +108,10 @@ itself is Apache-2.0.
 
 **Using a third-party extension.** `mdp-compiler` has no runtime plugin loader yet,
 by design (the zero-maintenance bet). To render a third-party block or artifact in
-a real document you fork or patch core: teach `parse.mjs` the fence and add a
-`case` (plus the `STYLE`) to the three renderers for a block, or add a `RENDERERS`
-entry for an artifact. Each generated package's README spells out the exact
-lines.
+a real document you fork or patch core: for a block, teach `parse.mjs` the fence,
+add a `case` (plus the `STYLE`) to the three per-form renderers AND to the shared
+`content-blocks.mjs` (which covers the four interactive forms); for an artifact, add
+a `RENDERERS` entry. Each generated package's README spells out the exact lines.
 
 ## Code style
 

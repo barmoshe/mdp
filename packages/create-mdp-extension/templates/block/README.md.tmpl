@@ -73,6 +73,18 @@ render `__FENCE__` in a real page / slides / flyer, fork or patch
    // in renderBlock:     case "__NODE_TYPE__": return __RENDER_FN__(block);
    ```
 
+3. **Wire the interactive forms** - in `packages/core/src/content-blocks.mjs`, add
+   the same case to `renderContentBlock` and add your STYLE to the
+   `CONTENT_BLOCK_STYLE` array. That one file is what renders the block in the four
+   interactive forms (scroll, accordion, tabs, stepper); a block wired only into
+   page/slides/flyer shows up blank in them.
+
+   ```js
+   import { __RENDER_FN__, __STYLE_CONST__ } from "__PACKAGE_NAME__";
+   // add __STYLE_CONST__ to the CONTENT_BLOCK_STYLE array
+   // in renderContentBlock:  case "__NODE_TYPE__": return __RENDER_FN__(block);
+   ```
+
 An unknown fence already degrades to readable text, so an un-wired block never
 breaks a document.
 

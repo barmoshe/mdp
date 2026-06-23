@@ -70,6 +70,8 @@ jobs:
           echo "codex is fresh"
       - name: Scaffolder acceptance (create-mdp-extension produces a working package)
         run: node scripts/check-scaffold.mjs
+      - name: Extension examples acceptance (curated extensions build + stay deterministic)
+        run: node scripts/check-extensions.mjs
 
   site:
     runs-on: ubuntu-latest

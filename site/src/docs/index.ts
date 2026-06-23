@@ -11,6 +11,7 @@ import plugins from "./plugins.md?raw";
 import architecture from "./architecture.md?raw";
 import mcp from "./mcp.md?raw";
 import examplesDoc from "./examples.md?raw";
+import extensions from "./extensions.md?raw";
 
 export type DocPage = {
   id: string;
@@ -29,6 +30,7 @@ export const DOCS: DocPage[] = [
   { id: "forms", title: "Forms", group: "Guide", blurb: "Page, slides, flyer, the document forms (report, one-pager, memo, letter), the interactive forms (scroll, accordion, tabs, stepper), and the mapping table.", content: forms },
   { id: "themes", title: "Themes & design", group: "Guide", blurb: "The theme set and the design lock.", content: themes },
   { id: "examples", title: "Examples & templates", group: "Guide", blurb: "Example probes and fill-in templates.", content: examplesDoc },
+  { id: "extensions", title: "Build an extension", group: "Guide", blurb: "Blocks and artifacts: the full wiring, plus live examples.", content: extensions },
   { id: "cli", title: "CLI reference", group: "Tools", blurb: "build.mjs flags and determinism.", content: cli },
   { id: "plugins", title: "Plugins", group: "Tools", blurb: "Claude Code and Codex.", content: plugins },
   { id: "mcp", title: "MCP server", group: "Tools", blurb: "Compile MDP from any MCP host.", content: mcp },
