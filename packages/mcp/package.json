@@ -1,7 +1,7 @@
 {
   "name": "mdp-mcp",
-  "version": "0.3.1",
-  "description": "MCP server for MDP: compile one .mdp source into design-locked HTML across the full form set (page, slides, flyer, document forms, and interactive forms) from any MCP host.",
+  "version": "0.4.0",
+  "description": "MCP server for MDP: compile one .mdp source into design-locked HTML across the full form set (page, slides, flyer, document forms, and interactive forms) from any MCP host, and send the artifact to Slack.",
   "type": "module",
   "license": "Apache-2.0",
   "author": "Bar Moshe",
@@ -30,7 +30,8 @@
     "stepper",
     "markdown",
     "ai",
-    "agents"
+    "agents",
+    "slack"
   ],
   "bin": {
     "mdp-mcp": "bin/mdp-mcp.mjs"
