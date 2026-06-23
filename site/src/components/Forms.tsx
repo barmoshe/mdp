@@ -91,9 +91,20 @@ function Thumb({ id }: { id: FormId }) {
         <div className="ha-prog">
           <span />
         </div>
-        <div className="ha-bar w1" />
-        <div className="ha-bar w2" />
-        <div className="ha-bar w3" />
+        <div className="ha-tasks">
+          <div className="ha-task is-done">
+            <span className="ha-check" />
+            <span className="ha-bar w1" />
+          </div>
+          <div className="ha-task is-active">
+            <span className="ha-check" />
+            <span className="ha-bar w2" />
+          </div>
+          <div className="ha-task">
+            <span className="ha-check" />
+            <span className="ha-bar w3" />
+          </div>
+        </div>
       </div>
     );
   }
@@ -154,7 +165,8 @@ export default function Forms() {
           <p className="lead">
             The same <code>.mdp</code> source becomes a page to read, a deck to
             present, a flyer to post, the document forms from report to letter, and
-            interactive forms: a scroll story, tabs, an accordion, a stepper. You opt
+            interactive forms: a scroll story, tabs, an accordion, a stepper, and a
+            plan. You opt
             into the forms you want with one line of frontmatter; the engine lays out
             each one.
           </p>

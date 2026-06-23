@@ -23,7 +23,7 @@ export default function Hero() {
               meaning; the engine owns the design. One <code>.mdp</code> source
               compiles into a page, a deck, a flyer, the document forms (report,
               one-pager, memo, letter), or the interactive forms (scroll, accordion,
-              tabs, stepper), and every one looks shipped.
+              tabs, stepper, plan), and every one looks shipped.
             </p>
 
             <div className="hero-actions" style={{ "--reveal-i": 3 } as CSSProperties}>
