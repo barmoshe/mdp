@@ -5,6 +5,16 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Fixed
+- The `mdp:diagram` tree layout renders node names instead of their bare ids.
+
+### Changed
+- The theme accent and secondary color read more boldly: accent-text link
+  underlines thicken to 2px, inline `code` sits on an accent-tinted chip, the
+  title masthead rule grows from a 3px hairline to a 4px bar, and list markers
+  take the secondary accent. These stay meaning-spot accents, so the design
+  lock is unchanged.
+
 ## [0.3.0] - 2026-06-22
 
 ### Added

@@ -15,6 +15,18 @@ This is a presentation distillation of the changelog. The authoritative, full hi
 
 ## Unreleased
 
+### Fixed
+
+- **The `mdp:diagram` tree layout** renders node names instead of their bare ids.
+
+### Changed
+
+- **The theme accent reads more boldly.** Accent-text link underlines thicken to 2px, inline `code` sits on an accent-tinted chip, the title masthead rule grows from a 3px hairline to a 4px bar, and list markers take the secondary accent. Still meaning-spot accents, so the design lock holds.
+
+---
+
+## 0.3.0
+
 The engine, server, and scaffolder are now published to npm.
 
 ```mdp:stats
@@ -26,6 +38,9 @@ Curated themes: 11
 
 ### Added
 
+- **Interactive forms**: scroll, accordion, tabs, and stepper. Each compiles the same source into a different navigation experience, degrades to readable HTML with no JavaScript, and keeps WCAG AA contrast and keyboard navigation.
+- **Timeline, FAQ, and pricing blocks**: `mdp:timeline` renders a vertical sequence of steps on an accent rail; `mdp:faq` renders question-answer pairs as native disclosure elements; `mdp:pricing` renders priced tiers as a locked card grid (the priced sibling of compare). All render across every form.
+- **Custom brand color**: `brand-accent` (one hex) derives a full WCAG-AA accent set. An optional `brand-accent-2` adds a secondary accent in engine-chosen spots. `brand-font` picks the body family from a closed set of system stacks.
 - **Published to npm**: `npm i mdp-compiler` to embed the engine, `npx -y mdp-mcp` for the MCP server, and `npm create mdp-extension` to scaffold a block or artifact.
 - **An MCP server** (`mdp-mcp`) so any MCP host can compile MDP. It exposes `mdp_compile`, `mdp_present`, and `mdp_validate`, plus `mdp://spec` and `mdp://example/*` resources.
 - **Five more themes**, bringing the curated set to eleven: ocean, forest, terracotta, coral, and plum. The set is now ordered as a spectrum, every accent WCAG-AA verified.
@@ -38,16 +53,6 @@ Curated themes: 11
 - The masthead now carries the theme accent (an accent-colored kicker and a short rule under the title) in all three artifacts, meaning-spot accents, so the design lock is unchanged.
 - A hub and live playground at barmoshe.github.io/mdp, deployed to GitHub Pages, bundling the real engine and carrying the full documentation.
 - A Codex plugin, self-contained in `codex/`, exposing an `mdp` skill that auto-triggers on "show this", "make a deck", and similar.
-
----
-
-## 0.3.0
-
-### Added
-
-- **Interactive forms**: scroll, accordion, tabs, and stepper. Each compiles the same source into a different navigation experience, degrades to readable HTML with no JavaScript, and keeps WCAG AA contrast and keyboard navigation.
-- **Timeline, FAQ, and pricing blocks**: `mdp:timeline` renders a vertical sequence of steps on an accent rail; `mdp:faq` renders question-answer pairs as native disclosure elements; `mdp:pricing` renders priced tiers as a locked card grid (the priced sibling of compare). All render across every form.
-- **Custom brand color**: `brand-accent` (one hex) derives a full WCAG-AA accent set. An optional `brand-accent-2` adds a secondary accent in engine-chosen spots. `brand-font` picks the body family from a closed set of system stacks.
 
 ---
 
