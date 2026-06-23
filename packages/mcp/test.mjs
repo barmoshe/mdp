@@ -7,9 +7,10 @@ import { readFileSync, mkdtempSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { mdpCompile, mdpValidate, mdpPresent } from "./src/tools.mjs";
+import { mdpCompile, mdpValidate, mdpPresent, mdpSendSlack } from "./src/tools.mjs";
 import { artifactFilename } from "./src/io.mjs";
 import { ARTIFACTS } from "./src/engine.mjs";
+import { slackApi, uploadFileToSlack } from "./src/slack.mjs";
 
 const ASSETS = join(dirname(fileURLToPath(import.meta.url)), "assets");
 
@@ -137,6 +138,78 @@ async function main() {
     check("present: serves 200", resp.status === 200);
     check("present: served the slides html", body.includes("mdp-deck"));
     check("present: a server is open", previewServerCount() >= 1);
+  }
+
+  // 5. slack: refusal paths are pure (always run); the 3-step upload flow runs
+  // against a STUBBED global fetch (no network). A real send is opt-in via
+  // MDP_TEST_SLACK + SLACK_BOT_TOKEN so default CI never reaches the network.
+  {
+    const savedToken = process.env.SLACK_BOT_TOKEN;
+    const savedChannel = process.env.MDP_SLACK_CHANNEL;
+    const realFetch = globalThis.fetch;
+    try {
+      // 5a. no token -> structured refusal, not a throw.
+      delete process.env.SLACK_BOT_TOKEN;
+      const noTok = await mdpSendSlack({ source: GOOD, form: "page", channel: "C1" });
+      check("slack: no token -> error no_token", noTok.ok === false && noTok.error === "no_token");
+
+      // 5b. token present but no channel (arg or env) -> refusal.
+      process.env.SLACK_BOT_TOKEN = "xoxb-test";
+      delete process.env.MDP_SLACK_CHANNEL;
+      const noChan = await mdpSendSlack({ source: GOOD, form: "page" });
+      check("slack: no channel -> error no_channel", noChan.ok === false && noChan.error === "no_channel");
+
+      // 5c. slackApi passes the { ok:false, error } envelope straight through.
+      globalThis.fetch = async () => ({ ok: true, json: async () => ({ ok: false, error: "not_in_channel" }) });
+      const envOut = await slackApi("files.completeUploadExternal", "xoxb-test", { foo: 1 });
+      check("slack: slackApi passes Slack error through", envOut.ok === false && envOut.error === "not_in_channel");
+
+      // 5d. full 3-step upload against a stubbed fetch: order + success shape.
+      const calls = [];
+      globalThis.fetch = async (url) => {
+        const u = String(url);
+        calls.push(u);
+        if (u.includes("files.getUploadURLExternal"))
+          return { ok: true, json: async () => ({ ok: true, upload_url: "https://files.slack.test/up", file_id: "F123" }) };
+        if (u === "https://files.slack.test/up") return { ok: true, text: async () => "OK" };
+        if (u.includes("files.completeUploadExternal"))
+          return { ok: true, json: async () => ({ ok: true, files: [{ id: "F123", permalink: "https://slack.test/F123" }] }) };
+        return { ok: false, status: 404, json: async () => ({ ok: false, error: "unexpected_url" }) };
+      };
+      const up = await uploadFileToSlack({ token: "xoxb-test", filePath: a.artifacts[0].path, filename: "page.html", channel: "C1", initialComment: "hi" });
+      check("slack: upload ok with file id", up.ok === true && up.file_id === "F123");
+      check("slack: upload returns permalink", !!(up.file && up.file.permalink === "https://slack.test/F123"));
+      check(
+        "slack: 3 calls in order (reserve, bytes, complete)",
+        calls.length === 3 &&
+          calls[0].includes("files.getUploadURLExternal") &&
+          calls[1] === "https://files.slack.test/up" &&
+          calls[2].includes("files.completeUploadExternal")
+      );
+
+      // 5e. a Slack error at step 1 surfaces as { ok:false, error } (no throw).
+      globalThis.fetch = async (url) =>
+        String(url).includes("files.getUploadURLExternal")
+          ? { ok: true, json: async () => ({ ok: false, error: "invalid_auth" }) }
+          : { ok: true, json: async () => ({ ok: true }) };
+      const upErr = await uploadFileToSlack({ token: "x", filePath: a.artifacts[0].path, channel: "C1" });
+      check("slack: step-1 error surfaces", upErr.ok === false && upErr.error === "invalid_auth");
+
+      // 5f. opt-in LIVE send (real network) — only with MDP_TEST_SLACK + a real token.
+      if (process.env.MDP_TEST_SLACK && savedToken) {
+        globalThis.fetch = realFetch;
+        process.env.SLACK_BOT_TOKEN = savedToken;
+        const live = await mdpSendSlack({ source: GOOD, form: "page", channel: savedChannel, initial_comment: "mdp-mcp live smoke test" });
+        check("slack: live send ok", live.ok === true);
+        console.log(`  info live send -> ${JSON.stringify(live)}`);
+      }
+    } finally {
+      globalThis.fetch = realFetch;
+      if (savedToken === undefined) delete process.env.SLACK_BOT_TOKEN;
+      else process.env.SLACK_BOT_TOKEN = savedToken;
+      if (savedChannel === undefined) delete process.env.MDP_SLACK_CHANNEL;
+      else process.env.MDP_SLACK_CHANNEL = savedChannel;
+    }
   }
 
   console.log(failures === 0 ? "\nmdp-mcp smoke: PASS" : `\nmdp-mcp smoke: ${failures} FAILURE(S)`);

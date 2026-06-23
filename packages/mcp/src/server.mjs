@@ -10,7 +10,7 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { ARTIFACTS } from "./engine.mjs";
-import { mdpCompile, mdpValidate, mdpPresent } from "./tools.mjs";
+import { mdpCompile, mdpValidate, mdpPresent, mdpSendSlack } from "./tools.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const assetsDir = resolve(here, "..", "assets"); // vendored SPEC.md + examples/
@@ -85,6 +85,30 @@ export async function startServer() {
       annotations: { readOnlyHint: false, openWorldHint: false },
     },
     (args) => run(mdpPresent, args)
+  );
+
+  server.registerTool(
+    "mdp_send_slack",
+    {
+      title: "Send MDP to Slack",
+      description:
+        "Compile an MDP source and upload the self-contained HTML artifact to a Slack channel as a file. " +
+        "Any single form. Requires SLACK_BOT_TOKEN (a bot token with files:write); the channel is the " +
+        "`channel` arg or $MDP_SLACK_CHANNEL. Note: Slack shows the .html as a downloadable file, not an " +
+        "inline render — opening it shows the full design (interactive forms included).",
+      inputSchema: {
+        source: z.string().describe("The raw .mdp source text."),
+        form: z.enum([...ARTIFACTS]).default("page").describe("Which artifact to send (any single MDP form)."),
+        channel: z
+          .string()
+          .optional()
+          .describe("Slack channel id (e.g. C0123456789). Defaults to $MDP_SLACK_CHANNEL. The bot must be a member of it."),
+        initial_comment: z.string().optional().describe("Optional message shown above the uploaded file."),
+        out_dir: z.string().optional().describe("Working dir for the compiled HTML. Defaults to $MDP_OUT_DIR or the OS temp dir."),
+      },
+      annotations: { readOnlyHint: false, openWorldHint: true }, // openWorld: reaches the Slack API
+    },
+    (args) => run(mdpSendSlack, args)
   );
 
   // --- resources ---
