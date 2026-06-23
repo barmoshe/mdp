@@ -1,16 +1,19 @@
 name: release
 
-# Publish any package whose package.json version is not yet on npm. Trigger by
-# pushing a version tag (e.g. v0.2.2) or publishing a GitHub Release. Each package
-# is checked independently against the registry, so a tag that bumped only one
-# package publishes only that one; the rest are already published and skipped.
+# Two responsibilities, both triggered by pushing a version tag (e.g. v0.3.0):
 #
-# Auth: set an npm automation token as the NPM_TOKEN repository secret
-# (npmjs.com -> Access Tokens -> Generate -> Classic -> Automation; it bypasses
-# 2FA and can create new packages). Provenance is signed via GitHub OIDC (the
-# id-token permission below), no extra setup. To switch to npm trusted publishing
-# later, register this repo + this workflow as a trusted publisher on each package
-# and remove the NPM_TOKEN secret.
+#   1. Publish any package whose package.json version is not yet on npm. Each
+#      package is checked independently against the registry, so a tag that bumped
+#      only one package publishes only that one; the rest are skipped.
+#   2. Create (or refresh) the matching GitHub Release, with notes taken from the
+#      CHANGELOG section for that version, so the Release never drifts from the tag.
+#
+# Auth for npm is npm trusted publishing (OIDC): with `id-token: write` and a recent
+# npm CLI, `npm publish` authenticates via GitHub's OIDC token and signs provenance
+# automatically -- no NPM_TOKEN secret, and no 2FA/OTP prompt. This repo + this
+# workflow must be registered as a trusted publisher on npmjs.com for each package
+# (package -> Settings -> Trusted Publishers -> GitHub Actions) before the first
+# token-less publish of a new version.
 
 on:
   push:
@@ -18,10 +21,15 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)publish a GitHub Release for, e.g. v0.3.0"
+        required: false
+        default: ""
 
 permissions:
-  contents: read
-  id-token: write # npm provenance via OIDC
+  contents: write # create the GitHub Release
+  id-token: write # npm provenance + trusted publishing via OIDC
 
 jobs:
   publish:
@@ -37,21 +45,52 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24 # ships npm >= 11.5 (trusted publishing) and clears the Node 20 deprecation
           registry-url: https://registry.npmjs.org
       # The engine is dependency-free and needs no build. mdp-mcp has a `prepack`
       # (scripts/sync-mcp.mjs, zero-dep) that re-vendors the engine at pack time;
       # npm runs it automatically, so no install step is required to publish.
       - name: Publish ${{ matrix.package }} if its version is new
         working-directory: ${{ matrix.package }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           name=$(node -p "require('./package.json').name")
           version=$(node -p "require('./package.json').version")
           if npm view "$name@$version" version >/dev/null 2>&1; then
             echo "$name@$version is already on npm. Skipping."
           else
-            echo "Publishing $name@$version with provenance."
+            echo "Publishing $name@$version with provenance via trusted publishing."
             npm publish --provenance --access public
+          fi
+
+  github-release:
+    # Tag pushes, or a manual dispatch that names an existing tag. Gated off the
+    # `release: published` event so creating a Release here cannot loop.
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && inputs.tag != '')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
+          fetch-depth: 0
+      - name: Publish GitHub Release from CHANGELOG
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${{ inputs.tag || github.ref_name }}"
+          version="${tag#v}"
+          # Extract the `## [version]` section from CHANGELOG.md (up to the next `## [`).
+          awk -v ver="$version" '
+            $0 ~ "^## \\[" ver "\\]" { f=1; next }
+            f && /^## \[/ { exit }
+            f { print }
+          ' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "Release $tag" > notes.md
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release edit "$tag" --title "$tag" --notes-file notes.md
+          else
+            gh release create "$tag" --title "$tag" --notes-file notes.md --verify-tag
           fi
