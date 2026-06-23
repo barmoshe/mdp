@@ -282,7 +282,10 @@ B -> A: changes
 ````
 
    `A: label` declares or labels a node; `A -> B` is an edge, `A --> B` a dashed
-   one, and a trailing `: text` labels the edge. Three kinds ship: `flow` (a
+   one, and a trailing `: text` labels the edge. In a `tree`, that trailing text
+   instead names the child node (a hierarchy has named nodes, not labeled
+   connectors), so `parent -> child: Name` renders `Name` in the child's box; an
+   explicit `child: Name` declaration still wins. Three kinds ship: `flow` (a
    layered top-to-bottom flowchart), `sequence` (actors as lifelines with ordered
    messages, with an `actor A: Alice` alias accepted), and `tree` (a tidy
    hierarchy). The layout is deterministic (integer coordinates, no randomness)

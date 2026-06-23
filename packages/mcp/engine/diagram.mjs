@@ -185,6 +185,27 @@ function layoutSequence(nodes, edges) {
 // over its children. Depth sets the row. Deterministic post-order placement.
 function layoutTree(nodes, edges) {
   const index = new Map(nodes.map((n, i) => [n.id, i]));
+
+  // Tree semantics: the trailing label in `parent -> child: Name` NAMES THE CHILD;
+  // it is not a label on the connector. A hierarchy has named nodes, not labeled
+  // edges. The parser is kind-agnostic, so it parks that text on the edge and
+  // defaults a never-declared child's label to its id — which, in a tree, renders
+  // bare ids in the boxes and stacks the real names as edge labels at sibling
+  // midpoints, where they collide and clip. Here, where we know this is a tree, we
+  // fold each such label into its still-unnamed child and clear it from the edge.
+  // An explicit `child: Name` declaration wins (its label differs from the id); a
+  // genuine edge label on an already-named child is left intact.
+  const display = nodes.map((n) => n.label);
+  const edgeText = edges.map((e) => e.label);
+  for (let j = 0; j < edges.length; j++) {
+    const t = index.get(edges[j].to);
+    if (t == null || !edgeText[j]) continue;
+    if (display[t] === nodes[t].id) {
+      display[t] = edgeText[j];
+      edgeText[j] = null;
+    }
+  }
+
   const children = nodes.map(() => []);
   const indeg = nodes.map(() => 0);
   for (const e of edges) {
@@ -197,7 +218,7 @@ function layoutTree(nodes, edges) {
   let roots = nodes.map((_, i) => i).filter((i) => indeg[i] === 0);
   if (!roots.length) roots = [0];
 
-  const widths = nodes.map((n) => boxWidth(n.label));
+  const widths = nodes.map((_, i) => boxWidth(display[i]));
   const depth = nodes.map(() => 0);
   const cx = nodes.map(() => 0);
   const placed = nodes.map(() => false);
@@ -226,18 +247,18 @@ function layoutTree(nodes, edges) {
   const totalH = MARGIN + (maxDepth + 1) * NODE_H + maxDepth * V_GAP + MARGIN;
 
   const parts = [];
-  for (const e of edges) {
-    const f = index.get(e.from);
-    const t = index.get(e.to);
+  for (let j = 0; j < edges.length; j++) {
+    const f = index.get(edges[j].from);
+    const t = index.get(edges[j].to);
     if (f == null || t == null) continue;
     const py = yOf(depth[f]) + NODE_H;
     const ty = yOf(depth[t]);
-    parts.push(elbow(cx[f], py, cx[t], ty, e.dashed ? " is-dashed" : ""));
+    parts.push(elbow(cx[f], py, cx[t], ty, edges[j].dashed ? " is-dashed" : ""));
     parts.push(arrowHead(cx[t], ty, "down"));
-    if (e.label) parts.push(edgeLabel(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), e.label));
+    if (edgeText[j]) parts.push(edgeLabel(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), edgeText[j]));
   }
   for (let i = 0; i < nodes.length; i++) {
-    parts.push(nodeBox(cx[i] - Math.round(widths[i] / 2), yOf(depth[i]), widths[i], nodes[i].label));
+    parts.push(nodeBox(cx[i] - Math.round(widths[i] / 2), yOf(depth[i]), widths[i], display[i]));
   }
   return { w: totalW, h: totalH, inner: parts.join("\n") };
 }
