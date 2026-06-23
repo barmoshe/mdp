@@ -113,6 +113,23 @@ plain language; the agent authors clean MDP, compiles it, and opens the result.
 
 Then "show this as a deck", "make a one-pager from this file", or `/mdp present <file>`.
 
+### Preview a plan as MDP
+
+When an agent writes an implementation plan, render it as the interactive `plan`
+form — collapsible phases, status-aware checklists, and a live progress meter.
+
+- **On demand:** run `/mdp-preview-plan` (it converts the active plan, or one you
+  point it at, then surfaces the HTML). Under the hood it runs
+  `node scripts/preview-plan.mjs --latest --open`, which wraps the plan in MDP
+  frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into `mdp:tasks` blocks,
+  and compiles to `dist/plan-preview.html`.
+- **Automatically in plan mode:** the project hook in `.claude/settings.json`
+  (a `PostToolUse` hook on `ExitPlanMode`) runs that same command every time a
+  plan is submitted. `--open` opens it in a local browser when you run Claude
+  Code on your machine, and is a harmless no-op in a headless/remote session
+  (where the agent surfaces the HTML file instead). Remove the hook to opt out,
+  or move it to `~/.claude/settings.json` to enable it for every project.
+
 **Codex** (a self-contained plugin in `codex/`):
 
 ```text

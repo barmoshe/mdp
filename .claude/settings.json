@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/preview-plan.mjs\" --latest --open || true",
+            "timeout": 30,
+            "statusMessage": "Rendering the plan as an MDP preview…"
+          }
+        ]
+      }
+    ]
+  }
+}
