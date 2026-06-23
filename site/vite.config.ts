@@ -19,6 +19,18 @@ export default defineConfig({
   resolve: {
     alias: {
       "mdp-compiler": enginePath,
+      // The curated example extensions, bundled by the live showcase the same way
+      // the playground bundles the engine (they live above the site root, which
+      // server.fs.allow permits).
+      "mdp-block-status": fileURLToPath(
+        new URL("../extensions/mdp-block-status/src/index.mjs", import.meta.url)
+      ),
+      "mdp-block-spec-sheet": fileURLToPath(
+        new URL("../extensions/mdp-block-spec-sheet/src/index.mjs", import.meta.url)
+      ),
+      "mdp-artifact-resume": fileURLToPath(
+        new URL("../extensions/mdp-artifact-resume/src/index.mjs", import.meta.url)
+      ),
     },
   },
   server: {

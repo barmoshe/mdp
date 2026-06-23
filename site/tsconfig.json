@@ -21,7 +21,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "mdp-compiler": ["../packages/core/src/index.mjs"]
+      "mdp-compiler": ["../packages/core/src/index.mjs"],
+      "mdp-block-status": ["../extensions/mdp-block-status/src/index.mjs"],
+      "mdp-block-spec-sheet": ["../extensions/mdp-block-spec-sheet/src/index.mjs"],
+      "mdp-artifact-resume": ["../extensions/mdp-artifact-resume/src/index.mjs"]
     }
   },
   "include": ["src", "vite.config.ts", "../../examples/manifest.json", "../../templates/manifest.json"]

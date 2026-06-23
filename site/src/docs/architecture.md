@@ -66,13 +66,17 @@ keeping the lock intact:
 
 - **Blocks.** New typed content, such as a chart or a timeline, that every
   artifact can render. A block is a small shared module exporting a `STYLE` string
-  and a `render` function, using monochrome tokens and logical CSS so it flips
-  under right-to-left automatically.
+  and a `render` function, using the design tokens and logical CSS so it flips
+  under right-to-left automatically. Wiring a block into the engine touches the
+  three per-form renderers (page, slides, flyer) and the shared
+  `content-blocks.mjs`, which covers the four interactive forms (scroll, accordion,
+  tabs, stepper) in one place.
 - **Artifacts.** New output types, such as a resume or a changelog, as new solvers
   over the same semantic representation. Register one entry in `RENDERERS` and the
   CLI picks it up.
 
 Anything beyond the curated core lives in its own repo and follows a naming
 convention: third-party blocks are `mdp-block-<name>`, third-party artifacts are
-`mdp-artifact-<name>`. The machine-facing build guide is `AGENTS.md` in the repo,
-and contribution rules are in `CONTRIBUTING.md`.
+`mdp-artifact-<name>`. The [Build an extension](#/docs/extensions) guide walks the
+whole path with worked examples; the machine-facing build guide is `AGENTS.md` in
+the repo, and contribution rules are in `CONTRIBUTING.md`.

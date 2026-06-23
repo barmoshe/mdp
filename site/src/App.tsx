@@ -10,6 +10,7 @@ import Brand from "./components/Brand";
 import Themes from "./components/Themes";
 import Install from "./components/Install";
 import Library from "./components/Library";
+import Extensions from "./components/Extensions";
 import Extend from "./components/Extend";
 import FinalCta from "./components/FinalCta";
 import Footer from "./components/Footer";
@@ -101,6 +102,7 @@ export default function App() {
         <Themes />
         <Install />
         <Library />
+        <Extensions />
         <Extend />
         <FinalCta />
       </main>
