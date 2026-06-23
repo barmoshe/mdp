@@ -15,6 +15,12 @@ This is a presentation distillation of the changelog. The authoritative, full hi
 
 ## Unreleased
 
+Nothing yet.
+
+---
+
+## 0.3.1
+
 ### Fixed
 
 - **The `mdp:diagram` tree layout** renders node names instead of their bare ids.

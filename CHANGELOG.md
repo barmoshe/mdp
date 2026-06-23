@@ -5,6 +5,8 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-06-23
+
 ### Fixed
 - The `mdp:diagram` tree layout renders node names instead of their bare ids.
 

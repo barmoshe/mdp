@@ -1,6 +1,6 @@
 {
   "name": "mdp-compiler",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The MDP parser and composition engine: one source to a semantic representation to design-locked artifacts.",
   "type": "module",
   "license": "Apache-2.0",

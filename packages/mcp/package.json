@@ -1,6 +1,6 @@
 {
   "name": "mdp-mcp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "MCP server for MDP: compile one .mdp source into design-locked HTML across the full form set (page, slides, flyer, document forms, and interactive forms) from any MCP host.",
   "type": "module",
   "license": "Apache-2.0",
