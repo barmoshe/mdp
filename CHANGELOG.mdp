@@ -19,6 +19,14 @@ Nothing yet.
 
 ---
 
+## 0.4.0
+
+### Added
+
+- **Send to Slack.** A new `mdp_send_slack` MCP tool (`mdp-mcp`) compiles a source and uploads the self-contained HTML artifact to a Slack channel as a file, via Slack's external-upload flow. Auth is a bot token in `SLACK_BOT_TOKEN` (scope `files:write`); the channel is the `channel` argument or `MDP_SLACK_CHANNEL`. Any single form. Slack shows the `.html` as a downloadable file, not an inline render; opening it shows the full design, interactive forms included. Zero new dependencies.
+
+---
+
 ## 0.3.1
 
 ### Fixed

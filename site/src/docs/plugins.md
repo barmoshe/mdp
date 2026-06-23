@@ -46,7 +46,7 @@ and it compiles byte-identical output.
 
 For any MCP-speaking host (Claude Desktop, Cursor, Windsurf, ...) MDP also ships
 as a standalone MCP server, `mdp-mcp`. It exposes `mdp_compile`, `mdp_present`,
-and `mdp_validate`, plus the spec and examples as resources. See the
+`mdp_validate`, and `mdp_send_slack`, plus the spec and examples as resources. See the
 [MCP server](#/docs/mcp) page to install it.
 
 ## One engine, many surfaces

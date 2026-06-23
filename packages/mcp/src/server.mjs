@@ -39,7 +39,7 @@ function readAsset(rel) {
 }
 
 export async function startServer() {
-  const server = new McpServer({ name: "mdp-mcp", version: "0.2.0" });
+  const server = new McpServer({ name: "mdp-mcp", version: "0.4.0" });
 
   // --- tools ---
   server.registerTool(

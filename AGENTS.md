@@ -82,7 +82,7 @@ and surface the result; none adds anything to the format.
 - **MCP server**: a self-contained server in `packages/mcp/` (`mdp-mcp`),
   published to npm and runnable via `npx -y mdp-mcp`, so any MCP host (Claude
   Desktop, Cursor, ...) can compile MDP. It exposes the `mdp_compile`,
-  `mdp_present`, and `mdp_validate` tools plus `mdp://spec` and `mdp://example/*`
+  `mdp_present`, `mdp_validate`, and `mdp_send_slack` tools plus `mdp://spec` and `mdp://example/*`
   resources. Like Codex it is self-contained: the engine and assets are
   **vendored** in by `npm run sync:mcp` (a copy of the root, re-run after any
   engine change; CI fails if it is stale). It is the one package with

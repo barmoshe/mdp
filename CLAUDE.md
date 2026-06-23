@@ -66,7 +66,7 @@ mdp/
       schema.mjs          the versioned JSON Schema for the IR (SCHEMA, SCHEMA_VERSION)
       index.mjs           public API: compile(), parse(), RENDERERS, ARTIFACTS, tokens
   packages/mcp/           mdp-mcp: the MCP server, published to npm (self-contained)
-    src/                  server, tools (mdp_compile / mdp_present / mdp_validate), io
+    src/                  server, tools (mdp_compile / mdp_present / mdp_validate / mdp_send_slack), io, slack
     engine/               VENDORED copy of packages/core/src (do not edit by hand)
     assets/               VENDORED SPEC + example/template seeds
     test.mjs              the server smoke test (npm test inside packages/mcp)
@@ -99,7 +99,7 @@ the format; each authors `.mdp`, runs the engine, and shows the result.
   skill. Lives in its own folder so Codex and Claude each see exactly one `mdp`
   component.
 - **MCP server**: `packages/mcp` (`mdp-mcp`), run via `npx -y mdp-mcp`, exposing
-  `mdp_compile`, `mdp_present`, `mdp_validate` and `mdp://spec` + `mdp://example/*`
+  `mdp_compile`, `mdp_present`, `mdp_validate`, `mdp_send_slack` and `mdp://spec` + `mdp://example/*`
   resources to any MCP host.
 
 ## The engine API

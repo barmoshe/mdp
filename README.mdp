@@ -48,7 +48,7 @@ MDP is not an app to visit and not a syntax to learn. It ships as a plugin, so y
 
 - **Claude Code** — this repo is the marketplace: `/plugin marketplace add barmoshe/mdp`, then ask "show this as a deck".
 - **Codex** — a self-contained plugin in `codex/`: `codex marketplace add barmoshe/mdp`, then enable MDP from the app.
-- **Any MCP host** — the `mdp-mcp` server via `claude mcp add mdp -- npx -y mdp-mcp`, exposing `mdp_compile`, `mdp_present`, and `mdp_validate`.
+- **Any MCP host** — the `mdp-mcp` server via `claude mcp add mdp -- npx -y mdp-mcp`, exposing `mdp_compile`, `mdp_present`, `mdp_validate`, and `mdp_send_slack`.
 
 ---
 

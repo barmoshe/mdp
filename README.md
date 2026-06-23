@@ -127,7 +127,7 @@ Then enable MDP from the Codex app and ask "show this as a slide deck".
 claude mcp add mdp -- npx -y mdp-mcp
 ```
 
-It exposes `mdp_compile`, `mdp_present`, and `mdp_validate`. See the
+It exposes `mdp_compile`, `mdp_present`, `mdp_validate`, and `mdp_send_slack`. See the
 [MCP server](https://barmoshe.github.io/mdp/#/docs/mcp) docs.
 
 ## What a source looks like

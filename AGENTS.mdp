@@ -63,7 +63,7 @@ note: A self-contained plugin in codex/.
 
 # MCP server
 note: packages/mcp/ (mdp-mcp), via npx -y mdp-mcp.
-- Exposes mdp_compile, mdp_present, mdp_validate.
+- Exposes mdp_compile, mdp_present, mdp_validate, mdp_send_slack.
 - Engine vendored by sync:mcp; the one package with deps.
 ```
 

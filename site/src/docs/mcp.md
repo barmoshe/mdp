@@ -26,7 +26,9 @@ claude mcp add mdp -- npx -y mdp-mcp
 
 Set `MDP_OUT_DIR` in the server's `env` to choose where artifacts are written; it
 defaults to your OS temp dir, and the server never assumes the working directory.
-Set `MDP_NO_OPEN=1` to compile and serve without auto-opening a browser.
+Set `MDP_NO_OPEN=1` to compile and serve without auto-opening a browser. For
+`mdp_send_slack`, set `SLACK_BOT_TOKEN` (a bot token with `files:write`) and,
+optionally, `MDP_SLACK_CHANNEL` (the default channel id).
 
 ## Tools
 
@@ -39,6 +41,12 @@ Set `MDP_NO_OPEN=1` to compile and serve without auto-opening a browser.
   and path.
 - **mdp_validate(source)** — parse and report `{ ok, meta, blocks, issues }`.
   Never errors; malformed input degrades to issues so an agent can self-correct.
+- **mdp_send_slack(source, form?, channel?, initial_comment?, out_dir?)** — compile
+  one artifact and upload the self-contained HTML to a Slack channel as a file.
+  Requires `SLACK_BOT_TOKEN` (a bot token with `files:write`); the channel is the
+  `channel` argument or `MDP_SLACK_CHANNEL`. Slack shows the `.html` as a
+  downloadable file (it does not render HTML inline); opening it shows the full
+  design, interactive forms included. Expected failures degrade to `{ ok, error }`.
 
 ## Resources
 
