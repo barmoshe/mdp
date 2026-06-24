@@ -120,15 +120,34 @@ form — collapsible phases, status-aware checklists, and a live progress meter.
 
 - **On demand:** run `/mdp-preview-plan` (it converts the active plan, or one you
   point it at, then surfaces the HTML). Under the hood it runs
-  `node scripts/preview-plan.mjs --latest --open`, which wraps the plan in MDP
-  frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into `mdp:tasks` blocks,
-  and compiles to `dist/plan-preview.html`.
-- **Automatically in plan mode:** the project hook in `.claude/settings.json`
-  (a `PostToolUse` hook on `ExitPlanMode`) runs that same command every time a
-  plan is submitted. `--open` opens it in a local browser when you run Claude
-  Code on your machine, and is a harmless no-op in a headless/remote session
-  (where the agent surfaces the HTML file instead). Remove the hook to opt out,
-  or move it to `~/.claude/settings.json` to enable it for every project.
+  `node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" --latest --open`, which
+  wraps the plan in MDP frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into
+  `mdp:tasks` blocks, and compiles it to the `plan` form. Works from any project once
+  the plugin is installed (the path resolves via `${CLAUDE_PLUGIN_ROOT}`).
+- **Automatically on plan exit (optional):** Claude Code has no per-hook toggle, so
+  the plugin does not force this on you. To auto-render every time you submit a plan,
+  add a `PostToolUse` hook on `ExitPlanMode` to your `.claude/settings.json`:
+
+  ```json
+  {
+    "hooks": {
+      "PostToolUse": [
+        {
+          "matcher": "ExitPlanMode",
+          "hooks": [
+            { "type": "command", "command": "node \"<mdp>/scripts/preview-plan.mjs\" --latest --open || true" }
+          ]
+        }
+      ]
+    }
+  }
+  ```
+
+  Replace `<mdp>` with the path to your MDP clone or installed plugin. Inside this
+  repo that is `$CLAUDE_PROJECT_DIR` (exactly what this repo's own
+  `.claude/settings.json` uses). `--open` opens it locally and is a harmless no-op in
+  a headless session. Put it in one project's `.claude/settings.json`, or in
+  `~/.claude/settings.json` to enable it everywhere.
 
 **Codex** (a self-contained plugin in `codex/`):
 

@@ -5,6 +5,13 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Changed
+- **Plan preview works as an installed plugin.** `/mdp-preview-plan` now invokes the
+  converter via `${CLAUDE_PLUGIN_ROOT}` (with a repo-root fallback) instead of a
+  CWD-relative path, so it works for `/mdp` plugin users in any project, not just
+  inside this repo. The `ExitPlanMode` auto-render is documented in the README as an
+  opt-in hook (Claude Code has no per-hook toggle, so it is not bundled).
+
 ## [0.5.0] - 2026-06-24
 
 ### Added

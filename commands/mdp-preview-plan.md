@@ -26,13 +26,14 @@ Arguments: $ARGUMENTS
    - If the user pasted plan text instead, write it to a temp `.md` first, or
      pipe it in with `--stdin`.
 
-2. Compile to the `plan` form. Run, from the MDP plugin/repo root
-   (`${CLAUDE_PLUGIN_ROOT}` when installed as a plugin, else the repo root):
+2. Compile to the `plan` form. The converter lives at the plugin root, so
+   `${CLAUDE_PLUGIN_ROOT}` resolves it when installed as a plugin and falls back to
+   the repo root (`.`) for in-repo dev:
 
    ```bash
-   node scripts/preview-plan.mjs --latest --open
-   # or: node scripts/preview-plan.mjs <plan.md> --open
-   # or: node scripts/preview-plan.mjs --stdin --open < plan.md
+   node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" --latest --open
+   # or: node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" <plan.md> --open
+   # or: node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" --stdin --open < plan.md
    ```
 
    `--open` opens the HTML in a browser when you are running Claude Code locally
