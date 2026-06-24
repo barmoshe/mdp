@@ -92,24 +92,35 @@ and surface the result; none adds anything to the format.
 
 ## Releasing
 
-Each package versions independently and publishes from CI
-(`.github/workflows/release.yml`):
+Each package versions independently and publishes **manually**. There is no
+release workflow; tagging does nothing automated.
 
-1. Bump the version in the changed package's `package.json` (`mdp-compiler`,
-   `mdp-mcp`, and/or `create-mdp-extension`), update `CHANGELOG.md`, and land it
-   on `main`.
-2. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z` (or publish a GitHub
-   Release).
-3. CI publishes every package whose `package.json` version is not yet on npm,
-   with provenance, and skips the rest. A tag that bumped only one package
-   publishes only that one.
+1. Bump the version in the changed package's `package.json` (`mdp-compiler` in
+   `packages/core`, `mdp-mcp` in `packages/mcp`, and/or `create-mdp-extension`),
+   update `CHANGELOG.md`, and land it on `main`. After an engine change, re-run
+   `npm run sync:codex` and `npm run sync:mcp` so the vendored copies match (the
+   CI freshness gates fail otherwise). `mdp-mcp` also carries a hardcoded version
+   string in `src/server.mjs` that sync does not touch; bump it by hand.
+2. Authenticate once: `npm login` (npm's browser web-auth, which clears 2FA). A
+   local `npm publish` returns a misleading `404` if you are not logged in first.
+3. Publish each changed package from its own directory:
+   `cd packages/core && npm publish --access public`, then
+   `cd packages/mcp && npm publish --access public`. `packages/mcp` has a
+   `prepack` hook that re-runs `sync-mcp` (re-vendoring the engine) before it
+   packs, so the tarball always ships a fresh engine.
+4. Tag and cut the GitHub Release for visibility:
+   `git tag vX.Y.Z && git push origin vX.Y.Z`, then `gh release create vX.Y.Z`
+   with notes from `CHANGELOG.md`. The tag is a marker only; it publishes nothing.
 
 A published version is immutable: to fix a mistake, bump and ship a new version
-(`npm deprecate` retires a bad one). Auth: the `NPM_TOKEN` repository secret must
-hold an npm automation token (npmjs.com -> Access Tokens -> Classic -> Automation,
-which bypasses 2FA). Provenance is signed via GitHub OIDC; to move to npm trusted
-publishing instead, register this repo + `release.yml` as a trusted publisher on
-each package and remove the token.
+(`npm deprecate` retires a bad one).
+
+**CI auto-publish is a not-yet-built future option.** There is no
+`.github/workflows/release.yml` (an earlier one was removed). Clearing npm's
+2FA-on-publish gate (`EOTP`) from CI needs either a **granular** access token
+created with the **"Bypass two-factor authentication"** box (npm removed classic
+Automation tokens in Nov 2025) or **Trusted Publishing** via OIDC. Until one is
+set up, releases are manual by the flow above.
 
 ## The design lock
 
