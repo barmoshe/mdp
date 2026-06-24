@@ -5,6 +5,8 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-24
+
 ### Added
 - **Plan form.** A fifth interactive form, `plan`, renders an implementation plan
   as collapsible phases (each `---` section a `<details>`), the `{.lead}` standfirst

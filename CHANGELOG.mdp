@@ -15,6 +15,12 @@ This is a presentation distillation of the changelog. The authoritative, full hi
 
 ## Unreleased
 
+Nothing yet.
+
+---
+
+## 0.5.0
+
 ### Added
 
 - **Plan form.** A fifth interactive form, `plan`, renders an implementation plan as collapsible phases (each `---` section a `<details>`), the `{.lead}` as the goal, and `mdp:tasks` checklists driving a live progress meter. Reads the block set exactly as `page` does.
