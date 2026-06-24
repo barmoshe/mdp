@@ -126,6 +126,30 @@ function parseFlowBody(bodyLines) {
   return bodyLines.map((l) => l.trim()).filter((l) => l.length > 0);
 }
 
+// Parse the body of a `mdp:tasks` fenced block into a checklist. Each non-blank
+// line is one task; an optional `[ ]` / `[x]` / `[~]` marker sets its status
+// (todo / done / active), and a bare `- text` bullet is a todo. A line that does
+// not match the bullet grammar still becomes a todo task (degrade, never drop or
+// throw). The list is flat: phases supply the grouping in the plan form.
+function parseTasksBody(bodyLines) {
+  const items = [];
+  for (const raw of bodyLines) {
+    const line = raw.trim();
+    if (line === "") continue;
+    const m = line.match(/^[-*]\s+(?:\[([ xX~])\]\s+)?(.*)$/);
+    if (m) {
+      const mark = m[1];
+      const status =
+        mark === "x" || mark === "X" ? "done" : mark === "~" ? "active" : "todo";
+      const text = m[2].trim();
+      if (text) items.push({ status, text });
+    } else {
+      items.push({ status: "todo", text: line });
+    }
+  }
+  return items;
+}
+
 // Parse the inner lines of a `:::callout` container into paragraph blocks: one
 // paragraph per blank-line-separated group. Inline marks are left to the
 // renderer (each paragraph text flows through inline() there). Lists and other
@@ -378,6 +402,8 @@ export function parseBody(body) {
         blocks.push({ type: "compare", options: parseCompareBody(bodyLines) });
       } else if (fenceInfo === "mdp:flow") {
         blocks.push({ type: "flow", steps: parseFlowBody(bodyLines) });
+      } else if (fenceInfo === "mdp:tasks") {
+        blocks.push({ type: "tasks", items: parseTasksBody(bodyLines) });
       } else if (fenceInfo === "mdp:chart") {
         blocks.push({ type: "chart", items: parseChartBody(bodyLines) });
       } else if (fenceInfo === "mdp:table") {

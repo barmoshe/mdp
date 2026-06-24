@@ -36,6 +36,7 @@ by hand.
 | `brand-accent.mdp` | brand-accent, brand-accent-2, brand-font, stats, flow, lead | callout, flow, stats | page, slides, flyer | studio |
 | `brand-logo.mdp` | brand-logo, flow, callout:note, lead | callout, flow | page, slides, flyer | studio |
 | `form-flyer-heavy.mdp` | stats, quote, compare, list, lead | compare, list, quote, stats | flyer, page | violet |
+| `form-plan.mdp` | tasks, flow, list, callout:warning, callout:recommendation | callout, flow, tasks | plan, page | studio |
 | `form-slides-heavy.mdp` | quote, list, lead | list, quote | slides, page | mono |
 | `letter.mdp` | letter, list | (prose) | letter, page | terracotta |
 | `memo.mdp` | memo, list, callout:note | callout, list | memo, page | studio |

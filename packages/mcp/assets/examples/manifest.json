@@ -168,6 +168,12 @@
     "lead": "stepper"
   },
   {
+    "id": "form-plan",
+    "file": "form-plan.mdp",
+    "label": "Implementation plan",
+    "lead": "plan"
+  },
+  {
     "id": "starter",
     "file": "starter.mdp",
     "label": "Starter",

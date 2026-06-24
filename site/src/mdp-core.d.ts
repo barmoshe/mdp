@@ -9,7 +9,7 @@ declare module "mdp-compiler" {
   /** The base design-token CSS for a theme (:root custom properties plus the
    *  dark-mode flip), the same tokens compiled documents embed. */
   export function baseStyle(theme?: string): string;
-  /** The artifacts this engine can compile: ["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper"]. */
+  /** The artifacts this engine can compile: ["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper", "plan"]. */
   export const ARTIFACTS: string[];
   /** The curated theme names, in spectrum order: studio, ocean, teal, forest,
    *  amber, terracotta, coral, rose, plum, violet, mono. */

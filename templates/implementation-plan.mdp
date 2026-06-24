@@ -1,0 +1,51 @@
+---
+mdp: 1
+theme: studio
+forms: [plan, page]
+kicker: Implementation plan
+title: <WHAT YOU ARE BUILDING>
+---
+
+# <WHAT YOU ARE BUILDING>
+{.lead} <One sentence: the goal, and the constraint that must hold while you get there.>
+
+## <Phase one — e.g. Groundwork>
+
+<One line on what this phase sets up.>
+
+```mdp:tasks
+- [x] <A task already finished>
+- [~] <The task in progress right now>
+- [ ] <A task still to do>
+```
+
+:::callout warning
+<A risk or constraint for this phase: what must not break.>
+:::
+
+---
+
+## <Phase two — e.g. Implementation>
+
+<One line on the core work.>
+
+```mdp:tasks
+- [ ] <Task>
+- [ ] <Task>
+- [ ] <Task>
+```
+
+---
+
+## <Phase three — e.g. Verification & rollout>
+
+<One line on how you prove it works and ship it.>
+
+```mdp:tasks
+- [ ] <How you test it end to end>
+- [ ] <How you roll it out>
+```
+
+:::callout recommendation
+<The verification or rollback note: how you back out if something goes wrong.>
+:::

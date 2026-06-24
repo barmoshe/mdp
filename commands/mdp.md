@@ -1,6 +1,6 @@
 ---
-description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, scroll, accordion, tabs, or stepper and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a report, a memo, a letter, a scroll, a brief, or to render or compile MDP.
-argument-hint: [present|page|slides|flyer|report|onepager|memo|letter|scroll|accordion|tabs|stepper|all] [content, a file path, or nothing for the current content]
+description: Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, scroll, accordion, tabs, stepper, or plan and show or present it. Use when the user asks to present, show something nicely, make a deck, slides, a one-pager, a flyer, a report, a memo, a letter, a scroll, a plan, a brief, or to render or compile MDP.
+argument-hint: [present|page|slides|flyer|report|onepager|memo|letter|scroll|accordion|tabs|stepper|plan|all] [content, a file path, or nothing for the current content]
 ---
 
 # Show and present content with MDP
@@ -17,8 +17,10 @@ as it scrolls into view, with a reading-progress bar and a dot rail), an
 `accordion` (collapsible stacked sections built on native `<details>`: scan the
 headings, open the one you need), `tabs` (a tabbed explorer: each section becomes
 a panel you switch between, with arrow-key navigation and a deep-linkable URL
-hash), and a `stepper` (a guided walkthrough: one numbered step at a time, with a
-progress bar and Back / Next). The author writes meaning only; the engine owns all
+hash), a `stepper` (a guided walkthrough: one numbered step at a time, with a
+progress bar and Back / Next), and a `plan` (an implementation plan: each `---`
+section is a collapsible phase, and `mdp:tasks` checklists drive a live progress
+meter). The author writes meaning only; the engine owns all
 design, so the output cannot look junky. Turn the user's content into one of those
 forms and open it to show or present it.
 
@@ -35,7 +37,8 @@ Arguments: $ARGUMENTS
    (a scroll-driven narrative with scene reveals and a progress bar), `accordion`
    (collapsible stacked sections for reference or FAQ content), `tabs` (a tabbed
    explorer with arrow-key navigation and deep-linkable URL hashes), `stepper`
-   (a guided walkthrough with one step at a time and Back / Next controls), or
+   (a guided walkthrough with one step at a time and Back / Next controls), `plan`
+   (an implementation plan: collapsible phases and tick-off task checklists), or
    `all`.
    The rest is the content: a file path, pasted text, or empty (then use the most
    relevant content in the conversation or the file in focus). If the content is

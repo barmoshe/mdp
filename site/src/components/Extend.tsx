@@ -6,7 +6,7 @@ const SHIPPED = [
   { name: "create-mdp-extension", note: "On npm: scaffold a new block or artifact with one command." },
   { name: "Brand layer", note: "Name a brand color; the engine derives a full AA-gated accent set, light and dark, plus a logo plate and a system-font selector." },
   { name: "Examples & templates", note: "A conventioned library on one manifest." },
-  { name: "Interactive forms", note: "Scroll, accordion, tabs, and stepper: client-side forms over the same source, each with a no-JavaScript fallback and full keyboard navigation." },
+  { name: "Interactive forms", note: "Scroll, accordion, tabs, stepper, and plan: client-side forms over the same source, each with a no-JavaScript fallback and full keyboard navigation." },
   { name: "New blocks", note: "A typed pipe table, a pure-CSS bar chart, native zero-dependency SVG diagrams (flow, sequence, tree), a timeline, FAQ disclosures, and pricing tiers, all rendered by every form." },
 ];
 

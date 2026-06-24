@@ -1,12 +1,12 @@
 {
   "name": "mdp",
-  "description": "The MDP plugin: turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper), then show or present it.",
+  "description": "The MDP plugin: turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper, plan), then show or present it.",
   "owner": { "name": "Bar Moshe" },
   "plugins": [
     {
       "name": "mdp",
       "source": "./",
-      "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper) with MDP, then show or present it."
+      "description": "Turn content into a polished page, slide deck, flyer, report, one-pager, memo, letter, or interactive form (scroll, accordion, tabs, stepper, plan) with MDP, then show or present it."
     }
   ]
 }

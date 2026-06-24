@@ -3,7 +3,7 @@
 MDP ("Markdown Presentation") is a presentation compiler for
 AI-written content. One plain-text source compiles into many polished forms: a
 page, a slide deck, a flyer, a report, a one-pager, a memo, a letter, and
-interactive forms: a scroll story, an accordion, tabs, a stepper. The design
+interactive forms: a scroll story, an accordion, tabs, a stepper, a plan. The design
 is locked in the renderer, so the output
 cannot drift into the over-decorated "junky artifact" look. The source stays as
 clean and diffable as ordinary Markdown. The author writes content and light
@@ -23,7 +23,7 @@ representation, not templates and not live AI:
 1. The declarative source parses into a tree of typed meaning (a lead, a hero
    stat, a quote, a call to action), Markdoc-shaped, with no arbitrary code.
 2. Each artifact (the forms below: page, slides, flyer, report, onepager, memo,
-   letter, scroll, accordion, tabs, stepper) is a solver, not a template. It lays that meaning out against locked
+   letter, scroll, accordion, tabs, stepper, plan) is a solver, not a template. It lays that meaning out against locked
    design tokens and reflows so it cannot look bad.
 3. AI authors the source. The engine composes. The render is pure and
    reproducible: the same source produces the same output every time.
@@ -343,6 +343,27 @@ cta: [Choose Team](#)
    `mdp:compare`: the same locked card grid, standardised around a price and a
    single call to action. The `cta:` takes a `[text](url)` link.
 
+   A tenth directive is `mdp:tasks`, a status-aware checklist:
+
+````
+```mdp:tasks
+- [x] A task already done
+- [~] The task in progress now
+- [ ] A task still to do
+- A bare bullet is a to-do
+```
+````
+
+   Each non-blank line is one task. An optional marker sets its status: `[x]`
+   (or `[X]`) is done, `[~]` is in progress, `[ ]` (or a bare `-`/`*` bullet) is
+   to-do; a line that does not match still becomes a to-do (it never throws or
+   drops). Status reads through the design lock with no new colour: a done item
+   fills its box with the one accent and a check and recedes to faint ink, the
+   in-progress item rings its box in the accent and goes medium-weight, a to-do
+   item is a hairline box and body ink. The checklist is the natural unit of work
+   inside a `plan` phase, where ticking tasks drives the live progress meter; it
+   renders as a plain checklist in every other form.
+
 4. Triple-colon containers. A fenced block opened with `:::<directive>` and
    closed by a line that is exactly `:::`. v1 ships one: `callout`, a bordered
    aside that lifts a short passage out of the flow.
@@ -396,6 +417,10 @@ yields many polished outputs.
   navigation and a deep-linkable URL hash. The lateral form.
 - `stepper` a guided walkthrough: one numbered step at a time, with a progress bar
   and Back / Next. The process form.
+- `plan` an implementation plan: each `---` section is a phase (a collapsible
+  `<details>`), the `{.lead}` standfirst is the goal, and a `mdp:tasks` checklist
+  inside a phase drives a live progress meter you tick off. Built for the plans
+  agents write. The planning form.
 
 The default set (`page, slides, flyer`) compiles when a source omits `forms:`;
 the other forms are opt-in via an explicit `forms:` list.
@@ -439,13 +464,14 @@ differently per form:
 | `mdp:timeline` | rail of steps | rail of steps | own full-width rail |
 | `mdp:faq` | disclosures | disclosures | expanded Q/A |
 | `mdp:pricing` | tier cards | tier cards | own full-width tier cards |
+| `mdp:tasks` | checklist | checklist | checklist |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
 The document and interactive forms inherit these readings rather than redefining
-them: `report`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, and `stepper`
-read each block exactly as `page` does, and `onepager` composes them like `flyer`
-(full-width bands plus a packed grid).
+them: `report`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`, and
+`plan` read each block exactly as `page` does, and `onepager` composes them like
+`flyer` (full-width bands plus a packed grid).
 
 ## House style (the part the author cannot reach)
 

@@ -34,7 +34,7 @@ optionally, `MDP_SLACK_CHANNEL` (the default channel id).
 
 - **mdp_compile(source, form, out_dir?)** — compile to HTML and write a file.
   `form` is any artifact (`page`, `slides`, `flyer`, `report`, `onepager`,
-  `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`), or `all`.
+  `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`, `plan`), or `all`.
   Returns the absolute output path(s) and byte size. No browser. Deterministic.
 - **mdp_present(source, form?, out_dir?)** — compile (default `slides`), serve it
   on a loopback (127.0.0.1) preview server, open your browser, and return the URL

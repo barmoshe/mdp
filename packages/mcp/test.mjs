@@ -36,6 +36,7 @@ const MARKERS = {
   accordion: ['<main class="mdp-accordion">', "mdp-acc-item"],
   tabs: ['<main class="mdp-tabs">', "mdp-tablist"],
   stepper: ['<main class="mdp-stepper">', "mdp-step-rail"],
+  plan: ['<main class="mdp-plan">', "mdp-plan-phases"],
 };
 
 const GOOD = `---

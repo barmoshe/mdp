@@ -38,6 +38,7 @@ import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
 import { renderFaq, FAQ_STYLE } from "./faq.mjs";
 import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
+import { renderTasks, TASKS_STYLE } from "./tasks.mjs";
 
 const FLYER_STYLE = `.mdp-flyer-stage {
   min-height: 100vh;
@@ -142,7 +143,9 @@ ${TIMELINE_STYLE}
 
 ${FAQ_STYLE}
 
-${PRICING_STYLE}`;
+${PRICING_STYLE}
+
+${TASKS_STYLE}`;
 
 // Render one flyer block in flow. Handles every body block type, so a block that
 // shares a section with another (e.g. a stats band beside a callout) or a
@@ -182,6 +185,8 @@ function renderFlyerBlock(block) {
       return renderFaq(block);
     case "pricing":
       return renderPricing(block);
+    case "tasks":
+      return renderTasks(block);
     default:
       return "";
   }

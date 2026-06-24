@@ -37,6 +37,7 @@ import { renderDiagram, DIAGRAM_STYLE } from "./diagram.mjs";
 import { renderTimeline, TIMELINE_STYLE } from "./timeline.mjs";
 import { renderFaq, FAQ_STYLE } from "./faq.mjs";
 import { renderPricing, PRICING_STYLE } from "./pricing.mjs";
+import { renderTasks, TASKS_STYLE } from "./tasks.mjs";
 
 const SLIDES_STYLE = `.mdp-deck {
   /* No-JS fallback: slides stack and scroll, fully readable. */
@@ -174,6 +175,8 @@ ${TIMELINE_STYLE}
 ${FAQ_STYLE}
 
 ${PRICING_STYLE}
+
+${TASKS_STYLE}
 
 /* On a slide the callout body reads at presentation scale. */
 .mdp-slide .mdp-callout { padding: var(--mdp-space-6); }
@@ -369,6 +372,9 @@ function renderSlideBlock(block) {
 
     case "pricing":
       return renderPricing(block);
+
+    case "tasks":
+      return renderTasks(block);
 
     default:
       return "";

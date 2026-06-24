@@ -15,7 +15,7 @@ default it compiles the core forms (`page`, `slides`, `flyer`).
 | Option | Effect |
 |---|---|
 | `--out <dir>` | Write the artifacts to `<dir>` instead of `dist/`. |
-| `--only <artifact>` | Build just one artifact: `page`, `slides`, `flyer`, `report`, `onepager`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, or `stepper`. |
+| `--only <artifact>` | Build just one artifact: `page`, `slides`, `flyer`, `report`, `onepager`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`, or `plan`. |
 | `--theme <name>` | Override the frontmatter theme with any named theme. |
 | `--open [artifact]` | Show or present in the browser after building. With no name it opens the first built artifact. |
 

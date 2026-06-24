@@ -3,7 +3,7 @@
 **Markdown Presentation.** A presentation compiler for AI-written content. One
 declarative `.mdp` source composes, deterministically, into many polished,
 design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a
-memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper).
+memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper, plan).
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
@@ -113,6 +113,23 @@ plain language; the agent authors clean MDP, compiles it, and opens the result.
 
 Then "show this as a deck", "make a one-pager from this file", or `/mdp present <file>`.
 
+### Preview a plan as MDP
+
+When an agent writes an implementation plan, render it as the interactive `plan`
+form — collapsible phases, status-aware checklists, and a live progress meter.
+
+- **On demand:** run `/mdp-preview-plan` (it converts the active plan, or one you
+  point it at, then surfaces the HTML). Under the hood it runs
+  `node scripts/preview-plan.mjs --latest --open`, which wraps the plan in MDP
+  frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into `mdp:tasks` blocks,
+  and compiles to `dist/plan-preview.html`.
+- **Automatically in plan mode:** the project hook in `.claude/settings.json`
+  (a `PostToolUse` hook on `ExitPlanMode`) runs that same command every time a
+  plan is submitted. `--open` opens it in a local browser when you run Claude
+  Code on your machine, and is a harmless no-op in a headless/remote session
+  (where the agent surfaces the HTML file instead). Remove the hook to opt out,
+  or move it to `~/.claude/settings.json` to enable it for every project.
+
 **Codex** (a self-contained plugin in `codex/`):
 
 ```text
@@ -180,6 +197,7 @@ gates. The design lives in the engine.
 | `mdp:timeline` | A vertical sequence of steps on an accent rail. |
 | `mdp:faq` | Question and answer pairs as native disclosure elements. |
 | `mdp:pricing` | Priced tiers in a locked card grid: the priced sibling of compare. |
+| `mdp:tasks` | A status-aware checklist (`- [x]` done, `- [~]` in progress, `- [ ]` to-do); drives the live progress meter in the `plan` form. |
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
@@ -204,12 +222,13 @@ and the [spec](SPEC.md).
 | `mdp:timeline` | rail of steps | rail of steps | full-width rail |
 | `mdp:faq` | disclosures | disclosures | expanded Q/A |
 | `mdp:pricing` | tier cards | tier cards | full-width tier cards |
+| `mdp:tasks` | checklist | checklist | checklist |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
 The document forms inherit these readings: `report`, `memo`, and `letter` read
 each block exactly as `page` does, and the one-pager composes them like `flyer`.
-The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`) each reframe the
-same block set into their respective navigation model.
+The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`, `plan`) each
+reframe the same block set into their respective navigation model.
 
 ## The design lock
 

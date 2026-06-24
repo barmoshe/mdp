@@ -1,0 +1,59 @@
+---
+mdp: 1
+theme: studio
+forms: [plan, page]
+kicker: Implementation plan
+title: Add passkey sign-in
+demonstrates: [tasks, flow, list, callout:warning, callout:recommendation]
+---
+
+# Add passkey sign-in
+{.lead} Let people sign in with a passkey instead of a password, without breaking the existing email-and-password flow.
+
+## Groundwork
+
+Map the current auth path and stand up the WebAuthn pieces behind a flag before any user sees a change.
+
+```mdp:tasks
+- [x] Audit every caller of the current login endpoint
+- [x] Pick a WebAuthn library and add it behind a feature flag
+- [~] Model the `credential` table and its migration
+- [ ] Add a server endpoint to start and finish registration
+```
+
+:::callout warning
+The password flow must keep working untouched for everyone while passkeys roll out. Treat any change to the existing endpoint as out of scope here.
+:::
+
+---
+
+## Implementation
+
+Wire the client ceremony to the new endpoints and let an account hold more than one passkey.
+
+```mdp:tasks
+- [ ] Build the register-a-passkey screen in account settings
+- [ ] Build the sign-in-with-a-passkey button on the login screen
+- [ ] Support multiple passkeys per account, each with a label
+- [ ] Fall back to password automatically when WebAuthn is unavailable
+```
+
+```mdp:flow
+Create challenge -> Browser signs it -> Verify and store credential
+```
+
+---
+
+## Verification & rollout
+
+Prove it works across the common platforms, then open the flag a little at a time.
+
+```mdp:tasks
+- [ ] Add end-to-end tests for register, sign-in, and the password fallback
+- [ ] Manually verify on iOS, Android, and a desktop browser
+- [ ] Roll out to 5% of accounts, then 50%, then everyone
+```
+
+:::callout recommendation
+Keep the flag on a kill switch through the full rollout. If sign-in success dips on any platform, flip it off and fall back to passwords with no deploy.
+:::

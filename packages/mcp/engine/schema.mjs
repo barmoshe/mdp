@@ -26,12 +26,12 @@ import { DIAGRAM_KINDS } from "./diagram.mjs";
 // Semantic version of the grammar this schema describes. Bump on any change to
 // the frontmatter vocabulary or the block set. Independent of the `mdp:` format
 // version (which gates source-level compatibility).
-export const SCHEMA_VERSION = "1.2.0";
+export const SCHEMA_VERSION = "1.3.0";
 
 // The presentation forms a source can declare (the allowed enum). Matches
 // ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
 // (index.mjs re-exports SCHEMA).
-const FORMS = ["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper"];
+const FORMS = ["page", "slides", "flyer", "report", "onepager", "memo", "letter", "scroll", "accordion", "tabs", "stepper", "plan"];
 
 // The forms compiled when a source omits `forms:`. The three core forms stay the
 // default, so an unannotated source (and the playground) build the familiar set;
@@ -270,6 +270,24 @@ const definitions = {
       features: { type: "array", items: { type: "string" } },
     },
   },
+  tasks: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "items"],
+    properties: {
+      type: { const: "tasks" },
+      items: { type: "array", items: { $ref: "#/definitions/tasksItem" } },
+    },
+  },
+  tasksItem: {
+    type: "object",
+    additionalProperties: false,
+    required: ["status", "text"],
+    properties: {
+      status: { enum: ["todo", "done", "active"] },
+      text: { type: "string" },
+    },
+  },
 };
 
 // The frontmatter object (the IR's `meta`). Closed to the keys the engine reads
@@ -400,6 +418,7 @@ export const SCHEMA = {
           { $ref: "#/definitions/timeline" },
           { $ref: "#/definitions/faq" },
           { $ref: "#/definitions/pricing" },
+          { $ref: "#/definitions/tasks" },
         ],
       },
     },
