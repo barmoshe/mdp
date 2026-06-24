@@ -64,7 +64,7 @@ There is deliberately no raw HTML, no inline CSS, and no scripting in the source
 
 ## Forms and mechanics (v1)
 
-A form is an output shape. The form set includes the classic reading forms plus the interactive forms (scroll, accordion, tabs, stepper).
+A form is an output shape. The form set includes the classic reading forms plus the interactive forms (scroll, accordion, tabs, stepper, plan).
 
 ```mdp:compare
 # page

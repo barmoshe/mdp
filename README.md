@@ -68,7 +68,7 @@ npm i mdp-compiler
 ```js
 import { compile } from "mdp-compiler";
 
-const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter" | "scroll" | "accordion" | "tabs" | "stepper"
+const html = compile(source, "slides"); // "page" | "slides" | "flyer" | "report" | "onepager" | "memo" | "letter" | "scroll" | "accordion" | "tabs" | "stepper" | "plan"
 ```
 
 ### From source
@@ -84,7 +84,7 @@ node packages/core/build.mjs examples/block-compare.mdp
 This writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
 `flyer.html`, and, when a source opts into them, `report.html`, `onepager.html`,
 `memo.html`, `letter.html`, `scroll.html`, `accordion.html`, `tabs.html`,
-`stepper.html`). Open them in a browser. The render path is pure, so
+`stepper.html`, `plan.html`). Open them in a browser. The render path is pure, so
 two runs produce byte-identical output.
 
 Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp`

@@ -5,6 +5,33 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+### Added
+- **Plan form.** A fifth interactive form, `plan`, renders an implementation plan
+  as collapsible phases (each `---` section a `<details>`), the `{.lead}` standfirst
+  as the goal, and `mdp:tasks` checklists driving a live progress meter. It reads
+  the block set exactly as `page` does.
+- **`mdp:tasks` block.** A status-aware checklist directive: `- [x]` done, `- [~]`
+  in progress, `- [ ]` to-do. It renders in every artifact and feeds the `plan`
+  form's progress meter.
+- **Plan-mode preview.** A `/mdp-preview-plan` command and a project `PostToolUse`
+  hook on `ExitPlanMode` render a Claude Code plan as the `plan` form via
+  `scripts/preview-plan.mjs`, which wraps the plan in MDP frontmatter, lifts
+  `- [ ]` / `- [x]` / `- [~]` runs into `mdp:tasks` blocks, and splits a phase per
+  `##`. The conversion is deterministic and read-only; it never edits the plan.
+- **Extension examples + a live showcase.** Three curated, zero-dependency,
+  deterministic reference packages under `extensions/`: `mdp-block-status`
+  (`mdp:status` pills), `mdp-block-spec-sheet` (`mdp:spec-sheet`), and
+  `mdp-artifact-resume` (a `resume` output type), each with its own tests and an
+  offline demo. A new `scripts/check-extensions.mjs` (wired into `npm test` and CI)
+  gates them on tests, demo, determinism, and drift from the vendored engine. The
+  site gains an Extensions showcase that runs the real modules in `srcDoc` iframes,
+  plus a "Build an extension" docs page.
+
+### Fixed
+- The extension scaffolder now documents `content-blocks.mjs` wiring, so a
+  scaffolded block renders inside the interactive forms, not only the static
+  artifacts (scaffolder template README, CONTRIBUTING, architecture doc).
+
 ## [0.4.0] - 2026-06-23
 
 ### Added

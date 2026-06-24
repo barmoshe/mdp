@@ -1,6 +1,6 @@
 # MDP
 
-> A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into design-locked artifacts: a page, a slide deck, a flyer, the document forms (report, one-pager, memo, letter), and the interactive forms (scroll, accordion, tabs, stepper). The author writes meaning; the engine owns all design.
+> A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into design-locked artifacts: a page, a slide deck, a flyer, the document forms (report, one-pager, memo, letter), and the interactive forms (scroll, accordion, tabs, stepper, plan). The author writes meaning; the engine owns all design.
 
 ## Docs
 
@@ -28,5 +28,5 @@ An .mdp file is valid Markdown plus a few typed blocks. There is no styling in t
 - Frontmatter: `mdp: 1`, `forms: [page, slides, flyer]`, `title`, optional `kicker`, `lang`, `dir`, `theme` (a named theme), `brand-logo` (an asset reference), `brand-accent` and optional `brand-accent-2` (one 6-digit hex each; the engine derives a full AA-gated accent set), `brand-font` (the body font: one of system, serif, mono, rounded, humanist).
 - `# Title`, then `{.lead} a standfirst`. Sections start with `## Heading`. A line that is exactly `---` is a section or slide break.
 - Lists with `- ` or `1. `. A quote with `> ...` and an optional `{.cite} attribution`.
-- `mdp:stats` (key: value lines), `mdp:compare` (options as `# Name` plus `badge:`, `note:`, `cta:`, and `- ` pros), `mdp:flow` (steps joined by `->`), and `:::callout <variant>` ... `:::`.
+- `mdp:stats` (key: value lines), `mdp:compare` (options as `# Name` plus `badge:`, `note:`, `cta:`, and `- ` pros), `mdp:flow` (steps joined by `->`), `mdp:tasks` (a status-aware checklist: `- [x]` done, `- [~]` in progress, `- [ ]` to-do), and `:::callout <variant>` ... `:::`.
 - Never put styling in the source: no sizes, no inline CSS, no arbitrary fonts. The only color you may set is `brand-accent` (a hex the engine derives and gates to WCAG AA), and the only font is `brand-font` from a fixed set of system stacks; otherwise pick a named `theme`.

@@ -19,7 +19,7 @@ meaning, the renderer guarantees the look.
 - Output: one HTML file per artifact under `dist/` at the repo root
   (`page.html`, `slides.html`, `flyer.html`, plus `report.html`, `onepager.html`,
   `memo.html`, `letter.html`, `scroll.html`, `accordion.html`, `tabs.html`,
-  `stepper.html` when a source opts into them).
+  `stepper.html`, `plan.html` when a source opts into them).
 
 ## Determinism (a hard rule)
 

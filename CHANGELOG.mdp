@@ -15,7 +15,16 @@ This is a presentation distillation of the changelog. The authoritative, full hi
 
 ## Unreleased
 
-Nothing yet.
+### Added
+
+- **Plan form.** A fifth interactive form, `plan`, renders an implementation plan as collapsible phases (each `---` section a `<details>`), the `{.lead}` as the goal, and `mdp:tasks` checklists driving a live progress meter. Reads the block set exactly as `page` does.
+- **`mdp:tasks` block.** A status-aware checklist directive: `- [x]` done, `- [~]` in progress, `- [ ]` to-do. Renders in every artifact and feeds the `plan` form's progress meter.
+- **Plan-mode preview.** A `/mdp-preview-plan` command and a project `PostToolUse` hook on `ExitPlanMode` render a Claude Code plan as the `plan` form via `scripts/preview-plan.mjs` (wraps the plan in MDP frontmatter, lifts task runs into `mdp:tasks`, splits a phase per `##`). Deterministic and read-only; never edits the plan.
+- **Extension examples + a live showcase.** Three curated, zero-dependency, deterministic reference packages under `extensions/` (`mdp-block-status`, `mdp-block-spec-sheet`, `mdp-artifact-resume`), each with tests and an offline demo, gated in CI by `scripts/check-extensions.mjs` (tests, demo, determinism, engine-drift). The site gains an Extensions showcase running the real modules in `srcDoc` iframes, plus a "Build an extension" docs page.
+
+### Fixed
+
+- **Scaffolder doc gap.** Block wiring now documents `content-blocks.mjs`, so a scaffolded block renders inside the interactive forms, not only the static artifacts.
 
 ---
 

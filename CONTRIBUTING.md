@@ -63,8 +63,8 @@ component everywhere. Use `src/compare.mjs` as the model.
    where the other block styles are injected.
 6. Wire it into the shared interactive renderer too, `src/content-blocks.mjs`: add
    the same `case` to `renderContentBlock`, and add your `STYLE` to the
-   `CONTENT_BLOCK_STYLE` array. That one file covers all four interactive forms
-   (scroll, accordion, tabs, stepper); a block wired only into page/slides/flyer
+   `CONTENT_BLOCK_STYLE` array. That one file covers all five interactive forms
+   (scroll, accordion, tabs, stepper, plan); a block wired only into page/slides/flyer
    renders blank in them.
 7. Update `spec/schema.json` and `SPEC.md` once the shape settles.
 

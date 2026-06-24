@@ -9,7 +9,7 @@ title: MDP — Markdown Presentation
 # MDP — Markdown Presentation
 {.lead} A presentation compiler for AI-written content: one source, many design-locked artifacts.
 
-One declarative `.mdp` source composes, deterministically, into a page, a slide deck, a flyer, a report, a one-pager, a memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper). A markdown viewer gives you one rendering. MDP gives you a compiler.
+One declarative `.mdp` source composes, deterministically, into a page, a slide deck, a flyer, a report, a one-pager, a memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper, plan). A markdown viewer gives you one rendering. MDP gives you a compiler.
 
 ---
 
