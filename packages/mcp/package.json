@@ -1,6 +1,6 @@
 {
   "name": "mdp-mcp",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "MCP server for MDP: compile one .mdp source into design-locked HTML across the full form set (page, slides, flyer, document forms, and interactive forms) from any MCP host, and send the artifact to Slack.",
   "type": "module",
   "license": "Apache-2.0",

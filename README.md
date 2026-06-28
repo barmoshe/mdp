@@ -124,18 +124,18 @@ form — collapsible phases, status-aware checklists, and a live progress meter.
   wraps the plan in MDP frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into
   `mdp:tasks` blocks, and compiles it to the `plan` form. Works from any project once
   the plugin is installed (the path resolves via `${CLAUDE_PLUGIN_ROOT}`).
-- **Automatically on plan exit (optional):** Claude Code has no per-hook toggle, so
-  the plugin does not force this on you. To auto-render every time you submit a plan,
-  add a `PostToolUse` hook on `ExitPlanMode` to your `.claude/settings.json`:
+- **Automatically as a plan is presented (optional):** Claude Code has no per-hook
+  toggle, so the plugin does not force this on you. To auto-render every plan, add a
+  `PreToolUse` hook on `ExitPlanMode` to your `.claude/settings.json`:
 
   ```json
   {
     "hooks": {
-      "PostToolUse": [
+      "PreToolUse": [
         {
           "matcher": "ExitPlanMode",
           "hooks": [
-            { "type": "command", "command": "node \"<mdp>/scripts/preview-plan.mjs\" --latest --open || true" }
+            { "type": "command", "command": "node \"<mdp>/scripts/preview-plan.mjs\" --hook --open || true" }
           ]
         }
       ]
@@ -143,6 +143,11 @@ form — collapsible phases, status-aware checklists, and a live progress meter.
   }
   ```
 
+  `--hook` reads the `ExitPlanMode` tool-call JSON on stdin and renders that exact
+  plan, so the preview pops up **before the approval prompt** and refreshes on every
+  revision — not just once the plan is approved. (It falls back to the newest saved
+  plan if the payload has none, and always exits 0 so it can never block the plan.)
+  Use `PreToolUse`, not `PostToolUse`: the latter resolves only after you approve.
   Replace `<mdp>` with the path to your MDP clone or installed plugin. Inside this
   repo that is `$CLAUDE_PROJECT_DIR` (exactly what this repo's own
   `.claude/settings.json` uses). `--open` opens it locally and is a harmless no-op in

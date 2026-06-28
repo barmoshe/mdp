@@ -5,12 +5,28 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-28
+
+### Fixed
+- **Plan preview renders before approval.** The auto-render hook is now
+  `PreToolUse` on `ExitPlanMode`, not `PostToolUse`. `PostToolUse` resolves only
+  after you approve a plan, so the preview appeared only post-approval and, via
+  `--latest`, could render the previous plan mid-iteration. The preview now pops up
+  as the plan is presented and refreshes on every revision.
+
+### Added
+- **`preview-plan.mjs --hook`.** A first-class hook mode: it reads the
+  `ExitPlanMode` tool-call JSON on stdin and renders that exact plan
+  (`tool_input.plan`), so no shell wrapper is needed to wire the `PreToolUse` hook.
+  It falls back to the newest saved plan when the payload carries none, and always
+  exits 0 so it can never block `ExitPlanMode`. The repo's own `.claude/settings.json`
+  and the README now use `PreToolUse` + `--hook`.
+
 ### Changed
 - **Plan preview works as an installed plugin.** `/mdp-preview-plan` now invokes the
   converter via `${CLAUDE_PLUGIN_ROOT}` (with a repo-root fallback) instead of a
   CWD-relative path, so it works for `/mdp` plugin users in any project, not just
-  inside this repo. The `ExitPlanMode` auto-render is documented in the README as an
-  opt-in hook (Claude Code has no per-hook toggle, so it is not bundled).
+  inside this repo.
 
 ## [0.5.0] - 2026-06-24
 

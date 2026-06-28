@@ -50,3 +50,11 @@ Arguments: $ARGUMENTS
 4. Keep it deterministic and read-only: do not edit the user's plan; only render
    it. If the compile fails, report the error from the script rather than
    guessing.
+
+## Automatic alternative
+
+To render every plan without invoking this command, wire a `PreToolUse` hook on
+`ExitPlanMode` that runs `preview-plan.mjs --hook` (see the "Preview a plan as MDP"
+section of the README). `--hook` reads the tool-call JSON on stdin and renders the
+exact plan being presented, so the preview appears *before* the approval prompt and
+on each revision. It fails open and never blocks the plan.

@@ -9,14 +9,20 @@
 // --open and a local display — opens it in a browser.
 //
 // It is the shared core behind both the /mdp-preview-plan command (the manual
-// path: the agent surfaces the HTML to you) and the PostToolUse hook on
-// ExitPlanMode (the automatic path: it writes + opens on every plan).
+// path: the agent surfaces the HTML to you) and the PreToolUse hook on
+// ExitPlanMode (the automatic path): with --hook it reads the tool-call JSON on
+// stdin, lifts tool_input.plan, and renders it as the plan is presented — before
+// the approval dialog — so the preview shows on every plan and each iteration,
+// not just after approval.
 //
 // Usage:
 //   node scripts/preview-plan.mjs <plan.md>        # a specific plan file
 //   node scripts/preview-plan.mjs --latest         # newest plan in ~/.claude/plans
 //   cat plan.md | node scripts/preview-plan.mjs --stdin
+//   ... | node scripts/preview-plan.mjs --hook     # ExitPlanMode hook JSON on stdin
 //   flags: [--out <file>] [--open] [--plans-dir <dir>] [--title <text>]
+// --hook fails open (always exits 0) so it can never block ExitPlanMode, and
+// falls back to the newest saved plan if the payload carries no plan.
 // Prints `WROTE <abspath>` as its last line so a caller can find the HTML.
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from "node:fs";
@@ -29,12 +35,13 @@ import { compile } from "../packages/core/src/index.mjs";
 const repoRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 
 function parseArgs(argv) {
-  const args = { open: false, latest: false, stdin: false, out: null, plansDir: null, title: null, input: null };
+  const args = { open: false, latest: false, stdin: false, hook: false, out: null, plansDir: null, title: null, input: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--open") args.open = true;
     else if (a === "--latest") args.latest = true;
     else if (a === "--stdin") args.stdin = true;
+    else if (a === "--hook") args.hook = true;
     else if (a === "--out") args.out = argv[++i];
     else if (a === "--plans-dir") args.plansDir = argv[++i];
     else if (a === "--title") args.title = argv[++i];
@@ -186,12 +193,45 @@ function readStdin() {
   }
 }
 
+// In --hook mode the ExitPlanMode PreToolUse payload arrives as JSON on stdin;
+// lift the plan markdown out of it (tool_input.plan, or a bare .plan). Returns
+// "" on empty/non-JSON input so the caller can fall back to the newest plan.
+function planFromHookStdin() {
+  const raw = readStdin();
+  if (!raw.trim()) return "";
+  try {
+    const payload = JSON.parse(raw);
+    return (payload.tool_input && payload.tool_input.plan) || payload.plan || "";
+  } catch {
+    return "";
+  }
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  // --hook must never block ExitPlanMode: on any problem, report and exit 0.
+  const failOpen = args.hook;
+  const bail = (msg, code) => {
+    console.error(msg);
+    process.exit(failOpen ? 0 : code);
+  };
 
   let md = "";
   let sourceLabel = "";
-  if (args.stdin) {
+  if (args.hook) {
+    md = planFromHookStdin();
+    sourceLabel = "ExitPlanMode hook";
+    if (!md.trim()) {
+      // No plan in the payload (malformed/absent) — fall back to the newest
+      // saved plan so the preview still appears.
+      const plansDir = args.plansDir || join(homedir(), ".claude", "plans");
+      const path = newestPlan(plansDir);
+      if (path) {
+        md = readFileSync(path, "utf8");
+        sourceLabel = resolve(path);
+      }
+    }
+  } else if (args.stdin) {
     md = readStdin();
     sourceLabel = "stdin";
   } else {
@@ -199,31 +239,21 @@ function main() {
     if (!path && args.latest) {
       const plansDir = args.plansDir || join(homedir(), ".claude", "plans");
       path = newestPlan(plansDir);
-      if (!path) {
-        console.error(`preview-plan: no plan .md found in ${plansDir}`);
-        process.exit(2);
-      }
+      if (!path) bail(`preview-plan: no plan .md found in ${plansDir}`, 2);
     }
-    if (!path) {
-      console.error("preview-plan: pass a plan .md path, --latest, or --stdin");
-      process.exit(2);
-    }
+    if (!path) bail("preview-plan: pass a plan .md path, --latest, --stdin, or --hook", 2);
     md = readFileSync(path, "utf8");
     sourceLabel = resolve(path);
   }
 
-  if (!md.trim()) {
-    console.error("preview-plan: the plan source is empty");
-    process.exit(2);
-  }
+  if (!md.trim()) bail("preview-plan: the plan source is empty", 2);
 
   const source = toMdp(md, args.title);
   let html;
   try {
     html = compile(source, "plan");
   } catch (e) {
-    console.error(`preview-plan: compile failed: ${e && e.message ? e.message : e}`);
-    process.exit(1);
+    bail(`preview-plan: compile failed: ${e && e.message ? e.message : e}`, 1);
   }
 
   const out = args.out ? resolve(args.out) : join(repoRoot, "dist", "plan-preview.html");
