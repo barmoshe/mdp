@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img" aria-label="One .mdp source compiles deterministically into a page, slides, a flyer, a report, and eight more forms">
+  <title>One .mdp source compiles into many design-locked artifacts</title>
+  <defs>
+    <style>
+      .sans { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+    </style>
+    <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#5b54d6"/>
+    </marker>
+  </defs>
+
+  <!-- flat card, no shadow / no gradient -->
+  <rect x="8" y="8" width="1184" height="544" rx="16" fill="#fdfcfb" stroke="#e7e5e1" stroke-width="1.5"/>
+
+  <!-- ================= SOURCE ================= -->
+  <g>
+    <rect x="52" y="150" width="300" height="270" rx="12" fill="#f4f3f0" stroke="#dfddd8" stroke-width="1.5"/>
+    <rect x="52" y="150" width="300" height="40" rx="12" fill="#eeedfb"/>
+    <rect x="52" y="176" width="300" height="14" fill="#eeedfb"/>
+    <text x="72" y="177" class="mono" font-size="15" fill="#4f46d6">brief.mdp</text>
+    <!-- frontmatter -->
+    <rect x="74" y="212" width="120" height="8" rx="4" fill="#b8b4ec"/>
+    <rect x="74" y="228" width="180" height="8" rx="4" fill="#cfcdc7"/>
+    <rect x="74" y="244" width="150" height="8" rx="4" fill="#cfcdc7"/>
+    <!-- title + lead -->
+    <rect x="74" y="272" width="210" height="12" rx="4" fill="#1c1b19"/>
+    <rect x="74" y="294" width="256" height="8" rx="4" fill="#e4e3df"/>
+    <rect x="74" y="308" width="230" height="8" rx="4" fill="#e4e3df"/>
+    <!-- a compare block hint -->
+    <rect x="74" y="336" width="112" height="60" rx="6" fill="#ffffff" stroke="#dfddd8"/>
+    <rect x="200" y="336" width="112" height="60" rx="6" fill="#ffffff" stroke="#dfddd8"/>
+    <rect x="86" y="350" width="60" height="7" rx="3" fill="#b8b4ec"/>
+    <rect x="86" y="366" width="80" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="86" y="378" width="70" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="212" y="350" width="60" height="7" rx="3" fill="#b8b4ec"/>
+    <rect x="212" y="366" width="80" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="212" y="378" width="70" height="6" rx="3" fill="#e4e3df"/>
+    <text x="202" y="132" class="sans" font-size="17" font-weight="600" text-anchor="middle" fill="#56544f">one declarative source</text>
+  </g>
+
+  <!-- ================= COMPILE ARROW ================= -->
+  <g>
+    <line x1="366" y1="285" x2="452" y2="285" stroke="#5b54d6" stroke-width="2.5" marker-end="url(#arw)"/>
+    <text x="409" y="266" class="mono" font-size="16" text-anchor="middle" fill="#4f46d6">compile()</text>
+    <text x="409" y="312" class="sans" font-size="13" text-anchor="middle" fill="#8c8a83">deterministic</text>
+  </g>
+
+  <!-- ================= FORMS GRID ================= -->
+  <!-- helper geometry: 4 cards 320x150, gap 28, cols at 478 & 826, rows at 138 & 316 -->
+
+  <!-- PAGE -->
+  <g>
+    <rect x="478" y="138" width="320" height="150" rx="10" fill="#ffffff" stroke="#e7e5e1" stroke-width="1.5"/>
+    <rect x="490" y="150" width="52" height="22" rx="11" fill="#eeedfb"/>
+    <text x="516" y="165" class="mono" font-size="12" text-anchor="middle" fill="#4f46d6">page</text>
+    <rect x="502" y="196" width="150" height="11" rx="4" fill="#1c1b19"/>
+    <rect x="502" y="216" width="272" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="502" y="230" width="272" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="502" y="244" width="230" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="502" y="262" width="90" height="6" rx="3" fill="#b8b4ec"/>
+  </g>
+
+  <!-- SLIDES -->
+  <g>
+    <rect x="826" y="138" width="320" height="150" rx="10" fill="#ffffff" stroke="#e7e5e1" stroke-width="1.5"/>
+    <rect x="838" y="150" width="60" height="22" rx="11" fill="#eeedfb"/>
+    <text x="868" y="165" class="mono" font-size="12" text-anchor="middle" fill="#4f46d6">slides</text>
+    <rect x="838" y="182" width="296" height="94" rx="6" fill="#1c1b19"/>
+    <rect x="858" y="206" width="150" height="14" rx="4" fill="#f4f3f1"/>
+    <rect x="858" y="228" width="60" height="5" rx="2.5" fill="#7a72e0"/>
+    <rect x="858" y="248" width="190" height="6" rx="3" fill="#56544f"/>
+  </g>
+
+  <!-- FLYER -->
+  <g>
+    <rect x="478" y="316" width="320" height="150" rx="10" fill="#ffffff" stroke="#e7e5e1" stroke-width="1.5"/>
+    <rect x="490" y="328" width="52" height="22" rx="11" fill="#eeedfb"/>
+    <text x="516" y="343" class="mono" font-size="12" text-anchor="middle" fill="#4f46d6">flyer</text>
+    <rect x="502" y="360" width="272" height="42" rx="6" fill="#eeedfb"/>
+    <rect x="516" y="374" width="150" height="14" rx="4" fill="#4f46d6"/>
+    <rect x="502" y="414" width="128" height="38" rx="6" fill="#f4f3f0"/>
+    <rect x="646" y="414" width="128" height="38" rx="6" fill="#f4f3f0"/>
+  </g>
+
+  <!-- REPORT -->
+  <g>
+    <rect x="826" y="316" width="320" height="150" rx="10" fill="#ffffff" stroke="#e7e5e1" stroke-width="1.5"/>
+    <rect x="838" y="328" width="62" height="22" rx="11" fill="#eeedfb"/>
+    <text x="869" y="343" class="mono" font-size="12" text-anchor="middle" fill="#4f46d6">report</text>
+    <rect x="838" y="360" width="140" height="10" rx="4" fill="#1c1b19"/>
+    <rect x="838" y="384" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="838" y="398" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="838" y="412" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="838" y="426" width="100" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="1006" y="384" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="1006" y="398" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="1006" y="412" width="132" height="6" rx="3" fill="#e4e3df"/>
+    <rect x="1006" y="426" width="110" height="6" rx="3" fill="#e4e3df"/>
+  </g>
+
+  <!-- caption -->
+  <text x="812" y="508" class="sans" font-size="15" text-anchor="middle" fill="#8c8a83">+ onepager · memo · letter · scroll · accordion · tabs · stepper · plan.  One source, byte-identical every run.</text>
+</svg>

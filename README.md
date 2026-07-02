@@ -1,36 +1,66 @@
-# MDP
+<div align="center">
 
-**Markdown Presentation.** A presentation compiler for AI-written content. One
-declarative `.mdp` source composes, deterministically, into many polished,
-design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a
-memo, a letter, and the interactive forms (scroll, accordion, tabs, stepper, plan).
+<img src="assets/banner.svg" alt="MDP: one source, many design-locked artifacts" width="820">
+
+<p>
+  <a href="https://github.com/barmoshe/mdp/actions/workflows/ci.yml"><img src="https://github.com/barmoshe/mdp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.npmjs.com/package/mdp-compiler"><img src="https://img.shields.io/npm/v/mdp-compiler.svg?color=5b54d6&label=mdp-compiler" alt="npm: mdp-compiler"></a>
+  <a href="package.json"><img src="https://img.shields.io/badge/dependencies-zero-2f7d46.svg" alt="zero dependencies"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-56544f.svg" alt="license: Apache-2.0"></a>
+</p>
+
+<p>
+  <b><a href="https://barmoshe.github.io/mdp/">Playground</a></b> &nbsp;·&nbsp;
+  <a href="https://barmoshe.github.io/mdp/#/docs/getting-started">Docs</a> &nbsp;·&nbsp;
+  <a href="https://www.npmjs.com/package/mdp-compiler">npm</a> &nbsp;·&nbsp;
+  <a href="SPEC.md">Spec</a> &nbsp;·&nbsp;
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
+
+</div>
+
+---
+
+**A presentation compiler for AI-written content.** One declarative `.mdp` source
+composes, deterministically, into many polished, design-locked artifacts: a page, a
+slide deck, a flyer, a report, a one-pager, a memo, a letter, and the interactive
+forms (scroll, accordion, tabs, stepper, plan).
 
 A markdown viewer gives you one rendering. MDP gives you a compiler.
 
-[![Live playground](https://img.shields.io/badge/live-playground%20%2B%20docs-5b54d6)](https://barmoshe.github.io/mdp/)
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![Dependencies: zero](https://img.shields.io/badge/dependencies-zero-brightgreen)](package.json)
-[![CI](https://github.com/barmoshe/mdp/actions/workflows/ci.yml/badge.svg)](https://github.com/barmoshe/mdp/actions/workflows/ci.yml)
-![Node 18+](https://img.shields.io/badge/node-18%2B-brightgreen)
-[![npm: mdp-compiler](https://img.shields.io/npm/v/mdp-compiler?logo=npm&label=mdp-compiler)](https://www.npmjs.com/package/mdp-compiler)
+<div align="center">
+  <img src="assets/one-source-many-forms.svg" alt="One brief.mdp source compiles deterministically into page, slides, flyer, and report, plus eight more forms, byte-identical every run" width="900">
+</div>
 
 > **Try it now, no install:** the [live playground and documentation](https://barmoshe.github.io/mdp/)
 > run the real engine in your browser. Edit a source on the left, watch the page,
 > slides, and flyer compile on the right.
 
+## Contents
+
+- [Why](#why)
+- [How it works](#how-it-works)
+- [Quick start](#quick-start)
+- [Use it in your agent](#use-it-in-your-agent)
+- [What a source looks like](#what-a-source-looks-like)
+- [Blocks](#blocks)
+- [How one source maps to each form](#how-one-source-maps-to-each-form)
+- [The design lock](#the-design-lock)
+- [Documentation](#documentation)
+- [Status](#status) · [Roadmap](#roadmap) · [Contributing](#contributing) · [License](#license)
+
 ## Why
 
-AI writes oceans of Markdown. It is clean and cheap but reads as a flat wall of
-text. Ask to "show it nicely" and you get a one-off HTML artifact that looks fine
-once and is junky and unmaintainable the next day. MDP closes that gap. The
-author, a person or an agent, writes meaning. The engine owns all design, so the
-output cannot look junky. And the same source becomes a page, a deck, and a
-flyer.
+AI writes oceans of Markdown. It is clean and cheap but reads as a flat wall of text.
+Ask to "show it nicely" and you get a one-off HTML artifact that looks fine once and
+is junky and unmaintainable the next day. MDP closes that gap. The author, a person or
+an agent, writes meaning. The engine owns all design, so the output cannot look junky.
+And the same source becomes a page, a deck, and a flyer.
 
 ## How it works
 
-The rendering method is deterministic composition over a semantic
-representation, not templates and not live AI.
+The rendering method is deterministic composition over a semantic representation, not
+templates and not live AI.
 
 ```mermaid
 flowchart LR
@@ -44,13 +74,13 @@ flowchart LR
   C --> CO["flyer.html"]
 ```
 
-1. **A declarative source.** Markdoc-shaped: typed tags filled with data, no
-   arbitrary code. Agent-emittable, statically checkable, safe.
+1. **A declarative source.** Markdoc-shaped: typed tags filled with data, no arbitrary
+   code. Agent-emittable, statically checkable, safe.
 2. **A semantic representation.** The source parses into typed meaning, the IR
    `{ meta, blocks }`. Intent, not layout.
-3. **Deterministic composition.** Each artifact is a solver, not a template. It
-   lays the meaning out against locked design tokens and reflows so it cannot
-   look bad, compiled once and reproducible.
+3. **Deterministic composition.** Each artifact is a solver, not a template. It lays
+   the meaning out against locked design tokens and reflows so it cannot look bad,
+   compiled once and reproducible.
 4. **AI authors, the engine composes.** The render path is pure: the same source
    produces byte-identical output every time.
 
@@ -58,8 +88,8 @@ flowchart LR
 
 ### Install from npm
 
-The engine ships as [`mdp-compiler`](https://www.npmjs.com/package/mdp-compiler),
-zero dependencies, plain ESM, Node 18 or newer:
+The engine ships as [`mdp-compiler`](https://www.npmjs.com/package/mdp-compiler), zero
+dependencies, plain ESM, Node 18 or newer:
 
 ```bash
 npm i mdp-compiler
@@ -84,25 +114,25 @@ node packages/core/build.mjs examples/block-compare.mdp
 This writes one HTML file per artifact into `dist/` (`page.html`, `slides.html`,
 `flyer.html`, and, when a source opts into them, `report.html`, `onepager.html`,
 `memo.html`, `letter.html`, `scroll.html`, `accordion.html`, `tabs.html`,
-`stepper.html`, `plan.html`). Open them in a browser. The render path is pure, so
-two runs produce byte-identical output.
+`stepper.html`, `plan.html`). Open them in a browser. The render path is pure, so two
+runs produce byte-identical output.
 
-Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp`
-for the full block set. To show or present an artifact, add `--open`:
+Try `examples/block-stats.mdp` for a simple brief, or `examples/block-compare.mdp` for
+the full block set. To show or present an artifact, add `--open`:
 
 ```bash
 node packages/core/build.mjs examples/block-compare.mdp --open slides
 ```
 
-In the deck, arrows or space move, F toggles fullscreen, and print (Cmd or
-Ctrl + P) exports a PDF. See the [CLI reference](https://barmoshe.github.io/mdp/#/docs/cli)
-for `--out` and `--only`.
+In the deck, arrows or space move, F toggles fullscreen, and print (Cmd or Ctrl + P)
+exports a PDF. See the [CLI reference](https://barmoshe.github.io/mdp/#/docs/cli) for
+`--out` and `--only`.
 
 ## Use it in your agent
 
-MDP is not an app to visit and not a syntax to learn. It ships as a plugin, so
-you go from content to a polished artifact without leaving your editor. Ask in
-plain language; the agent authors clean MDP, compiles it, and opens the result.
+MDP is not an app to visit and not a syntax to learn. It ships as a plugin, so you go
+from content to a polished artifact without leaving your editor. Ask in plain language;
+the agent authors clean MDP, compiles it, and opens the result.
 
 **Claude Code** (this repo is the marketplace):
 
@@ -113,17 +143,35 @@ plain language; the agent authors clean MDP, compiles it, and opens the result.
 
 Then "show this as a deck", "make a one-pager from this file", or `/mdp present <file>`.
 
-### Preview a plan as MDP
+**Codex** (a self-contained plugin in [`codex/`](./codex)):
 
-When an agent writes an implementation plan, render it as the interactive `plan`
-form — collapsible phases, status-aware checklists, and a live progress meter.
+```text
+codex marketplace add barmoshe/mdp
+```
 
-- **On demand:** run `/mdp-preview-plan` (it converts the active plan, or one you
-  point it at, then surfaces the HTML). Under the hood it runs
-  `node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" --latest --open`, which
-  wraps the plan in MDP frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into
-  `mdp:tasks` blocks, and compiles it to the `plan` form. Works from any project once
-  the plugin is installed (the path resolves via `${CLAUDE_PLUGIN_ROOT}`).
+Then enable MDP from the Codex app and ask "show this as a slide deck".
+
+**Any MCP host** (Claude Desktop, Cursor, and others) via the `mdp-mcp` server:
+
+```text
+claude mcp add mdp -- npx -y mdp-mcp
+```
+
+It exposes `mdp_compile`, `mdp_present`, `mdp_validate`, and `mdp_send_slack`. See the
+[MCP server](https://barmoshe.github.io/mdp/#/docs/mcp) docs.
+
+<details>
+<summary><b>Preview an implementation plan as MDP</b> (the <code>plan</code> form)</summary>
+
+When an agent writes an implementation plan, render it as the interactive `plan` form:
+collapsible phases, status-aware checklists, and a live progress meter.
+
+- **On demand:** run `/mdp-preview-plan` (it converts the active plan, or one you point
+  it at, then surfaces the HTML). Under the hood it runs
+  `node "${CLAUDE_PLUGIN_ROOT:-.}/scripts/preview-plan.mjs" --latest --open`, which wraps
+  the plan in MDP frontmatter, lifts `- [ ]` / `- [x]` / `- [~]` runs into `mdp:tasks`
+  blocks, and compiles it to the `plan` form. Works from any project once the plugin is
+  installed (the path resolves via `${CLAUDE_PLUGIN_ROOT}`).
 - **Automatically as a plan is presented (optional):** Claude Code has no per-hook
   toggle, so the plugin does not force this on you. To auto-render every plan, add a
   `PreToolUse` hook on `ExitPlanMode` to your `.claude/settings.json`:
@@ -143,33 +191,15 @@ form — collapsible phases, status-aware checklists, and a live progress meter.
   }
   ```
 
-  `--hook` reads the `ExitPlanMode` tool-call JSON on stdin and renders that exact
-  plan, so the preview pops up **before the approval prompt** and refreshes on every
-  revision — not just once the plan is approved. (It falls back to the newest saved
-  plan if the payload has none, and always exits 0 so it can never block the plan.)
-  Use `PreToolUse`, not `PostToolUse`: the latter resolves only after you approve.
-  Replace `<mdp>` with the path to your MDP clone or installed plugin. Inside this
-  repo that is `$CLAUDE_PROJECT_DIR` (exactly what this repo's own
-  `.claude/settings.json` uses). `--open` opens it locally and is a harmless no-op in
-  a headless session. Put it in one project's `.claude/settings.json`, or in
-  `~/.claude/settings.json` to enable it everywhere.
+  `--hook` reads the `ExitPlanMode` tool-call JSON on stdin and renders that exact plan,
+  so the preview pops up **before the approval prompt** and refreshes on every revision,
+  not just once the plan is approved. (It falls back to the newest saved plan if the
+  payload has none, and always exits 0 so it can never block the plan.) Use `PreToolUse`,
+  not `PostToolUse`: the latter resolves only after you approve. Replace `<mdp>` with the
+  path to your MDP clone or installed plugin. `--open` opens it locally and is a harmless
+  no-op in a headless session.
 
-**Codex** (a self-contained plugin in `codex/`):
-
-```text
-codex marketplace add barmoshe/mdp
-```
-
-Then enable MDP from the Codex app and ask "show this as a slide deck".
-
-**Any MCP host** (Claude Desktop, Cursor, ...) via the `mdp-mcp` server:
-
-```text
-claude mcp add mdp -- npx -y mdp-mcp
-```
-
-It exposes `mdp_compile`, `mdp_present`, `mdp_validate`, and `mdp_send_slack`. See the
-[MCP server](https://barmoshe.github.io/mdp/#/docs/mcp) docs.
+</details>
 
 ## What a source looks like
 
@@ -203,9 +233,9 @@ Start self-hosted, then move later if you prefer a visual builder.
 :::
 ````
 
-It is valid, readable Markdown. There is no styling in the source: no sizes, no
-fonts, and the only color you may name is a brand color the engine derives and
-gates. The design lives in the engine.
+It is valid, readable Markdown. There is no styling in the source: no sizes, no fonts,
+and the only color you may name is a brand color the engine derives and gates. The
+design lives in the engine.
 
 ## Blocks
 
@@ -227,8 +257,8 @@ gates. The design lives in the engine.
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
 | `brand-logo` / `brand-accent` / `brand-font` | Add a logo, name a brand color (one hex) the engine re-lights into a full WCAG-AA accent set, or set the body font from a closed set of system stacks. |
 
-Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks)
-and the [spec](SPEC.md).
+Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks) and
+the [spec](SPEC.md).
 
 ## How one source maps to each form
 
@@ -249,21 +279,20 @@ and the [spec](SPEC.md).
 | `mdp:tasks` | checklist | checklist | checklist |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
 
-The document forms inherit these readings: `report`, `memo`, and `letter` read
-each block exactly as `page` does, and the one-pager composes them like `flyer`.
-The interactive forms (`scroll`, `accordion`, `tabs`, `stepper`, `plan`) each
-reframe the same block set into their respective navigation model.
+The document forms inherit these readings: `report`, `memo`, and `letter` read each
+block exactly as `page` does, and the one-pager composes them like `flyer`. The
+interactive forms (`scroll`, `accordion`, `tabs`, `stepper`, `plan`) each reframe the
+same block set into their respective navigation model.
 
 ## The design lock
 
-`packages/core/src/tokens.mjs` is the single source of the look: two font
-families, two weights, one warm neutral ink ramp plus a single restrained accent,
-light and dark, no gradients or shadows. The author writes meaning only and
-cannot reach the design, so the over-decorated "junky artifact" look is
-impossible by construction. Pick a vibe with the `theme` field, a curated palette
-from the spectrum (`studio`, `ocean`, `teal`, `forest`, `amber`, `terracotta`,
-`coral`, `rose`, `plum`, `violet`, or `mono`); every theme passes WCAG AA in
-light and dark, verified by `npm test`.
+`packages/core/src/tokens.mjs` is the single source of the look: two font families, two
+weights, one warm neutral ink ramp plus a single restrained accent, light and dark, no
+gradients or shadows. The author writes meaning only and cannot reach the design, so the
+over-decorated "junky artifact" look is impossible by construction. Pick a vibe with the
+`theme` field, a curated palette from the spectrum (`studio`, `ocean`, `teal`, `forest`,
+`amber`, `terracotta`, `coral`, `rose`, `plum`, `violet`, or `mono`); every theme passes
+WCAG AA in light and dark, verified by `npm test`.
 
 ## Documentation
 
@@ -274,37 +303,33 @@ Full docs live on the site, rendered alongside the live playground:
 - [Forms](https://barmoshe.github.io/mdp/#/docs/forms) and [themes](https://barmoshe.github.io/mdp/#/docs/themes)
 - [CLI](https://barmoshe.github.io/mdp/#/docs/cli), [plugins](https://barmoshe.github.io/mdp/#/docs/plugins), and [architecture](https://barmoshe.github.io/mdp/#/docs/architecture)
 
-In-repo: the [vision](VISION.md), the [spec](SPEC.md), and the machine-facing
-build guide [AGENTS.md](AGENTS.md).
+In-repo: the [vision](VISION.md), the [spec](SPEC.md), and the machine-facing build
+guide [AGENTS.md](AGENTS.md).
 
-## The site and playground
-
-The hub at [barmoshe.github.io/mdp](https://barmoshe.github.io/mdp/) lives in
-`site/` (a Vite + React app) and bundles the real engine straight from
-`packages/core`, so the playground compiles with the same code the CLI and the
-plugins run. The engine itself stays dependency-free; only the docs site has a
-build. It deploys to GitHub Pages on every push to `main`.
+The hub at [barmoshe.github.io/mdp](https://barmoshe.github.io/mdp/) lives in `site/` (a
+Vite + React app) and bundles the real engine straight from `packages/core`, so the
+playground compiles with the same code the CLI and the plugins run. The engine itself
+stays dependency-free; only the docs site has a build. It deploys to GitHub Pages on
+every push to `main`.
 
 ## Status
 
-Early and honest. A working engine that proves the core claim: one source
-composes deterministically into many clean artifacts, with a first set of blocks
-and right-to-left support. The format and the block grammar will move before 1.0.
-Issues and ideas are welcome.
+Early and honest. A working engine that proves the core claim: one source composes
+deterministically into many clean artifacts, with a first set of blocks and
+right-to-left support. The format and the block grammar will move before 1.0. Issues and
+ideas are welcome.
 
 ## Roadmap
 
-The live playground, the `mdp-mcp` MCP server, and the `create-mdp-extension`
-scaffolder are shipped and published to npm. The block set continues to grow;
-more diagram kinds (gantt, state, ER) are planned behind the existing
-`mdp:diagram` syntax.
+The live playground, the `mdp-mcp` MCP server, and the `create-mdp-extension` scaffolder
+are shipped and published to npm. The block set continues to grow; more diagram kinds
+(gantt, state, ER) are planned behind the existing `mdp:diagram` syntax.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md), the
-machine-facing build guide. The bar for a change: keep the engine pure (the
-render path is deterministic and byte-identical across runs) and keep the design
-locked.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md), the machine-facing
+build guide. The bar for a change: keep the engine pure (the render path is
+deterministic and byte-identical across runs) and keep the design locked.
 
 ## License
 
