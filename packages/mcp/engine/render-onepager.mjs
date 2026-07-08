@@ -14,7 +14,7 @@
 // Built for short content; long content simply flows to a second printed page
 // (the engine never shrinks type to fit — the design is locked).
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -92,6 +92,7 @@ const ONEPAGER_STYLE = `.mdp-onepager-stage {
 .mdp-onepager-band .mdp-figure-value { font-size: 1.5rem; color: var(--mdp-accent-text); }
 
 .mdp-onepager-quote .mdp-quote-text { font-size: 1.25rem; }
+.mdp-onepager .mdp-figure-img img { max-height: 14rem; }
 
 /* Footer strip: the trailing section, set off by a hairline. */
 .mdp-onepager-footer {
@@ -140,7 +141,7 @@ ${TASKS_STYLE}
   }
   .mdp-onepager-stage { display: block; min-height: auto; padding: 0; }
   .mdp-onepager { max-width: none; border: 0; border-radius: 0; padding: 0; }
-  .mdp-onepager-item, .mdp-onepager-band { break-inside: avoid; }
+  .mdp-onepager-item, .mdp-onepager-band, .mdp-figure-img { break-inside: avoid; }
   @page { margin: 1.5cm; }
 }`;
 
@@ -188,6 +189,10 @@ function renderOnepagerBlock(block) {
       return renderStatsBand(block);
     case "quote":
       return renderQuoteBlock(block);
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
     case "compare":
       return renderCompare(block);
     case "flow":
@@ -218,8 +223,8 @@ function renderSectionInner(section) {
 }
 
 // Classify a section so the grid knows whether it spans one column or both.
-// Compare/callout/flow/stats/quote are full-width by nature; plain text packs
-// into a single column.
+// Compare/callout/flow/stats/quote/image are full-width by nature; plain text
+// packs into a single column.
 function classify(section) {
   const types = section.blocks.map((b) => b.type);
   if (types.includes("compare")) return "wide";
@@ -227,6 +232,7 @@ function classify(section) {
   if (types.includes("flow")) return "wide";
   if (types.includes("stats")) return "wide";
   if (types.includes("quote")) return "wide";
+  if (types.includes("image")) return "wide";
   if (
     types.includes("table") || types.includes("chart") || types.includes("diagram") ||
     types.includes("timeline") || types.includes("faq") || types.includes("pricing")

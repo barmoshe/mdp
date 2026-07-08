@@ -78,6 +78,12 @@
     "lead": "page"
   },
   {
+    "id": "block-image",
+    "file": "block-image.mdp",
+    "label": "Body images",
+    "lead": "page"
+  },
+  {
     "id": "theme-gallery",
     "file": "theme-gallery.mdp",
     "label": "Theme gallery",

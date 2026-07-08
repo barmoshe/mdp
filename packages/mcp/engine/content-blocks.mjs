@@ -9,7 +9,7 @@
 // block type is then wired into all four forms in a single place. Pure: it
 // solves the IR only, with no clocks and no randomness.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import { renderCompare, COMPARE_STYLE } from "./compare.mjs";
 import { renderFlow, FLOW_STYLE } from "./flow.mjs";
 import { renderCallout, CALLOUT_STYLE } from "./callout.mjs";
@@ -78,6 +78,11 @@ export function renderContentBlock(block) {
         block.text
       )}</blockquote>${cite}\n</figure>`;
     }
+
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
 
     case "compare":
       return renderCompare(block);

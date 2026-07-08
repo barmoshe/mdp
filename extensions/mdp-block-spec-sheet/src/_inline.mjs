@@ -10,6 +10,7 @@
 //   *italic*      -> <em>
 //   `code`        -> <code>
 //   [text](url)   -> <a href="url">text</a>
+//   ![alt](src)   -> <img src="src" alt="alt">
 
 // Escape the five HTML-significant characters.
 export function escapeHtml(text) {
@@ -82,18 +83,27 @@ export function inline(text) {
     return `${codes.length - 1}`;
   });
 
-  // 2. Links: [text](url)
+  // 2. Images: ![alt](src). Consumed before links so the leading ! is never
+  //    left dangling in front of a stray <a>. Reuses the logo's stricter
+  //    scheme allowlist; an unsafe src drops the image entirely rather than
+  //    emitting a broken <img>.
+  out = out.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_m, alt, url) => {
+    const src = safeImgUrl(url);
+    return src ? `<img class="mdp-inline-img" src="${src}" alt="${alt}" loading="lazy">` : "";
+  });
+
+  // 3. Links: [text](url)
   out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, label, url) => {
     return `<a href="${safeUrl(url)}">${label}</a>`;
   });
 
-  // 3. Bold: **text** (before italics, so ** is not eaten by *).
+  // 4. Bold: **text** (before italics, so ** is not eaten by *).
   out = out.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
 
-  // 4. Italic: *text*
+  // 5. Italic: *text*
   out = out.replace(/\*([^*]+)\*/g, "<em>$1</em>");
 
-  // 5. Restore code spans.
+  // 6. Restore code spans.
   out = out.replace(/(\d+)/g, (_m, i) => `<code>${codes[Number(i)]}</code>`);
 
   return out;

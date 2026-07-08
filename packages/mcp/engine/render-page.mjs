@@ -10,7 +10,7 @@
 //
 // A single centred reading column, ~640px. Hierarchy from type and whitespace.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -123,6 +123,11 @@ function renderBlock(block) {
         block.text
       )}</blockquote>${cite}\n</figure>`;
     }
+
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
 
     case "compare":
       return renderCompare(block);

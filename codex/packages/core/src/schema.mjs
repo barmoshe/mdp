@@ -163,6 +163,17 @@ const definitions = {
     required: ["type", "text"],
     properties: { type: { const: "paragraph" }, text: { type: "string" } },
   },
+  image: {
+    type: "object",
+    additionalProperties: false,
+    required: ["type", "alt", "src"],
+    properties: {
+      type: { const: "image" },
+      alt: { type: "string" },
+      // Already passed through safeImgUrl by the parser.
+      src: { type: "string" },
+    },
+  },
   table: {
     type: "object",
     additionalProperties: false,
@@ -412,6 +423,7 @@ export const SCHEMA = {
           { $ref: "#/definitions/callout" },
           { $ref: "#/definitions/quote" },
           { $ref: "#/definitions/paragraph" },
+          { $ref: "#/definitions/image" },
           { $ref: "#/definitions/table" },
           { $ref: "#/definitions/chart" },
           { $ref: "#/definitions/diagram" },

@@ -12,7 +12,7 @@
 // Print: light mode forced, @page margins, the cover/TOC/each section start on a
 // fresh page. With JS off it is still a complete, readable scrolling document.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -130,6 +130,7 @@ ${TASKS_STYLE}
   .mdp-report-toc { break-before: page; }
   .mdp-report-section { break-before: page; }
   .mdp-report-num, .mdp-report-heading { break-after: avoid; }
+  .mdp-figure-img { break-inside: avoid; }
   @page { margin: 2cm; }
 }`;
 
@@ -173,6 +174,11 @@ function renderReportBlock(block) {
         block.text
       )}</blockquote>${cite}\n</figure>`;
     }
+
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
 
     case "compare":
       return renderCompare(block);

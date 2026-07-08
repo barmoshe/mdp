@@ -5,6 +5,19 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-07-08
+
+### Added
+- **Body images.** `![alt](src)` now renders. A paragraph that is solely an
+  image becomes a locked-size `<figure class="mdp-figure-img">` per form (the
+  same asset-slot contract as `brand-logo`: the author names the asset, the
+  engine owns size and position); mixed into running text, the same syntax
+  stays inline as a small `<img>`. The `src` passes the same scheme allowlist
+  as `brand-logo`; an unsafe value drops the image entirely rather than
+  emitting a broken one. `onepager` promotes an image to the full-width row;
+  `flyer` caps it tight for the small card; `slides` scales it with the
+  viewport. Fixes #56.
+
 ## [0.6.0] - 2026-06-28
 
 ### Fixed

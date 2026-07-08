@@ -53,7 +53,7 @@ else fail("examples: no entry carries ci-determinism");
 // (unimplemented), so this required set is satisfiable.
 const REQUIRED = [
   "stats", "compare", "flow", "quote", "list", "lead", "cite", "brand-logo", "brand-accent", "brand-font", "rtl",
-  "table", "chart", "diagram", "timeline", "faq", "pricing", "tasks",
+  "table", "chart", "diagram", "timeline", "faq", "pricing", "tasks", "image",
   "callout:note", "callout:tip", "callout:cost", "callout:recommendation", "callout:warning",
 ];
 const seen = new Set();

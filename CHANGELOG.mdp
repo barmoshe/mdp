@@ -19,6 +19,14 @@ Nothing yet.
 
 ---
 
+## 0.7.0
+
+### Added
+
+- **Body images.** `![alt](src)` now renders. A paragraph that is solely an image becomes a locked-size figure per form (the same asset-slot contract as `brand-logo`); mixed into running text, the same syntax stays inline as a small image. An unsafe `src` drops the image entirely rather than emitting a broken one.
+
+---
+
 ## 0.5.0
 
 ### Added

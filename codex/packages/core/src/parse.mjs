@@ -24,6 +24,7 @@
 
 import { CALLOUT_VARIANTS } from "./callout.mjs";
 import { DIAGRAM_KINDS } from "./diagram.mjs";
+import { safeImgUrl } from "./inline.mjs";
 
 // Split a `[a, b, c]` inline array into trimmed string parts.
 function parseInlineArray(raw) {
@@ -552,6 +553,19 @@ export function parseBody(body) {
       continue;
     }
 
+    // Standalone image line: `![alt](src)` alone on its own line is the
+    // common single-illustration case, promoted to a block-level figure
+    // (mixed into running text, it stays inline — see inline.mjs). An unsafe
+    // src is dropped entirely, mirroring brand-logo's "vanish, don't
+    // degrade" contract instead of emitting a broken image.
+    const imageMatch = line.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+    if (imageMatch) {
+      const src = safeImgUrl(imageMatch[2]);
+      if (src) blocks.push({ type: "image", alt: imageMatch[1], src });
+      i++;
+      continue;
+    }
+
     // Line role on a standalone line (e.g. `{.lead} ...`).
     const { role, text } = splitRole(line);
     if (role === "lead") {
@@ -575,7 +589,8 @@ export function parseBody(body) {
         next.startsWith(":::") ||
         /^[-*]\s+/.test(next) ||
         /^\d+\.\s+/.test(next) ||
-        /^\{\.[a-zA-Z]/.test(next)
+        /^\{\.[a-zA-Z]/.test(next) ||
+        /^!\[([^\]]*)\]\(([^)\s]+)\)$/.test(next)
       ) {
         break;
       }

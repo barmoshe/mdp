@@ -14,7 +14,7 @@
 // a band, sets the quote as its own block, and puts the trailing section in a
 // footer band.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -103,6 +103,9 @@ const FLYER_STYLE = `.mdp-flyer-stage {
 .mdp-flyer-quote { padding: 0 var(--mdp-space-6); }
 .mdp-flyer-quote .mdp-quote-text { font-size: 1.25rem; }
 
+/* On the small card an image is capped tight so it never dominates it. */
+.mdp-flyer .mdp-figure-img img { max-height: 10rem; }
+
 /* Footer band: the trailing section, on the surface colour. */
 .mdp-flyer-footer {
   margin-top: var(--mdp-space-6);
@@ -167,6 +170,10 @@ function renderFlyerBlock(block) {
       return renderStatsBand(block);
     case "quote":
       return renderQuoteBlock(block);
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
     case "compare":
       return renderCompare(block);
     case "flow":
@@ -243,12 +250,13 @@ function classify(section) {
   if (types.includes("stats")) return "stats";
   if (types.includes("quote")) return "quote";
   if (types.includes("flow")) return "flow";
-  // table / chart / diagram / timeline / faq / pricing are wide blocks: their own
-  // full-width element, never squeezed into a two-column pairing (reuses the
-  // full-width "flow" treatment).
+  // table / chart / diagram / timeline / faq / pricing / image are wide blocks:
+  // their own full-width element, never squeezed into a two-column pairing
+  // (reuses the full-width "flow" treatment).
   if (
     types.includes("table") || types.includes("chart") || types.includes("diagram") ||
-    types.includes("timeline") || types.includes("faq") || types.includes("pricing")
+    types.includes("timeline") || types.includes("faq") || types.includes("pricing") ||
+    types.includes("image")
   ) return "flow";
   return "text";
 }

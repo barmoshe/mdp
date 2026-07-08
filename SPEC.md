@@ -387,6 +387,20 @@ None of the options is entirely free.
    is injected. A `:::` container opened with any other directive degrades
    gracefully: its inner content renders as normal blocks, nothing throws.
 
+5. Body images. Standard Markdown `![alt](src)`. A paragraph that is solely an
+   image reference is a block: the engine emits `<figure class="mdp-figure-
+   img"><img ...></figure>` at a locked size and aspect per form, the same
+   contract as `brand-logo` (an asset slot, not a color, size, or font).
+   Mixed into running text, the same syntax stays inline as a small `<img>`.
+   The `src` passes the same scheme allowlist as `brand-logo` (`http(s)`, `/`,
+   `./`, `../`, and base64 `data:image/*` only); an unsafe or malformed value
+   drops the image entirely rather than emitting a broken one. Single-column
+   forms (`page`, `report`, `onepager` text cells, `memo`, `letter`, `scroll`,
+   `accordion`, `tabs`, `stepper`, `plan`) cap it to the reading column width;
+   `onepager` promotes an image section to the full-width row (like
+   `compare`/`callout`/`flow`/`quote`); `flyer` caps it tightly for the small
+   card; `slides` scales it with the viewport.
+
 There is deliberately no raw HTML, no inline CSS, and no scripting in the
 source. Those are the doors slop walks through.
 
@@ -467,6 +481,7 @@ differently per form:
 | `mdp:tasks` | checklist | checklist | checklist |
 | `:::callout` | bordered aside | bordered aside | own full-width aside |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+| `![alt](src)` alone | full-width figure | full-slide figure | own full-width figure |
 
 The document and interactive forms inherit these readings rather than redefining
 them: `report`, `memo`, `letter`, `scroll`, `accordion`, `tabs`, `stepper`, and
@@ -511,6 +526,5 @@ in one pass. (v0.1: contract defined, validator to follow in the spike.)
 - The final closed set of line roles, and a `quote` or `figure` directive.
 - Whether `---` always means a slide in the slides form, or whether each `##`
   also starts one.
-- How images behave differently across forms.
 - Additional forms (social card, print) and their mapping rules.
 - The name is settled: MDP, for Markdown Presentation, owning the acronym.

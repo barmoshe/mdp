@@ -12,7 +12,7 @@
 //
 // Print-tuned: light mode, @page margins.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -100,6 +100,7 @@ ${TASKS_STYLE}
     --mdp-ink-soft: #52525b; --mdp-ink-faint: #8a8a8f; --mdp-border: rgba(0, 0, 0, 0.10);
   }
   .mdp-memo { max-width: none; padding: 0; }
+  .mdp-figure-img { break-inside: avoid; }
   @page { margin: 2cm; }
 }`;
 
@@ -142,6 +143,10 @@ function renderMemoBlock(block) {
         block.text
       )}</blockquote>${cite}\n</figure>`;
     }
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
     case "compare":
       return renderCompare(block);
     case "flow":

@@ -252,6 +252,7 @@ design lives in the engine.
 | `mdp:faq` | Question and answer pairs as native disclosure elements. |
 | `mdp:pricing` | Priced tiers in a locked card grid: the priced sibling of compare. |
 | `mdp:tasks` | A status-aware checklist (`- [x]` done, `- [~]` in progress, `- [ ]` to-do); drives the live progress meter in the `plan` form. |
+| `![alt](src)` | A paragraph that is solely an image becomes a locked-size figure; mixed into a sentence it stays inline. |
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
@@ -278,6 +279,7 @@ the [spec](SPEC.md).
 | `mdp:pricing` | tier cards | tier cards | full-width tier cards |
 | `mdp:tasks` | checklist | checklist | checklist |
 | blockquote + `{.cite}` | pull quote | full quote slide | quote block |
+| `![alt](src)` alone | full-width figure | full-slide figure | full-width figure |
 
 The document forms inherit these readings: `report`, `memo`, and `letter` read each
 block exactly as `page` does, and the one-pager composes them like `flyer`. The

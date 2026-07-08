@@ -408,6 +408,25 @@ em { font-style: italic; }
   box-shadow: 0 1px 2px rgba(15, 18, 20, 0.08), 0 6px 18px rgba(15, 18, 20, 0.06);
   margin-block-end: var(--mdp-space-5);
 }
+
+/* Body image: a paragraph that is solely an image reference, promoted to a
+   block-level figure. The author names the asset; size, ratio, and position
+   are locked here (mirrors .mdp-logo). Default cap fits the single-column
+   reading forms (page/report/scroll/accordion/tabs/stepper/plan/memo/letter);
+   per-form overrides live in each renderer's stylesheet. No physical left/
+   right, so it flips for free under dir=rtl. */
+.mdp-figure-img {
+  margin-block: var(--mdp-space-6);
+}
+.mdp-figure-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 28rem;
+  object-fit: cover;
+  border-radius: 0.625rem;
+  border: 1px solid var(--mdp-border);
+}
 `;
 
 // Assemble the shared stylesheet (the selected theme's tokens + base) injected

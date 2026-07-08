@@ -1,0 +1,17 @@
+---
+mdp: 1
+theme: studio
+forms: [page, onepager, flyer]
+title: Body images
+demonstrates: [image, lead]
+---
+
+# Body images
+{.lead} A single-illustration paragraph becomes a locked-size figure; the same syntax mixed into a sentence stays inline.
+
+![A hand-drawn robot at a desk](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjAwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkEgaGFuZC1kcmF3biByb2JvdCBhdCBhIGRlc2siPjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiByeD0iMTIiIGZpbGw9IiM1YjU0ZDYiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjEwMCIgcj0iNDAiIGZpbGw9IiNmZmZmZmYiLz48dGV4dCB4PSIxNTAiIHk9IjExMiIgZm9udC1mYW1pbHk9InN5c3RlbS11aSwtYXBwbGUtc3lzdGVtLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiNmZmZmZmYiPkJvZHkgaW1hZ2U8L3RleHQ+PC9zdmc+)
+
+---
+
+## Mixed into a sentence
+An image can also sit inline, ![a small inline icon](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTgiIGZpbGw9IiM1YjU0ZDYiLz48L3N2Zz4=) right beside the words around it, at a small size rather than a full figure.

@@ -12,6 +12,7 @@
   { "id": "block-timeline", "file": "block-timeline.mdp", "label": "Timeline", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "block-faq", "file": "block-faq.mdp", "label": "FAQ", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "block-pricing", "file": "block-pricing.mdp", "label": "Pricing", "lead": "page", "roles": ["ci-build", "ci-determinism", "vendor-mcp", "site"] },
+  { "id": "block-image", "file": "block-image.mdp", "label": "Body images", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "theme-gallery", "file": "theme-gallery.mdp", "label": "Theme gallery", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "rtl", "file": "rtl.mdp", "label": "Right to left", "lead": "page", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "form-flyer-heavy", "file": "form-flyer-heavy.mdp", "label": "Flyer composition", "lead": "flyer", "roles": ["ci-build", "vendor-mcp"] },

@@ -13,7 +13,7 @@
 // time, prev/next buttons, click-to-advance, Arrow keys, an "n / total"
 // counter, and dots. With JS off, slides simply stack and remain readable.
 
-import { inline } from "./inline.mjs";
+import { inline, escapeHtml } from "./inline.mjs";
 import {
   htmlDocument,
   deriveTitle,
@@ -79,6 +79,10 @@ const SLIDES_STYLE = `.mdp-deck {
 .mdp-slide .mdp-quote { border-inline-start-width: 3px; padding-inline-start: var(--mdp-space-6); }
 .mdp-slide .mdp-quote-text { font-size: clamp(1.75rem, 4.4vw, 2.75rem); }
 .mdp-slide .mdp-quote-cite { font-size: clamp(0.95rem, 1.8vw, 1.125rem); margin-top: var(--mdp-space-4); }
+
+/* A full slide fills the viewport, so the image scales with it rather than a
+   fixed cap. */
+.mdp-slide .mdp-figure-img img { max-height: clamp(16rem, 60vh, 34rem); }
 
 /* JS-on stepper UI. The .mdp-js class is added by the script. */
 .mdp-js .mdp-slide {
@@ -212,6 +216,7 @@ ${TASKS_STYLE}
   .mdp-slide .mdp-p, .mdp-slide .mdp-list { font-size: 1rem; }
   .mdp-slide .mdp-figure-value { font-size: 1.75rem; }
   .mdp-slide .mdp-quote-text { font-size: 1.4rem; }
+  .mdp-figure-img { break-inside: avoid; }
   @page { margin: 1.5cm; }
 }`;
 
@@ -345,6 +350,11 @@ function renderSlideBlock(block) {
         block.text
       )}</blockquote>${cite}\n</figure>`;
     }
+
+    case "image":
+      return `<figure class="mdp-figure-img"><img src="${block.src}" alt="${escapeHtml(
+        block.alt
+      )}" loading="lazy"></figure>`;
 
     case "compare":
       return renderCompare(block);
