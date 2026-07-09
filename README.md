@@ -256,7 +256,8 @@ design lives in the engine.
 | `:::callout` | A note, tip, cost, recommendation, or warning aside. |
 | `---` | A section break: a divider on a page, a slide break in slides. |
 | `lang` / `dir` | Set `dir: rtl` in the frontmatter and the whole layout flips. |
-| `brand-logo` / `brand-accent` / `brand-font` | Add a logo, name a brand color (one hex) the engine re-lights into a full WCAG-AA accent set, or set the body font from a closed set of system stacks. |
+| `brand-logo` / `brand-accent` / `brand-font` | Add a logo, name a brand color (a hex, `rgb()`/`hsl()`, or a CSS name) the engine re-lights into a full WCAG-AA accent set, or set the body font from a closed set of system stacks. |
+| `` `#0C0B40` `` | An inline code span that is one color literal (hex, `rgb()`/`hsl()`, or a CSS name) gets a small color chip, so a palette reads as color. |
 
 Full grammar in the [documentation](https://barmoshe.github.io/mdp/#/docs/blocks) and
 the [spec](SPEC.md).

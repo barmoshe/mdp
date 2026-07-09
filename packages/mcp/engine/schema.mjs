@@ -26,7 +26,7 @@ import { DIAGRAM_KINDS } from "./diagram.mjs";
 // Semantic version of the grammar this schema describes. Bump on any change to
 // the frontmatter vocabulary or the block set. Independent of the `mdp:` format
 // version (which gates source-level compatibility).
-export const SCHEMA_VERSION = "1.3.0";
+export const SCHEMA_VERSION = "1.4.0";
 
 // The presentation forms a source can declare (the allowed enum). Matches
 // ARTIFACTS in index.mjs; kept as a literal here to avoid a circular import
@@ -345,15 +345,15 @@ const meta = {
     },
     "brand-accent": {
       description:
-        "Optional custom brand color: one 6-digit hex (e.g. #7DB74B). The engine derives a full WCAG-AA accent set (5 roles, light + dark) from it; a malformed or inaccessible value falls back to `theme`. A reference to one color, never a style.",
+        "Optional custom brand color: a hex (#RGB, #RGBA, #RRGGBB, #RRGGBBAA), an rgb()/rgba()/hsl()/hsla() value, or a CSS color name (e.g. #7DB74B, navy, rgb(0 0 128)). The engine normalizes it to one opaque hex and derives a full WCAG-AA accent set (5 roles, light + dark); a malformed or inaccessible value falls back to `theme`. Must be unquoted. A reference to one color, never a style.",
       type: "string",
-      pattern: "^#[0-9a-fA-F]{6}$",
+      pattern: "^(#[0-9a-fA-F]{3,8}|[a-zA-Z]+|(rgb|rgba|hsl|hsla)\\([^)]*\\))$",
     },
     "brand-accent-2": {
       description:
-        "Optional secondary brand color (one 6-digit hex), used sparingly in engine-chosen accents (title underline, flow connectors, active slide dot). Applies only alongside brand-accent and falls back to it when inaccessible.",
+        "Optional secondary brand color (a hex, rgb()/hsl(), or CSS color name), used sparingly in engine-chosen accents (title underline, flow connectors, active slide dot). Applies only alongside brand-accent and falls back to it when inaccessible.",
       type: "string",
-      pattern: "^#[0-9a-fA-F]{6}$",
+      pattern: "^(#[0-9a-fA-F]{3,8}|[a-zA-Z]+|(rgb|rgba|hsl|hsla)\\([^)]*\\))$",
     },
     "brand-font": {
       description:

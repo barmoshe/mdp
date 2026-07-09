@@ -16,7 +16,13 @@ import { fileURLToPath } from "node:url";
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const EXT = join(ROOT, "extensions");
 const NODE = process.execPath;
-const CORE_INLINE = join(ROOT, "packages/core/src/inline.mjs");
+// The vendored core chain every extension carries: the escaper plus the color
+// modules inline.mjs pulls in for swatches. [core source, vendored name].
+const VENDORED_CORE = [
+  ["packages/core/src/inline.mjs", "_inline.mjs"],
+  ["packages/core/src/color.mjs", "color.mjs"],
+  ["packages/core/src/named-colors.mjs", "named-colors.mjs"],
+];
 const TMPL_TOKENS = join(
   ROOT,
   "packages/create-mdp-extension/templates/artifact/src/_tokens.mjs.tmpl"
@@ -44,7 +50,7 @@ const EXTENSIONS = [
   { dir: "mdp-artifact-resume", name: "mdp-artifact-resume", keyword: "mdp-artifact", needle: "mdp-resume", tokens: true },
 ];
 
-const coreInline = readFileSync(CORE_INLINE);
+const coreVendored = VENDORED_CORE.map(([src, name]) => [name, readFileSync(join(ROOT, src))]);
 const tmplTokens = existsSync(TMPL_TOKENS) ? readFileSync(TMPL_TOKENS) : null;
 
 process.stdout.write("check-extensions: curated MDP extension examples\n");
@@ -66,8 +72,10 @@ for (const ext of EXTENSIONS) {
   ok(`${ext.dir}: name + keywords follow the convention`);
 
   // 2. Vendored design files match the engine byte-for-byte (no drift).
-  if (!coreInline.equals(readFileSync(join(pkgDir, "src/_inline.mjs")))) {
-    fail(`${ext.dir}: vendored src/_inline.mjs differs from packages/core/src/inline.mjs`);
+  for (const [name, bytes] of coreVendored) {
+    if (!bytes.equals(readFileSync(join(pkgDir, "src", name)))) {
+      fail(`${ext.dir}: vendored src/${name} differs from packages/core/src/${name}`);
+    }
   }
   if (ext.tokens) {
     if (!tmplTokens) fail("the artifact template _tokens.mjs.tmpl is missing");

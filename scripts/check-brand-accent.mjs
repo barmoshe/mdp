@@ -11,6 +11,7 @@
 import {
   deriveAccent,
   deriveAccent2,
+  normalizeColor,
   contrast,
   relativeLuminance,
   TEXT_MIN,
@@ -79,6 +80,52 @@ if (JSON.stringify(deriveAccent("#7DB74B")) === JSON.stringify(deriveAccent("#7D
   if (compile(good, "page").includes(`--mdp-accent: ${fill}`)) {
     ok("integration: a valid brand-accent emits the derived fill");
   } else fail("integration: derived fill not found in compiled output");
+}
+
+// (e) normalizeColor: the shared front door canonicalizes every accepted syntax to
+// one opaque hex and rejects everything else (fail closed). Alpha is dropped.
+{
+  const CASES = [
+    ["#abc", "#aabbcc"],
+    ["#AABBCC", "#aabbcc"],
+    ["#0C0B40", "#0c0b40"],
+    ["#f00a", "#ff0000"],       // 4-digit shorthand, alpha dropped
+    ["#00008080", "#000080"],   // 8-digit, alpha dropped
+    ["navy", "#000080"],
+    ["RebeccaPurple", "#663399"],
+    ["rgb(0,0,128)", "#000080"],
+    ["rgb(0 0 128 / 50%)", "#000080"],
+    ["rgb(50%, 0%, 0%)", "#800000"],
+    ["hsl(240, 100%, 25%)", "#000080"],
+    ["hsl(240deg 100% 25%)", "#000080"],
+    ["  navy  ", "#000080"],     // trimmed
+  ];
+  let normOk = true;
+  for (const [input, want] of CASES) {
+    const got = normalizeColor(input);
+    if (got !== want) { fail(`normalizeColor(${JSON.stringify(input)}) = ${got}, want ${want}`); normOk = false; }
+  }
+  if (normOk) ok(`normalizeColor canonicalizes all ${CASES.length} accepted syntaxes`);
+
+  const REJECT = ["transparent", "#12345", "#1234567", "not-a-color", "npm run build", "rgb(0,0)", "", "  ", "#", "rgb()"];
+  let rejOk = true;
+  for (const bad of REJECT) {
+    if (normalizeColor(bad) !== null) { fail(`normalizeColor(${JSON.stringify(bad)}) should be null`); rejOk = false; }
+  }
+  if (rejOk) ok(`normalizeColor rejects all ${REJECT.length} non-colors (fail closed)`);
+}
+
+// (f) the loosened brand-accent path: a CSS name / rgb() / hsl() now drives the
+// same derivation as the equivalent hex, and compiles to the same token block.
+{
+  const base = `---\nmdp: 1\ntheme: forest\ntitle: T\n---\n# T\n{.lead} x\n`;
+  const withVal = (v) => base.replace("title: T", `brand-accent: ${v}\ntitle: T`);
+  const navyFill = deriveAccent("#000080").light.fill;
+  for (const v of ["navy", "rgb(0,0,128)", "hsl(240, 100%, 25%)", "#000080"]) {
+    if (compile(withVal(v), "page").includes(`--mdp-accent: ${navyFill}`)) {
+      ok(`integration: brand-accent: ${v} emits the derived navy fill`);
+    } else fail(`integration: brand-accent: ${v} did not emit the navy fill`);
+  }
 }
 
 console.log(failures === 0 ? "\ncheck-brand-accent: PASS" : `\ncheck-brand-accent: ${failures} FAILURE(S)`);

@@ -21,8 +21,8 @@ kicker: Brief                # optional, the small eyebrow above the masthead
 lang: he                     # optional, document language, default "en"
 dir: rtl                     # optional, writing direction, inferred from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
-brand-accent: #2f8f6b        # optional, one brand hex; engine derives the accent set
-brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+brand-accent: #2f8f6b        # optional, one brand color (hex, rgb()/hsl(), or a CSS name); engine derives the accent set
+brand-accent-2: #e8a33d      # optional, a secondary brand color for a few accents
 brand-font: rounded          # optional, body font: system serif mono rounded humanist
 to: All engineering          # optional, memo + letter recipient
 from: Platform team          # optional, memo + letter sender / signature
@@ -42,8 +42,8 @@ signoff: Warm regards,       # optional, letter closing
 | `lang` | Document language on the root element. Defaults to `en`. |
 | `dir` | `ltr` or `rtl`. If omitted, inferred from `lang`. |
 | `brand-logo` | A brand logo the engine places in the masthead: a URL, a relative path, or a base64 `data:image` URI. Validated and sanitized; an unsafe or missing value renders no logo. |
-| `brand-accent` | A custom brand color: one 6-digit hex (with a leading `#`). The engine derives the full accent set (five roles, light and dark) from it, all WCAG AA. A malformed or inaccessible value falls back to `theme`. |
-| `brand-accent-2` | An optional secondary brand color (6-digit hex), used sparingly in a few engine-chosen accents (the title underline, flow connectors, the active slide dot). Applies only alongside `brand-accent`. |
+| `brand-accent` | A custom brand color: a hex (`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`), an `rgb()`/`hsl()` value, or a CSS color name (e.g. `navy`). Must be unquoted. The engine normalizes it to one opaque hex, then derives the full accent set (five roles, light and dark), all WCAG AA. An unrecognized or inaccessible value falls back to `theme`. |
+| `brand-accent-2` | An optional secondary brand color (same formats), used sparingly in a few engine-chosen accents (the title underline, flow connectors, the active slide dot). Applies only alongside `brand-accent`. |
 | `brand-font` | The body/UI font, one of a closed set of system stacks: `system`, `serif`, `mono`, `rounded`, `humanist`. No web fonts. The serif used for leads and quotes is unchanged; an unknown value falls back to the theme default. |
 | `to` | Memo and letter only: the addressee (the To: line). Plain text. |
 | `from` | Memo and letter only: the sender (the From: line, the letterhead, and the signature). Plain text. |
@@ -68,17 +68,27 @@ place, or repeat. The value passes a scheme allowlist (`http(s)`, a relative pat
 or a base64 `data:image/...` URI) and renders as an `<img>`, never inline `<svg>`,
 so it cannot smuggle script.
 
-`brand-accent` is the other amendment: name one brand color as a 6-digit hex and
-the engine re-lights it into the full accent set, the fill, the on-fill label, the
-link and label text, a surface wash, and a border, for both light and dark. Every
-load-bearing role is gated to WCAG AA, exactly as the named themes are, so a brand
-color can never make the page unreadable. It overrides only the accent; the warm
-neutral ramp and the type scale stay put. A malformed value (quoted, missing the
-`#`, or not six hex digits), or a color that cannot be made accessible, is ignored
-and the document falls back to its named `theme`. `brand-accent-2` names an
-optional second color the engine uses sparingly, in the title underline, the flow
-connectors, and the active slide dot, and applies only alongside `brand-accent`.
-You pick the colors; the engine still owns where they land.
+`brand-accent` is the other amendment: name one brand color, as a hex, an
+`rgb()`/`hsl()` value, or a CSS color name, and the engine normalizes it to one
+opaque hex and re-lights it into the full accent set, the fill, the on-fill label,
+the link and label text, a surface wash, and a border, for both light and dark.
+Every load-bearing role is gated to WCAG AA, exactly as the named themes are, so a
+brand color can never make the page unreadable. It overrides only the accent; the
+warm neutral ramp and the type scale stay put. The value must be unquoted (the
+frontmatter scanner keeps quote characters, so a quoted value falls through). An
+unrecognized value, or a color that cannot be made accessible, is ignored and the
+document falls back to its named `theme`. `brand-accent-2` names an optional second
+color the engine uses sparingly, in the title underline, the flow connectors, and
+the active slide dot, and applies only alongside `brand-accent`. You pick the
+colors; the engine still owns where they land.
+
+Inline color swatches are the body-level complement. When an inline code span is
+exactly one recognized color literal (the same set `brand-accent` accepts, a hex,
+an `rgb()`/`hsl()`, or a CSS color name), the engine prepends a small color chip
+inside the `<code>`, so a palette like `#0C0B40`, `navy`, or `rgb(0, 0, 128)` reads
+as color, not just text. The chip color is the normalized hex, so those three
+render an identical swatch; an ordinary code span, or a malformed color, is left
+untouched.
 
 `brand-font` sets the body and UI typeface from a closed set of system stacks:
 `system` (the default), `serif`, `mono`, `rounded`, and `humanist`. The serif used

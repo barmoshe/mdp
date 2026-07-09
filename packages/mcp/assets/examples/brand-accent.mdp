@@ -13,7 +13,7 @@ brand-font: rounded
 # Northwind Labs
 {.lead} One brand color in the frontmatter, and the engine derives the whole accent set, light and dark, every role gated to WCAG AA.
 
-Set `brand-accent` to your brand hex. The engine re-lights it into the five accent roles for both light and dark mode and keeps the type, spacing, and neutral ramp exactly as the theme defines them. You pick a color, never how it is used.
+Set `brand-accent` to your brand color: a hex, an `rgb()`/`hsl()`, or a CSS color name like `teal`. The engine re-lights it into the five accent roles for both light and dark mode and keeps the type, spacing, and neutral ramp exactly as the theme defines them. You pick a color, never how it is used.
 
 ```mdp:flow
 Name a brand color -> The engine derives five roles, light + dark -> Every form stays on brand and AA

@@ -19,6 +19,7 @@
   { "id": "form-slides-heavy", "file": "form-slides-heavy.mdp", "label": "Slide deck", "lead": "slides", "roles": ["ci-build", "vendor-mcp"] },
   { "id": "brand-logo", "file": "brand-logo.mdp", "label": "Branded", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "brand-accent", "file": "brand-accent.mdp", "label": "Custom accent", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
+  { "id": "block-colors", "file": "block-colors.mdp", "label": "Color swatches", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "release-notes", "file": "release-notes.mdp", "label": "Release note", "lead": "page", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "report", "file": "report.mdp", "label": "Report", "lead": "report", "roles": ["ci-build", "vendor-mcp", "site"] },
   { "id": "onepager", "file": "onepager.mdp", "label": "One-pager", "lead": "onepager", "roles": ["ci-build", "vendor-mcp", "site"] },

@@ -11,6 +11,12 @@
 //   `code`        -> <code>
 //   [text](url)   -> <a href="url">text</a>
 //   ![alt](src)   -> <img src="src" alt="alt">
+//
+// One extra affordance rides on the code span: when a code span is exactly one
+// recognized color literal (a hex, rgb()/hsl(), or a CSS color name), a small
+// color chip is emitted just inside the <code> so the color is visible inline.
+
+import { normalizeColor } from "./color.mjs";
 
 // Escape the five HTML-significant characters.
 export function escapeHtml(text) {
@@ -103,8 +109,19 @@ export function inline(text) {
   // 5. Italic: *text*
   out = out.replace(/\*([^*]+)\*/g, "<em>$1</em>");
 
-  // 6. Restore code spans.
-  out = out.replace(/(\d+)/g, (_m, i) => `<code>${codes[Number(i)]}</code>`);
+  // 6. Restore code spans. If a span is exactly one color literal, prepend a chip.
+  //    The chip background is the NORMALIZED hex (never the raw string), so the
+  //    inline style only ever holds a 6-digit hex — no author text reaches CSS.
+  //    Code bodies are already escaped, and a valid color literal is escape-neutral
+  //    (no <>&"'), so codes[i] is safe to test and re-emit as the visible label.
+  out = out.replace(/(\d+)/g, (_m, i) => {
+    const body = codes[Number(i)];
+    const hex = normalizeColor(body);
+    const chip = hex
+      ? `<span class="mdp-swatch" style="background:${hex}"></span>`
+      : "";
+    return `<code>${chip}${body}</code>`;
+  });
 
   return out;
 }

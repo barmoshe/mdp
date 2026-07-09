@@ -30,15 +30,19 @@ source recompose.
 
 ## A custom brand color
 
-When no named theme is close enough, set `brand-accent` to a single brand hex (for
-example `brand-accent: #7db74b`). The engine re-lights that one color into the full
+When no named theme is close enough, set `brand-accent` to a single brand color:
+a hex, an `rgb()`/`hsl()` value, or a CSS color name (for example
+`brand-accent: #7db74b`, `brand-accent: navy`, or `brand-accent: rgb(0 0 128)`).
+The engine normalizes it to one opaque hex and re-lights that color into the full
 accent set, the fill, the on-fill label, the link and label text, a surface wash,
 and a border, for both light and dark, and gates every load-bearing role to WCAG
 AA. If the color cannot be made accessible, the document falls back to the named
 `theme`. An optional `brand-accent-2` adds a second color the engine uses sparingly
 (the title underline, the flow connectors, the active slide dot). You name the
 color; the engine still owns every role and every placement, so a brand color
-cannot drift the look or break contrast. You can also set `brand-font` to change
+cannot drift the look or break contrast. The same color literals also render an
+inline swatch: a code span that is one color (like `#7db74b` or `navy`) shows a
+small chip, so a palette reads as color. You can also set `brand-font` to change
 the body typeface to one of a few system families (`serif`, `mono`, `rounded`,
 `humanist`); the serif used for leads and quotes stays. See [the format](#/docs/format).
 

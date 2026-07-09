@@ -1,0 +1,35 @@
+---
+mdp: 1
+theme: studio
+forms: [page, slides, flyer]
+kicker: Color
+title: Colors and swatches
+demonstrates: [swatch, brand-accent, list, stats, lead]
+brand-accent: navy
+---
+
+# Colors and swatches
+{.lead} Any inline code that is exactly one color shows a small chip, so a palette reads as color, not just text. The `brand-accent` here is set by name, `navy`.
+
+When a code span is a single color literal, MDP prepends a swatch: a hex like `#0C0B40`, a CSS color name like `coral`, an `rgb(37, 99, 235)`, or an `hsl(240, 100%, 25%)`. Ordinary code such as `npm run build` is left alone.
+
+## A palette, read as color
+
+- Navy `#0C0B40` is the deep hero surface
+- Yellow `#FFFB4D` is the primary button fill
+- Royal blue `rgb(59, 95, 232)` is the wordmark accent
+- A named color works too: `rebeccapurple`
+- So does `hsl(174, 63%, 43%)` for a teal
+
+```mdp:stats
+Hex forms: #rgb #rrggbb #rrggbbaa
+Functional: rgb() hsl()
+Named colors: 148
+Chip color: normalized hex
+```
+
+The chip color is always the normalized 6-digit hex, so the same color written as `#000080`, `navy`, or `rgb(0, 0, 128)` renders an identical swatch. The `brand-accent` frontmatter accepts the same set: a hex, an `rgb()`/`hsl()`, or a color name.
+
+:::callout note
+A code span that is not a recognized color, or a malformed one, stays a plain code span with no chip. Nothing about the author's text reaches CSS: only the normalized hex does.
+:::

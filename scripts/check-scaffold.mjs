@@ -120,22 +120,27 @@ function checkType({ type, name, expectName, expectKeyword, demoNeedle }) {
   ok(`${type}: demo writes a working preview`);
 }
 
-// The vendored escaper in each template must match mdp-compiler byte-for-byte.
+// The vendored core modules in each template must match mdp-compiler byte-for-byte
+// (the escaper plus the color chain inline.mjs pulls in for swatches).
+const VENDORED = [
+  ["inline.mjs", "_inline.mjs.tmpl"],
+  ["color.mjs", "color.mjs.tmpl"],
+  ["named-colors.mjs", "named-colors.mjs.tmpl"],
+];
 function checkVendorDrift() {
-  const core = readFileSync(join(ROOT, "packages/core/src/inline.mjs"));
-  for (const type of ["block", "artifact"]) {
-    const tmpl = join(
-      ROOT,
-      `packages/create-mdp-extension/templates/${type}/src/_inline.mjs.tmpl`
-    );
-    if (!core.equals(readFileSync(tmpl))) {
-      fail(
-        `${type}: vendored _inline.mjs is stale`,
-        `Run 'npm run sync:ext-vendor' and commit. (${tmpl})`
-      );
+  for (const [srcName, destName] of VENDORED) {
+    const core = readFileSync(join(ROOT, "packages/core/src", srcName));
+    for (const type of ["block", "artifact"]) {
+      const tmpl = join(ROOT, `packages/create-mdp-extension/templates/${type}/src/${destName}`);
+      if (!core.equals(readFileSync(tmpl))) {
+        fail(
+          `${type}: vendored ${destName} is stale`,
+          `Run 'npm run sync:ext-vendor' and commit. (${tmpl})`
+        );
+      }
     }
   }
-  ok("vendored _inline.mjs matches mdp-compiler (no drift)");
+  ok("vendored core modules match mdp-compiler (no drift)");
 }
 
 process.stdout.write("check-scaffold: create-mdp-extension acceptance\n");

@@ -5,6 +5,34 @@ Keep a Changelog, and the project aims to follow Semantic Versioning.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-07-09
+
+### Added
+- **Inline color swatches.** When an inline code span is exactly one recognized
+  color literal, MDP prepends a small color chip inside the `<code>` so a palette
+  reads as color, not just text. Recognized syntaxes: hex (`#RGB`, `#RGBA`,
+  `#RRGGBB`, `#RRGGBBAA`), `rgb()`/`rgba()`/`hsl()`/`hsla()`, and the CSS color
+  names. The chip color is the normalized 6-digit hex, so `#000080`, `navy`, and
+  `rgb(0, 0, 128)` render an identical swatch; the inline style only ever carries a
+  6-digit hex, so no author text reaches CSS. Ordinary code and malformed colors are
+  left untouched. See `examples/block-colors.mdp`.
+- **`brand-accent` accepts more color formats.** `brand-accent` and
+  `brand-accent-2` now take a hex (3/4/6/8-digit), an `rgb()`/`hsl()` value, or a
+  CSS color name, not only a 6-digit hex. All are normalized to one opaque hex and
+  fed to the same WCAG-AA accent derivation; an unrecognized or inaccessible value
+  still falls back to the named `theme`. The value must be unquoted, as before.
+
+### Changed
+- Schema version bumped to 1.4.0 (the `brand-accent` / `brand-accent-2` pattern is
+  broadened). A shared `normalizeColor` primitive now backs both the swatch and the
+  accent path, so a color is parsed the same way everywhere.
+- Released across packages: `mdp-compiler` 0.8.0, `mdp-mcp` 0.8.0, and
+  `create-mdp-extension` 0.3.0, plus the MDP Claude Code plugin and the Codex
+  plugin bumped to 0.8.0. `inline.mjs` now pulls in the color chain
+  (`color.mjs`, `named-colors.mjs`) for swatches, so those two modules are vendored
+  alongside the escaper in the codex mirror, the MCP engine, the extension scaffold
+  templates, and the curated example extensions; the drift gates cover all three.
+
 ## [0.7.0] - 2026-07-08
 
 ### Added

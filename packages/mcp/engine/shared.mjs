@@ -6,7 +6,7 @@
 
 import { escapeHtml, safeImgUrl } from "./inline.mjs";
 import { baseStyle, THEMES, DEFAULT_THEME, FONT_STACKS } from "./tokens.mjs";
-import { deriveAccent, deriveAccent2 } from "./color.mjs";
+import { deriveAccent, deriveAccent2, normalizeColor } from "./color.mjs";
 
 // Languages that default to a right-to-left script when no explicit dir is set.
 const RTL_LANGS = new Set(["he", "ar", "fa", "ur", "yi"]);
@@ -20,29 +20,27 @@ export function deriveTheme(ir) {
   return THEMES.includes(name) ? name : DEFAULT_THEME;
 }
 
-// A bare 6-digit hex like #7DB74B. The frontmatter scanner does NOT strip quotes
-// and coerces all-digit values to Number, so the leading `#` is mandatory: a
-// quoted "#7db74b", a non-`#` value, or a numeric coercion all fail this guard
-// and fall through to the named theme.
-const HEX6 = /^#[0-9a-fA-F]{6}$/;
-
-// Resolve a custom primary accent from `brand-accent`: validate the hex, then ask
-// the engine to derive a full AA-gated accent set. Returns the {light,dark} set
-// or null (bad hex, or a color that cannot be made accessible) so the caller
-// falls back to the named theme.
+// Resolve a custom primary accent from `brand-accent`: normalize the author's
+// color literal to an opaque hex, then ask the engine to derive a full AA-gated
+// accent set. `normalizeColor` accepts a hex (3/4/6/8-digit), rgb()/hsl(), or a
+// CSS color name and returns "#rrggbb" or null. Returns the {light,dark} set or
+// null (unrecognized color, or one that cannot be made accessible) so the caller
+// falls back to the named theme. Note the frontmatter scanner does NOT strip
+// quotes, so the value must be unquoted: a quoted "#7db74b" or "navy" keeps its
+// quotes, fails to normalize, and falls through to the named theme.
 export function deriveBrandAccent(ir) {
   const raw = (ir && ir.meta && ir.meta["brand-accent"]) || "";
-  if (typeof raw !== "string" || !HEX6.test(raw.trim())) return null;
-  return deriveAccent(raw.trim());
+  const hex = typeof raw === "string" ? normalizeColor(raw) : null;
+  return hex ? deriveAccent(hex) : null;
 }
 
-// The optional secondary accent from `brand-accent-2`, same validation. Only
+// The optional secondary accent from `brand-accent-2`, same normalization. Only
 // applied when a primary brand accent is also present (it has no meaning on its
 // own), and it falls back to the primary if the color cannot be made accessible.
 export function deriveBrandAccent2(ir) {
   const raw = (ir && ir.meta && ir.meta["brand-accent-2"]) || "";
-  if (typeof raw !== "string" || !HEX6.test(raw.trim())) return null;
-  return deriveAccent2(raw.trim());
+  const hex = typeof raw === "string" ? normalizeColor(raw) : null;
+  return hex ? deriveAccent2(hex) : null;
 }
 
 // Resolve `brand-font` to a system font stack from the closed FONT_STACKS set, or

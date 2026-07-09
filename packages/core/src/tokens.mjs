@@ -245,6 +245,19 @@ code {
   padding: 0.08em 0.36em;
 }
 
+/* Color swatch: a small chip prepended inside a code span whose whole body is one
+   color literal (see inline.mjs). The chip color rides an inline style; the border
+   keeps a white or pale chip visible on the code surface in light and dark mode. */
+.mdp-swatch {
+  display: inline-block;
+  inline-size: 0.72em;
+  block-size: 0.72em;
+  margin-inline-end: 0.4em;
+  vertical-align: -0.06em;
+  border-radius: 3px;
+  border: 1px solid var(--mdp-border);
+}
+
 strong { font-weight: var(--mdp-weight-medium); }
 em { font-style: italic; }
 

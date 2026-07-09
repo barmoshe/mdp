@@ -27,6 +27,7 @@ export { baseStyle, themeTokens, BASE, THEMES, DEFAULT_THEME, THEME_SWATCHES } f
 export {
   deriveAccent,
   deriveAccent2,
+  normalizeColor,
   contrast,
   relativeLuminance,
   hexToOklch,

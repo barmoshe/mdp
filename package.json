@@ -1,6 +1,6 @@
 {
   "name": "mdp",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "description": "MDP: a presentation compiler for AI-written content. One source, many design-locked artifacts.",
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build": "node packages/core/build.mjs",
-    "test": "node scripts/check-contrast.mjs && node scripts/check-brand-accent.mjs && node scripts/check-brand-font.mjs && node scripts/check-logo.mjs && node scripts/check-image.mjs && node scripts/check-examples.mjs && node scripts/check-schema.mjs && node scripts/check-scaffold.mjs && node scripts/check-extensions.mjs",
+    "test": "node scripts/check-contrast.mjs && node scripts/check-brand-accent.mjs && node scripts/check-swatch.mjs && node scripts/check-brand-font.mjs && node scripts/check-logo.mjs && node scripts/check-image.mjs && node scripts/check-examples.mjs && node scripts/check-schema.mjs && node scripts/check-scaffold.mjs && node scripts/check-extensions.mjs",
     "check:examples": "node scripts/check-examples.mjs",
     "check:schema": "node scripts/check-schema.mjs",
     "check:scaffold": "node scripts/check-scaffold.mjs",

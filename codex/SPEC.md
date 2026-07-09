@@ -74,8 +74,8 @@ kicker: Brief                # optional, the small eyebrow above the masthead
 lang: he                     # optional, the document language; default "en"
 dir: rtl                     # optional, writing direction; auto from lang
 brand-logo: ./logo.svg       # optional, a brand mark placed in the masthead
-brand-accent: #2f8f6b        # optional, one brand hex; the engine derives the accent set
-brand-accent-2: #e8a33d      # optional, a secondary brand hex for a few accents
+brand-accent: #2f8f6b        # optional, one brand color (hex, rgb()/hsl(), or a CSS name); the engine derives the accent set
+brand-accent-2: #e8a33d      # optional, a secondary brand color for a few accents
 brand-font: rounded          # optional, body font: system serif mono rounded humanist
 to: Engineering              # optional, read by memo and letter (recipient)
 from: Bar Moshe              # optional, read by memo and letter (sender)
@@ -124,14 +124,17 @@ is the one amendment to Principle 2: an asset slot is not a color, size, or font
 Prefer SVG or a 2x raster; an agent should normally omit it or use a known URL,
 not synthesize a large `data:` URI.
 
-`brand-accent` is an optional custom brand color: one 6-digit hex with a leading
-`#`. The engine derives a full accent set from it, the five roles (the fill, the
+`brand-accent` is an optional custom brand color: a hex (`#RGB`, `#RGBA`,
+`#RRGGBB`, or `#RRGGBBAA`), an `rgb()`/`rgba()`/`hsl()`/`hsla()` value, or a CSS
+color name like `navy`. It must be unquoted (the frontmatter scanner keeps quote
+characters, so a quoted value fails to parse). The engine normalizes it to one
+opaque hex, then derives a full accent set from it, the five roles (the fill, the
 on-fill label, the link/label text, a surface wash, and a border) in both light
 and dark, and gates the load-bearing roles to WCAG AA exactly as the named themes
 are. It overrides only the accent; the warm neutral ramp and the type scale are
-untouched. A malformed value (quoted, missing the `#`, or not six hex digits), or
-a color that cannot be made accessible, is ignored and the document falls back to
-`theme`, then `studio`. `brand-accent-2` names an optional second brand color used
+untouched. An unrecognized value, or a color that cannot be made accessible, is
+ignored and the document falls back to `theme`, then `studio`. `brand-accent-2`
+names an optional second brand color used
 sparingly in engine-chosen spots only (the title underline, the flow connectors,
 and the active slide dot); it applies only alongside `brand-accent` and falls back
 to it. Like the logo, this amends Principle 2: the author names a color, never a
@@ -144,6 +147,16 @@ These are system families only, no `@font-face` and no network, so determinism a
 the offline posture hold; an unknown value falls back to the theme default. This is
 the third amendment to Principle 2: the author picks a font character from a fixed
 set, never an arbitrary font or a size.
+
+Inline color swatches are the body-level complement to `brand-accent`. When an
+inline code span is exactly one recognized color literal (a hex, an `rgb()`/`hsl()`,
+or a CSS color name, the same set `brand-accent` accepts), the engine prepends a
+small color chip inside the `<code>` so a palette reads as color, not just text. The
+chip color is the normalized 6-digit hex, so `#000080`, `navy`, and `rgb(0, 0, 128)`
+render an identical swatch, and no author text ever reaches CSS. An ordinary code
+span, or one holding a malformed color, is left untouched. This is not author
+styling (the non-goal below still holds): the author names a color, the engine owns
+the mark, exactly as with `brand-accent`.
 
 `to`, `from`, `date`, `salutation`, and `signoff` are optional plain-string
 fields read only by the document forms that need them: `memo` and `letter` use

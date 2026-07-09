@@ -19,6 +19,8 @@
 // OKLab matrices are Björn Ottosson's (https://bottosson.github.io/posts/oklab/);
 // the inverse chain mirrors the palette-oklch tool the workshop already ships.
 
+import { CSS_NAMED_COLORS } from "./named-colors.mjs";
+
 // --- sRGB hex <-> integer channels ---------------------------------------------
 
 // "#rrggbb" -> [r, g, b] as integers 0..255. Assumes an already-validated hex.
@@ -32,6 +34,88 @@ export function rgbToHex([r, g, b]) {
   const h = (v) =>
     Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0");
   return `#${h(r)}${h(g)}${h(b)}`;
+}
+
+// --- input color parsing (normalizeColor) --------------------------------------
+//
+// The single, deterministic front door for author-supplied color literals. Both
+// the inline color swatch and the `brand-accent` frontmatter compose on it: any
+// recognized CSS color (hex 3/4/6/8-digit, rgb()/rgba(), hsl()/hsla(), or a named
+// keyword) is canonicalized to one opaque "#rrggbb"; anything unrecognized returns
+// null so callers fail closed. Alpha is intentionally dropped: a swatch chip and a
+// derived accent are both opaque, and one canonical hex keeps everything downstream
+// (chip background, deriveAccent) hex-only and injection-safe.
+
+// HSL -> [r, g, b] 0..255. h in degrees, s/l in 0..1.
+export function hslToRgb(h, s, l) {
+  const hue = (((h % 360) + 360) % 360) / 60;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((hue % 2) - 1));
+  const m = l - c / 2;
+  let rgb;
+  if (hue < 1) rgb = [c, x, 0];
+  else if (hue < 2) rgb = [x, c, 0];
+  else if (hue < 3) rgb = [0, c, x];
+  else if (hue < 4) rgb = [0, x, c];
+  else if (hue < 5) rgb = [x, 0, c];
+  else rgb = [c, 0, x];
+  return rgb.map((v) => (v + m) * 255);
+}
+
+const unit = (n) => Math.max(0, Math.min(1, n));
+// Split the inside of rgb()/hsl() on commas, whitespace, and the modern `/` alpha
+// separator, so both `rgb(0,0,128)` and `rgb(0 0 128 / 50%)` parse.
+const splitFn = (inner) => inner.split(/[\s,/]+/).filter(Boolean);
+
+export function normalizeColor(input) {
+  if (typeof input !== "string") return null;
+  const s = input.trim().toLowerCase();
+  if (!s) return null;
+
+  // Named CSS color keyword.
+  if (Object.prototype.hasOwnProperty.call(CSS_NAMED_COLORS, s)) {
+    return CSS_NAMED_COLORS[s];
+  }
+
+  // Hex: #rgb, #rgba, #rrggbb, #rrggbbaa. 3/4-digit shorthand is doubled; alpha
+  // (the 4th shorthand digit / trailing byte) is dropped. 5- and 7-digit are invalid.
+  const hex = /^#([0-9a-f]+)$/.exec(s);
+  if (hex) {
+    const d = hex[1];
+    if (d.length === 3 || d.length === 4) {
+      return `#${d[0]}${d[0]}${d[1]}${d[1]}${d[2]}${d[2]}`;
+    }
+    if (d.length === 6 || d.length === 8) return `#${d.slice(0, 6)}`;
+    return null;
+  }
+
+  // rgb()/rgba(): three integer or percentage channels, optional alpha (ignored).
+  const rgb = /^rgba?\(([^)]+)\)$/.exec(s);
+  if (rgb) {
+    const parts = splitFn(rgb[1]);
+    if (parts.length < 3) return null;
+    const chan = parts.slice(0, 3).map((p) => {
+      const n = parseFloat(p);
+      if (!Number.isFinite(n)) return NaN;
+      return p.endsWith("%") ? Math.round((n / 100) * 255) : Math.round(n);
+    });
+    if (chan.some(Number.isNaN)) return null;
+    return rgbToHex(chan.map((n) => Math.max(0, Math.min(255, n))));
+  }
+
+  // hsl()/hsla(): hue (deg), saturation %, lightness %, optional alpha (ignored).
+  const hsl = /^hsla?\(([^)]+)\)$/.exec(s);
+  if (hsl) {
+    const parts = splitFn(hsl[1]);
+    if (parts.length < 3) return null;
+    const h = parseFloat(parts[0]);
+    const sPct = parseFloat(parts[1]);
+    const lPct = parseFloat(parts[2]);
+    if (![h, sPct, lPct].every(Number.isFinite)) return null;
+    return rgbToHex(hslToRgb(h, unit(sPct / 100), unit(lPct / 100)));
+  }
+
+  return null;
 }
 
 // --- sRGB gamma transfer (the standard pair, used only for OKLab conversion) ---

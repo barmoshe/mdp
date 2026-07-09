@@ -120,6 +120,12 @@
     "lead": "page"
   },
   {
+    "id": "block-colors",
+    "file": "block-colors.mdp",
+    "label": "Color swatches",
+    "lead": "page"
+  },
+  {
     "id": "release-notes",
     "file": "release-notes.mdp",
     "label": "Release note",

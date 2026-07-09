@@ -22,10 +22,12 @@ by hand.
 | `accordion.mdp` | accordion, list, callout:tip, table | callout, list, table | accordion, page | studio |
 | `block-callouts.mdp` | callout:note, callout:tip, callout:cost, callout:recommendation, callout:warning, lead | callout | page, slides, flyer | amber |
 | `block-chart.mdp` | chart, lead | chart | page, slides, flyer | amber |
+| `block-colors.mdp` | swatch, brand-accent, list, stats, lead | callout, list, stats | page, slides, flyer | studio |
 | `block-compare.mdp` | compare, flow, callout:cost, callout:recommendation, lead | callout, compare, flow | page, slides, flyer | studio |
 | `block-diagram.mdp` | diagram, lead | diagram | page, slides, flyer | studio |
 | `block-faq.mdp` | faq, lead | faq | page, slides, flyer | ocean |
 | `block-flow.mdp` | flow, lead | flow | flyer, page, slides | ocean |
+| `block-image.mdp` | image, lead | image | page, onepager, flyer | studio |
 | `block-lists.mdp` | list, lead | list | page, slides, flyer | terracotta |
 | `block-pricing.mdp` | pricing, lead | pricing | page, slides, flyer | violet |
 | `block-quote.mdp` | quote, cite, lead | quote | slides, page, flyer | forest |
