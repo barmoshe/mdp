@@ -114,18 +114,83 @@ function elbow(x1, y1, x2, y2, dashed = "") {
   return `<polyline class="mdp-diagram-edge${dashed}" points="${x1},${y1} ${x1},${my} ${x2},${my} ${x2},${y2}"/>`;
 }
 
-// A small label sitting on its own background plate so a connector does not read
-// through it. Width is estimated from the text length (no DOM).
-function edgeLabel(cx, cy, label) {
+// The plate a connector label sits on, as geometry only.
+//
+// Split out from the markup because two things need these numbers before
+// anything is emitted: keeping labels off each other, and sizing the canvas. A
+// plate outside the viewBox is simply cropped, which is how a label silently
+// disappears rather than looking wrong.
+function labelBox(cx, cy, label) {
   const text = String(label);
   const w = Math.round(text.length * CHAR_ADVANCE) + 8;
   const h = FONT_SIZE + 6;
-  const x = cx - Math.round(w / 2);
-  const y = cy - Math.round(h / 2);
+  return { text, cx, cy, w, h, x: cx - Math.round(w / 2), y: cy - Math.round(h / 2) };
+}
+
+function labelMarkup(box) {
   return (
-    `<rect class="mdp-diagram-edge-label-bg" x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>\n` +
-    `<text class="mdp-diagram-edge-label" x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central">${escapeHtml(text)}</text>`
+    `<rect class="mdp-diagram-edge-label-bg" x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}" rx="3"/>\n` +
+    `<text class="mdp-diagram-edge-label" x="${box.cx}" y="${box.cy}" text-anchor="middle" dominant-baseline="central">${escapeHtml(box.text)}</text>`
   );
+}
+
+// A small label sitting on its own background plate so a connector does not read
+// through it. Width is estimated from the text length (no DOM).
+function edgeLabel(cx, cy, label) {
+  return labelMarkup(labelBox(cx, cy, label));
+}
+
+function overlaps(a, b) {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+}
+
+// Push labels apart so none is hidden under another.
+//
+// Two forward edges leaving one box for adjacent targets share a midpoint row,
+// so their plates land side by side and, once the text is long enough, on top of
+// each other. Whichever is drawn second wins and the first becomes unreadable.
+//
+// Deterministic: walk in emission order and, while a label overlaps one already
+// placed, move it down by its own height plus a hair. Downward because the
+// midpoint row is empty space between two layers; sideways would drag the label
+// off the connector it names. The guard is belt and braces against a pathological
+// set rather than a real case.
+function spreadLabels(boxes) {
+  const placed = [];
+  for (const box of boxes) {
+    let guard = 0;
+    while (placed.some((p) => overlaps(p, box)) && guard++ < 24) {
+      box.y += box.h + 4;
+      box.cy += box.h + 4;
+    }
+    placed.push(box);
+  }
+  return boxes;
+}
+
+// Grow a layout's canvas so every label plate is inside it.
+//
+// Layouts size themselves from their node grid, which is right for boxes and
+// wrong for anything hanging off an edge: a label centred on the back-edge
+// channel, or on a connector near the frame, reaches past the grid and is
+// cropped by the viewBox. Measuring what is actually drawn fixes it, and letting
+// the viewBox carry a non-zero origin means growing left or up costs no
+// coordinate rewriting.
+function fitLabels(layout, boxes) {
+  if (!boxes.length) return layout;
+  const x0 = layout.x ?? 0;
+  const y0 = layout.y ?? 0;
+  let minX = x0;
+  let minY = y0;
+  let maxX = x0 + layout.w;
+  let maxY = y0 + layout.h;
+  for (const b of boxes) {
+    minX = Math.min(minX, b.x - MARGIN);
+    minY = Math.min(minY, b.y - MARGIN);
+    maxX = Math.max(maxX, b.x + b.w + MARGIN);
+    maxY = Math.max(maxY, b.y + b.h + MARGIN);
+  }
+  return { ...layout, x: minX, y: minY, w: maxX - minX, h: maxY - minY };
 }
 
 // sequence: actors as columns with dashed lifelines, messages as ordered arrows.
@@ -148,6 +213,7 @@ function layoutSequence(nodes, edges) {
   const totalH = lifelineBottom + MARGIN;
 
   const parts = [];
+  const labels = [];
   for (let i = 0; i < nodes.length; i++) {
     parts.push(
       `<line class="mdp-diagram-lifeline" x1="${centers[i]}" y1="${MARGIN + NODE_H}" x2="${centers[i]}" y2="${lifelineBottom}"/>`
@@ -169,16 +235,17 @@ function layoutSequence(nodes, edges) {
         `<polyline class="mdp-diagram-edge${dashed}" points="${x0},${y} ${x0 + w},${y} ${x0 + w},${y + 16} ${x0},${y + 16}"/>`
       );
       parts.push(arrowHead(x0, y + 16, "left"));
-      if (e.label) parts.push(edgeLabel(x0 + w, y - 6, e.label));
+      if (e.label) labels.push(labelBox(x0 + w, y - 6, e.label));
     } else {
       const x1 = centers[fi];
       const x2 = centers[ti];
       parts.push(`<line class="mdp-diagram-edge${dashed}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}"/>`);
       parts.push(arrowHead(x2, y, x2 > x1 ? "right" : "left"));
-      if (e.label) parts.push(edgeLabel(Math.round((x1 + x2) / 2), y - 10, e.label));
+      if (e.label) labels.push(labelBox(Math.round((x1 + x2) / 2), y - 10, e.label));
     }
   });
-  return { w: totalW, h: totalH, inner: parts.join("\n") };
+  for (const box of spreadLabels(labels)) parts.push(labelMarkup(box));
+  return fitLabels({ w: totalW, h: totalH, inner: parts.join("\n") }, labels);
 }
 
 // tree: a tidy hierarchy. Leaves take sequential inline slots; a parent centres
@@ -247,6 +314,7 @@ function layoutTree(nodes, edges) {
   const totalH = MARGIN + (maxDepth + 1) * NODE_H + maxDepth * V_GAP + MARGIN;
 
   const parts = [];
+  const labels = [];
   for (let j = 0; j < edges.length; j++) {
     const f = index.get(edges[j].from);
     const t = index.get(edges[j].to);
@@ -255,12 +323,13 @@ function layoutTree(nodes, edges) {
     const ty = yOf(depth[t]);
     parts.push(elbow(cx[f], py, cx[t], ty, edges[j].dashed ? " is-dashed" : ""));
     parts.push(arrowHead(cx[t], ty, "down"));
-    if (edgeText[j]) parts.push(edgeLabel(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), edgeText[j]));
+    if (edgeText[j]) labels.push(labelBox(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), edgeText[j]));
   }
+  for (const box of spreadLabels(labels)) parts.push(labelMarkup(box));
   for (let i = 0; i < nodes.length; i++) {
     parts.push(nodeBox(cx[i] - Math.round(widths[i] / 2), yOf(depth[i]), widths[i], display[i]));
   }
-  return { w: totalW, h: totalH, inner: parts.join("\n") };
+  return fitLabels({ w: totalW, h: totalH, inner: parts.join("\n") }, labels);
 }
 
 // flow: a layered graph, top to bottom. Layer = shortest path (BFS) from a source,
@@ -333,6 +402,7 @@ function layoutFlow(nodes, edges) {
   const totalH = MARGIN + (maxLayer + 1) * NODE_H + maxLayer * V_GAP + MARGIN;
 
   const parts = [];
+  const labels = [];
   for (const e of edges) {
     const f = index.get(e.from);
     const t = index.get(e.to);
@@ -344,9 +414,22 @@ function layoutFlow(nodes, edges) {
       const ty = yOf(layer[t]);
       parts.push(elbow(cx[f], py, cx[t], ty, dashed));
       parts.push(arrowHead(cx[t], ty, "down"));
-      if (e.label) parts.push(edgeLabel(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), e.label));
+      if (e.label) labels.push(labelBox(Math.round((cx[f] + cx[t]) / 2), Math.round((py + ty) / 2), e.label));
+    } else if (layer[t] === layer[f] && cx[t] > cx[f]) {
+      // Same layer, target to the inline-end: a straight sibling connector.
+      //
+      // This used to take the back-edge channel, which routed the line out past
+      // the target, up an empty channel, and back in with a reversed arrowhead.
+      // It read as an error. A sibling edge is a plain horizontal arrow between
+      // the two boxes, and the gap between them is exactly where it belongs.
+      const y = yOf(layer[f]) + Math.round(NODE_H / 2);
+      const sx = cx[f] + Math.round(widths[f] / 2);
+      const tx = cx[t] - Math.round(widths[t] / 2);
+      parts.push(`<line class="mdp-diagram-edge${dashed}" x1="${sx}" y1="${y}" x2="${tx}" y2="${y}"/>`);
+      parts.push(arrowHead(tx, y, "right"));
+      if (e.label) labels.push(labelBox(Math.round((sx + tx) / 2), y, e.label));
     } else {
-      // back or same layer: out the source's inline-end, up the channel, into the
+      // back edge: out the source's inline-end, along the channel, into the
       // target's inline-end (arrow points back toward the box).
       const sy = yOf(layer[f]) + Math.round(NODE_H / 2);
       const ty = yOf(layer[t]) + Math.round(NODE_H / 2);
@@ -356,13 +439,16 @@ function layoutFlow(nodes, edges) {
         `<polyline class="mdp-diagram-edge${dashed}" points="${sx},${sy} ${channelX},${sy} ${channelX},${ty} ${tx},${ty}"/>`
       );
       parts.push(arrowHead(tx, ty, "left"));
-      if (e.label) parts.push(edgeLabel(channelX, Math.round((sy + ty) / 2), e.label));
+      if (e.label) labels.push(labelBox(channelX, Math.round((sy + ty) / 2), e.label));
     }
   }
+  // Labels last: resolved against each other, then drawn over the connectors
+  // they name and under nothing.
+  for (const box of spreadLabels(labels)) parts.push(labelMarkup(box));
   for (let i = 0; i < nodes.length; i++) {
     parts.push(nodeBox(cx[i] - Math.round(widths[i] / 2), yOf(layer[i]), widths[i], nodes[i].label));
   }
-  return { w: totalW, h: totalH, inner: parts.join("\n") };
+  return fitLabels({ w: totalW, h: totalH, inner: parts.join("\n") }, labels);
 }
 
 // Render a diagram block to one inline <svg>. Dispatches on kind; an empty diagram
@@ -381,7 +467,9 @@ export function renderDiagram(block) {
   const title = `${block.kind} diagram, ${nodes.length} node${nodes.length === 1 ? "" : "s"}`;
   return (
     `<figure class="mdp-diagram">\n` +
-    `<svg class="mdp-diagram-svg" viewBox="0 0 ${layout.w} ${layout.h}" role="img" aria-label="${escapeHtml(
+    // A non-zero origin so a layout can grow up or to the inline-start without
+    // rewriting every coordinate it already emitted.
+    `<svg class="mdp-diagram-svg" viewBox="${layout.x ?? 0} ${layout.y ?? 0} ${layout.w} ${layout.h}" role="img" aria-label="${escapeHtml(
       title
     )}" xmlns="http://www.w3.org/2000/svg">\n` +
     layout.inner +
