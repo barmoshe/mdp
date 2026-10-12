@@ -337,3 +337,7 @@ deterministic and byte-identical across runs) and keep the design locked.
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+---
+
+Built by [Bar Moshe](https://bar-builds.com/?src=gh-mdp)
