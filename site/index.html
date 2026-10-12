@@ -20,9 +20,65 @@
     />
     <meta property="og:url" content="https://barmoshe.github.io/mdp/" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="author" content="Bar Moshe" />
+    <link rel="canonical" href="https://barmoshe.github.io/mdp/" />
+    <!-- The static fallback in #root is for crawlers that run no JavaScript;
+         a browser that runs JS hides it until React replaces it, so there is no flash. -->
+    <script>document.documentElement.classList.add("js")</script>
+    <style>.js #mdp-static { display: none; }</style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "MDP",
+        "alternateName": "mdp-compiler",
+        "description": "A presentation compiler for AI-written content. One declarative .mdp source compiles, deterministically, into a page, a slide deck, a flyer, a report and more, with the design owned by the engine.",
+        "url": "https://barmoshe.github.io/mdp/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "softwareVersion": "0.8.0",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "codeRepository": "https://github.com/barmoshe/mdp",
+        "downloadUrl": "https://www.npmjs.com/package/mdp-compiler",
+        "author": {
+          "@type": "Person",
+          "@id": "https://bar-builds.com/#person",
+          "name": "Bar Moshe",
+          "url": "https://bar-builds.com/"
+        }
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- What a crawler that runs no JavaScript (most AI search bots) reads.
+         React replaces it on load. Copy from README.md; keep the two in step. -->
+    <div id="root">
+      <main id="mdp-static" style="max-width: 720px; margin: 48px auto; padding: 0 16px; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>MDP, a presentation compiler for AI-written content</h1>
+        <p>
+          One declarative <code>.mdp</code> source composes, deterministically, into many polished,
+          design-locked artifacts: a page, a slide deck, a flyer, a report, a one-pager, a memo, a letter,
+          and the interactive forms (scroll, accordion, tabs, stepper, plan).
+        </p>
+        <p>A markdown viewer gives you one rendering. MDP gives you a compiler.</p>
+        <h2>Install</h2>
+        <p><code>npm i mdp-compiler</code></p>
+        <p>
+          In Claude Code: <code>/plugin marketplace add barmoshe/mdp</code>, then
+          <code>/plugin install mdp@mdp</code>. As an MCP server:
+          <code>claude mcp add mdp -- npx -y mdp-mcp</code>.
+        </p>
+        <h2>Links</h2>
+        <p>
+          <a href="https://github.com/barmoshe/mdp">Source on GitHub</a> ·
+          <a href="https://www.npmjs.com/package/mdp-compiler">mdp-compiler on npm</a> ·
+          <a href="https://github.com/barmoshe/mdp/blob/main/SPEC.md">The spec</a>
+        </p>
+        <p>Open source under Apache-2.0. Built by <a href="https://bar-builds.com/?src=mdp-hub">Bar Moshe</a>.</p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
